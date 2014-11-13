@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MyActivity"
+    android:id="@+id/viewID"
+    android:minWidth="100dp">
+
+
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Accedi"
+            android:id="@+id/loginB"
+            android:layout_marginBottom="133dp"
+            android:maxWidth="600dp"
+            android:minHeight="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="MusicShare"
+            android:id="@+id/nome"
+            android:textSize="65dp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#CCFFFF"
+            android:layout_above="@+id/loginB"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="153dp"/>
+</RelativeLayout>
