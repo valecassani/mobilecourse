@@ -1,37 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.valeriocassani.myapplication.Home$PlaceholderFragment">
+>
 
-    <TextView
-        android:text="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <fragment android:layout_width="fill_parent"
+              android:layout_height="170dp"
+              android:id="@+id/top_fragment"
+              android:name="it.polimi.mobilecourse.expenses.Home$PlaceholderFragment"
+              class="it.polimi.mobilecourse.expenses.Home$PlaceholderFragment"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentLeft="true">
 
-    <SlidingDrawer
-            android:id="@+id/drawer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
 
-            android:handle="@+id/handle"
-            android:content="@+id/content">
 
-        <ImageView
-                android:id="@id/handle"
-                android:layout_width="88dip"
-                android:layout_height="44dip" />
+    </fragment>
 
-        <GridView
-                android:id="@id/content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
-    </>
+
+
+
+    <fragment android:layout_width="fill_parent"
+              android:layout_height="230dp"
+              android:id="@+id/bottom_fragment"
+              android:name="it.polimi.mobilecourse.expenses.Home$BottomFragment"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentStart="false"
+              android:layout_alignParentEnd="false"
+              class="it.polimi.mobilecourse.expenses.Home$BottomFragment"
+              android:layout_below="@+id/top_fragment">
+
+
+    </fragment>
+
+
+
 
 
 </RelativeLayout>
