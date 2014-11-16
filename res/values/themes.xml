@@ -9,6 +9,8 @@
     </style>
 
     <color name="custom_theme_color">#FF6633</color>
+    <color name="bottomcolor">#ff995b09</color>
+    <color name="topcolor">#ff998c12</color>
 
 
     <!-- ActionBar styles -->
@@ -16,5 +18,7 @@
            parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">#993300</item>
     </style>
+
+
 
 </resources>
