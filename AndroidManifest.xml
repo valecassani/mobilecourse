@@ -3,18 +3,16 @@
           package="it.polimi.mobilecourse.expenses"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="21"/>
+    <uses-sdk android:minSdkVersion="15"/>
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name="MyActivity"
-                  android:label="@string/app_name">
+        <activity android:name=".Home"
+                  android:label="@string/app_name"
+                   android:theme="@style/CustomActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Home">
 
-
-        </activity>
     </application>
 </manifest>
