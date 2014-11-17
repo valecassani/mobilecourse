@@ -29,19 +29,7 @@ public class Home extends Activity {
             getFragmentManager().beginTransaction()
                     .add(R.id.bottom_fragment, new BottomFragmentHome())
                     .commit();
-            ListView lista=(ListView)findViewById(R.id.listAction);
-            String [] actions=new String[]{"controlla conto"};
-            ArrayList<String> azioni=new ArrayList<String>();
-            azioni.addAll(Arrays.asList(actions));
-            ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,R.layout.simplerow,azioni);
 
-            lista.setAdapter(arrayAdapter);
-            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                }
-            });
         }
 
     }
