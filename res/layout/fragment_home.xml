@@ -15,7 +15,18 @@
 
     </fragment>
 
+    <fragment android:layout_width="fill_parent"
+              android:layout_height="170dp"
+              android:id="@+id/mid_fragment"
+              android:name="it.polimi.mobilecourse.expenses.MidFragmentHome"
+              class="it.polimi.mobilecourse.expenses.MidFragmentHome"
+              android:layout_above="@+id/bottom_fragment"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/top_fragment">
 
+
+
+    </fragment>
 
 
 
@@ -28,7 +39,7 @@
               android:layout_alignParentStart="false"
               android:layout_alignParentEnd="false"
               class="it.polimi.mobilecourse.expenses.BottomFragmentHome"
-              android:layout_below="@+id/top_fragment">
+            >
 
 
     </fragment>
