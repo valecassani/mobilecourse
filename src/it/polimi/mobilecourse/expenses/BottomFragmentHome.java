@@ -17,19 +17,38 @@ import java.util.List;
  */
 public class BottomFragmentHome extends Fragment {
 
-    private String[] actions;
+
+    ArrayAdapter<String> arrayAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View bottomView = inflater.inflate(R.layout.bottom_fragment, container, false);
-        String [] actions=new String[]{"controlla conto"};
+        String [] actions=new String[]{};
         List<String> azioni=new ArrayList<String>();
         azioni.addAll(Arrays.asList(actions));
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,azioni);
+        arrayAdapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,azioni);
         ListView lista=(ListView)bottomView.findViewById(R.id.listAction);
 
         lista.setAdapter(arrayAdapter);
-
-
+        getAzioni();
         return bottomView;
     }
+
+    public void getAzioni(){
+
+        arrayAdapter.add("Lista operazioni");
+        arrayAdapter.add("Trasferimenti");
+        arrayAdapter.add("Statistiche");
+        arrayAdapter.add("Ricorrenze");
+        arrayAdapter.add("Categorie");
+        arrayAdapter.add("Backup");
+        arrayAdapter.add("Esporta i dati");
+        arrayAdapter.add("I miei conti");
+        arrayAdapter.add("Luoghi / Negozi");
+        arrayAdapter.add("Tipi di pagamento");
+
+
+    }
+
+
+
 }

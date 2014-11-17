@@ -27,6 +27,9 @@ public class Home extends Activity {
                     .add(R.id.top_fragment, new TopFragmentHome())
                     .commit();
             getFragmentManager().beginTransaction()
+                    .add(R.id.mid_fragment,new MidFragmentHome())
+                    .commit();
+            getFragmentManager().beginTransaction()
                     .add(R.id.bottom_fragment, new BottomFragmentHome())
                     .commit();
 
