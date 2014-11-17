@@ -9,4 +9,13 @@
         >
 
 
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listAction"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:fastScrollEnabled="false"
+            android:fastScrollAlwaysVisible="false"
+            />
 </RelativeLayout>
