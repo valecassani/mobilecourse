@@ -28,6 +28,18 @@ public class TopFragmentHome extends Fragment {
             }
         });
 
+        ImageView linkbar=(ImageView)rootView.findViewById(R.id.linkbar);
+        linkbar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent inet=new Intent(v.getContext(),NavigationDrawer.class);
+                startActivity(inet);
+            }
+
+
+        });
+
+
         return rootView;
 
 
