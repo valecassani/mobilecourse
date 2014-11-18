@@ -12,7 +12,7 @@
     <color name="bottomcolor">#ff995b09</color>
     <color name="midcolor">#ff219940</color>
     <color name="topcolor">#ff998c12</color>
-    <color name="underbar">#ff321899</color>
+    <color name="underbar">#ff99993e</color>
 
     <style name="NewOperationBarTheme"
            parent="@android:style/Theme.Holo.Light">
