@@ -110,7 +110,7 @@ public class NavigationDrawer extends Activity{
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        menu.findItem(R.id.viewID).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
 
     }
