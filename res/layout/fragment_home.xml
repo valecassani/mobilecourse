@@ -4,21 +4,19 @@
     android:layout_height="match_parent"
 >
 
-    <fragment android:layout_width="fill_parent"
-              android:layout_height="230dp"
-              android:id="@+id/top_fragment"
-              android:name="it.polimi.mobilecourse.expenses.TopFragmentHome"
-              class="it.polimi.mobilecourse.expenses.TopFragmentHome"
-              android:layout_alignParentTop="true"
-              android:layout_alignParentLeft="true"
-              tools:layout="@layout/top_fragment">
 
 
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/mid_fragment"
+            android:id="@+id/layoutreplace"
+            android:orientation="vertical"></LinearLayout>
 
-    </fragment>
+
 
     <fragment android:layout_width="fill_parent"
-              android:layout_height="150dp"
+              android:layout_height="100dp"
               android:id="@+id/mid_fragment"
               android:name="it.polimi.mobilecourse.expenses.MidFragmentHome"
               class="it.polimi.mobilecourse.expenses.MidFragmentHome"
@@ -33,20 +31,17 @@
 
 
 
+
     <fragment android:layout_width="fill_parent"
               android:layout_height="230dp"
               android:id="@+id/bottom_fragment"
-              android:name="it.polimi.mobilecourse.expenses.BottomFragmentHome"
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentStart="false"
-              android:layout_alignParentEnd="false"
               class="it.polimi.mobilecourse.expenses.BottomFragmentHome"
-              tools:layout="@layout/bottom_fragment">
+              tools:layout="@layout/bottom_fragment"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentLeft="true">
 
 
     </fragment>
-
 
 
 
