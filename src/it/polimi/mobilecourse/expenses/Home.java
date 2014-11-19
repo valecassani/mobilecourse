@@ -6,11 +6,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.*;
 import android.widget.*;
+
+import android.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,15 +29,43 @@ public class Home extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.top_fragment, new TopFragmentHome())
-                    .commit();
-            getFragmentManager().beginTransaction()
-                    .add(R.id.mid_fragment,new MidFragmentHome())
-                    .commit();
-            getFragmentManager().beginTransaction()
-                    .add(R.id.bottom_fragment, new BottomFragmentHome())
-                    .commit();
+
+          getFragmentManager().beginTransaction().add(R.id.layoutreplace,new TopFragmentHome()).commit();
+
+
+            TextView conto=(TextView)findViewById(R.id.myconto);
+            conto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Fragment fg=new ContoFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.layoutreplace, fg);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+
+                }
+            });
+
+
+
+            ImageView but=(ImageView)findViewById(R.id.buttonrep);
+            but.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Fragment fg=new ContoFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.layoutreplace, fg);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+
+                }
+            });
+
+
 
 
 
