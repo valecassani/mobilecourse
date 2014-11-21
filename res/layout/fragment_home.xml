@@ -9,25 +9,21 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/mid_fragment"
             android:id="@+id/layoutreplace"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"
+            android:layout_above="@+id/secondreplace"></LinearLayout>
 
 
 
-    <fragment android:layout_width="fill_parent"
-              android:layout_height="100dp"
-              android:id="@+id/mid_fragment"
-              android:name="it.polimi.mobilecourse.expenses.MidFragmentHome"
-              class="it.polimi.mobilecourse.expenses.MidFragmentHome"
-              android:layout_alignParentLeft="true"
-              android:layout_below="@+id/top_fragment"
-              android:layout_above="@+id/bottom_fragment"
-              tools:layout="@layout/mid_fragment">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:id="@+id/secondreplace"
+            android:orientation="vertical"
+            android:layout_above="@+id/bottom_fragment"></LinearLayout>
 
 
 
-    </fragment>
 
 
 

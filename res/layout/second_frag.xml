@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+        >
+
+
+    <fragment
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:id="@+id/second_mid"
+            android:name="it.polimi.mobilecourse.expenses.SecondMid"
+            class="it.polimi.mobilecourse.expenses.SecondMid"
+            tools:layout="@layout/second_mid"></fragment>
+
+</RelativeLayout>
