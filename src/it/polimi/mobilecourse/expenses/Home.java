@@ -29,41 +29,16 @@ public class Home extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home);
         if (savedInstanceState == null) {
-
+         MidFragmentHome mf=new MidFragmentHome();
           getFragmentManager().beginTransaction().add(R.id.layoutreplace,new TopFragmentHome()).commit();
-
-
-            TextView conto=(TextView)findViewById(R.id.myconto);
-            conto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Fragment fg=new ContoFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layoutreplace, fg);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-
-                }
-            });
+            getFragmentManager().beginTransaction().add(R.id.secondreplace,mf).commit();
 
 
 
-            ImageView but=(ImageView)findViewById(R.id.buttonrep);
-            but.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Fragment fg=new ContoFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layoutreplace, fg);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
 
 
-                }
-            });
+
+
 
 
 
