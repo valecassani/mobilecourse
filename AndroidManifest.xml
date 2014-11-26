@@ -17,6 +17,8 @@
                 android:theme="@style/NewOperationBarTheme"/>
         <activity android:name=".NavigationDrawer" android:label = "Prova Drawer"
                   android:theme="@style/AppTheme"/>
+        <activity android:name=".ProvaInsert"/>
+        <activity android:name=".ProvaShowResult"/>
 
     </application>
 </manifest>
