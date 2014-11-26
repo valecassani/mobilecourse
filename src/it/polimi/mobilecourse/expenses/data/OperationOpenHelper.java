@@ -64,4 +64,16 @@ public class OperationOpenHelper extends SQLiteOpenHelper {
 
 
     }
+
+    public Cursor doquery(){
+        SQLiteDatabase db=this.getReadableDatabase();
+
+
+
+        Cursor cursor = db.query(TABLE_NAME, new String[] {OP, VALUE, TYPE,DATA},
+                OP + " like '%cul%'", null, null, null, null);
+        cursor.moveToFirst();
+        return cursor;
+
+    }
 }

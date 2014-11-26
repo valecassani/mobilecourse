@@ -1,6 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.EditText;
 import it.polimi.mobilecourse.expenses.data.Operation;
@@ -26,6 +27,11 @@ public class ProvaShowResult extends Activity {
         String opdue=resultdue.getOp();
         EditText testodue=(EditText)findViewById(R.id.testodue);
         testodue.setText(opdue);
+        Cursor resultq=db.doquery();
+        String opq=resultq.getString(0);//primo elemento della select
+        EditText testoq=(EditText)findViewById(R.id.testoquery);
+        testoq.setText(opq);
+
 
 
 
