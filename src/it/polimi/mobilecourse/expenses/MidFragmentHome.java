@@ -25,13 +25,14 @@ public class MidFragmentHome extends Fragment {
                 Fragment sm= new SecondMid();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layoutreplace, fg);
+                transaction.replace(R.id.secondreplace,sm);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                FragmentTransaction transa = getFragmentManager().beginTransaction();
+                /*FragmentTransaction transa = getFragmentManager().beginTransaction();
                 transa.replace(R.id.secondreplace,sm);
                 transa.addToBackStack(null);
                 transa.commit();
-
+*/
             }
         });
 
