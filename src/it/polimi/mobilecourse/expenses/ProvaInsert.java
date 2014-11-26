@@ -1,12 +1,14 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import it.polimi.mobilecourse.expenses.data.Operation;
 import it.polimi.mobilecourse.expenses.data.OperationOpenHelper;
 
@@ -41,6 +43,12 @@ public class ProvaInsert extends Activity implements View.OnClickListener {
                 oh.addOperation(ooop);
                 Intent myint=new Intent(v.getContext(),Home.class);
                 startActivity(myint);
+                Context context = getApplicationContext();
+                CharSequence text = "Operazione salvata correttamente!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 break;
             default:break;
 
