@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,24 @@ public class TopFragmentHome extends Fragment {
             }
         });
 
+        ImageView buttonadd=(ImageView)rootView.findViewById(R.id.linkbar);
+        buttonadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myint=new Intent(rootView.getContext(),ProvaInsert.class);
+                startActivity(myint);
+            }
+        });
 
+        ImageView buttonshow=(ImageView)rootView.findViewById(R.id.imageView3);
+        buttonshow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myi=new Intent(rootView.getContext(),ProvaShowResult.class);
+                startActivity(myi);
+            }
+        });
 
 
 
