@@ -49,6 +49,15 @@ public class TopFragmentHome extends Fragment {
             }
         });
 
+        ImageView buttonprova=(ImageView)rootView.findViewById(R.id.imageView2);
+        buttonshow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myi=new Intent(rootView.getContext(),ProvaUni.class);
+                startActivity(myi);
+            }
+        });
 
 
 
