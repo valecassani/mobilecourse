@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="planets_array">prova1</string-array>
+    <string-array name="array_options" >
+        <item>Lista Operazioni</item>
+        <item>Trasferimenti</item>
+        <item>Statistiche</item>
+        <item>Ricorrenze</item>
+        <item>Categorie</item>
+        <item>Backup</item>
+        <item>Esporta i dati</item>
+        <item>I miei conti</item>
+        <item>Luoghi / Negozi</item>
+        <item>Tipi di pagamento</item>
+    </string-array>
 </resources>

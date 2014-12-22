@@ -6,4 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="new_operation">Nuova operazione</string>
 
+    <!-- array delle opzioni dell'applicazione nel bottom fragment-->
+
+
 </resources>
