@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,8 +45,8 @@ public class UniFragment extends Fragment {
         this.activity = (ProvaUni) activity;
     }
 
-    public void displayResults(ArrayList<Entity> result) {
-        Entity user = result.get(0);
+    public void displayResults(ArrayList<ObjDb> result) {
+        ObjDb user = result.get(0);
         TextView textView = (TextView) view.findViewById(R.id.textViewdb);
         textView.setText(user.get("nome"));
     }

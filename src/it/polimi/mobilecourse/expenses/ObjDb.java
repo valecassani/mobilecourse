@@ -10,11 +10,11 @@ import org.json.JSONObject;
 /**
  * Created by Matteo on 21/12/2014.
  */
-public class Entity {
+public class ObjDb {
 
 
 
-        public Entity() {
+        public ObjDb() {
             elements = new HashMap<String,String>();
         }
         private Map<String,String> elements;
@@ -27,8 +27,8 @@ public class Entity {
         public String getFist() {
             return elements.get(elements.keySet().toArray()[0]);
         }
-        static Entity jsonObjectToEntity(JSONObject jsonObject) {
-            Entity result = new Entity();
+        static ObjDb jsonObjectToEntity(JSONObject jsonObject) {
+            ObjDb result = new ObjDb();
             try {
                 JSONArray names = jsonObject.names();
                 JSONArray values = jsonObject.toJSONArray(names);
@@ -41,9 +41,9 @@ public class Entity {
             }
             return result;
         }
-        static ArrayList<Entity> jsonArrayToEntityList(JSONArray jsonArray) {
+        static ArrayList<ObjDb> jsonArrayToObjDBList(JSONArray jsonArray) {
             if (jsonArray == null) return null;
-            ArrayList<Entity> result = new ArrayList<Entity>();
+            ArrayList<ObjDb> result = new ArrayList<ObjDb>();
             for(int i=0; i<jsonArray.length(); i++) {
                 try {
                     result.add(jsonObjectToEntity((JSONObject) jsonArray.get(i)));
@@ -53,9 +53,9 @@ public class Entity {
             }
             return result;
         }
-        static ArrayList<String> entityListToStringList(ArrayList<Entity> list) {
+        static ArrayList<String> entityListToStringList(ArrayList<ObjDb> list) {
             ArrayList<String> result = new ArrayList<String>();
-            for(Entity element : list) {
+            for(ObjDb element : list) {
                 result.add(element.getFist());
             }
             return result;

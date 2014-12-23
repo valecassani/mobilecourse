@@ -18,7 +18,7 @@ public class HelpActivity extends Activity {
 
 
 
-    void handleResult(ArrayList<Entity> result,Fragment fragment){
+    void handleResult(ArrayList<ObjDb> result,Fragment fragment){
 
 
     }

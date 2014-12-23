@@ -1,9 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -12,7 +10,6 @@ import java.util.ArrayList;
  */
 public class ProvaUni extends HelpActivity {
 
-    //RequestFtp rf=new RequestFtp(this.getClass(),"univer.php",this.getApplicationContext());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,7 @@ public class ProvaUni extends HelpActivity {
     }
 
     @Override
-    public void handleResult(ArrayList<Entity> result,Fragment fragment){
+    public void handleResult(ArrayList<ObjDb> result,Fragment fragment){
 
         UniFragment unifr=(UniFragment) fragment;
         unifr.displayResults(result);
