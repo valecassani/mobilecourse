@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        >
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="TUTORED"
+            android:textSize="64dp"
+            android:fontFamily="Roboto-Medium"
+            android:id="@+id/title"
+            android:layout_marginTop="164dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Studente"
+            android:id="@+id/buttonStudente"
+            android:layout_marginLeft="45dp"
+            android:layout_alignTop="@+id/buttonTutor"
+            android:layout_alignLeft="@+id/title"/>
+
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Tutor"
+            android:id="@+id/buttonTutor"
+            android:layout_marginBottom="131dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/title"
+            android:layout_marginRight="30dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Accedi come:"
+            android:id="@+id/textView2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
