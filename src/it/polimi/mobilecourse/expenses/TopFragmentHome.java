@@ -30,27 +30,10 @@ public class TopFragmentHome extends Fragment {
             }
         });
 
-        ImageView buttonadd=(ImageView)rootView.findViewById(R.id.linkbar);
-        buttonadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myint=new Intent(rootView.getContext(),ProvaInsert.class);
-                startActivity(myint);
-            }
-        });
 
-        ImageView buttonshow=(ImageView)rootView.findViewById(R.id.imageView3);
-        buttonshow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myi=new Intent(rootView.getContext(),ProvaShowResult.class);
-                startActivity(myi);
-            }
-        });
 
         ImageView buttonprova=(ImageView)rootView.findViewById(R.id.imageView2);
-        buttonshow.setOnClickListener(new View.OnClickListener() {
+        buttonprova.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
