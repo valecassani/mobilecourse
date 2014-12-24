@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -9,17 +9,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="Username"
             android:ems="10"
-            android:id="@+id/editText"
-            android:layout_gravity="center_horizontal"/>
+            android:id="@+id/userS"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/pasS"
+            android:layout_marginTop="90dp"
+            android:layout_alignRight="@+id/pasS"/>
 
     <EditText
-            android:layout_width="match_parent"
+            android:layout_width="304dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/editText2"
-            android:layout_gravity="center_horizontal"/>
+            android:id="@+id/pasS"
+            android:text="Password"
+            android:layout_below="@+id/userS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="43dp"/>
 
-</LinearLayout>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accedi"
+            android:id="@+id/butAccess"
+            android:layout_below="@+id/pasS"
+            android:layout_centerHorizontal="true"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrati"
+            android:id="@+id/regS"
+            android:layout_marginTop="49dp"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connettiti con Facebook"
+            android:id="@+id/fbS"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Non sei registrato?"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/butAccess"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="oppure"
+            android:id="@+id/textView4"
+            android:layout_below="@+id/regS"
+            android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
