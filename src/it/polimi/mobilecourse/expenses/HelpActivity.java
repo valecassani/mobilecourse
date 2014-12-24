@@ -3,6 +3,7 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class HelpActivity extends Activity {
 
 
 
-    void handleResult(ArrayList<ObjDb> result,Fragment fragment){
+    void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
 
 
     }

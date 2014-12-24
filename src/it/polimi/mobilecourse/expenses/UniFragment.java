@@ -28,7 +28,7 @@ public class UniFragment extends Fragment {
         im.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RequestFtp().setParameters(activity,"univer.php",UniFragment.this).execute();
+                new RequestFtp().setParameters(activity,"univer.php","prova",UniFragment.this).execute();
 
             }
         });

@@ -25,8 +25,9 @@
                   android:theme="@style/AppTheme"/>
         <activity android:name=".ProvaUni"/>
         <activity android:name=".HelpActivity"/>
-        <activity android:name=".LoginStudente" android:theme="@style/LoginSBarTheme" android:label="@string/login_st"/>
+        <activity android:name=".LoginStudente" android:label="@string/login_st"/>
         <activity android:name=".LoginTutor" android:theme="@style/LoginTBarTheme" android:label="@string/login_tut"/>
+        <activity android:name=".RegistrationStudent"/>
 
     </application>
 </manifest>

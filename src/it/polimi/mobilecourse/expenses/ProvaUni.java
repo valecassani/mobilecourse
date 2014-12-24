@@ -28,7 +28,7 @@ public class ProvaUni extends HelpActivity {
     }
 
     @Override
-    public void handleResult(ArrayList<ObjDb> result,Fragment fragment){
+    public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
 
         UniFragment unifr=(UniFragment) fragment;
         unifr.displayResults(result);

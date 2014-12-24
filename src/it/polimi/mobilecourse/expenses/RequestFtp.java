@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Fragment;
 import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 /**
@@ -13,14 +14,18 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
 
     private String url;
     private Fragment fragment;
+    private String op;
     private HelpActivity act;
 
-    public RequestFtp setParameters(HelpActivity activity, String url, Fragment fragment) {
+    public RequestFtp setParameters(HelpActivity activity, String url,String op, Fragment fragment) {
         this.url = url;
+        this.op=op;
         this.act=(HelpActivity)activity;
         this.fragment = fragment;
         return this;
     }
+
+
     /** The system calls this to perform work in a worker thread and
      * delivers it the parameters given to AsyncTask.execute() */
     protected ArrayList<ObjDb> doInBackground(Void... params) {
@@ -33,7 +38,10 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
             Toast.makeText(act.getApplicationContext(),"Errore",5).show();
             return;
         }
-        act.handleResult(result,fragment);
+        act.handleResult(result,op,fragment);
 
     }
+
+
+
 }
