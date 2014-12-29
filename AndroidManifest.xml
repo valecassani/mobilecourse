@@ -24,7 +24,7 @@
         
         <activity android:name=".NewOperation" android:label="Nuova operazione"
                 android:theme="@style/NewOperationBarTheme"/>
-        <activity android:name=".LandingActivity">
+        <activity android:name=".LandingActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
             
             
         </activity>
@@ -33,7 +33,7 @@
         <activity android:name=".LoginStudente"/>
         <activity android:name=".LoginTutor"/>
         <activity android:name=".RegistrationStudent"/>
-               
+
 
     </application>
 </manifest>
