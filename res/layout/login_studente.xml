@@ -8,14 +8,12 @@
 
 
     <fragment
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:id="@+id/frag"
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="@dimen/activity_vertical_margin"
+            android:id="@+id/fragLS"
             class="it.polimi.mobilecourse.expenses.LoginSFragment"
 
             android:name="it.polimi.mobilecourse.expenses.LoginSFragment"
-            tools:layout="@layout/logins_frag"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"></fragment>
+            tools:layout="@layout/logins_frag"></fragment>
 
 </RelativeLayout>
