@@ -16,10 +16,6 @@ public class LandingActivity extends Activity {
 
         setContentView(R.layout.landing_activity);
         buttonsActions();
-
-
-
-
     }
 
 

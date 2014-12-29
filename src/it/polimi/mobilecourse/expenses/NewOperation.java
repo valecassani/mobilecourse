@@ -19,7 +19,7 @@ public class NewOperation extends Activity {
             @Override
             public void onClick(View view) {
 
-                Intent myintent = new Intent(view.getContext(), Home.class);
+                Intent myintent = new Intent(view.getContext(), HomeTutor.class);
                 startActivity(myintent);
             }
         });
