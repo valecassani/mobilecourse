@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,17 +24,18 @@ public class RegistrationStudent extends HelpActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_student);
 
+
+
     }
+
+
 
 
 
     @Override
     public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
 
-        if(op=="numeroel") {
-            RegStudentFragment regs=(RegStudentFragment) fragment;
-            regs.numeroel(result);
-        }
+
         if(op=="spinnerUni"){
 
             RegStudentFragment reg=(RegStudentFragment) fragment;
