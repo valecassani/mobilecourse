@@ -11,23 +11,29 @@
 
     </uses-permission>
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name=".LandingActivity"
-                  android:label="@string/app_name"
-                  android:theme="@style/Landing">
+        <activity android:name=".HomeTutor"
+            android:theme="@style/AppTheme">
+               
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            
         </activity>
+            
+        
         <activity android:name=".NewOperation" android:label="Nuova operazione"
-                />
-        <activity android:name=".NavigationDrawer" android:label = "Prova Drawer"
-                  android:theme="@style/AppTheme"/>
+                android:theme="@style/NewOperationBarTheme"/>
+        <activity android:name=".LandingActivity">
+            
+            
+        </activity>
         <activity android:name=".ProvaUni"/>
         <activity android:name=".HelpActivity"/>
-        <activity android:name=".LoginStudente" android:label="@string/login_st"/>
-        <activity android:name=".LoginTutor" android:theme="@style/LoginTBarTheme" android:label="@string/login_tut"/>
+        <activity android:name=".LoginStudente"/>
+        <activity android:name=".LoginTutor"/>
         <activity android:name=".RegistrationStudent"/>
+               
 
     </application>
 </manifest>
