@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,7 +125,7 @@ public class RegStudentFragment extends Fragment {
         EditText surname=(EditText) view.findViewById(R.id.surnameS);
         EditText cell=(EditText) view.findViewById(R.id.cellS);
         EditText mail=(EditText) view.findViewById(R.id.mailS);
-        EditText pass=(EditText) view.findViewById(R.id.pasS);
+        EditText pass=(EditText) view.findViewById(R.id.passS);
         EditText passdue=(EditText) view.findViewById(R.id.pass2S);
 
         nameS=name.getText().toString();
