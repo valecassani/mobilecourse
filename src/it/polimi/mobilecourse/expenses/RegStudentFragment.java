@@ -1,10 +1,14 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.widget.*;
 import org.w3c.dom.Text;
 
 import javax.xml.datatype.Duration;
+import java.lang.reflect.Array;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,7 @@ import java.util.List;
 public class RegStudentFragment extends Fragment {
 
     private View view;
+    private ProgressBar progressView;
     private Spinner uniSpinner;
     private Button submit;
     private RegistrationStudent activity;
@@ -38,7 +44,7 @@ public class RegStudentFragment extends Fragment {
     private String cellS;
     private String mailS;
     private String passS;
-
+    private String passDue;
 
 
     @Override
@@ -46,6 +52,7 @@ public class RegStudentFragment extends Fragment {
 
 
          view = inflater.inflate(R.layout.regs_frag, container, false);
+        progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
 
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -58,6 +65,9 @@ public class RegStudentFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                progressBar();
                 getData();
 
 
@@ -133,26 +143,9 @@ public class RegStudentFragment extends Fragment {
         cellS=cell.getText().toString();
         mailS=mail.getText().toString();
         passS=pass.getText().toString();
+        passDue=passdue.getText().toString();
+        controlUser(mailS);
 
-        if(isValidEmail(mailS)==true){
-
-            if(passS.compareTo(passdue.getText().toString())==0 && isPasswordValid(passS)==true){
-
-                completeReg();
-
-
-
-            }
-            else{
-                Toast.makeText(getActivity().getApplicationContext(),"Campo password non corretto", Toast.LENGTH_SHORT).show();
-
-            }
-
-        }
-        else{
-
-            Toast.makeText(getActivity().getApplicationContext(),"Mail non valida", Toast.LENGTH_SHORT).show();
-        }
 
 
 
@@ -172,6 +165,10 @@ public class RegStudentFragment extends Fragment {
 
     }
 
+    private boolean isCellValid(String cell){
+        return Patterns.PHONE.matcher(cell).matches();
+    }
+
     private void completeReg(){
 
         String url="registration.php?username=".concat(mailS).concat("&").concat("password=").concat(passS).concat("&").concat("nome=")
@@ -182,6 +179,86 @@ public class RegStudentFragment extends Fragment {
         Intent myintent = new Intent(view.getContext(), LandingActivity.class);
         startActivity(myintent);
 
+
+
+    }
+
+    private void controlUser(String mail){
+
+        String url="control_mail_s.php?mail=".concat(mail);
+        new RequestFtp().setParameters(activity, url, "controlS", RegStudentFragment.this).execute();
+
+    }
+
+    public void duplicateMail(ArrayList<ObjDb> result){
+
+        ObjDb res = result.get(0);
+        String str=res.get("ID");
+        if(str.compareTo("NO")==0){
+
+            controlField();
+
+        }
+        else{
+
+            Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
+            Intent myintent = new Intent(view.getContext(), LandingActivity.class);
+            startActivity(myintent);
+            }
+
+    }
+
+    private void controlField(){
+
+
+        if(isValidEmail(mailS)==true && isCellValid(cellS)==true ){
+
+            if(passS.compareTo(passDue)==0 && isPasswordValid(passS)==true){
+
+
+
+
+                completeReg();
+
+
+
+            }
+            else{
+                Toast.makeText(getActivity().getApplicationContext(),"Campo password non corretto", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+        else{
+
+            Toast.makeText(getActivity().getApplicationContext(),"Mail o Cellulare non validi", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+
+    private void progressBar(){
+
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        progressView.setVisibility(View.VISIBLE);
+
+        progressView.animate().setDuration(shortAnimTime).alpha(1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressView.setVisibility(View.GONE);
+            }
+        });
+        try{
+
+            Thread.sleep(2000);
+
+        }
+        catch(Exception e){
+
+        }
 
 
     }
