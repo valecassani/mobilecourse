@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class HomeTutor extends ActionBarActivity
@@ -45,35 +46,18 @@ public class HomeTutor extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        buttonsActions();
-    }
 
-    private void buttonsActions(){
-
-        Button butS=(Button) findViewById(R.id.action_logout);
-        butS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myintent = new Intent(v.getContext(), LoginStudente.class);
-                startActivity(myintent);
-
-            }
-        });
-
-        Button butT=(Button) findViewById(R.id.buttonTutor);
-        butT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myintent = new Intent(v.getContext(), LoginTutor.class);
-                startActivity(myintent);
-
-            }
-        });
 
 
     }
+
+   /* private void populateUserData() {
+        EditText name = (EditText) this.findViewById(R.id.name);
+        String url="user_data.php";
+        new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFragment.this).execute();
+    }
+*/
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments

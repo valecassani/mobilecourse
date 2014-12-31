@@ -27,7 +27,6 @@ public class RegStudentFragment extends Fragment {
     private Spinner uniSpinner;
     private Button submit;
     private RegistrationStudent activity;
-    private SpinnerUni su;
     private manageSpinner ms=null;
     private int identifierUni;
     private String idUni;
