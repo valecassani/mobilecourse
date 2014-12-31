@@ -35,7 +35,7 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
      * the result from doInBackground() */
     protected void onPostExecute(ArrayList<ObjDb> result) {
         if(result == null) {
-            Toast.makeText(act.getApplicationContext(),"Errore",5).show();
+            Toast.makeText(act.getApplicationContext(),R.string.error_connection,Toast.LENGTH_SHORT).show();
             return;
         }
         act.handleResult(result,op,fragment);

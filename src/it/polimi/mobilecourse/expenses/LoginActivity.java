@@ -2,12 +2,13 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
 /**
  * Created by Matteo on 26/10/2014.
  */
-public class LoginActivity  extends Activity {
+public class LoginActivity  extends FragmentActivity        {
 
 
     @Override

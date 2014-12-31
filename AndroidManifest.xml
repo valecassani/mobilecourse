@@ -14,6 +14,7 @@
         <activity android:name=".HomeTutor"
             android:theme="@style/AppTheme">
 
+
         </activity>
             
         
@@ -26,10 +27,11 @@
             </intent-filter>
 
 
+
         </activity>
         <activity android:name=".ProvaUni"/>
         <activity android:name=".HelpActivity"/>
-        <activity android:name=".LoginStudente"/>
+        <activity android:name=".LoginStudente" android:theme="@style/Theme.AppCompat.Light"/>
         <activity android:name=".LoginTutor"/>
         <activity android:name=".RegistrationStudent"/>
 
