@@ -82,10 +82,12 @@
             android:saveEnabled="true"
             android:drawSelectorOnTop="true"
 
+
             android:spinnerMode="dialog"
             android:layout_below="@+id/textView6"
             android:layout_alignLeft="@+id/spinnerCitta"
-            android:layout_alignRight="@+id/spinnerCitta"/>
+            android:layout_alignRight="@+id/spinnerCitta"
+            android:clickable="true"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -153,6 +155,15 @@
                         android:id="@+id/textView8"
                         android:layout_below="@+id/spinnerUni"
                         android:layout_alignLeft="@+id/textView6"/>
+
+                <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBarRS"
+                        android:visibility="gone"
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"/>
 
 
         </RelativeLayout>
