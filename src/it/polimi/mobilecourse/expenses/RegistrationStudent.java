@@ -43,6 +43,10 @@ public class RegistrationStudent extends HelpActivity {
         }
 
 
+        if(op=="controlS"){
+            RegStudentFragment reg=(RegStudentFragment) fragment;
+            reg.duplicateMail(result);
+        }
 
     }
 
