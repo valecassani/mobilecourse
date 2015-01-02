@@ -9,23 +9,16 @@
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Nome"
-            android:ems="10"
-            android:id="@+id/name"
-            android:layout_gravity="left|top" />
+        <fragment
+            android:id="@+id/fragLS"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="it.polimi.mobilecourse.expenses.UserData"
+            android:name="it.polimi.mobilecourse.expenses.UserData"
+            tools:layout="@layout/logins_frag"/>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Cognome"
-            android:ems="10"
-            android:id="@+id/surname"
-            android:layout_gravity="left|top" />
+
 
 
 

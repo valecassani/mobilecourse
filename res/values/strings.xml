@@ -21,6 +21,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_logout">Logout</string>
+    <string name="welcome">Benvenuto</string>
 
     <!-- array delle opzioni dell'applicazione nel bottom fragment-->
 
