@@ -58,6 +58,7 @@ public class RegStudentFragment extends Fragment {
         uniSpinner=(Spinner) view.findViewById(R.id.spinnerUni);
         submit=(Button) view.findViewById(R.id.regS);
 
+
         ms= new manageSpinner();
         ms.execute((Void) null);
         manageUSpinner();
@@ -66,7 +67,7 @@ public class RegStudentFragment extends Fragment {
             public void onClick(View v) {
 
 
-                progressBar();
+                progress(true);
                 getData();
 
 
@@ -237,27 +238,18 @@ public class RegStudentFragment extends Fragment {
 
 
 
-    private void progressBar(){
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
-        final int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
 
-        progressView.setVisibility(View.VISIBLE);
-
-        progressView.animate().setDuration(shortAnimTime).alpha(1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                progressView.setVisibility(View.GONE);
-            }
-        });
-        try{
-
-            Thread.sleep(2000);
-
-        }
-        catch(Exception e){
-
-        }
 
 
     }
