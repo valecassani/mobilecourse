@@ -19,7 +19,7 @@ public class LoginSFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View frags = inflater.inflate(R.layout.logins_frag, container, false);
+        final View frags = inflater.inflate(R.layout.logins_frag, container, true);
 
         mail=(TextView) frags.findViewById(R.id.userS);
         password=(TextView) frags.findViewById(R.id.pasS);
