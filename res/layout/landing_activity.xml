@@ -6,36 +6,29 @@
         >
 
 
-    <TextView
-            android:layout_width="wrap_content"
+    <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="TUTORED"
-            android:textSize="64dp"
-            android:fontFamily="Roboto-Medium"
-            android:id="@+id/title"
-            android:layout_marginTop="164dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/landing_image"
+            android:layout_above="@+id/textView2"
+            android:layout_alignParentLeft="true"/>
 
     <Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Studente"
             android:id="@+id/buttonStudente"
-            android:layout_marginLeft="45dp"
             android:layout_alignTop="@+id/buttonTutor"
-            android:layout_alignLeft="@+id/title"/>
+            android:layout_toLeftOf="@+id/textView2"/>
 
     <Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Tutor"
             android:id="@+id/buttonTutor"
-            android:layout_marginBottom="131dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/title"
-            android:layout_marginRight="30dp"/>
+            android:layout_below="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_marginTop="108dp"/>
 
     <TextView
             android:layout_width="wrap_content"
