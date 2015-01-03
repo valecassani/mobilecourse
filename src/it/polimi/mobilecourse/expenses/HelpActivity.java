@@ -1,7 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -20,7 +19,7 @@ public class HelpActivity extends ActionBarActivity {
 
 
 
-    void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
+    void handleResult(ArrayList<ObjDb> result,String op, android.app.Fragment fragment){
 
 
     }

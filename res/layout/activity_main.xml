@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             class="it.polimi.mobilecourse.expenses.UserData"
             android:name="it.polimi.mobilecourse.expenses.UserData"
-            tools:layout="@layout/logins_frag"/>
+           />
 
 
 

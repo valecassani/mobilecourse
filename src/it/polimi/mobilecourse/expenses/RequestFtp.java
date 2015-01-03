@@ -20,7 +20,7 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
     public RequestFtp setParameters(HelpActivity activity, String url,String op, Fragment fragment) {
         this.url = url;
         this.op=op;
-        this.act=(HelpActivity)activity;
+        this.act=activity;
         this.fragment = fragment;
         return this;
     }

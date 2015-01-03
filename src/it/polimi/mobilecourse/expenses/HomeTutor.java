@@ -2,9 +2,10 @@ package it.polimi.mobilecourse.expenses;
 
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -18,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 
-public class HomeTutor extends ActionBarActivity
+
+public class HomeTutor extends HelpActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -33,7 +36,7 @@ public class HomeTutor extends ActionBarActivity
     private CharSequence mTitle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -62,9 +65,13 @@ public class HomeTutor extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        int commit = fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
+
+
+
+
     }
 
     public void onSectionAttached(int number) {
@@ -122,10 +129,19 @@ public class HomeTutor extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void handleResult(ArrayList<ObjDb> result,String op, Fragment fragment){
+
+        UserData usr=(UserData) fragment;
+        usr.displayResults(result);
+
+
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends android.support.v4.app.Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -160,6 +176,9 @@ public class HomeTutor extends ActionBarActivity
             ((HomeTutor) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+
+
 
 
     }
