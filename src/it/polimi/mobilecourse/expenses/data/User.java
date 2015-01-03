@@ -7,6 +7,9 @@ import it.polimi.mobilecourse.expenses.ObjDb;
 /**
  * Created by Valerio on 03/01/2015.
  * classe che fa il parsing JSON dei dati utente a partire dalla query in user_data.php
+ *
+ * sui setter da aggiungere l'update nel database
+ *
  */
 public class User {
 
@@ -15,6 +18,9 @@ public class User {
     private String surname;
     private String age;
     private String cellulare;
+    private String indirizzo;
+    private int iduniversità;
+    private int idcittia;
 
     public User (ArrayList<ObjDb> data){
         for (ObjDb d :data) {
@@ -71,5 +77,29 @@ public class User {
 
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public int getIduniversità() {
+        return iduniversità;
+    }
+
+    public void setIduniversità(int iduniversità) {
+        this.iduniversità = iduniversità;
+    }
+
+    public int getIdcittia() {
+        return idcittia;
+    }
+
+    public void setIdcittia(int idcittia) {
+        this.idcittia = idcittia;
     }
 }
