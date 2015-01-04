@@ -14,8 +14,8 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            class="it.polimi.mobilecourse.expenses.UserData"
-            android:name="it.polimi.mobilecourse.expenses.UserData"
+            class="it.polimi.mobilecourse.expenses.tutor.TutorData"
+            android:name="it.polimi.mobilecourse.expenses.tutor.TutorData"
            />
 
 

@@ -1,4 +1,4 @@
-package it.polimi.mobilecourse.expenses;
+package it.polimi.mobilecourse.expenses.student;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,12 +11,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.data.User;
+import it.polimi.mobilecourse.expenses.HelpActivity;
+import it.polimi.mobilecourse.expenses.ObjDb;
+import it.polimi.mobilecourse.expenses.R;
+import it.polimi.mobilecourse.expenses.RequestFtp;
+import it.polimi.mobilecourse.expenses.data.Student;
 
 /**
  * Created by Valerio on 30/12/2014.
  */
-public class UserData extends Fragment {
+public class StudentData extends Fragment {
 
 
     private View view;
@@ -26,8 +30,8 @@ public class UserData extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_data_layout, container, true);
 
-        String url="user_data.php";
-        new RequestFtp().setParameters(activity, url,"userData" , UserData.this).execute();
+        String url="student_data.php";
+        new RequestFtp().setParameters(activity, url,"userData" , StudentData.this).execute();
         Toast.makeText(getActivity().getApplicationContext(), "Dati Caricati", Toast.LENGTH_LONG).show();
 
         
@@ -46,9 +50,9 @@ public class UserData extends Fragment {
 
 
     public void displayResults(ArrayList<ObjDb> result) {
-        User user = new User(result);
+        Student student = new Student(result);
         TextView name = (TextView) view.findViewById(R.id.username);
-        name.setText(user.getName());
+        name.setText(student.getName());
     }
    
 }

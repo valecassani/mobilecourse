@@ -11,7 +11,7 @@ import it.polimi.mobilecourse.expenses.ObjDb;
  * sui setter da aggiungere l'update nel database
  *
  */
-public class User {
+public class Student {
 
     private String username;
     private String name;
@@ -22,7 +22,7 @@ public class User {
     private int iduniversità;
     private int idcittia;
 
-    public User (ArrayList<ObjDb> data){
+    public Student(ArrayList<ObjDb> data){
         for (ObjDb d :data) {
             if (d.get("username")!=null)
                 this.username = d.get("username");
