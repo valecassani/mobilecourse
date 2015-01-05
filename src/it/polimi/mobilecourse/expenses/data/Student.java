@@ -24,15 +24,15 @@ public class Student {
 
     public Student(ArrayList<ObjDb> data){
         for (ObjDb d :data) {
-            if (d.get("username")!=null)
+           // if (d.get("username")!=null)
                 this.username = d.get("username");
-            if (d.get("eta")!=null)
+            //if (d.get("eta")!=null)
                 this.age = d.get("eta");
-            if (d.get("cellulare")!=null)
+           // if (d.get("cellulare")!=null)
                 this.cellulare = d.get("cellulare");
-            if (d.get("nome")!=null)
+            //if (d.get("nome")!=null)
                 this.name = d.get("nome");
-            if (d.get("cognome")!=null)
+            //if (d.get("cognome")!=null)
                 this.surname = d.get("cognome");
 
         }

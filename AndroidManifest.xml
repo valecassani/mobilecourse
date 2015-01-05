@@ -36,6 +36,7 @@
         <activity android:name=".LoginStudente" android:theme="@style/Theme.AppCompat.Light"/>
         <activity android:name=".LoginTutor"/>
         <activity android:name=".RegistrationStudent" android:theme="@style/Theme.AppCompat.Light"/>
+        <activity android:name=".HomeStudent" android:theme="@style/Theme.AppCompat.Light"/>
 
 
     </application>

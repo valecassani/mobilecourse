@@ -7,10 +7,10 @@
     <string name="new_operation">Nuova operazione</string>
     <string name="login_st">Login studente</string>
     <string name="login_tut">Login tutor</string>
-    <string name="title_section1">Area Tutor</string>
-    <string name="title_section2">Profilo</string>
-    <string name="title_section3">Calendario Ripetizioni</string>
-    <string name="title_section4">Messaggi in Arrivo</string>
+    <string name="area_tutor">Area Tutor</string>
+    <string name="profile">Profilo</string>
+    <string name="calendario_ripetizioni">Calendario Ripetizioni</string>
+    <string name="incoming_requests">Richieste in entrata</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="tutored">tutored</string>
@@ -22,6 +22,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="action_logout">Logout</string>
     <string name="welcome">Benvenuto</string>
+    <string name="area_student">Area studente</string>
 
     <!-- array delle opzioni dell'applicazione nel bottom fragment-->
 
