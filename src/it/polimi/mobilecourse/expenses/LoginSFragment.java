@@ -33,10 +33,19 @@ public class LoginSFragment extends Fragment {
         });
 
 
+        Button fb=(Button)frags.findViewById(R.id.fbS);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fbaccess(v);
+            }
+        });
+
         Button reg=(Button) frags.findViewById(R.id.regS);
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 registration(v);
             }
         });
@@ -57,5 +66,9 @@ public class LoginSFragment extends Fragment {
 
     }
 
+    private void fbaccess(View v){
+        Intent myi=new Intent(v.getContext(),LoginFBActivity.class);
+        startActivity(myi);
+    }
 
 }
