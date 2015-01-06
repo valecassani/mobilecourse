@@ -8,7 +8,7 @@ import android.view.Menu;
 /**
  * Created by Matteo on 26/10/2014.
  */
-public class LoginActivity  extends FragmentActivity        {
+public class LoginActivity extends FragmentActivity        {
 
 
     @Override
