@@ -1,10 +1,8 @@
 package it.polimi.mobilecourse.expenses;
 
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -16,11 +14,13 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.tutor.NavigationDrawerFragment;
-import it.polimi.mobilecourse.expenses.tutor.TutorData;
+import it.polimi.mobilecourse.expenses.student.StudentData;
+import it.polimi.mobilecourse.expenses.student.NavigationDrawerFragment;
 
-
-public class HomeTutor extends HelpActivity
+/**
+ * Created by Valerio on 05/01/2015.
+ */
+public class HomeStudent extends HelpActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -36,7 +36,7 @@ public class HomeTutor extends HelpActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.student_home);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -75,7 +75,7 @@ public class HomeTutor extends HelpActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.area_tutor);
+                mTitle = getString(R.string.area_student);
                 break;
             case 2:
                 mTitle = getString(R.string.profile);
@@ -129,7 +129,7 @@ public class HomeTutor extends HelpActivity
 
     public void handleResult(ArrayList<ObjDb> result,String op, Fragment fragment){
 
-        TutorData usr=(TutorData) fragment;
+        StudentData usr=(StudentData) fragment;
         usr.displayResults(result);
 
 
@@ -171,7 +171,7 @@ public class HomeTutor extends HelpActivity
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((HomeTutor) activity).onSectionAttached(
+            ((HomeStudent) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
@@ -184,3 +184,4 @@ public class HomeTutor extends HelpActivity
 
 
 }
+
