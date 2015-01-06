@@ -23,6 +23,7 @@
     <string name="action_logout">Logout</string>
     <string name="welcome">Benvenuto</string>
     <string name="area_student">Area studente</string>
+    <string name="facebook_app_id">397063377138176</string>
 
     <!-- array delle opzioni dell'applicazione nel bottom fragment-->
 
