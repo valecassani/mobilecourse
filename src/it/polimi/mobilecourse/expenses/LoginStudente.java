@@ -21,7 +21,7 @@ public class LoginStudente extends ActionBarActivity {
 
 
         Button butS = (Button) findViewById(R.id.buttonLogin);
-        butS.setOnClickListener(new View.OnClickListener() {
+/*        butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -29,7 +29,7 @@ public class LoginStudente extends ActionBarActivity {
                 startActivity(myintent);
 
             }
-        });
+        });*/
 
     }
 
