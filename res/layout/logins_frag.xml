@@ -68,15 +68,11 @@
         android:layout_below="@+id/regS"
         android:layout_centerHorizontal="true"/>
 
-    <fragment android:id="@+id/butFB"
+    <com.facebook.widget.LoginButton
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-
+        android:layout_height="60dp"
         android:layout_below="@+id/textView4"
         android:layout_alignLeft="@+id/pasS"
-        android:layout_alignRight="@+id/pasS"
-        android:name="it.polimi.mobilecourse.expenses.LogFBS"
-        class="it.polimi.mobilecourse.expenses.LogFBS"
-        tools:layout="@layout/logfb_s"></fragment>
+        android:layout_alignRight="@+id/pasS" />
 
 </RelativeLayout>
