@@ -31,8 +31,7 @@
         <item name="android:background">#993300</item>
     </style>
 
-     <style name="Landing">
-     parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+     <style name="Landing" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
      <item name="android:windowBackground">@color/sfondo</item>
 
      </style>
