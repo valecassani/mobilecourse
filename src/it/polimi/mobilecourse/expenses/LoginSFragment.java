@@ -33,13 +33,7 @@ public class LoginSFragment extends Fragment {
         });
 
 
-        Button fb=(Button)frags.findViewById(R.id.fbS);
-        fb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fbaccess(v);
-            }
-        });
+
 
         Button reg=(Button) frags.findViewById(R.id.regS);
         reg.setOnClickListener(new View.OnClickListener() {
