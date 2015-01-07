@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -46,17 +47,7 @@
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connettiti con Facebook"
-        android:id="@+id/fbS"
-        android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true"/>
 
-    <com.facebook.widget.LoginButton
-        android:layout_width="50dp"
-        android:layout_height="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,5 +67,16 @@
         android:id="@+id/textView4"
         android:layout_below="@+id/regS"
         android:layout_centerHorizontal="true"/>
+
+    <fragment android:id="@+id/butFB"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/textView4"
+        android:layout_alignLeft="@+id/pasS"
+        android:layout_alignRight="@+id/pasS"
+        android:name="it.polimi.mobilecourse.expenses.LogFBS"
+        class="it.polimi.mobilecourse.expenses.LogFBS"
+        tools:layout="@layout/logfb_s"></fragment>
 
 </RelativeLayout>

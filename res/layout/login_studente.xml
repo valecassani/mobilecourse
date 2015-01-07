@@ -6,23 +6,16 @@
                 android:layout_height="match_parent"
         >
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/buttonLogin"
-        android:layout_marginLeft="45dp"
-        />
+
 
 
     <fragment
 
             android:id="@+id/fragLS"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
             class="it.polimi.mobilecourse.expenses.LoginSFragment"
             android:name="it.polimi.mobilecourse.expenses.LoginSFragment"
-            tools:layout="@layout/logins_frag"/>
+            tools:layout="@layout/logins_frag" />
 
 </RelativeLayout>
