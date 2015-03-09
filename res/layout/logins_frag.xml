@@ -68,11 +68,6 @@
         android:layout_below="@+id/regS"
         android:layout_centerHorizontal="true"/>
 
-    <com.facebook.widget.LoginButton
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/pasS"
-        android:layout_alignRight="@+id/pasS" />
+
 
 </RelativeLayout>
