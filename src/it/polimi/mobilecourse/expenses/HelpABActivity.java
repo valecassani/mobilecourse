@@ -1,16 +1,15 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-/**
- * Created by Matteo on 22/12/2014.
- */
-public class HelpActivity extends Activity {
+
+public class HelpABActivity extends ActionBarActivity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

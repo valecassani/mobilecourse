@@ -20,7 +20,7 @@ import it.polimi.mobilecourse.expenses.student.NavigationDrawerFragment;
 /**
  * Created by Valerio on 05/01/2015.
  */
-public class HomeStudent extends HelpActivity
+public class HomeStudent extends HelpABActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -38,8 +38,7 @@ public class HomeStudent extends HelpActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.

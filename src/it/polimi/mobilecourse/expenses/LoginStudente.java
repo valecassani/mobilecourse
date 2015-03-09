@@ -20,15 +20,19 @@ import com.facebook.model.GraphUser;
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class LoginStudente extends ActionBarActivity {
+public class LoginStudente extends FragmentActivity {
 
     boolean logged;
-    Context ctx;
+
+
+    private FBSFragment fbsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_studente);
+
+
 
 
         //Button butS = (Button) findViewById(R.id.buttonLogin);
@@ -47,8 +51,8 @@ public class LoginStudente extends ActionBarActivity {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
-        facebookLogin();
+        //Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
+        //facebookLogin();
 
     }
 
@@ -66,11 +70,14 @@ public class LoginStudente extends ActionBarActivity {
                         public void onCompleted(final GraphUser user, final Response response) {
                             if (user != null) {
                                 logged = true;
-                                startActivity(myintent);
+                                String name=user.getName();
+                                myintent.putExtra("Username",name);
 
                             }
                         }
                     }).executeAsync();
+                    startActivity(myintent);
+
 
                 }
                 else

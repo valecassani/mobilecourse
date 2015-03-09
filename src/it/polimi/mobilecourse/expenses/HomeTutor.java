@@ -20,7 +20,7 @@ import it.polimi.mobilecourse.expenses.tutor.NavigationDrawerFragment;
 import it.polimi.mobilecourse.expenses.tutor.TutorData;
 
 
-public class HomeTutor extends HelpActivity
+public class HomeTutor extends HelpABActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**

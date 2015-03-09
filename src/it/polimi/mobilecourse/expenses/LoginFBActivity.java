@@ -33,7 +33,7 @@ public class LoginFBActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loginfb);
+        //setContentView(R.layout.loginfb);
         nome=(TextView)findViewById(R.id.nome);
         ctx=this;
         logged=false;
@@ -43,8 +43,8 @@ public class LoginFBActivity extends Activity {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
-        facebookLogin();
+        //Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
+        //facebookLogin();
 
     }
 
