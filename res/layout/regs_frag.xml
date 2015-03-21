@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+    >
 
 
 <LinearLayout android:orientation="vertical"
@@ -19,8 +20,8 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Nome"
             android:ems="10"
+            android:hint="Nome"
             android:id="@+id/nameS"
             android:layout_alignParentTop="true"
             android:layout_marginTop="45dp"
@@ -31,7 +32,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Cognome"
+            android:hint="Cognome"
             android:ems="10"
             android:id="@+id/surnameS"
             android:layout_alignTop="@+id/nameS"
@@ -47,7 +48,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/mailS"
-            android:text="Mail"
+            android:hint="Mail"
             android:layout_below="@+id/cellS"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="38dp"/>
@@ -58,7 +59,7 @@
             android:inputType="phone"
             android:ems="10"
             android:id="@+id/cellS"
-            android:text="Cellulare"
+            android:hint="Cellulare"
             android:layout_marginTop="41dp"
             android:layout_below="@+id/nameS"
             android:layout_alignLeft="@+id/mailS"/>
@@ -93,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Città"
+            android:text="Dove vivi?"
             android:id="@+id/textView5"
             android:layout_alignTop="@+id/spinnerCitta"
             android:layout_alignLeft="@+id/nameS"/>
