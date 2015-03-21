@@ -56,6 +56,10 @@
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
          <item name="android:background">#ff259299</item>
          <item name="android:label">@string/login_tut</item>
+    </style>
+
+    <style name="BaseStyle"
+        parent="@android:style/Widget.Holo.Light">
 
     </style>
 </resources>
