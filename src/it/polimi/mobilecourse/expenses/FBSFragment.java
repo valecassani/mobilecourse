@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.FacebookException;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.SessionLoginBehavior;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
@@ -23,7 +25,7 @@ import com.facebook.widget.LoginButton;
 import java.util.Arrays;
 
 
-public class FBSFragment extends android.support.v4.app.Fragment {
+public class FBSFragment extends android.app.Fragment {
 
 
     private boolean logged;
@@ -37,9 +39,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     private UiLifecycleHelper uiHelper;
 
 
-    public void call(Session session, SessionState state, Exception exception) {
-        onSessionStateChange(session, state, exception);
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,14 +49,24 @@ public class FBSFragment extends android.support.v4.app.Fragment {
 
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.loginfb, container, false);
         ctx=getActivity();
         LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
-        authButton.setFragment(this);
-        authButton.setReadPermissions(Arrays.asList("public_profile"));
+        authButton.setOnErrorListener(new LoginButton.OnErrorListener() {
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("FBSFragment", "Error " + error.getMessage());
+            }
+        });
+        authButton.setReadPermissions(Arrays.asList("public_profile","email"));
+
+        //authButton.setFragment(getTargetFragment());
 
 
 
@@ -68,6 +78,9 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         final Intent myintent = new Intent(getActivity(), DataActivityStudent.class);
         final Intent closint=new Intent(this.getActivity(),LandingActivity.class);
+
+        System.out.println(session.getPermissions());
+
 
         if (session.isOpened()) {
             Log.i("FBSFragment", "Logged in...");
@@ -97,7 +110,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
                                     bundle.putString("Username",user.getName());
                                     bundle.putString("Mail",user.getUsername());
 
-                                    //myintent.putExtras(bundle);
+                                    myintent.putExtras(bundle);
                                     //startActivity(myintent);
 
 
@@ -147,6 +160,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         uiHelper.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override

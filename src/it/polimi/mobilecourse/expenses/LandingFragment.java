@@ -160,11 +160,11 @@ public class LandingFragment extends Fragment {
 
         ObjDb res = result.get(0);
         String strR=res.get("ID");
-        if(strR=="S"){
+        /*if(strR=="S"){
 
-            str="S";
-            Intent myintent = new Intent(view.getContext(), HomeStudent.class);
-            startActivity(myintent);
+            //str="S";
+            //Intent myintent = new Intent(view.getContext(), HomeStudent.class);
+            //startActivity(myintent);
 
         }
         if(strR=="T"){
@@ -172,7 +172,7 @@ public class LandingFragment extends Fragment {
             str="T";
             Intent myintent = new Intent(view.getContext(), HomeTutor.class);
             startActivity(myintent);
-        }
+        }*/
 
 
 

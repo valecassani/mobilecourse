@@ -3,6 +3,7 @@ package it.polimi.mobilecourse.expenses;
 import java.util.ArrayList;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;

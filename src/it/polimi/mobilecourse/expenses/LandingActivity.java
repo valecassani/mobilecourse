@@ -36,6 +36,8 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Matteo on 23/12/2014.
@@ -46,21 +48,30 @@ public class LandingActivity extends HelpActivity {
     private LandingFragment lf;
     private ProgressBar progressView;
     private manageButton mb=null;
+
     private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback=new Session.StatusCallback(){
         @Override
         public void call(final Session session,final SessionState state,final Exception exception){
-            onSessionStateChange(session, state, exception);
+
+            List<String> lp=session.getPermissions();
+            if(lp.contains("email")){
+
+                onSessionStateChange(session, state, exception);
+
+
+
+            }
+
+
         }
     };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.landing_activity);
-        progressView=(ProgressBar)findViewById(R.id.progressBarRS);
-        lf=new LandingFragment();
 
+        setLanding();
         progress(true);
         uiHelper = new UiLifecycleHelper(this,callback);
         uiHelper.onCreate(savedInstanceState);
@@ -69,6 +80,15 @@ public class LandingActivity extends HelpActivity {
         mb.execute((Void) null);
 
 
+
+
+    }
+
+    private void setLanding(){
+        setContentView(R.layout.landing_activity);
+
+        progressView=(ProgressBar)findViewById(R.id.progressBarRS);
+        lf=new LandingFragment();
     }
 
     @Override
@@ -80,6 +100,10 @@ public class LandingActivity extends HelpActivity {
     @Override
     public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
 
+        if(result==null){
+            progress(false);
+            showButton();
+        }
 
         if(op=="controlloFB"){
             LandingFragment lfr=(LandingFragment) fragment;
@@ -90,6 +114,15 @@ public class LandingActivity extends HelpActivity {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+
+        Session.StatusCallback statusCallback = new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+
+            }
+        };
+
+       //session.requestNewReadPermissions(new Session.NewPermissionsRequest(this,Arrays.asList("email")));
 
         if(session==null || session.isClosed()){
             Log.i("LandingActivity", "session nulla...");
@@ -115,6 +148,8 @@ public class LandingActivity extends HelpActivity {
         if(session!=null && session.isOpened()){
 
             Log.i("LandingActivity", "session not null...");
+            System.out.println(session.getPermissions());
+
 
             /*Request.newMeRequest(session, new Request.GraphUserCallback() {
                 @Override
@@ -133,7 +168,10 @@ public class LandingActivity extends HelpActivity {
             }).executeAsync();*/
 
             //Session.OpenRequest req=new Session.OpenRequest(this).setPermissions("basic_info","email");
-            /*new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
+            //new Session.OpenRequest(this).setPermissions(Arrays.asList("basic_info", "email")).setCallback(statusCallback);
+            System.out.println(session.getPermissions());
+
+            new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
                 public void onCompleted(Response response){
 
 
@@ -141,6 +179,8 @@ public class LandingActivity extends HelpActivity {
                     String us=null;
                     try {
                     us=response.getGraphObject().getProperty("email").toString();
+
+
 
                     //  u = jobj.getString("email");
                     }
@@ -152,7 +192,7 @@ public class LandingActivity extends HelpActivity {
                     lf.ftpControl(url);
                 }
 
-            }).executeAsync();*/
+            }).executeAsync();
 
         }
 
@@ -168,6 +208,13 @@ public class LandingActivity extends HelpActivity {
             onSessionStateChange(session, session.getState(), null);
         }
         uiHelper.onResume();
+    }
+
+    private void showButton(){
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container,lf);
+        fragmentTransaction.commit();
     }
 
 
@@ -193,6 +240,7 @@ public class LandingActivity extends HelpActivity {
 
 
         }
+
         if(session!=null && session.isOpened()){
 
             Log.i("LandingActivity", "session not null...");
@@ -253,10 +301,7 @@ public class LandingActivity extends HelpActivity {
 
             if(success) {
                 progress(false);
-                FragmentManager fragmentManager=getFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.fragment_container,lf);
-                fragmentTransaction.commit();
+                showButton();
 
 
 
