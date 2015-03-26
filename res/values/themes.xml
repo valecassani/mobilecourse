@@ -46,8 +46,7 @@
     <item name="android:windowBackground">@color/custom_theme_color</item>
     </style>
 
-    <style name="ActionBarS" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-     <item name="android:background">#ff259299</item>
+    <style name="ActionBarS" parent="@android:style/Widget.Holo.Light">
      <item name="android:label">@string/login_st</item>
      </style>
 
