@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -11,11 +12,11 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.student.StudentData;
 
 /**
  * Created by valeriocassani on 18/03/15.
@@ -28,6 +29,7 @@ public class HomeStudent2 extends HelpActivity{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private FrameLayout mDrawerFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,8 @@ public class HomeStudent2 extends HelpActivity{
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
+        mDrawerFragment = (FrameLayout) findViewById(R.id.left_drawer_student);
 
 
         // set a custom shadow that overlays the main content when the drawer opens
@@ -72,7 +75,7 @@ public class HomeStudent2 extends HelpActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(1);
+            selectItem(0);
         }
 
 
@@ -98,19 +101,21 @@ public class HomeStudent2 extends HelpActivity{
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        if (position == 0) {
-            Fragment fragment = new StudentData();
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).commit();
-        } else {
-
-
-            if (position == 1) {
-                Fragment fragment = new MidFragmentHome();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).commit();
-            }
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new TopFragmentHome();
+                break;
+            case 1:
+                fragment = new MidFragmentHome();
+                break;
+            case 2:
+                fragment = new BottomFragmentHome();
+                break;
         }
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).commit();
 
 
 
@@ -119,7 +124,7 @@ public class HomeStudent2 extends HelpActivity{
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mDrawerOptions[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawerFragment);
     }
 
 
@@ -130,6 +135,19 @@ public class HomeStudent2 extends HelpActivity{
 
 
 
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
 

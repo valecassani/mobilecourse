@@ -1,4 +1,4 @@
-package it.polimi.mobilecourse.expenses.student;
+package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,10 +11,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.HelpActivity;
-import it.polimi.mobilecourse.expenses.ObjDb;
-import it.polimi.mobilecourse.expenses.R;
-import it.polimi.mobilecourse.expenses.RequestFtp;
 import it.polimi.mobilecourse.expenses.data.Student;
 
 /**
