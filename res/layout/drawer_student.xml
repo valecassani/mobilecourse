@@ -10,7 +10,19 @@
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        >
+
+        <fragment
+            android:id="@+id/fragLS"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="it.polimi.mobilecourse.expenses.student.StudentData"
+            android:name="it.polimi.mobilecourse.expenses.student.StudentData"
+            />
+    </FrameLayout>
+
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right

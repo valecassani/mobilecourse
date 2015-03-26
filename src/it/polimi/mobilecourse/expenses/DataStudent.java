@@ -1,4 +1,4 @@
-package it.polimi.mobilecourse.expenses.student;
+package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,16 +11,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.HelpActivity;
-import it.polimi.mobilecourse.expenses.ObjDb;
-import it.polimi.mobilecourse.expenses.R;
-import it.polimi.mobilecourse.expenses.RequestFtp;
 import it.polimi.mobilecourse.expenses.data.Student;
 
 /**
- * Created by Valerio on 30/12/2014.
+ * Created by valeriocassani on 26/03/15.
  */
-public class StudentData extends Fragment {
+public class DataStudent extends Fragment{
 
 
     private View view;
@@ -31,14 +27,14 @@ public class StudentData extends Fragment {
         view = inflater.inflate(R.layout.user_data_layout, container, true);
 
         String url="student_data.php";
-        new RequestFtp().setParameters(activity, url,"userData" , StudentData.this).execute();
+        new RequestFtp().setParameters(activity, url,"userData" , DataStudent.this).execute();
         Toast.makeText(getActivity().getApplicationContext(), "Dati Caricati", Toast.LENGTH_LONG).show();
 
-        
-        
-        
 
-        
+
+
+
+
         return view;
     }
 
@@ -55,5 +51,5 @@ public class StudentData extends Fragment {
         name.setText(student.getName());
 
     }
-   
+
 }

@@ -20,8 +20,8 @@ public class LoginTutor extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), HomeTutor.class);
-                startActivity(myintent);
+               // Intent myintent = new Intent(v.getContext(), HomeTutor.class);
+               // startActivity(myintent);
 
             }
         });

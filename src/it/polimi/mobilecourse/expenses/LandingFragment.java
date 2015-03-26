@@ -95,7 +95,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
+                Intent myintent = new Intent(v.getContext(), HomeStudent2.class);
                 startActivity(myintent);
 
             }
@@ -133,7 +133,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), HomeTutor.class);
+                Intent myintent = new Intent(v.getContext(), HomeStudent2.class);
                 startActivity(myintent);
 
             }
@@ -163,14 +163,14 @@ public class LandingFragment extends Fragment {
         if(strR=="S"){
 
             str="S";
-            Intent myintent = new Intent(view.getContext(), HomeStudent.class);
+            Intent myintent = new Intent(view.getContext(), HomeStudent2.class);
             startActivity(myintent);
 
         }
         if(strR=="T"){
 
             str="T";
-            Intent myintent = new Intent(view.getContext(), HomeTutor.class);
+            Intent myintent = new Intent(view.getContext(), HomeStudent2.class);
             startActivity(myintent);
         }
 
