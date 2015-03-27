@@ -100,6 +100,8 @@ public class HomeStudent2 extends HelpActivity{
        return super.onPrepareOptionsMenu(menu);
     }
 
+
+    //metodo per far aprire e chiudere il drawer col bottone
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mDrawerToggle.onOptionsItemSelected(item)) {
