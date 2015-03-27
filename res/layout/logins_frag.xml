@@ -74,10 +74,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBarLS"
         android:visibility="gone"
+        android:layout_below="@id/butAccess"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_alignBottom="@+id/noreg"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/butAccess" />
+         />
 
 </RelativeLayout>
