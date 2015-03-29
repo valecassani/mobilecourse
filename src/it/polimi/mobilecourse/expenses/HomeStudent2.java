@@ -118,7 +118,7 @@ public class HomeStudent2 extends HelpActivity{
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new TopFragmentHome();
+                fragment = new BlankFragment();
                 break;
             case 1:
                 fragment = new MidFragmentHome();
