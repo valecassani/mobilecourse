@@ -9,17 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.facebook.LoggingBehavior;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.Settings;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
-import com.google.android.gms.fitness.result.SessionStopResult;
 
 import java.util.ArrayList;
 
@@ -95,7 +84,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), HomeStudent2.class);
+                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
                 startActivity(myintent);
 
             }
@@ -133,7 +122,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), HomeStudent2.class);
+                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
                 startActivity(myintent);
 
             }
@@ -163,14 +152,14 @@ public class LandingFragment extends Fragment {
         if(strR=="S"){
 
             str="S";
-            Intent myintent = new Intent(view.getContext(), HomeStudent2.class);
+            Intent myintent = new Intent(view.getContext(), HomeStudent.class);
             startActivity(myintent);
 
         }
         if(strR=="T"){
 
             str="T";
-            Intent myintent = new Intent(view.getContext(), HomeStudent2.class);
+            Intent myintent = new Intent(view.getContext(), HomeStudent.class);
             startActivity(myintent);
         }
 

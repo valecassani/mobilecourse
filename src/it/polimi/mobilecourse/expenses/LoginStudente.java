@@ -35,8 +35,8 @@ public class LoginStudente extends FragmentActivity {
 
 
 
-        //Button butS = (Button) findViewById(R.id.buttonLogin);
-/*        butS.setOnClickListener(new View.OnClickListener() {
+        Button butS = (Button) findViewById(R.id.butS);
+        butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -44,7 +44,7 @@ public class LoginStudente extends FragmentActivity {
                 startActivity(myintent);
 
             }
-        });*/
+        });
 
     }
 

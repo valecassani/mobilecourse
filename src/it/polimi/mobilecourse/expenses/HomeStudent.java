@@ -1,5 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by valeriocassani on 18/03/15.
  */
-public class HomeStudent2 extends HelpActivity{
+public class HomeStudent extends Activity{
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -30,7 +33,17 @@ public class HomeStudent2 extends HelpActivity{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private FrameLayout mDrawerFragment;
+    private LinearLayout mDrawerFragment;
+    private int userId;
+
+    public HomeStudent() {
+
+
+    }
+
+    public HomeStudent(int userId) {
+        this.userId = userId;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +53,7 @@ public class HomeStudent2 extends HelpActivity{
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
-        mDrawerFragment = (FrameLayout) findViewById(R.id.left_drawer_student);
+        mDrawerFragment = (LinearLayout) findViewById(R.id.left_drawer_student);
 
 
         // set a custom shadow that overlays the main content when the drawer opens
@@ -80,9 +93,11 @@ public class HomeStudent2 extends HelpActivity{
         }
 
 
-
-
     }
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,7 +133,7 @@ public class HomeStudent2 extends HelpActivity{
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new BlankFragment();
+                fragment = new StudentDataFragment();
                 break;
             case 1:
                 fragment = new MidFragmentHome();
@@ -129,7 +144,8 @@ public class HomeStudent2 extends HelpActivity{
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).commit();
+        fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+
 
 
 
@@ -142,14 +158,7 @@ public class HomeStudent2 extends HelpActivity{
     }
 
 
-    public void handleResult(ArrayList<ObjDb> result,String op, Fragment fragment){
 
-        DataStudent usr = (DataStudent) fragment;
-        usr.displayResults(result);
-
-
-
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -160,7 +169,6 @@ public class HomeStudent2 extends HelpActivity{
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
