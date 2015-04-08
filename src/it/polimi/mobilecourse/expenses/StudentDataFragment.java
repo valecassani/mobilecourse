@@ -45,10 +45,12 @@ public class StudentDataFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private final String TAG = "Student Data Fragment";
 
-    private String mParam1;
+    private String username;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -81,9 +83,11 @@ public class StudentDataFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.student_data_fragment, container, false);
+        username = getArguments().getString("username");
+        Log.d(TAG, username);
 
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String url ="http://www.unishare.it/tutored/student_data.php";
+        String url ="http://www.unishare.it/tutored/user_data_ok.php?mail=" + username;
 
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
@@ -137,52 +141,10 @@ public class StudentDataFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }
-
-
-
-    public void displayResults(ArrayList<ObjDb> result) {
-        Student student = new Student(result);
-        TextView username = (TextView) getView().findViewById(R.id.username);
-        username.setText(student.getUsername());
-        /*
-        TextView name = (TextView) getView().findViewById(R.id.name);
-        name.setText(student.getName());
-        TextView surname = (TextView) getView().findViewById(R.id.surname);
-        surname.setText(student.getSurname());
-
-        */
-
-
     }
 
 

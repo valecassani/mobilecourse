@@ -3,11 +3,13 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,13 +29,18 @@ import java.util.ArrayList;
  */
 public class HomeStudent extends Activity{
 
+    private String TAG = "STUDENT";
+
+
     private CharSequence mTitle;
+    private String username;
     private CharSequence mDrawerTitle;
     private String[] mDrawerOptions;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerFragment;
+    private Intent intent;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -51,6 +58,9 @@ public class HomeStudent extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
+        intent = getIntent();
+        username = intent.getStringExtra("username");
+        Log.d(TAG, "This is the username from Facebook App "  + username );
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
@@ -153,6 +163,10 @@ public class HomeStudent extends Activity{
         switch (position) {
             case 0:
                 fragment = new StudentDataFragment();
+                Bundle bundle = new Bundle();
+                username = "valerio.cassani@gmail.com";
+                bundle.putString("username", username);
+                fragment.setArguments(bundle);
                 break;
             case 1:
                 fragment = new MidFragmentHome();

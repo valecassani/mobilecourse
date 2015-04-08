@@ -71,7 +71,8 @@ public class LoginStudente extends FragmentActivity {
                             if (user != null) {
                                 logged = true;
                                 String name=user.getName();
-                                myintent.putExtra("Username",name);
+                                myintent.putExtra("username",name);
+
 
                             }
                         }
