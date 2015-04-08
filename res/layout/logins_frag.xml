@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Username"
+        android:hint="Username"
         android:ems="10"
         android:id="@+id/userS"
         android:layout_gravity="center_horizontal"
@@ -25,7 +25,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/pasS"
-        android:text="Password"
+        android:hint="Password"
         android:layout_below="@+id/userS"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"/>
@@ -44,7 +44,7 @@
         android:text="Registrati"
         android:id="@+id/regS"
         android:layout_marginTop="49dp"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/noreg"
         android:layout_centerHorizontal="true"/>
 
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Non sei registrato?"
-        android:id="@+id/textView3"
+        android:id="@+id/noreg"
         android:layout_below="@+id/butAccess"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"/>
@@ -64,10 +64,20 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="oppure"
-        android:id="@+id/textView4"
+        android:id="@+id/oppure"
         android:layout_below="@+id/regS"
+        android:layout_above="@id/authButton"
         android:layout_centerHorizontal="true"/>
 
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarLS"
+        android:visibility="gone"
+        android:layout_below="@id/butAccess"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+         />
 
 </RelativeLayout>

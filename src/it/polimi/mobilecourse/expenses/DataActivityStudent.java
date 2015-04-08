@@ -5,6 +5,11 @@ package it.polimi.mobilecourse.expenses;
  */
 
 import android.app.Activity;
+
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
+>>>>>>> master
 import android.os.Bundle;
 import android.widget.TextView;
 

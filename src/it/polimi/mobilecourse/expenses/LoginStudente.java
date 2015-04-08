@@ -17,15 +17,18 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 
+import java.util.ArrayList;
+
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class LoginStudente extends FragmentActivity {
+public class LoginStudente extends HelpActivity {
 
     boolean logged;
 
 
     private FBSFragment fbsFragment;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,21 +49,21 @@ public class LoginStudente extends FragmentActivity {
             }
         });
 
+
     }
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        //Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
-        //facebookLogin();
+        Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
 
     }
 
-    public void facebookLogin(){
-        final Intent myintent = new Intent(getApplicationContext(), DataActivityStudent.class);
+    @Override
+    public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
 
 
-        Session.openActiveSession(this, true, new Session.StatusCallback() {
+        if(op=="logStudente"){
 
             @Override
             public void call(Session session, SessionState state, Exception exception) {
@@ -73,19 +76,12 @@ public class LoginStudente extends FragmentActivity {
                                 String name=user.getName();
                                 myintent.putExtra("username",name);
 
-
-                            }
-                        }
-                    }).executeAsync();
-                    startActivity(myintent);
+            LoginSFragment lsfrag=(LoginSFragment) fragment;
+            lsfrag.manageLogin(result);
+        }
 
 
-                }
-                else
-                {
-                    logged = false;
-                }
-            }});
+
     }
 
 

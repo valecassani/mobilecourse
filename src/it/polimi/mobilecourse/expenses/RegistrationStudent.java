@@ -42,6 +42,12 @@ public class RegistrationStudent extends HelpActivity {
             reg.arrayU(result);
         }
 
+        if(op=="spinnerCity"){
+
+            RegStudentFragment reg=(RegStudentFragment) fragment;
+            reg.arrayC(result);
+        }
+
 
         if(op=="controlS"){
             RegStudentFragment reg=(RegStudentFragment) fragment;

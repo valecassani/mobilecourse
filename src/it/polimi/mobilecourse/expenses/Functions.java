@@ -9,6 +9,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.telephony.TelephonyManager;
 
 public class Functions {
 
@@ -24,6 +25,7 @@ public class Functions {
     static ArrayList<ObjDb> query(Context context, String url) {
         System.out.println(url);
         if(!checkRete(context)) {
+            System.out.println("Problema rete");
             return null;
         }
         ArrayList<ObjDb> result = null;

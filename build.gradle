@@ -19,16 +19,17 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.android.support:support-v4:21.0.2'
     compile 'commons-io:commons-io:2.4'
     compile project(':facebook')
+
     compile project (':volley')
+    compile 'com.google.android.gms:play-services:6.1.71'
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion '21.1.1'
 
     sourceSets {
         main {
