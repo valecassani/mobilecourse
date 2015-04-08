@@ -34,6 +34,9 @@ public class HomeStudent extends Activity{
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerFragment;
+
+    private ArrayList<NavDrawerItem> mDrawerItems;
+    private NavDrawerListAdapter mNavDrawerAdapter;
     private int userId;
 
     public HomeStudent() {
@@ -57,10 +60,26 @@ public class HomeStudent extends Activity{
 
 
         // set a custom shadow that overlays the main content when the drawer opens
+
+        mDrawerItems = new ArrayList<NavDrawerItem>();
+
+
+        //aggiunta icone al drawer
+
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_like_icon));
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1],R.drawable.com_facebook_button_like_icon_selected));
+
+
+        // setting the nav drawer list adapter
+        mNavDrawerAdapter = new NavDrawerListAdapter(getApplicationContext(),
+                mDrawerItems);
+        mDrawerList.setAdapter(mNavDrawerAdapter);
+
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mDrawerOptions));
+
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
