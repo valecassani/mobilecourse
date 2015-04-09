@@ -22,7 +22,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/ciaonome"
+        android:editable="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+
 
 </RelativeLayout>
