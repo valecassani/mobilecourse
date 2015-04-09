@@ -38,6 +38,17 @@ public class LoginStudente extends HelpActivity {
 
 
 
+        Button butS = (Button) findViewById(R.id.butS);
+        butS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
+                startActivity(myintent);
+
+            }
+        });
+
 
     }
 
@@ -53,6 +64,17 @@ public class LoginStudente extends HelpActivity {
 
 
         if(op=="logStudente"){
+
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                if (session.isOpened()) {
+                    Request.newMeRequest(session, new Request.GraphUserCallback() {
+                        @Override
+                        public void onCompleted(final GraphUser user, final Response response) {
+                            if (user != null) {
+                                logged = true;
+                                String name=user.getName();
+                                myintent.putExtra("username",name);
 
             LoginSFragment lsfrag=(LoginSFragment) fragment;
             lsfrag.manageLogin(result);

@@ -2,185 +2,218 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.student.StudentData;
-import it.polimi.mobilecourse.expenses.student.NavigationDrawerFragment;
 
 /**
- * Created by Valerio on 05/01/2015.
+ * Created by valeriocassani on 18/03/15.
  */
-public class HomeStudent extends HelpABActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class HomeStudent extends Activity{
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private String TAG = "STUDENT";
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
+
     private CharSequence mTitle;
+    private String username;
+    private CharSequence mDrawerTitle;
+    private String[] mDrawerOptions;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private LinearLayout mDrawerFragment;
+    private Intent intent;
 
-    @Override
+    private ArrayList<NavDrawerItem> mDrawerItems;
+    private NavDrawerListAdapter mNavDrawerAdapter;
+    private int userId;
+
+    public HomeStudent() {
+
+
+    }
+
+    public HomeStudent(int userId) {
+        this.userId = userId;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
+        intent = getIntent();
+        username = intent.getStringExtra("username");
+        Log.d(TAG, "This is the username from Facebook App "  + username );
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-
-
-
-
-    }
-
-   /* private void populateUserData() {
-        EditText name = (EditText) this.findViewById(R.id.name);
-        String url="user_data.php";
-        new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFragment.this).execute();
-    }
-*/
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        int commit = fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
+        mDrawerFragment = (LinearLayout) findViewById(R.id.left_drawer_student);
 
 
+        // set a custom shadow that overlays the main content when the drawer opens
+
+        mDrawerItems = new ArrayList<NavDrawerItem>();
 
 
-    }
+        //aggiunta icone al drawer
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.area_student);
-                break;
-            case 2:
-                mTitle = getString(R.string.profile);
-                break;
-            case 3:
-                mTitle = getString(R.string.calendario_ripetizioni);
-                break;
-            case 4:
-                mTitle = getString(R.string.incoming_requests);
-                break;
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_like_icon));
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1],R.drawable.com_facebook_button_like_icon_selected));
+
+
+        // setting the nav drawer list adapter
+        mNavDrawerAdapter = new NavDrawerListAdapter(getApplicationContext(),
+                mDrawerItems);
+        mDrawerList.setAdapter(mNavDrawerAdapter);
+
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // set up the drawer's list view with items and click listener
+
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            selectItem(0);
         }
+
+
     }
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
+
+
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
-        }
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+       boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerFragment);
+       menu.findItem(R.id.action_logout).setVisible(!drawerOpen);
+
+       return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    //metodo per far aprire e chiudere il drawer col bottone
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
+        if(mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public void handleResult(ArrayList<ObjDb> result,String op, Fragment fragment){
-
-        StudentData usr=(StudentData) fragment;
-        usr.displayResults(result);
 
 
 
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends android.support.v4.app.Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+    private void selectItem(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new StudentDataFragment();
+                Bundle bundle = new Bundle();
+                username = "valerio.cassani@gmail.com";
+                bundle.putString("username", username);
+                fragment.setArguments(bundle);
+                break;
+            case 1:
+                fragment = new MidFragmentHome();
+                break;
+            case 2:
+                fragment = new BottomFragmentHome();
+                break;
         }
 
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.navigation_drawer, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((HomeStudent) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
 
 
 
 
 
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mDrawerOptions[position]);
+        mDrawerLayout.closeDrawer(mDrawerFragment);
     }
 
 
 
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    private  class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            selectItem(position);
+
+        }
+
+    }
 }
-

@@ -29,7 +29,7 @@ public class TutorData extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.user_data_layout, container, true);
+        view = inflater.inflate(R.layout.student_data_fragment, container, true);
 
         String url="tutor_data.php";
 
