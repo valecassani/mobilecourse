@@ -26,19 +26,10 @@
     <string name="newuser">Nuovo utente</string>
     <string name="facebook_app_id">397063377138176</string>
 
-
-    <string-array name="student_drawer">
-        <item>Profilo</item>
-        <item>Ripetizioni</item>
-        <item>Agenda</item>
-    </string-array>
-
     <!-- array delle opzioni dell'applicazione nel bottom fragment -->
 
     <string name="title_activity_data_activity_student">DataActivityStudent</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_help_ab">HelpABActivity</string>
-    <string name="drawer_open">Drawer Is Open</string>
-    <string name="drawer_close">Drawer Is Close</string>
 
 </resources>
