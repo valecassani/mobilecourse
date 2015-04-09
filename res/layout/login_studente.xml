@@ -2,45 +2,48 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <LinearLayout android:orientation="vertical"
-        android:layout_height="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
 
         android:weightSum="1">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/skip_button"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+
+            <fragment
+
+                android:id="@+id/fragLS"
+                android:name="it.polimi.mobilecourse.expenses.LoginSFragment"
+                class="it.polimi.mobilecourse.expenses.LoginSFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-        >
+                tools:layout="@layout/logins_frag" />
 
+            <fragment
+                android:id="@+id/loginFB"
+                android:name="it.polimi.mobilecourse.expenses.ContoFragment"
+                class="it.polimi.mobilecourse.expenses.ContoFragment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="17dp"
+                tools:layout="@layout/loginfb"
 
+                />
 
-
-    <fragment
-
-            android:id="@+id/fragLS"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-            class="it.polimi.mobilecourse.expenses.LoginSFragment"
-            android:name="it.polimi.mobilecourse.expenses.LoginSFragment"
-            tools:layout="@layout/logins_frag"
-        />
-
-    <fragment android:layout_height="60dp"
-        android:layout_width="match_parent"
-        android:id="@+id/loginFB"
-        android:layout_below="@id/fragLS"
-        tools:layout="@layout/loginfb"
-        android:name="it.polimi.mobilecourse.expenses.FBSFragment"
-        class="it.polimi.mobilecourse.expenses.FBSFragment"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="17dp"
-
-        ></fragment>
-
-</RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
-    </ScrollView>
+</ScrollView>
