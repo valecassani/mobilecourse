@@ -25,7 +25,7 @@ import com.facebook.widget.LoginButton;
 import java.util.Arrays;
 
 
-public class FBSFragment extends android.app.Fragment {
+public class FBSFragment extends android.support.v4.app.Fragment {
 
 
     private boolean logged;
@@ -66,7 +66,7 @@ public class FBSFragment extends android.app.Fragment {
         });
         authButton.setReadPermissions(Arrays.asList("public_profile","email"));
 
-        //authButton.setFragment(getTargetFragment());
+        authButton.setFragment(this.getTargetFragment());
 
 
 

@@ -17,12 +17,10 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 
-import java.util.ArrayList;
-
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class LoginStudente extends HelpActivity {
+public class LoginStudente extends FragmentActivity {
 
     boolean logged;
 
@@ -38,6 +36,16 @@ public class LoginStudente extends HelpActivity {
 
 
 
+        //Button butS = (Button) findViewById(R.id.buttonLogin);
+/*        butS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
+                startActivity(myintent);
+
+            }
+        });*/
 
     }
 
@@ -45,21 +53,39 @@ public class LoginStudente extends HelpActivity {
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
+        //facebookLogin();
 
     }
 
-    @Override
-    public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
+    public void facebookLogin(){
+        //final Intent myintent = new Intent(getApplicationContext(), DataActivityStudent.class);
 
 
-        if(op=="logStudente"){
+        Session.openActiveSession(this, true, new Session.StatusCallback() {
 
-            LoginSFragment lsfrag=(LoginSFragment) fragment;
-            lsfrag.manageLogin(result);
-        }
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                if (session.isOpened()) {
+                    Request.newMeRequest(session, new Request.GraphUserCallback() {
+                        @Override
+                        public void onCompleted(final GraphUser user, final Response response) {
+                            if (user != null) {
+                                logged = true;
+                                String name=user.getName();
+                                //myintent.putExtra("Username",name);
+
+                            }
+                        }
+                    }).executeAsync();
+                    //startActivity(myintent);
 
 
-
+                }
+                else
+                {
+                    logged = false;
+                }
+            }});
     }
 
 

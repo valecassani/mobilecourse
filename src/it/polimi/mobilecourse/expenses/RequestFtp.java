@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -18,10 +19,10 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
     private String op;
     private HelpActivity act;
 
-    public RequestFtp setParameters(HelpActivity activity, String url,String op, Fragment fragment) {
+    public RequestFtp setParameters(Activity activity, String url,String op, Fragment fragment) {
         this.url = url;
         this.op=op;
-        this.act=activity;
+        this.act=(HelpActivity)activity;
         this.fragment = fragment;
         return this;
     }
