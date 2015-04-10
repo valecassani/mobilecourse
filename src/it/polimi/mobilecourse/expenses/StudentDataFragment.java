@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import it.polimi.mobilecourse.expenses.data.Student;
 
 
 /**
@@ -173,20 +172,6 @@ public class StudentDataFragment extends Fragment {
 
 
 
-    public void displayResults(ArrayList<ObjDb> result) {
-        Student student = new Student(result);
-        TextView username = (TextView) getView().findViewById(R.id.username);
-        username.setText(student.getUsername());
-        /*
-        TextView name = (TextView) getView().findViewById(R.id.name);
-        name.setText(student.getName());
-        TextView surname = (TextView) getView().findViewById(R.id.surname);
-        surname.setText(student.getSurname());
-
-        */
-
-
-    }
 
 
 

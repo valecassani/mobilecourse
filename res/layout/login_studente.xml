@@ -34,8 +34,8 @@
 
             <fragment
                 android:id="@+id/loginFB"
-                android:name="it.polimi.mobilecourse.expenses.ContoFragment"
-                class="it.polimi.mobilecourse.expenses.ContoFragment"
+                android:name="it.polimi.mobilecourse.expenses.SecondFragment"
+                class="it.polimi.mobilecourse.expenses.SecondFragment"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_alignParentBottom="true"

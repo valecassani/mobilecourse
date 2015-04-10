@@ -31,10 +31,6 @@
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name=".NewOperation"
-            android:label="Nuova operazione"
-            android:theme="@style/NewOperationBarTheme" />
-        <activity
             android:name=".LandingActivity"
             android:theme="@style/Landing" >
             <intent-filter>

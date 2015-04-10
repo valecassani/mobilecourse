@@ -159,11 +159,9 @@ public class HomeStudent extends Activity{
                 fragment = new StudentDataFragment();
                 break;
             case 1:
-                fragment = new MidFragmentHome();
+                fragment = new SecondFragment();
                 break;
-            case 2:
-                fragment = new BottomFragmentHome();
-                break;
+
         }
 
         FragmentManager fragmentManager = getFragmentManager();
