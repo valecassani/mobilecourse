@@ -43,7 +43,7 @@ public class LandingFragment extends Fragment {
 
 
         super.onCreate(savedInstanceState);
-        this.activity = (LandingActivity) getActivity();
+        //this.activity = (LandingActivity) getActivity();
     }
 
     @Override
@@ -166,7 +166,7 @@ public class LandingFragment extends Fragment {
 
     public void ftpControl(String url) {
 
-        new RequestFtp().setParameters(this.activity, url, "controlloFB", LandingFragment.this).execute();
+        new RequestFtp().setParameters(getActivity(), url, "controlloFB", LandingFragment.this).execute();
     }
 
 

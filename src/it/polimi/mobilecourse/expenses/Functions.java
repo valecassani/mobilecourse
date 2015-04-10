@@ -33,13 +33,11 @@ public class Functions {
         return result;
     }
     public static boolean checkRete(Context context) {
-        if(context!=null) {
-            ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo infos[] = conMgr.getAllNetworkInfo();
-            for (NetworkInfo info : infos) {
-                if (info.getState() == State.CONNECTED)
-                    return true;
-            }
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo infos[] = conMgr.getAllNetworkInfo();
+        for (NetworkInfo info : infos) {
+            if (info.getState() == State.CONNECTED)
+                return true;
         }
         return false;
     }

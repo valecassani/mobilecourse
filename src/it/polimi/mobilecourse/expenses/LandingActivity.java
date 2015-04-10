@@ -13,7 +13,6 @@ import android.content.pm.Signature;
 import android.media.session.MediaSession;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 
 import android.util.Log;
