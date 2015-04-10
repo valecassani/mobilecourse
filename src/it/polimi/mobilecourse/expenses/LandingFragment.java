@@ -2,13 +2,17 @@ package it.polimi.mobilecourse.expenses;
 
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.LoggingBehavior;
@@ -31,16 +35,15 @@ public class LandingFragment extends Fragment {
     private String str;
 
 
+    int id;
+    String nome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-
-
-
-
-
-
+        this.activity = (LandingActivity) getActivity();
     }
 
     @Override
@@ -53,17 +56,19 @@ public class LandingFragment extends Fragment {
         return view;
     }
 
-    @Override
+    /*@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
 
-        this.activity = (LandingActivity) activity;
-    }
+       // this.activity = (LandingActivity) activity;
+    }*/
 
-    private void buttonsActions(){
 
-        Button butS=(Button) view.findViewById(R.id.buttonStudente);
+
+    public void buttonsActions() {
+
+        Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +79,7 @@ public class LandingFragment extends Fragment {
             }
         });
 
-        Button butT=(Button) view.findViewById(R.id.buttonTutor);
+        Button butT = (Button) view.findViewById(R.id.buttonTutor);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,20 +93,24 @@ public class LandingFragment extends Fragment {
 
     }
 
-    private void buttonsSActions(){
+    private void buttonsSActions() {
 
-        Button butS=(Button) view.findViewById(R.id.buttonStudente);
+        Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
+                Intent myintent = new Intent(v.getContext(), DataActivityStudent.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("Nome", nome);
+                mBundle.putInt("Id", id);
+                myintent.putExtras(mBundle);
                 startActivity(myintent);
 
             }
         });
 
-        Button butT=(Button) view.findViewById(R.id.buttonTutor);
+        Button butT = (Button) view.findViewById(R.id.buttonTutor);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,70 +120,98 @@ public class LandingFragment extends Fragment {
 
             }
         });
-
-
-    }
-
-    private void buttonsTActions(){
-
-        Button butS=(Button) view.findViewById(R.id.buttonStudente);
-        butS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myintent = new Intent(v.getContext(), LoginStudente.class);
-                startActivity(myintent);
-
-            }
-        });
-
-        Button butT=(Button) view.findViewById(R.id.buttonTutor);
-        butT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myintent = new Intent(v.getContext(), HomeTutor.class);
-                startActivity(myintent);
-
-            }
-        });
-
-
-    }
-
-
-    public void ftpControl(String url){
-
-        new RequestFtp().setParameters(activity, url, "controlloFB", LandingFragment.this).execute();
-    }
-
-
-    private String getControl(){
-        return str;
-
-    }
-
-
-
-    public void control(ArrayList<ObjDb> result){
-
-        ObjDb res = result.get(0);
-        String strR=res.get("ID");
-        /*if(strR=="S"){
-
-            //str="S";
-            //Intent myintent = new Intent(view.getContext(), HomeStudent.class);
-            //startActivity(myintent);
+        try {
+            ((manageListener) activity).manageButton();
+        }
+        catch(ClassCastException cce){
 
         }
-        if(strR=="T"){
-
-            str="T";
-            Intent myintent = new Intent(view.getContext(), HomeTutor.class);
-            startActivity(myintent);
-        }*/
 
 
+    }
 
+    private void buttonsTActions() {
+
+        Button butS = (Button) view.findViewById(R.id.buttonStudente);
+        butS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myintent = new Intent(v.getContext(), LoginStudente.class);
+                startActivity(myintent);
+
+            }
+        });
+
+        Button butT = (Button) view.findViewById(R.id.buttonTutor);
+        butT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myintent = new Intent(v.getContext(), DataActivityTutor.class);
+                startActivity(myintent);
+
+            }
+        });
+        try {
+            ((manageListener) activity).manageButton();
+        }
+        catch(ClassCastException cce){
+
+        }
+
+
+    }
+
+
+    public void ftpControl(String url) {
+
+        new RequestFtp().setParameters(this.activity, url, "controlloFB", LandingFragment.this).execute();
+    }
+
+
+    private void setNomeWelcome(String nome) {
+        WelcomeFragment wf = activity.getWf();
+        wf.setText(nome);
+    }
+
+
+    public void control(ArrayList<ObjDb> result) {
+
+        ObjDb res = result.get(0);
+        String response = res.get("Response");
+        //System.out.println("Response "+response);
+        if (response.compareTo("S") == 0) {
+
+            str = "S";
+            String id_utente = res.get("id_utente");
+            nome = res.get("nome");
+            //System.out.println("nome "+nome);
+            id = Integer.parseInt(id_utente);
+            buttonsSActions();
+
+
+        }
+        if (response.compareTo("T") == 0) {
+
+            str = "T";
+            String id_utente = res.get("id_utente");
+            nome = res.get("nome");
+            id = Integer.parseInt(id_utente);
+            buttonsTActions();
+
+
+        }
+        if (nome.compareTo("") != 0) {
+            setNomeWelcome(nome);
+        }
+
+
+    }
+
+
+    public interface manageListener{
+
+        public void manageButton();
     }
 }

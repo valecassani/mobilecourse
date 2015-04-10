@@ -21,11 +21,12 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import android.support.v4.app;
 
 import java.util.Arrays;
 
 
-public class FBSFragment extends android.app.Fragment {
+public class FBSFragment extends android.support.v4.app.Fragment {
 
 
     private boolean logged;
@@ -66,7 +67,7 @@ public class FBSFragment extends android.app.Fragment {
         });
         authButton.setReadPermissions(Arrays.asList("public_profile","email"));
 
-        //authButton.setFragment(getTargetFragment());
+        authButton.setFragment(this.getTargetFragment());
 
 
 
@@ -101,28 +102,28 @@ public class FBSFragment extends android.app.Fragment {
                 @Override
                 public void call(Session session, SessionState state, Exception exception) {
                     if (session.isOpened()) { */
-                        Request.newMeRequest(session, new Request.GraphUserCallback() {
-                            @Override
-                            public void onCompleted(final GraphUser user, final Response response) {
-                                if (user != null) {
-                                    logged = true;
-                                    Bundle bundle=new Bundle();
-                                    bundle.putString("Username",user.getName());
-                                    bundle.putString("Mail",user.getUsername());
+            Request.newMeRequest(session, new Request.GraphUserCallback() {
+                @Override
+                public void onCompleted(final GraphUser user, final Response response) {
+                    if (user != null) {
+                        logged = true;
+                        Bundle bundle=new Bundle();
+                        bundle.putString("Username",user.getName());
+                        bundle.putString("Mail",user.getUsername());
 
-                                    myintent.putExtras(bundle);
-                                    //startActivity(myintent);
-
-
-
-                                }
-                            }
-                        }).executeAsync();
+                        myintent.putExtras(bundle);
+                        //startActivity(myintent);
 
 
-                 //   }
 
-               // }});
+                    }
+                }
+            }).executeAsync();
+
+
+            //   }
+
+            // }});
 
 
         } else if (session.isClosed()) {

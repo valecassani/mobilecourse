@@ -56,10 +56,10 @@ public class RegStudentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-         view = inflater.inflate(R.layout.regs_frag, container, false);
+        view = inflater.inflate(R.layout.regs_frag, container, false);
 
-         settingsReg();
-         setSpinner();
+        settingsReg();
+        setSpinner();
 
 
         //registrazione
@@ -258,7 +258,7 @@ public class RegStudentFragment extends Fragment {
             Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
             Intent myintent = new Intent(view.getContext(), LandingActivity.class);
             startActivity(myintent);
-            }
+        }
 
     }
 
@@ -296,13 +296,13 @@ public class RegStudentFragment extends Fragment {
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+        progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
 
 
 

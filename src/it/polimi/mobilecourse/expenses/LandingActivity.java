@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.media.session.MediaSession;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
@@ -42,30 +44,18 @@ import java.util.List;
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class LandingActivity extends HelpActivity {
+public class LandingActivity extends HelpActivity implements LandingFragment.manageListener {
 
 
     private LandingFragment lf;
+    private WelcomeFragment wf;
     private ProgressBar progressView;
-    private manageButton mb=null;
+    //private manageButton mb=null;
 
     private UiLifecycleHelper uiHelper;
-    private Session.StatusCallback callback=new Session.StatusCallback(){
-        @Override
-        public void call(final Session session,final SessionState state,final Exception exception){
+    private Session.StatusCallback callback;
 
-            List<String> lp=session.getPermissions();
-            if(lp.contains("email")){
-
-                onSessionStateChange(session, state, exception);
-
-
-
-            }
-
-
-        }
-    };
+    String nome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,13 +63,51 @@ public class LandingActivity extends HelpActivity {
 
         setLanding();
         progress(true);
+        showWelcome();
+        manageSession(savedInstanceState);
+        //mb= new manageButton();
+        //mb.execute((Void) null);
+        //manageButton();
+
+
+
+    }
+
+    private void manageSession(Bundle savedInstanceState){
+
+        //questa funzione controllo se l'utente è già loggato via fb o no
+
+
+
+        //è loggato entra qua
+        callback=new Session.StatusCallback(){
+            @Override
+            public void call(final Session session,final SessionState state,final Exception exception){
+
+
+
+                onSessionStateChange(session, state, exception);
+
+
+
+
+
+
+            }
+        };
         uiHelper = new UiLifecycleHelper(this,callback);
         uiHelper.onCreate(savedInstanceState);
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
-        mb= new manageButton();
-        mb.execute((Void) null);
+        Session session=Session.getActiveSession();
+        if(session.getPermissions().isEmpty()){
+            System.out.println("logged false");
+            //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
+            FragmentManager fragMan = getFragmentManager();
+            FragmentTransaction fragTrans=fragMan.beginTransaction();
+            fragTrans.replace(R.id.fragreplace,lf).commit();
+            progress(false);
 
-
+        }
 
 
     }
@@ -89,6 +117,8 @@ public class LandingActivity extends HelpActivity {
 
         progressView=(ProgressBar)findViewById(R.id.progressBarRS);
         lf=new LandingFragment();
+        //hideButton();
+        wf=new WelcomeFragment();
     }
 
     @Override
@@ -100,9 +130,9 @@ public class LandingActivity extends HelpActivity {
     @Override
     public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
 
+
         if(result==null){
             progress(false);
-            showButton();
         }
 
         if(op=="controlloFB"){
@@ -115,31 +145,28 @@ public class LandingActivity extends HelpActivity {
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 
-        Session.StatusCallback statusCallback = new Session.StatusCallback() {
-            @Override
-            public void call(Session session, SessionState state, Exception exception) {
 
-            }
-        };
-
-       //session.requestNewReadPermissions(new Session.NewPermissionsRequest(this,Arrays.asList("email")));
 
         if(session==null || session.isClosed()){
             Log.i("LandingActivity", "session nulla...");
 
-            session=Session.openActiveSessionFromCache(this);
-            Request.newMeRequest(session, new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(final GraphUser user, final Response response) {
-                    if (user != null) {
-                        String url = "exist_user.php?mail=".concat(user.getUsername());
-                        lf.ftpControl(url);
-
-
+            /*session=Session.openActiveSessionFromCache(this);
+            new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
+                public void onCompleted(Response response){
+                    String us=null;
+                    try {
+                        us=response.getGraphObject().getProperty("email").toString();
+                        nome=response.getGraphObject().getProperty("first_name").toString();
 
                     }
+                    catch(NullPointerException e){
+                        System.out.println(response.getError());
+                    }
+                    String url="exist_user.php?mail=".concat(us);
+                    lf.ftpControl(url);
                 }
-            }).executeAsync();
+
+            }).executeAsync();*/
 
 
         }
@@ -148,45 +175,21 @@ public class LandingActivity extends HelpActivity {
         if(session!=null && session.isOpened()){
 
             Log.i("LandingActivity", "session not null...");
-            System.out.println(session.getPermissions());
 
 
-            /*Request.newMeRequest(session, new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(final GraphUser user, final Response response) {
-                    if (user != null) {
 
-                        id[0] =user.getId();
-                        System.out.println("Id:"+ id[0]);
-                        //Log.i("LandingActivity", user.getUsername());
-
-                        //String url="exist_user.php?mail=".concat(u);
-                        //lf.ftpControl(url);
-
-                    }
-                }
-            }).executeAsync();*/
-
-            //Session.OpenRequest req=new Session.OpenRequest(this).setPermissions("basic_info","email");
-            //new Session.OpenRequest(this).setPermissions(Arrays.asList("basic_info", "email")).setCallback(statusCallback);
             System.out.println(session.getPermissions());
 
             new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
                 public void onCompleted(Response response){
-
-
-                    //String u=null;
                     String us=null;
                     try {
-                    us=response.getGraphObject().getProperty("email").toString();
+                        us=response.getGraphObject().getProperty("email").toString();
+                        nome=response.getGraphObject().getProperty("first_name").toString();
 
-
-
-                    //  u = jobj.getString("email");
                     }
                     catch(NullPointerException e){
-                        //System.out.println(response.toString());
-                         System.out.println(response.getError());
+                        System.out.println(response.getError());
                     }
                     String url="exist_user.php?mail=".concat(us);
                     lf.ftpControl(url);
@@ -210,15 +213,24 @@ public class LandingActivity extends HelpActivity {
         uiHelper.onResume();
     }
 
-    private void showButton(){
+
+
+    public void showWelcome(){
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container,lf);
+        fragmentTransaction.add(R.id.welcomemessage, wf);
         fragmentTransaction.commit();
+
+
+    }
+
+    public WelcomeFragment getWf(){
+
+        return wf;
     }
 
 
-    private void controlloUtente(){
+    /*private void controlloUtente(){
 
         Session session=Session.getActiveSession();
         if(session==null || session.isClosed()){
@@ -266,9 +278,9 @@ public class LandingActivity extends HelpActivity {
 
 
 
-    }
+    }*/
 
-    private void progress(final boolean show){
+    public void progress(final boolean show){
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -284,13 +296,26 @@ public class LandingActivity extends HelpActivity {
 
     }
 
-    public class manageButton extends AsyncTask<Void,Void,Boolean> {
+    private void showButton(){
+        System.out.println("logged true");
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragreplace,lf).commit();
+    }
+
+    /*private void hideButton(){
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.hide(lf);
+        fragmentTransaction.commitAllowingStateLoss();
+
+    }*/
+
+    /*public class manageButton extends AsyncTask<Void,Void,Boolean> {
 
         @Override
         protected Boolean doInBackground(Void ...params){
 
-
-            //controlloUtente();
 
 
             return true;
@@ -300,8 +325,7 @@ public class LandingActivity extends HelpActivity {
         protected void onPostExecute(final Boolean success){
 
             if(success) {
-                progress(false);
-                showButton();
+
 
 
 
@@ -313,6 +337,12 @@ public class LandingActivity extends HelpActivity {
 
 
 
+
+    }*/
+
+    public void manageButton(){
+        progress(false);
+        showButton();
 
     }
 

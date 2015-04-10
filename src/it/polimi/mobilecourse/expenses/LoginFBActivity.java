@@ -34,7 +34,7 @@ public class LoginFBActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.loginfb);
-        nome=(TextView)findViewById(R.id.nome);
+        //nome=(TextView)findViewById(R.id.nome);
         ctx=this;
         logged=false;
 

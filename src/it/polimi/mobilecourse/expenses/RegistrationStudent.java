@@ -1,7 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
