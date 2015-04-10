@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             class="it.polimi.mobilecourse.expenses.tutor.TutorData"
             android:name="it.polimi.mobilecourse.expenses.tutor.TutorData"
-           />
+            tools:layout="@layout/user_data_layout" />
 
 
 
