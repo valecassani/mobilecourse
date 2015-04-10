@@ -7,16 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Matteo on 17/11/2014.
+ * Created by Matteo on 18/11/2014.
  */
-public class UnderBar extends Fragment {
+public class SecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.underbar, container, false);
+
+        View contView = inflater.inflate(R.layout.cont_fragment, container, false);
+
+
+        return contView;
+    }
 
 
 
 
-        return rootView;
+    public static Fragment newInstance(){
+
+        SecondFragment nfg=new SecondFragment();
+        return nfg;
+
     }
 }

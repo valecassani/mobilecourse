@@ -23,6 +23,7 @@ import com.facebook.model.GraphUser;
 public class LoginStudente extends FragmentActivity {
 
     boolean logged;
+    Button skipButton;
 
 
     private FBSFragment fbsFragment;
@@ -32,6 +33,19 @@ public class LoginStudente extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_studente);
+        skipButton = (Button) findViewById(R.id.skip_button);
+
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(v.getContext(),HomeStudent.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
 
 
