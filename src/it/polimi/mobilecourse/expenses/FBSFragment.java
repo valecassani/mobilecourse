@@ -21,7 +21,6 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
-import android.support.v4.app;
 
 import java.util.Arrays;
 
@@ -98,7 +97,6 @@ public class FBSFragment extends android.support.v4.app.Fragment {
             //startActivity(myintent);
 
             /*Session.openActiveSession(ctx, true, new Session.StatusCallback() {
-
                 @Override
                 public void call(Session session, SessionState state, Exception exception) {
                     if (session.isOpened()) { */

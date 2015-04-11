@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public class DataActivityTutor extends Activity {
 
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +30,7 @@ public class DataActivityTutor extends Activity {
 
 
     }
+
+    */
 
 }

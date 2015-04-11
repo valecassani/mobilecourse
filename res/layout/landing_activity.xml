@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -10,41 +11,50 @@
 
         android:weightSum="1">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/landing_image"
-        android:id="@+id/imgLanding"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="115dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/landing_image"
+                android:id="@+id/imgLanding"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="115dp" />
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBarRS"
-        android:layout_below="@id/imgLanding"
-        style="?android:attr/progressBarStyleLarge"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="207dp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_container"
-        android:layout_below="@id/imgLanding">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBarRS"
+                android:layout_below="@id/imgLanding"
+                style="?android:attr/progressBarStyleLarge"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="207dp" />
 
 
-    </RelativeLayout>
+            <fragment android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragreplace"
+                android:layout_below="@id/imgLanding"
+                android:name="it.polimi.mobilecourse.expenses.FragReplace"
+                tools:layout="@layout/frag_replace">
 
-</RelativeLayout>
 
-</LinearLayout>
-    </ScrollView>
+
+            </fragment>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/welcomemessage"
+                ></RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

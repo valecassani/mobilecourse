@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Matteo on 22/12/2014.
  */
-public class HelpActivity extends Activity {
+public class HelpActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

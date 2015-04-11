@@ -35,16 +35,7 @@ public class LoginStudente extends HelpActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_studente);
-        skipButton = (Button) findViewById(R.id.skip_button);
 
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(v.getContext(),HomeStudent.class);
-                startActivity(intent);
-            }
-        });
 
 
 
