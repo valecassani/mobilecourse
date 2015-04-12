@@ -40,22 +40,20 @@ public class HomeStudent extends Activity{
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
-    private int userId;
+    private String userId;
 
     public HomeStudent() {
 
 
     }
 
-    public HomeStudent(int userId) {
-        this.userId = userId;
-    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
-        username = data.getString("Username");
+        username = data.getString("Mail");
+        userId = data.getString("user_id");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -161,6 +159,7 @@ public class HomeStudent extends Activity{
                 fragment = new StudentDataFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("username", username);
+                bundle.putString("id", userId);
                 fragment.setArguments(bundle);
                 break;
             case 1:

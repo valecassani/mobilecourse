@@ -99,6 +99,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         uiHelper.onCreate(savedInstanceState);
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         Session session=Session.getActiveSession();
+
         if(session.getPermissions().isEmpty()){
             System.out.println("logged false");
             //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
@@ -108,6 +109,8 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
             progress(false);
 
         }
+
+
 
 
     }

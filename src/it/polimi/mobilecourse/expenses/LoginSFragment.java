@@ -37,6 +37,7 @@ public class LoginSFragment extends Fragment {
     TextView oppure;
     Button reg;
     Fragment fbs;
+    Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class LoginSFragment extends Fragment {
                 }
             }
         });
+
+        intent = new Intent(getActivity(), HomeStudent.class);
 
 
 
@@ -158,8 +161,15 @@ public class LoginSFragment extends Fragment {
         else {
             ObjDb res = result.get(0);
             String str = res.get("Risposta");
+            String userId = null;
             if (str.compareTo("OK")==0) {
                 Toast.makeText(getActivity().getApplicationContext(), "Login corretto", Toast.LENGTH_LONG).show();
+                userId = res.get("user_id");
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", userId);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             } else {
                 progress(false);

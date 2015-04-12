@@ -13,7 +13,7 @@ public class DataActivityTutor extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data_activity_tutor);
+        setContentView(R.layout.activity_data_activity_student);
     }
 
     public void onStart(){

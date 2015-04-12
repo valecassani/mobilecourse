@@ -45,7 +45,8 @@ public class StudentDataFragment extends Fragment {
     private final String TAG = "Student Data Fragment";
 
     private String username;
-
+    private String id;
+    private String url;
     private String mParam1;
     private String mParam2;
 
@@ -65,6 +66,7 @@ public class StudentDataFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,8 +87,16 @@ public class StudentDataFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
         username = getArguments().getString("username");
-        Log.d(TAG,username);
-        String url ="http://www.unishare.it/tutored/user_data_ok.php?mail="+username;
+        if (username != null) {
+            url = "http://www.unishare.it/tutored/user_data_ok.php?mail=" + username;
+        }    else {
+            id = getArguments().getString("id");
+            if (id != null) {
+               url = "http://www.unishare.it/tutored/student_by_id.php?id"+id;
+            }
+        }
+
+
 
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
