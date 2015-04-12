@@ -76,7 +76,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        final Intent myintent = new Intent(getActivity(), DataActivityStudent.class);
+        final Intent myintent = new Intent(getActivity(), HomeStudent.class);
         final Intent closint=new Intent(this.getActivity(),LandingActivity.class);
 
         System.out.println(session.getPermissions());
@@ -110,7 +110,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
                         bundle.putString("Mail",user.getUsername());
 
                         myintent.putExtras(bundle);
-                        //startActivity(myintent);
+                        startActivity(myintent);
 
 
 
@@ -127,7 +127,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
         } else if (session.isClosed()) {
             Log.i("FBSFragment", "Logged out...");
             //rimando LandingActivity
-            //startActivity(closint);
+            startActivity(closint);
 
         }
 

@@ -202,7 +202,7 @@ public class LandingFragment extends Fragment {
 
 
         }
-        if (nome.compareTo("") != 0) {
+        if (nome != null && nome.compareTo("") != 0) {
             setNomeWelcome(nome);
         }
 

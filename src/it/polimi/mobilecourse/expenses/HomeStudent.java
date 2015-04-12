@@ -36,6 +36,7 @@ public class HomeStudent extends Activity{
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerFragment;
+    private String username;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -53,7 +54,8 @@ public class HomeStudent extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
-
+        Bundle data = getIntent().getExtras();
+        username = data.getString("Username");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,6 +159,9 @@ public class HomeStudent extends Activity{
         switch (position) {
             case 0:
                 fragment = new StudentDataFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+                fragment.setArguments(bundle);
                 break;
             case 1:
                 fragment = new SecondFragment();

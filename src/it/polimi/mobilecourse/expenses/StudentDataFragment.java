@@ -84,7 +84,8 @@ public class StudentDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.student_data_fragment, container, false);
 
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        username = "valerio.cassani@gmail.com";
+        username = getArguments().getString("username");
+        Log.d(TAG,username);
         String url ="http://www.unishare.it/tutored/user_data_ok.php?mail="+username;
 
         // Tag used to cancel the request
