@@ -92,7 +92,8 @@ public class StudentDataFragment extends Fragment {
         }    else {
             id = getArguments().getString("id");
             if (id != null) {
-               url = "http://www.unishare.it/tutored/student_by_id.php?id"+id;
+               Log.d(TAG,"Used id query");
+               url = "http://www.unishare.it/tutored/student_by_id.php?id="+id;
             }
         }
 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class LoginStudente extends HelpActivity {
+public class LoginStudente extends FragmentActivity {
 
     boolean logged;
     Button skipButton;
@@ -46,6 +46,8 @@ public class LoginStudente extends HelpActivity {
 
     }
 
+
+    /*
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
@@ -60,12 +62,14 @@ public class LoginStudente extends HelpActivity {
         if(op=="logStudente"){
 
             LoginSFragment lsfrag=(LoginSFragment) fragment;
-            lsfrag.manageLogin(result);
+            //lsfrag.manageLogin(result);
         }
 
 
 
     }
+
+    */
 
 
 }

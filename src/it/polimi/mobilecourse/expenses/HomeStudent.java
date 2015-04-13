@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,13 +12,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -163,7 +158,7 @@ public class HomeStudent extends Activity{
                 fragment.setArguments(bundle);
                 break;
             case 1:
-                fragment = new SecondFragment();
+                fragment = new Ripetizioni();
                 break;
 
         }
@@ -196,6 +191,7 @@ public class HomeStudent extends Activity{
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
 
 
     private  class DrawerItemClickListener implements ListView.OnItemClickListener {

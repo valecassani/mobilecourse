@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 /**
  * Created by Matteo on 18/11/2014.
  */
-public class SecondFragment extends Fragment {
+public class Ripetizioni extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -24,7 +24,7 @@ public class SecondFragment extends Fragment {
 
     public static Fragment newInstance(){
 
-        SecondFragment nfg=new SecondFragment();
+        Ripetizioni nfg=new Ripetizioni();
         return nfg;
 
     }

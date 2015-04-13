@@ -286,6 +286,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     public void progress(final boolean show){
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
+        /*
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
         progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
@@ -294,6 +295,8 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                 progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+
+        */
 
 
 
