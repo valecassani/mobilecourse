@@ -56,13 +56,13 @@ public class LandingFragment extends Fragment {
         return view;
     }
 
-    /*@Override
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
 
        // this.activity = (LandingActivity) activity;
-    }*/
+    }
 
 
 

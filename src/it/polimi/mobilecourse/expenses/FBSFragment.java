@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.FacebookException;
+import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -34,9 +35,11 @@ public class FBSFragment extends android.support.v4.app.Fragment {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
             onSessionStateChange(session, state, exception);
+
         }
     };
     private UiLifecycleHelper uiHelper;
+    private View view;
 
 
 
@@ -54,7 +57,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.loginfb, container, false);
+        view = inflater.inflate(R.layout.loginfb, container, false);
         ctx=getActivity();
         LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
         authButton.setOnErrorListener(new LoginButton.OnErrorListener() {
@@ -76,7 +79,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        final Intent myintent = new Intent(getActivity(), HomeStudent.class);
+        final Intent myintent = new Intent(getActivity(), DataActivityStudent.class);
         final Intent closint=new Intent(this.getActivity(),LandingActivity.class);
 
         System.out.println(session.getPermissions());
@@ -97,26 +100,53 @@ public class FBSFragment extends android.support.v4.app.Fragment {
             //startActivity(myintent);
 
             /*Session.openActiveSession(ctx, true, new Session.StatusCallback() {
+
                 @Override
                 public void call(Session session, SessionState state, Exception exception) {
                     if (session.isOpened()) { */
-            Request.newMeRequest(session, new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(final GraphUser user, final Response response) {
-                    if (user != null) {
-                        logged = true;
-                        Bundle bundle=new Bundle();
-                        bundle.putString("Username",user.getName());
-                        bundle.putString("Mail",user.getUsername());
-
-                        myintent.putExtras(bundle);
-                        startActivity(myintent);
 
 
+            new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
+                public void onCompleted(Response response){
+
+                    String email=null;
+                    String nome=null;
+                    try {
+                        email=response.getGraphObject().getProperty("email").toString();
+                        nome=response.getGraphObject().getProperty("first_name").toString();
 
                     }
+                    catch(NullPointerException e){
+                        System.out.println(response.getError());
+                    }
+                    Bundle bundle=new Bundle();
+                    bundle.putString("Mail",email);
+                    bundle.putString("Nome",nome);
+                    Intent myintent = new Intent(view.getContext(), RegistrationStudent.class);
+                    startActivity(myintent);
+
                 }
+
             }).executeAsync();
+
+
+               /*         Request.newMeRequest(session, new Request.GraphUserCallback() {
+                            @Override
+                            public void onCompleted(final GraphUser user, final Response response) {
+                                if (user != null) {
+                                    logged = true;
+                                    Bundle bundle=new Bundle();
+                                    bundle.putString("Username",user.getName());
+                                    bundle.putString("Mail",user.getUsername());
+
+                                    myintent.putExtras(bundle);
+                                    //startActivity(myintent);
+
+
+
+                                }
+                            }
+                        }).executeAsync(); */
 
 
             //   }
@@ -127,7 +157,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
         } else if (session.isClosed()) {
             Log.i("FBSFragment", "Logged out...");
             //rimando LandingActivity
-            startActivity(closint);
+            //startActivity(closint);
 
         }
 
@@ -172,6 +202,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     public void onDestroy() {
         super.onDestroy();
         uiHelper.onDestroy();
+
     }
 
     @Override
