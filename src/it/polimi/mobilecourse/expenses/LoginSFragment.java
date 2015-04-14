@@ -217,7 +217,6 @@ public class LoginSFragment extends Fragment {
 
 
 
-
             String str = result.getString("Risposta");
             String userId = null;
             if (str.compareTo("OK")==0) {

@@ -158,7 +158,11 @@ public class HomeStudent extends Activity{
                 fragment.setArguments(bundle);
                 break;
             case 1:
+                bundle = new Bundle();
+                bundle.putString("student_id",userId);
+
                 fragment = new RipetizioniFragment();
+                fragment.setArguments(bundle);
                 break;
 
         }
