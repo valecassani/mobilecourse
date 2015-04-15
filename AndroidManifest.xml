@@ -57,7 +57,7 @@
             android:label="Nuovo studente"/>
         <activity
             android:name=".HomeStudent"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:theme="@style/Theme.AppCompat.Light" >
 
         </activity>
         <activity android:name=".LoginFBActivity" />

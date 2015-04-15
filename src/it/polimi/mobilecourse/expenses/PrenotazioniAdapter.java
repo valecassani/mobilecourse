@@ -6,25 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by valeriocassani on 14/04/15.
  */
-public class PrenotazioniAdapter extends ArrayAdapter<RipetizioniItem>{
+public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
 
     Context context;
-    List<RipetizioniItem> items;
+    List<PrenotazioniItem> items;
 
-    public PrenotazioniAdapter(Context context, int resource, List<RipetizioniItem> objects) {
+    public PrenotazioniAdapter(Context context, int resource, List<PrenotazioniItem> objects) {
         super(context, resource, objects);
         this.context = context;
         this.items = objects;
@@ -37,7 +33,7 @@ public class PrenotazioniAdapter extends ArrayAdapter<RipetizioniItem>{
     }
 
     @Override
-    public RipetizioniItem getItem(int position) {
+    public PrenotazioniItem getItem(int position) {
         return items.get(position);
     }
 

@@ -28,9 +28,10 @@
 
 
     <string-array name="student_drawer">
+        <item>Home</item>
         <item>Profilo</item>
-        <item>Ripetizioni</item>
-        <item>Agenda</item>
+        <item>Richieste</item>
+        <item>Prenotazioni</item>
     </string-array>
 
     <!-- array delle opzioni dell'applicazione nel bottom fragment -->

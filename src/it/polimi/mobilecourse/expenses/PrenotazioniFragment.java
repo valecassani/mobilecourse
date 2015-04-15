@@ -25,18 +25,18 @@ import java.util.ArrayList;
 /**
  * Created by Matteo on 18/11/2014.
  */
-public class RipetizioniFragment extends Fragment {
+public class PrenotazioniFragment extends Fragment {
 
     private final String TAG = "Prenotazioni";
     private RequestQueue queue;
-    private ArrayList<RipetizioniItem> items;
+    private ArrayList<PrenotazioniItem> items;
     private Context context;
     private ListView mListView;
     private String studentId;
     private String tutorId;
 
-    public RipetizioniFragment() {
-        items = new ArrayList<RipetizioniItem>();
+    public PrenotazioniFragment() {
+        items = new ArrayList<PrenotazioniItem>();
     }
 
 
@@ -72,7 +72,7 @@ public class RipetizioniFragment extends Fragment {
 
     public static Fragment newInstance(){
 
-        RipetizioniFragment nfg=new RipetizioniFragment();
+        PrenotazioniFragment nfg=new PrenotazioniFragment();
         return nfg;
 
     }
@@ -96,7 +96,7 @@ public class RipetizioniFragment extends Fragment {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, response.toString());
-                                RipetizioniItem item = new RipetizioniItem(obj.getString("materia"),obj.getString("data"),
+                                PrenotazioniItem item = new PrenotazioniItem(obj.getString("materia"),obj.getString("data"),
                                         obj.getString("cellulare"));
                                 items.add(item);
 

@@ -69,7 +69,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
         });
         authButton.setReadPermissions(Arrays.asList("public_profile","email"));
 
-        authButton.setFragment(this.getTargetFragment());
+        authButton.setFragment(this);
 
 
 
@@ -79,7 +79,7 @@ public class FBSFragment extends android.support.v4.app.Fragment {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        final Intent myintent = new Intent(getActivity(), DataActivityStudent.class);
+        final Intent myintent = new Intent(getActivity(), HomeStudent.class);
         final Intent closint=new Intent(this.getActivity(),LandingActivity.class);
 
         System.out.println(session.getPermissions());

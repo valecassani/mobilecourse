@@ -41,6 +41,8 @@ public class StudentDataFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private RequestQueue queue;
+
     // TODO: Rename and change types of parameters
     private final String TAG = "Student Data Fragment";
 
@@ -85,7 +87,7 @@ public class StudentDataFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.student_data_fragment, container, false);
 
-        RequestQueue queue = Volley.newRequestQueue(view.getContext());
+        queue = Volley.newRequestQueue(view.getContext());
         username = getArguments().getString("username");
         if (username != null) {
             url = "http://www.unishare.it/tutored/user_data_ok.php?mail=" + username;
@@ -180,6 +182,12 @@ public class StudentDataFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onDestroy(){
+
+        queue.stop();
     }
 
 

@@ -24,7 +24,7 @@ import org.w3c.dom.Text;
 /**
  * Created by Valerio on 13/04/2015.
  */
-public class RipetizioniItem {
+public class PrenotazioniItem {
 
 
     private String title;
@@ -32,10 +32,10 @@ public class RipetizioniItem {
     private String materia;
     private String cellulare;
 
-    public RipetizioniItem (){}
+    public PrenotazioniItem(){}
 
 
-    public RipetizioniItem(String materia, String data, String cellulare) {
+    public PrenotazioniItem(String materia, String data, String cellulare) {
         this.materia = materia;
         this.data = data;
         this.cellulare=cellulare;
