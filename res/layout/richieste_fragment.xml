@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="#a6f">
 
-    <TextView
-        android:layout_height="match_parent"
+    <ListView
+        android:layout_height="600dp"
         android:layout_width="match_parent"
-        android:text ="hey I'm the richieste fragment guy!!!"></TextView>
+        android:id ="@+id/richieste_list"></ListView>
+
+    <com.gc.materialdesign.views.ButtonFloat
+        android:id="@+id/button_add_richiesta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="24dp"
+        android:background="#1E88E5"
+        materialdesign:animate="true"
+        materialdesign:iconDrawable="@drawable/ic_plus" />
+
+
 
 </LinearLayout>

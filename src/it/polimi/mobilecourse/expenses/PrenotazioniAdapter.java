@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -96,11 +97,14 @@ public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
 
         TextView title = (TextView) convertView.findViewById(R.id.prenot_title);
         TextView data = (TextView) convertView.findViewById(R.id.prenot_data);
-        Log.i("Ripetizioni", "Sono arrivato a caricarmi le textview");
 
         title.setText(items.get(position).getMateria());
         data.setText(items.get(position).getData());
-        Log.i("Ripetizioni", "MATERIA CARICATA "+ items.get(position).getMateria());
+
+
+        ImageButton mImageButton = (ImageButton) convertView.findViewById(R.id.delete_rip_item);
+        mImageButton.setImageResource(R.drawable.ic_save);
+
 
 
         return convertView;

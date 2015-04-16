@@ -3,10 +3,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <ListView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/search_tutor_list"/>
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:id="@+id/search_tutor_nome"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_tutor_cognome"/>
+
+
+
+
+
 
 </LinearLayout>

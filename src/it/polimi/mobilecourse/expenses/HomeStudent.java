@@ -189,14 +189,14 @@ public class HomeStudent extends ActionBarActivity {
                 fragment.setArguments(bundle);
                 break;
             case 2:
+                fragment = new RichiesteFragment();
+                break;
+            case 3:
                 bundle = new Bundle();
                 bundle.putString("student_id",userId);
 
                 fragment = new PrenotazioniFragment();
                 fragment.setArguments(bundle);
-                break;
-            case 3:
-                fragment = new RichiesteFragment();
                 break;
 
         }
