@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.gc.materialdesign.views.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +34,8 @@ public class RichiesteFragment extends Fragment {
     private ArrayList<RichiestaItem> items;
     private ListView mListView;
     private Context context;
+    private Button newRichiestaButton;
+    private String idStudente;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +46,20 @@ public class RichiesteFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.richieste_list);
 
         context = container.getContext();
+        newRichiestaButton = (Button) view.findViewById(R.id.button_add_richiesta);
+        newRichiestaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),NuovaRichiestaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("student_id", idStudente);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+        });
+
+        idStudente = getArguments().getString("student_id");
         showResults();
 
 
@@ -51,7 +69,7 @@ public class RichiesteFragment extends Fragment {
     private void showResults() {
         String url;
 
-        url = "http://www.unishare.it/tutored/get_richieste.php?id_studente=1";
+        url = "http://www.unishare.it/tutored/get_richieste.php?id_studente="+ idStudente;
 
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,

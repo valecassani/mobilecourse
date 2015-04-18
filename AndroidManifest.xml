@@ -33,12 +33,12 @@
         <activity
             android:name=".LandingActivity"
             android:theme="@style/Landing" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
 
 
         </activity>
@@ -69,6 +69,11 @@
         <activity
             android:name=".HelpABActivity"
             android:label="@string/title_activity_help_ab" >
+        </activity>
+        <activity android:name=".NuovaRichiestaActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light"
+            android:parentActivityName=".HomeStudent">
+
         </activity>
     </application>
 

@@ -188,6 +188,7 @@ public class StudentDataFragment extends Fragment {
     public void onDestroy(){
 
         queue.stop();
+        super.onDestroy();
     }
 
 

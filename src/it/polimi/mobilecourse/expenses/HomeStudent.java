@@ -35,6 +35,7 @@ public class HomeStudent extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerFragment;
     private String username;
+    private int positionRequired;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -50,8 +51,14 @@ public class HomeStudent extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
-        username = data.getString("Mail");
-        userId = data.getString("user_id");
+
+        if (data.getString("Mail") != null) {
+            username = data.getString("Mail");
+        }
+        if (data.getString("user_id") != null)
+            userId = data.getString("user_id");
+        if (data.getInt("position") != 0)
+            positionRequired = data.getInt("position");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -119,6 +126,8 @@ public class HomeStudent extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+        selectItem(positionRequired);
+
 
 
     }
@@ -190,6 +199,9 @@ public class HomeStudent extends ActionBarActivity {
                 break;
             case 2:
                 fragment = new RichiesteFragment();
+                bundle = new Bundle();
+                bundle.putString("student_id",userId);
+                fragment.setArguments(bundle);
                 break;
             case 3:
                 bundle = new Bundle();
