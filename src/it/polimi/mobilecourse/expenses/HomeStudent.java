@@ -76,7 +76,7 @@ public class HomeStudent extends ActionBarActivity {
         //aggiunta icone al drawer
 
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_like_icon));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_icon));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1],R.drawable.com_facebook_button_like_icon_selected));
 

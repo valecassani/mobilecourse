@@ -24,13 +24,7 @@ import android.widget.TextView;
 
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.Settings;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,8 +46,6 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     private ProgressBar progressView;
     //private manageButton mb=null;
 
-    private UiLifecycleHelper uiHelper;
-    private Session.StatusCallback callback;
 
     String nome;
 
@@ -80,27 +72,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
 
         //è loggato entra qua
-        callback=new Session.StatusCallback(){
-            @Override
-            public void call(final Session session,final SessionState state,final Exception exception){
 
-
-
-                onSessionStateChange(session, state, exception);
-
-
-
-
-
-
-            }
-        };
-        uiHelper = new UiLifecycleHelper(this,callback);
-        uiHelper.onCreate(savedInstanceState);
-        Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
-        Session session=Session.getActiveSession();
-
-        if(session.getPermissions().isEmpty()){
             System.out.println("logged false");
             //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
             FragmentManager fragMan = getFragmentManager();
@@ -108,7 +80,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
             fragTrans.replace(R.id.fragreplace,lf).commit();
             progress(false);
 
-        }
+
 
 
 
@@ -124,11 +96,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         wf=new WelcomeFragment();
     }
 
-    @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        uiHelper.onActivityResult(requestCode,resultCode,data);
-    }
+
 
     @Override
     public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
@@ -146,75 +114,9 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
     }
 
-    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 
 
 
-        if(session==null || session.isClosed()){
-            Log.i("LandingActivity", "session nulla...");
-
-            /*session=Session.openActiveSessionFromCache(this);
-            new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
-                public void onCompleted(Response response){
-                    String us=null;
-                    try {
-                        us=response.getGraphObject().getProperty("email").toString();
-                        nome=response.getGraphObject().getProperty("first_name").toString();
-
-                    }
-                    catch(NullPointerException e){
-                        System.out.println(response.getError());
-                    }
-                    String url="exist_user.php?mail=".concat(us);
-                    lf.ftpControl(url);
-                }
-
-            }).executeAsync();*/
-
-
-        }
-
-
-        if(session!=null && session.isOpened()){
-
-            Log.i("LandingActivity", "session not null...");
-
-
-
-            System.out.println(session.getPermissions());
-
-            new Request(session,"me",null, HttpMethod.GET,new Request.Callback(){
-                public void onCompleted(Response response){
-                    String us=null;
-                    try {
-                        us=response.getGraphObject().getProperty("email").toString();
-                        nome=response.getGraphObject().getProperty("first_name").toString();
-
-                    }
-                    catch(NullPointerException e){
-                        System.out.println(response.getError());
-                    }
-                    String url="exist_user.php?mail=".concat(us);
-                    lf.ftpControl(url);
-                }
-
-            }).executeAsync();
-
-        }
-
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Session session = Session.getActiveSession();
-        if (session != null &&
-                (session.isOpened() || session.isClosed()) ) {
-            onSessionStateChange(session, session.getState(), null);
-        }
-        uiHelper.onResume();
-    }
 
 
 

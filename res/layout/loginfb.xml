@@ -12,14 +12,13 @@
 
 
 
-    <com.facebook.widget.LoginButton android:id="@+id/authButton"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="172dp"
-        ></com.facebook.widget.LoginButton>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
 
 
 

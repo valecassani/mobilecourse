@@ -30,16 +30,12 @@
                 tools:layout="@layout/logins_frag"
                 />
 
-            <fragment android:layout_height="60dp"
-                android:layout_width="match_parent"
-                android:id="@+id/loginFB"
-                android:layout_below="@id/fragLS"
-                android:name="it.polimi.mobilecourse.expenses.FBSFragment"
-                class="it.polimi.mobilecourse.expenses.FBSFragment"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="17dp"
-
-                tools:layout="@layout/loginfb"></fragment>
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fb_student_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/fragLS" />
 
 
 

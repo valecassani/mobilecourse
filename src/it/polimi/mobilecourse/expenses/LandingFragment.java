@@ -16,13 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.LoggingBehavior;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.Settings;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
+
 import com.google.android.gms.fitness.result.SessionStopResult;
 
 import java.util.ArrayList;
