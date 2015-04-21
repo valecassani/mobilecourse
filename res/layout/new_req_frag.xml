@@ -3,40 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PROVA TEXTVIEW IN QUESTO CASPITA DI LAYOUT"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:id="@+id/testoRichiesta"
-            android:hint="Testo della Richiesta"
-            android:layout_gravity="center_horizontal" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:hint="Selezionare una data"
-            android:id="@+id/dataEntro"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Invia"
-            android:id="@+id/buttonSendRich" />
+    android:orientation="vertical">
 
 
 
+    <EditText
+        android:id="@+id/testoRichiesta"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:hint="Testo della Richiesta" />
 
+    <EditText
+        android:id="@+id/dataEntro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:hint="Selezionare una data"
+        android:inputType="date" />
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop" />
+
+    <Button
+        android:id="@+id/buttonSendRich"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invia" />
 
 
 </LinearLayout>

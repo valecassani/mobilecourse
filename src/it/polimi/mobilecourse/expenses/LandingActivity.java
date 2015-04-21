@@ -13,6 +13,7 @@ import android.content.pm.Signature;
 import android.media.session.MediaSession;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 
@@ -21,9 +22,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 
 import org.json.JSONException;
@@ -40,10 +53,13 @@ import java.util.List;
  */
 public class LandingActivity extends HelpActivity implements LandingFragment.manageListener {
 
-
+    boolean loadDone;
+    private String username;
     private LandingFragment lf;
     private WelcomeFragment wf;
     private ProgressBar progressView;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
     //private manageButton mb=null;
 
 
@@ -52,14 +68,33 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        loadDone = false;
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
+                while(loadDone = false);
+                updateWithToken(newAccessToken);
+            }
+        };
+        callbackManager = CallbackManager.Factory.create();
+        loadDone = false;
         setLanding();
         progress(true);
+
+        while (loadDone = false);
+        updateWithToken(AccessToken.getCurrentAccessToken());
         showWelcome();
         manageSession(savedInstanceState);
+        Log.i("Landing", "logged false");
+        //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
+        FragmentManager fragMan = getFragmentManager();
+        FragmentTransaction fragTrans = fragMan.beginTransaction();
+        fragTrans.replace(R.id.fragreplace, lf).commit();
         //mb= new manageButton();
         //mb.execute((Void) null);
         //manageButton();
+
 
 
 
@@ -67,21 +102,77 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
     private void manageSession(Bundle savedInstanceState){
 
-        //questa funzione controllo se l'utente è già loggato via fb o no
 
 
 
-        //è loggato entra qua
 
-            System.out.println("logged false");
-            //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
-            FragmentManager fragMan = getFragmentManager();
-            FragmentTransaction fragTrans=fragMan.beginTransaction();
-            fragTrans.replace(R.id.fragreplace,lf).commit();
-            progress(false);
+                //è loggato entra qua
 
 
 
+
+
+
+
+
+    }
+
+    private void updateWithToken(final AccessToken currentAccessToken) {
+
+        if (currentAccessToken != null) {
+            Toast.makeText(getApplicationContext(), "Login con Facebook avvenuto", Toast.LENGTH_SHORT);
+            Intent intent = new Intent(LandingActivity.this, HomeStudent.class);
+            Bundle bundle = new Bundle();
+
+
+            bundle.putString("mail", username);
+
+            Log.i("Landing", "username" + bundle.getString("mail"));
+            intent.putExtras(bundle);
+
+            startActivity(intent);
+
+
+
+        } else {
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+
+                }
+            }, 100);
+                progress(false);
+
+        }
+    }
+
+    private void getEmail(AccessToken currentAccessToken) {
+
+        GraphRequest request = GraphRequest.newMeRequest(
+                currentAccessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                        try {
+                            Log.v("LoginActivity", response.getJSONObject().getString("email"));
+                            username = object.getString("email");
+                            loadDone = true;
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "email");
+        request.setParameters(parameters);
+        request.executeAsync();
 
 
 
@@ -94,6 +185,13 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         lf=new LandingFragment();
         //hideButton();
         wf=new WelcomeFragment();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode, Intent data)
+    {
+        super.onActivityResult(requestCode, responseCode, data);
+        callbackManager.onActivityResult(requestCode, responseCode, data);
     }
 
 
@@ -188,7 +286,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     public void progress(final boolean show){
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
-        /*
+
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
         progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
@@ -198,7 +296,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
             }
         });
 
-        */
+
 
 
 

@@ -42,6 +42,7 @@ public class RichiesteFragment extends Fragment {
         View view = inflater.inflate(R.layout.richieste_fragment, container, false);
         items = new ArrayList<RichiestaItem>();
         queue = Volley.newRequestQueue(view.getContext());
+        idStudente = getArguments().getString("student_id");
 
         mListView = (ListView) view.findViewById(R.id.richieste_list);
 
@@ -59,7 +60,7 @@ public class RichiesteFragment extends Fragment {
             }
         });
 
-        idStudente = getArguments().getString("student_id");
+
         showResults();
 
 

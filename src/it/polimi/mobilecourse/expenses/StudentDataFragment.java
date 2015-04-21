@@ -89,8 +89,11 @@ public class StudentDataFragment extends Fragment {
 
         queue = Volley.newRequestQueue(view.getContext());
         username = getArguments().getString("username");
+        Log.i(TAG,"Username received: " + username);
+
         if (username != null) {
-            url = "http://www.unishare.it/tutored/user_data_ok.php?mail=" + username;
+            Log.i(TAG,"url for username");
+            url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
         }    else {
             id = getArguments().getString("id");
             if (id != null) {

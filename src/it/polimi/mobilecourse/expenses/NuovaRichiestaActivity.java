@@ -70,7 +70,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         context = getApplicationContext();
         queue= Volley.newRequestQueue(context);
-        idStudente = getIntent().getExtras().getString("id_studente");
+        idStudente = getIntent().getExtras().getString("student_id");
         mTesto = (EditText)findViewById(R.id.testoRichiesta);
         mDataEntro = (EditText)findViewById(R.id.dataEntro);
         sendButton = (Button)findViewById(R.id.buttonSendRich);
@@ -168,7 +168,8 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 returnToFragmentRichieste();
-                break;
+                return true;
+                
 
 
         }
@@ -178,7 +179,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private void returnToFragmentRichieste(){
         Intent intent = new Intent(this,HomeStudent.class);
         Bundle bundle = new Bundle();
-        bundle.putString("user_id","1" );
+        bundle.putString("user_id",idStudente );
         bundle.putString("Mail","");
         bundle.putInt("position", 2);
         intent.putExtras(bundle);

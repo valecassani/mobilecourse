@@ -43,7 +43,6 @@ import java.util.Arrays;
 public class LoginStudente extends ActionBarActivity {
 
     boolean logged;
-    Button skipButton;
     LoginButton loginButton;
     CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
@@ -111,7 +110,6 @@ public class LoginStudente extends ActionBarActivity {
 
                 // Get User Name
 
-                Log.i("LoginFB", profile.getName());
                 Log.i("LoginFB", profile.getFirstName());
 
             }

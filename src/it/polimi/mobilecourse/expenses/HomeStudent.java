@@ -3,6 +3,7 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.facebook.login.LoginManager;
+
 import java.util.ArrayList;
 
 
@@ -26,6 +30,8 @@ import java.util.ArrayList;
  * Created by valeriocassani on 18/03/15.
  */
 public class HomeStudent extends ActionBarActivity {
+
+    private static String TAG ="Home Student";
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -51,12 +57,20 @@ public class HomeStudent extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
+        Log.i(TAG, "username: " + data.getString("mail"));
 
-        if (data.getString("Mail") != null) {
+
+        if (data.getString("mail") != null) {
+            Log.i(TAG, "username: " + data.getString("mail"));
             username = data.getString("Mail");
         }
-        if (data.getString("user_id") != null)
+        if (data.getString("user_id") != null) {
+            Log.i(TAG, "userid: " + data.getString("user_id"));
+
             userId = data.getString("user_id");
+        } else {
+
+        }
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
         mTitle = mDrawerTitle = getTitle();
@@ -172,6 +186,11 @@ public class HomeStudent extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_search:
                 //openSearch();
+                return true;
+            case R.id.action_logout:
+                LoginManager.getInstance().logOut();
+                Intent intent = new Intent(HomeStudent.this,LandingActivity.class);
+                startActivity(intent);
                 return true;
 
             default:
