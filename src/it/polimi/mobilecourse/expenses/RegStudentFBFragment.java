@@ -10,11 +10,23 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import javax.xml.datatype.Duration;
@@ -26,7 +38,7 @@ import java.util.List;
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class RegStudentFragment extends Fragment {
+public class RegStudentFBFragment extends Fragment {
 
     private View view;
     private ProgressBar progressView;
@@ -56,12 +68,13 @@ public class RegStudentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-         view = inflater.inflate(R.layout.regs_frag, container, false);
+        view = inflater.inflate(R.layout.regfbstudent_fragment, container, false);
 
 
 
-         settingsReg();
-         setSpinner();
+
+        settingsReg();
+        setSpinner();
 
 
         //registrazione
@@ -73,6 +86,7 @@ public class RegStudentFragment extends Fragment {
                 submit.setVisibility(View.GONE);
                 progress(true);
                 getData();
+                controlField();
 
 
             }
@@ -103,6 +117,11 @@ public class RegStudentFragment extends Fragment {
 
 
     private void settingsReg(){
+
+        Bundle bundle = activity.getIntent().getExtras();
+        String nome = bundle.getString("Nome");
+        TextView complete=(TextView) view.findViewById(R.id.complete);
+        complete.setText(nome + ",completa il profilo.");
 
         progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
 
@@ -184,22 +203,16 @@ public class RegStudentFragment extends Fragment {
     }
 
     private void getData(){
-        EditText name=(EditText) view.findViewById(R.id.nameS);
-        EditText surname=(EditText) view.findViewById(R.id.surnameS);
+
         EditText cell=(EditText) view.findViewById(R.id.cellS);
-        EditText mail=(EditText) view.findViewById(R.id.mailS);
-        EditText pass=(EditText) view.findViewById(R.id.passS);
-        EditText passdue=(EditText) view.findViewById(R.id.pass2S);
 
 
 
-        nameS=name.getText().toString();
-        surnameS=surname.getText().toString();
+
+
         cellS=cell.getText().toString();
-        mailS=mail.getText().toString();
-        passS=pass.getText().toString();
-        passDue=passdue.getText().toString();
-        controlUser(mailS);
+
+
 
 
 
@@ -208,17 +221,7 @@ public class RegStudentFragment extends Fragment {
 
     }
 
-    private boolean isValidEmail(String target){
 
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
-
-    }
-
-    private boolean isPasswordValid(String password){
-
-        return password.length()>4;
-
-    }
 
     private boolean isCellValid(String cell){
         return Patterns.PHONE.matcher(cell).matches();
@@ -226,52 +229,67 @@ public class RegStudentFragment extends Fragment {
 
     private void completeReg(){
 
-        String url="registration.php?username=".concat(mailS).concat("&").concat("password=").concat(passS).concat("&").concat("nome=")
+
+        Bundle bundle = activity.getIntent().getExtras();
+
+        String nameS = bundle.getString("Nome");
+        String surnameS = bundle.getString("Cognome");
+        String mailS = bundle.getString("Mail");
+
+
+
+        String url="registration_student_fb.php?username=".concat(mailS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellS)
                 .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity);
-        new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFragment.this).execute();
+        //new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFBFragment.this).execute();
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                "http://www.unishare.it/tutored/"+url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d("RegFBStudent", "Registrazione avvenuta con successo");
+                            Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata",Toast.LENGTH_SHORT);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("RegFBStudent", "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+        queue.add(jsonObjReq);
+
         Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(), LandingActivity.class);
+        Intent myintent = new Intent(view.getContext(),LandingActivity.class);
         startActivity(myintent);
 
 
 
     }
 
-    private void controlUser(String mail){
-
-        String url="control_mail_s.php?mail=".concat(mail);
-        new RequestFtp().setParameters(activity, url, "controlS", RegStudentFragment.this).execute();
-
-    }
-
-    public void duplicateMail(ArrayList<ObjDb> result){
 
 
 
-        ObjDb res = result.get(0);
-        String str=res.get("ID");
-        if(str.compareTo("NO")==0){
-
-            controlField();
-
-        }
-        else{
-
-
-            Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
-            Intent myintent = new Intent(view.getContext(), LandingActivity.class);
-            startActivity(myintent);
-            }
-
-    }
 
     private void controlField(){
 
 
-        if(isValidEmail(mailS)==true && isCellValid(cellS)==true ){
+        if(isCellValid(cellS)==true ){
 
-            if(passS.compareTo(passDue)==0 && isPasswordValid(passS)==true){
 
 
 
@@ -280,19 +298,12 @@ public class RegStudentFragment extends Fragment {
 
 
 
-            }
-            else{
-                Toast.makeText(getActivity().getApplicationContext(),"Campo password non corretto", Toast.LENGTH_SHORT).show();
-                progress(false);
-                submit.setVisibility(View.VISIBLE);
 
-
-            }
 
         }
         else{
 
-            Toast.makeText(getActivity().getApplicationContext(),"Mail o Cellulare non validi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Cellulare non valido", Toast.LENGTH_SHORT).show();
             progress(false);
             submit.setVisibility(View.VISIBLE);
 
@@ -306,13 +317,13 @@ public class RegStudentFragment extends Fragment {
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+        progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
 
 
 
@@ -354,9 +365,9 @@ public class RegStudentFragment extends Fragment {
 
 
 
-            new RequestFtp().setParameters(activity, "univer.php", "spinnerUni", RegStudentFragment.this).execute();
+            new RequestFtp().setParameters(activity, "univer.php", "spinnerUniFB", RegStudentFBFragment.this).execute();
 
-            new RequestFtp().setParameters(activity, "cities.php", "spinnerCity", RegStudentFragment.this).execute();
+            new RequestFtp().setParameters(activity, "cities.php", "spinnerCityFB", RegStudentFBFragment.this).execute();
 
 
 

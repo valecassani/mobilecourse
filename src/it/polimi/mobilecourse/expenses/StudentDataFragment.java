@@ -88,8 +88,9 @@ public class StudentDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.student_data_fragment, container, false);
 
         queue = Volley.newRequestQueue(view.getContext());
-        username = getArguments().getString("username");
+        username = getActivity().getIntent().getExtras().getString("mail");
         Log.i(TAG,"Username received: " + username);
+
 
         if (username != null) {
             Log.i(TAG,"url for username");

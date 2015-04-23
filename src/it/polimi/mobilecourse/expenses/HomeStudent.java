@@ -21,7 +21,17 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.login.LoginManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -57,19 +67,21 @@ public class HomeStudent extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
-        Log.i(TAG, "username: " + data.getString("mail"));
-
+        Log.i(TAG,data.getString("user_id"));
 
         if (data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
-            username = data.getString("Mail");
-        }
-        if (data.getString("user_id") != null) {
-            Log.i(TAG, "userid: " + data.getString("user_id"));
-
-            userId = data.getString("user_id");
+            username = data.getString("mail");
+            getUserIdFromMail();
+            Log.i(TAG, "userid: " + userId);
         } else {
+            if (data.getString("user_id") != null) {
+                Log.i(TAG, "userid: " + data.getString("user_id"));
 
+                userId = data.getString("user_id");
+            } else {
+
+            }
         }
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
@@ -146,8 +158,42 @@ public class HomeStudent extends ActionBarActivity {
 
     }
 
+    private void getUserIdFromMail() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, obj.toString());
+                            userId = obj.getString("id");
+                            Log.d(TAG, "Assignment done of " + userId);
 
 
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+
+// Adding request to request queue
+        queue.add(jsonObjReq);
+    }
 
 
     @Override
@@ -212,7 +258,7 @@ public class HomeStudent extends ActionBarActivity {
             case 1:
                 fragment = new StudentDataFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("username", username);
+                bundle.putString("mail", username);
                 bundle.putString("id", userId);
                 fragment.setArguments(bundle);
                 break;
@@ -271,5 +317,9 @@ public class HomeStudent extends ActionBarActivity {
 
         }
 
+    }
+
+    public String getId(){
+        return userId;
     }
 }

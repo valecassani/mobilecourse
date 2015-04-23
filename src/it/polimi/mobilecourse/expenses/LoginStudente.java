@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -42,10 +43,14 @@ import java.util.Arrays;
  */
 public class LoginStudente extends ActionBarActivity {
 
-    boolean logged;
-    LoginButton loginButton;
-    CallbackManager callbackManager;
-    AccessTokenTracker accessTokenTracker;
+    private boolean logged;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private String email;
+    private String nome;
+    private String cognome;
+    private View view;
 
 
     private FBSFragment fbsFragment;
@@ -75,8 +80,8 @@ public class LoginStudente extends ActionBarActivity {
         catch (NoSuchAlgorithmException e)
         {
         }
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.login_studente);
+        view = findViewById(R.id.scroll_studente);
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_student_login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile, email"));;
@@ -84,10 +89,7 @@ public class LoginStudente extends ActionBarActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-
-
-                Profile profile = Profile.getCurrentProfile();
-
+                Log.i("LoginStudente", "Entro nel ciclo per recuperare i dati");
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -97,20 +99,33 @@ public class LoginStudente extends ActionBarActivity {
                                     GraphResponse response) {
                                 // Application code
                                 try {
-                                    Log.v("LoginActivity", response.getJSONObject().getString("email"));
+                                    email = response.getJSONObject().getString("email");
+                                    Log.v("LoginActivityyyyy", response.getJSONObject().getString("email"));
+                                    nome = response.getJSONObject().getString("first_name");
+                                    Log.v("LoginActivity", response.getJSONObject().getString("first_name"));
+
+                                    cognome = response.getJSONObject().getString("last_name");
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("Tipo", "FB");
+                                    bundle.putString("Mail", email);
+                                    bundle.putString("Nome", nome);
+                                    bundle.putString("Cognome",cognome);
+                                    Intent myintent = new Intent(LoginStudente.this, RegistrationStudent.class);
+                                    myintent.putExtras(bundle);
+                                    startActivity(myintent);
+
+
+
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender");
+                parameters.putString("fields", "id,first_name,last_name,email,gender");
                 request.setParameters(parameters);
                 request.executeAsync();
-
-                // Get User Name
-
-                Log.i("LoginFB", profile.getFirstName());
 
             }
 
@@ -128,19 +143,42 @@ public class LoginStudente extends ActionBarActivity {
 
         loginButton.registerCallback(callbackManager,mFacebookCallback);
 
+    }
+
+    public void launchRingDialog(View view, LoginResult loginResult1) {
+        final LoginResult loginResult = loginResult1;
+        final ProgressDialog ringProgressDialog = ProgressDialog.show(LoginStudente.this, "Please wait ...", "Loading data from Facebook", true);
+
+        ringProgressDialog.setCancelable(true);
+
+        new Thread(new Runnable() {
+
+            @Override
+
+            public void run() {
+
+                try {
 
 
 
 
 
 
+                } catch (Exception e) {
+
+
+
+                }
 
 
 
 
+            }
 
+        }).start();
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent data)
@@ -152,29 +190,11 @@ public class LoginStudente extends ActionBarActivity {
 
 
 
-    /*
-    @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
-
-    }
-
-    @Override
-    public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
-
-
-        if(op=="logStudente"){
-
-            LoginSFragment lsfrag=(LoginSFragment) fragment;
-            //lsfrag.manageLogin(result);
-        }
-
+    public void startRegComplete(){
 
 
     }
 
-    */
 
     @Override
     public void onDestroy() {

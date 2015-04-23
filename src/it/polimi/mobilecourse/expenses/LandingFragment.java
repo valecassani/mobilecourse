@@ -19,6 +19,9 @@ import com.facebook.LoggingBehavior;
 
 import com.google.android.gms.fitness.result.SessionStopResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -67,7 +70,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), LoginStudente.class);
+                Intent myintent = new Intent(activity, LoginStudente.class);
                 startActivity(myintent);
 
             }
@@ -78,7 +81,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), LoginTutor.class);
+                Intent myintent = new Intent(activity, LoginTutor.class);
                 startActivity(myintent);
 
             }
@@ -94,10 +97,10 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), DataActivityStudent.class);
+                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("Nome", nome);
-                mBundle.putInt("Id", id);
+                mBundle.putString("user_id", Integer.toString(id));
                 myintent.putExtras(mBundle);
                 startActivity(myintent);
 
@@ -142,7 +145,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent myintent = new Intent(v.getContext(), DataActivityTutor.class);
+                Intent myintent = new Intent(v.getContext(), HomeTutor.class);
                 startActivity(myintent);
 
             }
@@ -170,16 +173,16 @@ public class LandingFragment extends Fragment {
     }
 
 
-    public void control(ArrayList<ObjDb> result) {
+    public void control(JSONObject result) throws JSONException {
 
-        ObjDb res = result.get(0);
-        String response = res.get("Response");
+
+        String response = result.getString("Response");
         //System.out.println("Response "+response);
         if (response.compareTo("S") == 0) {
 
             str = "S";
-            String id_utente = res.get("id_utente");
-            nome = res.get("nome");
+            String id_utente = result.getString("id_utente");
+            nome = result.getString("nome");
             //System.out.println("nome "+nome);
             id = Integer.parseInt(id_utente);
             buttonsSActions();
@@ -189,8 +192,8 @@ public class LandingFragment extends Fragment {
         if (response.compareTo("T") == 0) {
 
             str = "T";
-            String id_utente = res.get("id_utente");
-            nome = res.get("nome");
+            String id_utente = result.getString("id_utente");
+            nome = result.getString("nome");
             id = Integer.parseInt(id_utente);
             buttonsTActions();
 
@@ -202,7 +205,12 @@ public class LandingFragment extends Fragment {
 
 
     }
+    @Override
+    public void onStop(){
+        super.onStop();
+        activity.finish();
 
+    }
 
     public interface manageListener{
 

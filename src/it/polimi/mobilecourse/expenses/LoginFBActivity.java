@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-
+import com.facebook.login.widget.LoginButton;
 
 
 /**
@@ -18,6 +18,7 @@ public class LoginFBActivity extends Activity {
     boolean logged;
     Context ctx;
     TextView nome;
+    private LoginButton lb;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -7,17 +7,12 @@
 
 
 
+    <fragment android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragreplace"
+        android:name="it.polimi.mobilecourse.expenses.FragReplace"
+        tools:layout="@layout/frag_replace"/>
 
-
-        <fragment
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/fragRS"
-                tools:layout="@layout/regs_frag"
-                class="it.polimi.mobilecourse.expenses.RegStudentFragment"
-                android:name="it.polimi.mobilecourse.expenses.RegStudentFragment"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"></fragment>
 
 
 
