@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -30,9 +37,12 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -70,8 +80,6 @@ public class LoginStudente extends ActionBarActivity {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
                 String sign = Base64.encodeToString(md.digest(), Base64.DEFAULT);
-                Log.e("MY KEY HASH:", sign);
-
             }
         }
         catch (PackageManager.NameNotFoundException e)
@@ -104,15 +112,11 @@ public class LoginStudente extends ActionBarActivity {
                                     nome = response.getJSONObject().getString("first_name");
                                     Log.v("LoginActivity", response.getJSONObject().getString("first_name"));
 
+
+
                                     cognome = response.getJSONObject().getString("last_name");
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("Tipo", "FB");
-                                    bundle.putString("Mail", email);
-                                    bundle.putString("Nome", nome);
-                                    bundle.putString("Cognome",cognome);
-                                    Intent myintent = new Intent(LoginStudente.this, RegistrationStudent.class);
-                                    myintent.putExtras(bundle);
-                                    startActivity(myintent);
+                                    controlFbLogin();
+
 
 
 
@@ -195,12 +199,96 @@ public class LoginStudente extends ActionBarActivity {
 
     }
 
+    private void controlFbLogin() {
+        String url = "http://www.unishare.it/tutored/exist_user.php?mail=" + email;
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        final boolean control;
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            if (obj.getString("Response").equals("S")) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("mail",email);
+                                Intent myintent = new Intent(LoginStudente.this, HomeStudent.class);
+                                myintent.putExtras(bundle);
+                                startActivity(myintent);
+                            } else {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("Tipo", "FB");
+                                bundle.putString("Mail", email);
+                                bundle.putString("Nome", nome);
+                                bundle.putString("Cognome",cognome);
+                                Intent myintent = new Intent(LoginStudente.this, RegistrationStudent.class);
+                                myintent.putExtras(bundle);
+                                startActivity(myintent);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("Landing", response.toString());
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Landing Fragment", "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+        queue.add(jsonObjectRequest);
+
+
+
+    }
+
+
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        accessTokenTracker.stopTracking();
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        invokeFragmentManagerNoteStateNotSaved();
+
     }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private void invokeFragmentManagerNoteStateNotSaved() {
+        /**
+         * For post-Honeycomb devices
+         */
+        if (Build.VERSION.SDK_INT < 11) {
+            return;
+        }
+        try {
+            Class cls = getClass();
+            do {
+                cls = cls.getSuperclass();
+            } while (!"Activity".equals(cls.getSimpleName()));
+            Field fragmentMgrField = cls.getDeclaredField("mFragments");
+            fragmentMgrField.setAccessible(true);
+
+            Object fragmentMgr = fragmentMgrField.get(this);
+            cls = fragmentMgr.getClass();
+
+            Method noteStateNotSavedMethod = cls.getDeclaredMethod("noteStateNotSaved", new Class[] {});
+            noteStateNotSavedMethod.invoke(fragmentMgr, new Object[] {});
+            Log.d("DLOutState", "Successful call for noteStateNotSaved!!!");
+        } catch (Exception ex) {
+            Log.e("DLOutState", "Exception on worka FM.noteStateNotSaved", ex);
+        }
+    }
+
+
+
 
 
 }

@@ -72,6 +72,7 @@ public class LandingFragment extends Fragment {
 
                 Intent myintent = new Intent(activity, LoginStudente.class);
                 startActivity(myintent);
+                activity.finish();
 
             }
         });
@@ -203,12 +204,6 @@ public class LandingFragment extends Fragment {
             setNomeWelcome(nome);
         }
 
-
-    }
-    @Override
-    public void onStop(){
-        super.onStop();
-        activity.finish();
 
     }
 

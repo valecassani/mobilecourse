@@ -64,7 +64,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
                 updateWithToken(newAccessToken);
             }
-        };;
+        };
         callbackManager = CallbackManager.Factory.create();
         updateWithToken(AccessToken.getCurrentAccessToken());
         setLanding();
@@ -74,12 +74,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         showWelcome();
         manageSession(savedInstanceState);
         if (logged == false) {
-            Log.i("Landing", "logged false");
-            //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
-            FragmentManager fragMan = getFragmentManager();
-            FragmentTransaction fragTrans = fragMan.beginTransaction();
-            fragTrans.replace(R.id.fragreplace, lf).commit();
-            progress(false);
+
 
         }
 
@@ -125,6 +120,12 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
                 @Override
                 public void run() {
+                    Log.i("Landing", "logged false");
+                    //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
+                    FragmentManager fragMan = getFragmentManager();
+                    FragmentTransaction fragTrans = fragMan.beginTransaction();
+                    fragTrans.replace(R.id.fragreplace, lf).commit();
+                    progress(false);
 
                 }
             }, 100);
@@ -372,10 +373,23 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
     }*/
 
+    @Override
     public void manageButton(){
         progress(false);
         showButton();
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        accessTokenTracker.stopTracking();
+
+    }
+
+    public void onResume() {
+        super.onResume();
+        accessTokenTracker.startTracking();
     }
 
 

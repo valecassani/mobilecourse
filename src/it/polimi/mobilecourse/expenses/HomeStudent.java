@@ -67,7 +67,6 @@ public class HomeStudent extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
-        Log.i(TAG,data.getString("user_id"));
 
         if (data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
