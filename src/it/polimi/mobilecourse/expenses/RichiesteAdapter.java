@@ -45,9 +45,11 @@ public class RichiesteAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.richieste_item, null);
         }
 
-        TextView testo = (TextView) convertView.findViewById(R.id.testo_richiesta);
+        TextView testo = (TextView) convertView.findViewById(R.id.testoRichiesta);
+        TextView dataEntro = (TextView) convertView.findViewById(R.id.data_entro_value);
 
         testo.setText(items.get(position).getTesto());
+        dataEntro.setText(items.get(position).getData());
 
 
 

@@ -134,7 +134,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     Map<String, String>  params = new HashMap<String, String>();
                     params.put("testo", testo);
                     params.put("data", dataToSend.toString());
-                    params.put("id_studente", "1");
+                    params.put("id_studente", idStudente);
                     params.put("foto","prova foto");
 
                     return params;

@@ -1,22 +1,17 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
-import android.app.Fragment;
+
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 import com.android.volley.Request;
@@ -25,15 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -45,7 +36,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -53,17 +43,13 @@ import java.util.Arrays;
  */
 public class LoginStudente extends ActionBarActivity {
 
-    private boolean logged;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-    private AccessTokenTracker accessTokenTracker;
     private String email;
     private String nome;
     private String cognome;
-    private View view;
 
 
-    private FBSFragment fbsFragment;
 
 
     @Override
@@ -79,20 +65,17 @@ public class LoginStudente extends ActionBarActivity {
             {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                String sign = Base64.encodeToString(md.digest(), Base64.DEFAULT);
             }
         }
-        catch (PackageManager.NameNotFoundException e)
+        catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e)
         {
+            e.printStackTrace();
         }
-        catch (NoSuchAlgorithmException e)
-        {
-        }
+
         setContentView(R.layout.login_studente);
-        view = findViewById(R.id.scroll_studente);
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_student_login_button);
-        loginButton.setReadPermissions(Arrays.asList("public_profile, email"));;
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email"));
         FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -149,39 +132,7 @@ public class LoginStudente extends ActionBarActivity {
 
     }
 
-    public void launchRingDialog(View view, LoginResult loginResult1) {
-        final LoginResult loginResult = loginResult1;
-        final ProgressDialog ringProgressDialog = ProgressDialog.show(LoginStudente.this, "Please wait ...", "Loading data from Facebook", true);
 
-        ringProgressDialog.setCancelable(true);
-
-        new Thread(new Runnable() {
-
-            @Override
-
-            public void run() {
-
-                try {
-
-
-
-
-
-
-                } catch (Exception e) {
-
-
-
-                }
-
-
-
-
-            }
-
-        }).start();
-
-    }
 
 
     @Override
@@ -191,18 +142,9 @@ public class LoginStudente extends ActionBarActivity {
         callbackManager.onActivityResult(requestCode, responseCode, data);
     }
 
-
-
-
-    public void startRegComplete(){
-
-
-    }
-
     private void controlFbLogin() {
         String url = "http://www.unishare.it/tutored/exist_user.php?mail=" + email;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        final boolean control;
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {

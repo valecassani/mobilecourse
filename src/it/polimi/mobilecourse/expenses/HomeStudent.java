@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessTokenTracker;
 import com.facebook.login.LoginManager;
 
 import org.json.JSONArray;
@@ -64,6 +65,7 @@ public class HomeStudent extends ActionBarActivity {
 
 
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
@@ -318,7 +320,5 @@ public class HomeStudent extends ActionBarActivity {
 
     }
 
-    public String getId(){
-        return userId;
-    }
+
 }
