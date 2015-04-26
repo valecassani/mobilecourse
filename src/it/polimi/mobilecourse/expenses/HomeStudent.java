@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -57,6 +59,7 @@ public class HomeStudent extends ActionBarActivity {
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
     private String userId;
+    private boolean doubleBackToExitPressedOnce;
 
     public HomeStudent() {
 
@@ -237,6 +240,7 @@ public class HomeStudent extends ActionBarActivity {
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
                 Intent intent = new Intent(HomeStudent.this,LandingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
 
@@ -319,6 +323,7 @@ public class HomeStudent extends ActionBarActivity {
         }
 
     }
+
 
 
 }

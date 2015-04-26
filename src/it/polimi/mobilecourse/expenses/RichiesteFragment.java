@@ -84,7 +84,7 @@ public class RichiesteFragment extends Fragment {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, response.toString());
                                 RichiestaItem item = new RichiestaItem(obj.getString("id"), obj.getString("testo"),
-                                        obj.getString("foto"), obj.getString("foto"));
+                                        obj.getString("dataentro"), obj.getString("foto"));
                                 items.add(item);
 
 

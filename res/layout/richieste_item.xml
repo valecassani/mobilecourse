@@ -5,26 +5,29 @@
 
 
     <TextView
-        android:layout_width="277dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/testoRichiesta"
         android:layout_row="0"
-        android:layout_column="1" />
+        android:layout_column="0"
+        android:layout_margin="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="Valida Entro"
         android:id="@+id/data_entro_title"
         android:layout_row="0"
-        android:layout_column="2" />
+        android:layout_column="2"
+        android:layout_margin="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/data_entro_value"
