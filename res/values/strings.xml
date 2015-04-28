@@ -41,5 +41,7 @@
     <string name="title_activity_help_ab">HelpABActivity</string>
     <string name="drawer_open">Drawer Is Open</string>
     <string name="drawer_close">Drawer Is Close</string>
+    <string name="search_hint">Cerca</string>
+    <string name="title_activity_search_results">Risultati della Ricerca</string>
 
 </resources>

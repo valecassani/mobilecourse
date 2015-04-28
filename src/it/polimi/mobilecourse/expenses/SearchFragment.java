@@ -64,11 +64,13 @@ public class SearchFragment extends Fragment {
                                 Log.d(TAG, obj.toString());
                                 SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"));
                                 items.add(item);
-                                SearchTutorAdapter adapter = new SearchTutorAdapter(context, items);
-                                mListView.setAdapter(adapter);
+
 
 
                             }
+
+                            SearchTutorAdapter adapter = new SearchTutorAdapter(context, items);
+                            mListView.setAdapter(adapter);
 
 
 

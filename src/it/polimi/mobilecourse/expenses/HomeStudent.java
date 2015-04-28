@@ -1,18 +1,17 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.support.v7.widget.SearchView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,7 +28,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.AccessTokenTracker;
 import com.facebook.login.LoginManager;
 
 import org.json.JSONArray;
@@ -95,6 +93,7 @@ public class HomeStudent extends ActionBarActivity {
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (LinearLayout) findViewById(R.id.left_drawer_student);
         ActionBar toolbar = getSupportActionBar();
+
 
 
 
@@ -204,24 +203,44 @@ public class HomeStudent extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo( searchManager.getSearchableInfo(getComponentName()) );
+        if (null != searchView )
+        {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false);
+        }
+
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener()
+        {
+            public boolean onQueryTextChange(String newText)
+            {
+                // this is your adapter that will be filtered
+
+                return true;
+            }
+
+            public boolean onQueryTextSubmit(String query)
+            {
+                onSearchRequested();
+                return true;
+            }
+        };
+        searchView.setOnQueryTextListener(queryTextListener);
         return super.onCreateOptionsMenu(menu);
     }
 
 
 
-    private void openSearch() {
-        Fragment fragment = new SearchFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
 
-
-    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerFragment);
        menu.findItem(R.id.action_logout).setVisible(!drawerOpen);
+
 
        return super.onPrepareOptionsMenu(menu);
     }
@@ -235,7 +254,7 @@ public class HomeStudent extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case R.id.action_search:
-                //openSearch();
+                onSearchRequested();
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
@@ -248,6 +267,14 @@ public class HomeStudent extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    @Override
+    public boolean onSearchRequested() {
+        Bundle appData = new Bundle();
+        appData.putString("hello", "world");
+        startSearch(null, false, appData, false);
+        return true;
     }
 
 

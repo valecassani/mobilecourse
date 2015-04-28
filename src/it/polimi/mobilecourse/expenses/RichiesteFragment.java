@@ -91,10 +91,11 @@ public class RichiesteFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            RichiesteAdapter adapter = new RichiesteAdapter(context, items);
-                            mListView.setAdapter(adapter);
+
 
                         }
+                        RichiesteAdapter adapter = new RichiesteAdapter(context, items);
+                        mListView.setAdapter(adapter);
 
 
                     }
@@ -117,8 +118,9 @@ public class RichiesteFragment extends Fragment {
     public void onDestroy(){
 
 
-        queue.stop();
+
         super.onDestroy();
+        queue.stop();
     }
 
 }
