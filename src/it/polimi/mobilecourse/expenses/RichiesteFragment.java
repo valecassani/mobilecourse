@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class RichiesteFragment extends Fragment {
         Log.i(TAG,"user id " + idStudente);
 
         mListView = (ListView) view.findViewById(R.id.richieste_list);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().show();
 
         context = container.getContext();
         newRichiestaButton = (Button) view.findViewById(R.id.button_add_richiesta);
