@@ -3,6 +3,7 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ public class PrenotazioniFragment extends Fragment {
 
         View contView = inflater.inflate(R.layout.ripet_fragment, container, false);
         studentId=getArguments().getString("student_id");
+        ((ActionBarActivity)getActivity()).getSupportActionBar().show();
 
 
         context = contView.getContext();
