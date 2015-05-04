@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.AccessTokenTracker;
 import com.facebook.LoggingBehavior;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.fitness.result.SessionStopResult;
 
 import org.json.JSONException;
@@ -202,6 +204,10 @@ public class LandingFragment extends Fragment {
         }
         if (nome != null && nome.compareTo("") != 0) {
             setNomeWelcome(nome);
+        }
+        if (response.compareTo("N") == 0) {
+            LoginManager.getInstance().logOut();
+            buttonsActions();
         }
 
 

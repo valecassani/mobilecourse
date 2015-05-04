@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +53,7 @@ public class HomeStudent extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerFragment;
     private String username;
+    private Toolbar toolbar;
     private int positionRequired;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
@@ -92,7 +94,14 @@ public class HomeStudent extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (LinearLayout) findViewById(R.id.left_drawer_student);
-        ActionBar toolbar = getSupportActionBar();
+
+        toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.app_name);
+            setSupportActionBar(toolbar);
+        }
+
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
 
@@ -107,9 +116,9 @@ public class HomeStudent extends ActionBarActivity {
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1],R.drawable.com_facebook_button_like_icon_selected));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.com_facebook_button_like_icon_selected));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2],R.drawable.ic_plusone_standard_off_client));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.ic_plusone_standard_off_client));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.abc_ic_search_api_mtrl_alpha));
 
@@ -124,19 +133,14 @@ public class HomeStudent extends ActionBarActivity {
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        toolbar.setIcon(R.drawable.landing_image);
-        toolbar.setTitle(R.string.app_name);
 
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-        toolbar.setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
+                mDrawerLayout,
+                toolbar,        /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
@@ -286,6 +290,7 @@ public class HomeStudent extends ActionBarActivity {
         switch (position) {
             case 0:
                 fragment = new SearchFragment();
+                getSupportActionBar().setTitle("Ricerca Tutor");
                 break;
             case 1:
                 fragment = new StudentDataFragment();
