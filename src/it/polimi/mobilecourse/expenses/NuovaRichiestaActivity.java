@@ -1,13 +1,17 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -35,6 +39,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,6 +63,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private EditText mTesto;
     private static EditText mDataEntro;
     private Button sendButton;
+    private Button imageButton;
     private String testo;
     private Date data;
     private ActionBar actionBar;
@@ -61,6 +72,11 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog datePickerDialog;
     private java.sql.Date dataToSend;
+    private Dialog dialog;
+    private String selectedPath;
+    String upLoadServerUri = null;
+
+    private int serverResponseCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,11 +93,35 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         setDateDialog();
+        imageButton = (Button)findViewById(R.id.buttonImage);
+        imageButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                openGallery(1);
+            } });
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 manageInput();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                uploadFile(selectedPath);
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
             }
         });
 
@@ -93,6 +133,15 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
 
         return;
+    }
+
+    public void openGallery(int req_code) {
+
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select file to upload "), req_code);
+
     }
 
     private void manageInput() {
@@ -193,4 +242,177 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
             datePickerDialog.show();
         }
     }
+
+    public int uploadFile(String sourceFileUri) {
+
+
+        String fileName = sourceFileUri;
+        System.out.println(selectedPath);
+
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+        File sourceFile = new File(sourceFileUri);
+
+        if (!sourceFile.isFile()) {
+
+            dialog.dismiss();
+
+            Log.e("uploadFile", "Source File not exist :"
+                    + selectedPath);
+
+
+            return 0;
+
+        } else {
+            try {
+
+                // open a URL connection to the Servlet
+                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                URL url = new URL(upLoadServerUri);
+
+                // Open a HTTP  connection to  the URL
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true); // Allow Inputs
+                conn.setDoOutput(true); // Allow Outputs
+                conn.setUseCaches(false); // Don't use a Cached Copy
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Connection", "Keep-Alive");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                conn.setRequestProperty("uploaded_file", fileName);
+
+                dos = new DataOutputStream(conn.getOutputStream());
+
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""+ fileName + "\"" + lineEnd);
+
+
+
+                dos.writeBytes(lineEnd);
+
+                // create a buffer of  maximum size
+                bytesAvailable = fileInputStream.available();
+
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                // read file and write it into form...
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                while (bytesRead > 0) {
+
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                }
+
+                // send multipart form data necesssary after file data...
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+                serverResponseCode = conn.getResponseCode();
+                String serverResponseMessage = conn.getResponseMessage();
+
+                Log.i("uploadFile", "HTTP Response is : "
+                        + serverResponseMessage + ": " + serverResponseCode);
+
+                if (serverResponseCode == 200) {
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
+                                    + " http://www.unishare.it/tutored/images/"
+                                    + selectedPath;
+
+                            
+                            Toast.makeText(NuovaRichiestaActivity.this, "File Upload Complete.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                //close the streams //
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+
+            } catch (MalformedURLException ex) {
+
+                dialog.dismiss();
+                ex.printStackTrace();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(NuovaRichiestaActivity.this, "MalformedURLException",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+            } catch (Exception e) {
+
+                dialog.dismiss();
+                e.printStackTrace();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(NuovaRichiestaActivity.this, "Got Exception : see logcat ",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Log.e("Upload Exception", "Exception : "
+                        + e.getMessage(), e);
+            }
+            dialog.dismiss();
+            return serverResponseCode;
+
+        } // End else block
+    }
+
+    public String getPath(Uri uri) {
+
+        String[] projection = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+
+        return cursor.getString(column_index);
+
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if (resultCode == RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            if (requestCode == 1)
+
+            {
+
+                selectedPath = getPath(selectedImageUri);
+
+                System.out.println("selectedPath1 : " + selectedPath);
+
+
+            }
+
+
+        }
+    }
+
 }
