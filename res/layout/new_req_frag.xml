@@ -23,11 +23,11 @@
         android:hint="Selezionare una data"
         android:inputType="date" />
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/imgAvatar"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/buttonImage"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop" />
+        android:layout_width="wrap_content"
+        android:text="Carica Immagine"></Button>
 
     <Button
         android:id="@+id/buttonSendRich"
