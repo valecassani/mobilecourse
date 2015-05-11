@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.SwipeRefreshLayout
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/swipe_prenotazioni"
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
 
 
@@ -32,6 +33,6 @@
         materialdesign:iconDrawable="@drawable/ic_plus" />
 
 
+</android.support.v4.widget.SwipeRefreshLayout>
 
 
-</RelativeLayout>
