@@ -103,14 +103,19 @@ public class UploadToServer extends Activity {
     public String getPath(Uri uri) {
 
         String[] projection = {MediaStore.Images.Media.DATA};
+        String res = null;
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
 
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
 
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
 
         cursor.moveToFirst();
 
-        return cursor.getString(column_index);
+        return res;
 
     }
 

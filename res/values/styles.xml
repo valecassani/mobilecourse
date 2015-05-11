@@ -1,12 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <!-- disable window title -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- disable window actionbar, cause u have an toolbar -->
+        <item name="windowActionBar">false</item>
 
-        <item name="android:theme">@style/CustomActionBarTheme</item>
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
-
     <!-- ActionBar styles -->
 
 

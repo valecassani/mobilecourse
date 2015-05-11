@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class RichiesteFragment extends Fragment {
     private Context context;
     private Button newRichiestaButton;
     private String idStudente;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class RichiesteFragment extends Fragment {
 
         mListView = (ListView) view.findViewById(R.id.richieste_list);
         ((ActionBarActivity)getActivity()).getSupportActionBar().show();
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeRichieste);
         context = container.getContext();
         newRichiestaButton = (Button) view.findViewById(R.id.button_add_richiesta);
         newRichiestaButton.setOnClickListener(new View.OnClickListener() {

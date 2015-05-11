@@ -5,11 +5,14 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
@@ -74,6 +77,8 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private java.sql.Date dataToSend;
     private Dialog dialog;
     private String selectedPath;
+    private String nameFile;
+    private ProgressDialog progressDialog;
     String upLoadServerUri = null;
 
     private int serverResponseCode;
@@ -82,6 +87,8 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_req_frag);
+
+        upLoadServerUri = "http://www.unishare.it/tutored/upload_to_server.php";
 
 
         context = getApplicationContext();
@@ -102,12 +109,29 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                manageInput();
+
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
+                                manageInput();
+                                progressDialog = ProgressDialog.show(NuovaRichiestaActivity.this, "", "Uploading file...", true);
+
+                                new Thread(new Runnable() {
+                                    public void run() {
+                                        runOnUiThread(new Runnable() {
+                                            public void run() {
+
+                                            }
+                                        });
+
+                                        uploadFile(selectedPath);
+
+                                    }
+                                }).start();
+
+
                                 uploadFile(selectedPath);
                                 break;
 
@@ -118,8 +142,8 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     }
                 };
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                AlertDialog.Builder builder = new AlertDialog.Builder(NuovaRichiestaActivity.this);
+                builder.setMessage("Vuoi inviare?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
 
             }
@@ -153,6 +177,8 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
         }
 
         String url = "http://www.unishare.it/tutored/add_richiesta.php";
@@ -184,13 +210,13 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     params.put("testo", testo);
                     params.put("data", dataToSend.toString());
                     params.put("id_studente", idStudente);
-                    params.put("foto","prova foto");
+                    params.put("foto","tutored/images/"+nameFile);
 
                     return params;
                 }
             };
         queue.add(jsObjRequest);
-        Toast.makeText(context,"Richiesta Aggiunta",Toast.LENGTH_SHORT);
+        Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
         returnToFragmentRichieste();
 
 
@@ -244,13 +270,14 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     }
 
     public int uploadFile(String sourceFileUri) {
+        progressDialog.show();
 
 
         String fileName = sourceFileUri;
         System.out.println(selectedPath);
 
         HttpURLConnection conn = null;
-        DataOutputStream dos = null;
+        DataOutputStream dos;
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
@@ -261,7 +288,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         if (!sourceFile.isFile()) {
 
-            dialog.dismiss();
+            progressDialog.dismiss();
 
             Log.e("uploadFile", "Source File not exist :"
                     + selectedPath);
@@ -271,6 +298,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         } else {
             try {
+                nameFile = sourceFile.getName();
 
                 // open a URL connection to the Servlet
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
@@ -349,7 +377,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
             } catch (MalformedURLException ex) {
 
-                dialog.dismiss();
+                progressDialog.dismiss();
                 ex.printStackTrace();
 
                 runOnUiThread(new Runnable() {
@@ -362,7 +390,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                 Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
             } catch (Exception e) {
 
-                dialog.dismiss();
+                progressDialog.dismiss();
                 e.printStackTrace();
 
                 runOnUiThread(new Runnable() {
@@ -374,7 +402,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                 Log.e("Upload Exception", "Exception : "
                         + e.getMessage(), e);
             }
-            dialog.dismiss();
+            progressDialog.dismiss();
             return serverResponseCode;
 
         } // End else block
@@ -394,6 +422,18 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
     }
 
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -404,7 +444,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
             {
 
-                selectedPath = getPath(selectedImageUri);
+                selectedPath = getRealPathFromURI(selectedImageUri);
 
                 System.out.println("selectedPath1 : " + selectedPath);
 
@@ -414,5 +454,66 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
         }
     }
+
+    //fa partire il thread,l'argomento di execute() è l'immagine da scaricare
+
+    DownloadImage di =new DownloadImage();
+    //di.execute("IMAG0583.jpg");
+
+
+
+    //thread che scarica l'immagine
+
+    public class DownloadImage extends AsyncTask<String,Void,Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(String ...params) {
+
+            try {
+
+                //bmp=Functions.downloadImageFromPath("http://www.unishare.it/tutored/images/"+params[0]);
+
+            }
+            catch(Exception exception){
+                System.out.println("Error "+exception.getMessage());
+
+            }
+
+            return true;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(final Boolean success){
+
+            if(success){
+
+//                setImage();
+
+
+
+            }
+
+        }
+
+
+    }
+
+
+    //funzione chiamata da onPostExecute e che setta l'immagine.img è un ImageView del file xml dell'activity.
+    //devi far girare le funzioni così,se no rompe :(
+
+    /*public void setImage(){
+
+        Image img = new Image();
+        img.setImageBitmap(bmp);
+        System.out.println("Immagine settata");
+    }
+    */
+
+//in realtà al thread tu passi il path che ti arriva da db (es. tutored/images/nome.jpg). basta che cambi il path
+// che usa la funzione downloadImageFromPath ,mettendo ("http://www.unishare.it/"+params[0])
 
 }
