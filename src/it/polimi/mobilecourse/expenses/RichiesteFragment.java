@@ -3,12 +3,16 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -18,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.gc.materialdesign.views.Button;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +42,8 @@ public class RichiesteFragment extends Fragment {
     private Context context;
     private Button newRichiestaButton;
     private String idStudente;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,11 +54,23 @@ public class RichiesteFragment extends Fragment {
         Log.i(TAG,"user id " + idStudente);
 
         mListView = (ListView) view.findViewById(R.id.richieste_list);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_richieste);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showResults();
+            }
+        });
+
 
         context = container.getContext();
-        newRichiestaButton = (Button) view.findViewById(R.id.button_add_richiesta);
-        newRichiestaButton.setOnClickListener(new View.OnClickListener() {
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_richieste);
+        fab.attachToListView(mListView);
+        Log.i(TAG,"Button Created");
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),NuovaRichiestaActivity.class);
@@ -59,6 +78,7 @@ public class RichiesteFragment extends Fragment {
                 bundle.putString("student_id", idStudente);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
 
             }
         });
@@ -81,8 +101,10 @@ public class RichiesteFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONArray response) {
+                        items.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
+
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, response.toString());
                                 RichiestaItem item = new RichiestaItem(obj.getString("id"), obj.getString("testo"),
@@ -98,6 +120,8 @@ public class RichiesteFragment extends Fragment {
                         }
                         RichiesteAdapter adapter = new RichiesteAdapter(context, items);
                         mListView.setAdapter(adapter);
+                        swipeRefreshLayout.setRefreshing(false);
+
 
 
                     }
@@ -107,11 +131,14 @@ public class RichiesteFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "Error: " + error.getMessage());
                 // hide the progress dialog
+                swipeRefreshLayout.setRefreshing(false);
 
             }
         });
 
         queue.add(jsonObjReq);
+
+
 
 
     }

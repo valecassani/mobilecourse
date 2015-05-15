@@ -94,7 +94,7 @@ public class LandingFragment extends Fragment {
     }
 
     private void buttonsSActions() {
-
+        (activity).manageButton();
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +120,7 @@ public class LandingFragment extends Fragment {
 
             }
         });
+
         try {
             ((manageListener) activity).manageButton();
         }
@@ -131,6 +132,7 @@ public class LandingFragment extends Fragment {
     }
 
     private void buttonsTActions() {
+        (activity).manageButton();
 
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +217,6 @@ public class LandingFragment extends Fragment {
 
     public interface manageListener{
 
-        public void manageButton();
+         void manageButton();
     }
 }

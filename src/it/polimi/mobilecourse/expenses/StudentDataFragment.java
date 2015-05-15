@@ -6,10 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,7 @@ public class StudentDataFragment extends Fragment {
     private String username;
     private String id;
     private String url;
+    private ImageView image;
     private String mParam1;
     private String mParam2;
 
@@ -91,7 +94,7 @@ public class StudentDataFragment extends Fragment {
         queue = Volley.newRequestQueue(view.getContext());
         username = getActivity().getIntent().getExtras().getString("mail");
         Log.i(TAG,"Username received: " + username);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
 
         if (username != null) {
@@ -156,6 +159,12 @@ public class StudentDataFragment extends Fragment {
         queue.add(jsonObjReq);
 
 
+        image = (ImageView)view.findViewById(R.id.immagine_prova);
+        DownloadImage di =new DownloadImage(image);
+        di.execute("IMAG0583.jpg");
+
+
+
         return view;
     }
 
@@ -190,12 +199,7 @@ public class StudentDataFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void onDestroy(){
 
-        queue.stop();
-        super.onDestroy();
-    }
 
 
 

@@ -2,9 +2,11 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,8 +54,9 @@ public class PrenotazioniFragment extends Fragment {
 
         View contView = inflater.inflate(R.layout.ripet_fragment, container, false);
         studentId=getArguments().getString("student_id");
-        ((ActionBarActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         mSwipeRefresh = (SwipeRefreshLayout) contView.findViewById(R.id.swipe_prenotazioni);
+        mSwipeRefresh.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -70,8 +73,6 @@ public class PrenotazioniFragment extends Fragment {
         return contView;
 
 
-
-
     }
 
 
@@ -85,7 +86,7 @@ public class PrenotazioniFragment extends Fragment {
         String url;
 
         if (studentId != null) {
-            url = "http://www.unishare.it/tutored/search_prenotazione.php?id_studente="+studentId;
+            url = "http://www.unishare.it/tutored/search_prenotazione.php?id_studente="+1;
         } else {
             url = "http://www.unishare.it/tutored/search_prenotazione.php?id_tutor=" + tutorId;
         }
@@ -96,6 +97,7 @@ public class PrenotazioniFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONArray response) {
+                        items.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
@@ -111,6 +113,7 @@ public class PrenotazioniFragment extends Fragment {
                             }
                             PrenotazioniAdapter adapter = new PrenotazioniAdapter(context,R.id.list_ripetizioni,items);
                             mListView.setAdapter(adapter);
+                            mSwipeRefresh.setRefreshing(false);
 
                         }
 
@@ -123,6 +126,7 @@ public class PrenotazioniFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "Error: " + error.getMessage());
                 // hide the progress dialog
+                mSwipeRefresh.setRefreshing(false);
 
             }
         });

@@ -1,15 +1,20 @@
 package it.polimi.mobilecourse.expenses;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 public class Functions {
 
@@ -40,5 +45,28 @@ public class Functions {
                 return true;
         }
         return false;
+    }
+    public static Bitmap downloadImageFromPath(String path){
+        InputStream in =null;
+        Bitmap bmp=null;
+        int responseCode = -1;
+        try{
+            URL url = new URL(path);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setDoInput(true);
+            con.connect();
+            responseCode = con.getResponseCode();
+            if(responseCode == HttpURLConnection.HTTP_OK)
+            {
+                //download
+                in = con.getInputStream();
+                bmp = BitmapFactory.decodeStream(in);
+                in.close();
+            }
+        }
+        catch(Exception ex){
+            Log.e("Exception", ex.toString());
+        }
+        return bmp;
     }
 }

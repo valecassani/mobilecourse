@@ -151,7 +151,6 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                             Log.v("LandingFragment", nome);
                             cognome = object.getString("last_name");
                             Log.v("LandingFragment", cognome);
-                            showButton();
                             controlFbLogin();
 
 
@@ -189,6 +188,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                             e.printStackTrace();
                         }
                         Log.d("Landing", response.toString());
+
 
 
                     }

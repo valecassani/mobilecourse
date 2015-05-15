@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -455,65 +458,21 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         }
     }
 
-    //fa partire il thread,l'argomento di execute() è l'immagine da scaricare
+    //fa partire il thread,l'argomento di execute() ï¿½ l'immagine da scaricare
 
-    DownloadImage di =new DownloadImage();
-    //di.execute("IMAG0583.jpg");
+
 
 
 
     //thread che scarica l'immagine
 
-    public class DownloadImage extends AsyncTask<String,Void,Boolean> {
 
 
-        @Override
-        protected Boolean doInBackground(String ...params) {
-
-            try {
-
-                //bmp=Functions.downloadImageFromPath("http://www.unishare.it/tutored/images/"+params[0]);
-
-            }
-            catch(Exception exception){
-                System.out.println("Error "+exception.getMessage());
-
-            }
-
-            return true;
-
-        }
+    //funzione chiamata da onPostExecute e che setta l'immagine.img ï¿½ un ImageView del file xml dell'activity.
+    //devi far girare le funzioni cosï¿½,se no rompe :(
 
 
-        @Override
-        protected void onPostExecute(final Boolean success){
-
-            if(success){
-
-//                setImage();
-
-
-
-            }
-
-        }
-
-
-    }
-
-
-    //funzione chiamata da onPostExecute e che setta l'immagine.img è un ImageView del file xml dell'activity.
-    //devi far girare le funzioni così,se no rompe :(
-
-    /*public void setImage(){
-
-        Image img = new Image();
-        img.setImageBitmap(bmp);
-        System.out.println("Immagine settata");
-    }
-    */
-
-//in realtà al thread tu passi il path che ti arriva da db (es. tutored/images/nome.jpg). basta che cambi il path
+//in realtï¿½ al thread tu passi il path che ti arriva da db (es. tutored/images/nome.jpg). basta che cambi il path
 // che usa la funzione downloadImageFromPath ,mettendo ("http://www.unishare.it/"+params[0])
 
 }

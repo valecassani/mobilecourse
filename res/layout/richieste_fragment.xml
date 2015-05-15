@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swipe_richieste"
-   >
-    <SwipeRefreshLayout
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+
+        android:id="@+id/swipe_richieste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipeRichieste">
+        android:orientation="vertical">
 
         <ListView
-            android:layout_height="match_parent"
+            android:id="@+id/richieste_list"
             android:layout_width="match_parent"
-            android:id ="@+id/richieste_list"></ListView>
-
-        <com.gc.materialdesign.views.ButtonFloat
-            android:id="@+id/button_add_richiesta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="24dp"
-            android:background="#1E88E5"
-            materialdesign:animate="true"
-            materialdesign:iconDrawable="@drawable/ic_plus" />
+            android:layout_height="match_parent"></ListView>
 
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    </SwipeRefreshLayout>
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab_richieste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_plus"
+        fab:fab_colorNormal="@color/primary"
+        fab:fab_colorPressed="@color/primary_pressed"
+        fab:fab_colorRipple="@color/ripple" />
+
+
+</LinearLayout>
 
 
 
-</android.support.v4.widget.SwipeRefreshLayout>

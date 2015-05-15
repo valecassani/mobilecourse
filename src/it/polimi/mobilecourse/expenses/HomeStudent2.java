@@ -31,6 +31,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.login.LoginManager;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,30 +50,27 @@ import java.util.ArrayList;
 /**
  * Created by valeriocassani on 18/03/15.
  */
-public class HomeStudent extends AppCompatActivity {
+public class HomeStudent2 extends AppCompatActivity {
 
     private static String TAG ="Home Student";
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private String[] mDrawerOptions;
-    private DrawerLayout mDrawerLayout;
+    private LinearLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerFragment;
     private String username;
     private Toolbar toolbar;
     private int positionRequired;
+    private AccountHeader headerResult;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
     private String userId;
     private boolean doubleBackToExitPressedOnce;
 
-    public HomeStudent() {
-
-
-    }
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +93,29 @@ public class HomeStudent extends AppCompatActivity {
 
             }
         }
+
+
+        Drawer.Result result = new Drawer()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Home"),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName("Settings")
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        // do something with the clicked item :D
+                    }
+                })
+                .build();
+
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (LinearLayout) findViewById(R.id.left_drawer_student);
 
@@ -129,7 +152,7 @@ public class HomeStudent extends AppCompatActivity {
                 mDrawerItems);
         mDrawerList.setAdapter(mNavDrawerAdapter);
 
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -138,12 +161,12 @@ public class HomeStudent extends AppCompatActivity {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
+        /*mDrawerToggle = new ActionBarDrawerToggle(
+                this,
                 mDrawerLayout,
-                toolbar,        /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close
         ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
@@ -156,7 +179,7 @@ public class HomeStudent extends AppCompatActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+*/
         if (savedInstanceState == null) {
             selectItem(0);
         }
@@ -243,11 +266,11 @@ public class HomeStudent extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-       boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerFragment);
-       menu.findItem(R.id.action_logout).setVisible(!drawerOpen);
+       /*boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerFragment);
+       menu.findItem(R.id.action_logout).setVisible(!drawerOpen);*/
 
 
-       return super.onPrepareOptionsMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
     }
 
 
@@ -263,7 +286,7 @@ public class HomeStudent extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
-                Intent intent = new Intent(HomeStudent.this,LandingActivity.class);
+                Intent intent = new Intent(HomeStudent2.this,LandingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
@@ -326,7 +349,7 @@ public class HomeStudent extends AppCompatActivity {
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mDrawerOptions[position]);
-        mDrawerLayout.closeDrawer(mDrawerFragment);
+        //mDrawerLayout.closeDrawer(mDrawerFragment);
     }
 
 

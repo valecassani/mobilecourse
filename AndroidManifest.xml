@@ -6,6 +6,8 @@
 
     <uses-sdk android:minSdkVersion="14" />
 
+
+
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
@@ -22,6 +24,9 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+        <provider android:name=".StudentSuggestionProvider"
+            android:authorities="it.polimi.mobilecourse.expenses.StudentSearchProvider"
+            android:exported="false"/>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -33,12 +38,12 @@
         <activity
             android:name=".LandingActivity"
             android:theme="@style/Landing" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
 
 
         </activity>
@@ -57,7 +62,7 @@
             android:label="Nuovo studente"/>
         <activity
             android:name=".HomeStudent"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -92,6 +97,10 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
+        </activity>
+        <activity android:name=".UploadToServer">
+
 
         </activity>
     </application>
