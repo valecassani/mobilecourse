@@ -91,9 +91,7 @@ public class LoginStudente extends ActionBarActivity {
                                 // Application code
                                 try {
                                     email = response.getJSONObject().getString("email");
-                                    Log.v("LoginActivityyyyy", response.getJSONObject().getString("email"));
                                     nome = response.getJSONObject().getString("first_name");
-                                    Log.v("LoginActivity", response.getJSONObject().getString("first_name"));
 
 
 

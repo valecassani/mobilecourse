@@ -4,17 +4,21 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.pkmmte.view.CircularImageView;
+
 /**
  * Created by valeriocassani on 14/05/15.
  */
 public class DownloadImage extends AsyncTask<String,Void,Boolean> {
     Bitmap bmp = null;
     ImageView img = null;
+    private CircularImageView imageCirc = null;
+
 
     public DownloadImage(ImageView img) {
         this.img = img;
     }
-
+    public DownloadImage(CircularImageView imageCirc) {this.imageCirc = imageCirc;}
 
 
     @Override
@@ -51,7 +55,10 @@ public class DownloadImage extends AsyncTask<String,Void,Boolean> {
     }
 
     public void setImage(){
-        img.setImageBitmap(bmp);
+        if (img != null)
+            img.setImageBitmap(bmp);
+        else if (imageCirc != null)
+            imageCirc.setImageBitmap(bmp);
         System.out.println("Immagine settata");
     }
 

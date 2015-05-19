@@ -23,6 +23,8 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,7 +32,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.pkmmte.view.CircularImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +56,7 @@ public class HomeStudent extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private LinearLayout mDrawerFragment;
+    private RelativeLayout mDrawerFragment;
     private String username;
     private Toolbar toolbar;
     private int positionRequired;
@@ -94,7 +98,12 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
-        mDrawerFragment = (LinearLayout) findViewById(R.id.left_drawer_student);
+        mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
+        TextView nome = (TextView)findViewById(R.id.drawer_nome);
+        nome.setText(username+userId+" CIAO CIAO CIAO");
+        CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+        DownloadImage downloadImage = new DownloadImage(circImgView);
+        downloadImage.doInBackground(Profile.getCurrentProfile().getProfilePictureUri(100, 100).toString());
 
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
         if (toolbar != null) {
