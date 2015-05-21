@@ -260,55 +260,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     }
 
 
-    /*private void controlloUtente(){
 
-        Session session=Session.getActiveSession();
-        if(session==null || session.isClosed()){
-            Log.i("LandingActivity", "session nulla...");
-
-            session=Session.openActiveSessionFromCache(this);
-            Request.newMeRequest(session, new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(final GraphUser user, final Response response) {
-                    if (user != null) {
-                        String url = "exist_user.php?mail=".concat(user.getUsername());
-                        lf.ftpControl(url);
-
-
-
-                    }
-                }
-            }).executeAsync();
-
-
-        }
-
-        if(session!=null && session.isOpened()){
-
-            Log.i("LandingActivity", "session not null...");
-
-            Request.newMeRequest(session, new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(final GraphUser user, final Response response) {
-                    if (user != null) {
-                        String url="exist_user.php?mail=".concat(user.getUsername());
-                        lf.ftpControl(url);
-
-                    }
-                }
-            }).executeAsync();
-
-
-
-        }
-
-
-
-
-
-
-
-    }*/
 
     public void progress(final boolean show){
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);

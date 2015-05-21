@@ -52,6 +52,8 @@ public class LoginStudente extends ActionBarActivity {
 
 
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -167,7 +169,7 @@ public class LoginStudente extends ActionBarActivity {
                                 Intent myintent = new Intent(LoginStudente.this, RegistrationStudent.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
-                                finish();
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

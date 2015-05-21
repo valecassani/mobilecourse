@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
         <!-- disable window title -->
@@ -13,6 +13,7 @@
     <!-- ActionBar styles -->
 
 
-    <color name="primaryColor">#26C6DA</color>
-    <color name="primaryColorDark">#00BCD4</color>
+    <color name="primaryColor">#EF6C00</color>
+    <color name="primaryColorDark">#E65100</color>
 </resources>
+

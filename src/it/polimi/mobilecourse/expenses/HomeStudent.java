@@ -217,31 +217,7 @@ public class HomeStudent extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo( searchManager.getSearchableInfo(getComponentName()) );
-        if (null != searchView )
-        {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setIconifiedByDefault(false);
-        }
 
-        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener()
-        {
-            public boolean onQueryTextChange(String newText)
-            {
-                // this is your adapter that will be filtered
-
-                return true;
-            }
-
-            public boolean onQueryTextSubmit(String query)
-            {
-                onSearchRequested();
-                return true;
-            }
-        };
-        searchView.setOnQueryTextListener(queryTextListener);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -268,7 +244,7 @@ public class HomeStudent extends AppCompatActivity {
         }
         switch (item.getItemId()) {
             case R.id.action_search:
-                onSearchRequested();
+                selectItem(1);
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
@@ -283,13 +259,7 @@ public class HomeStudent extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onSearchRequested() {
-        Bundle appData = new Bundle();
-        appData.putString("hello", "world");
-        startSearch(null, false, appData, false);
-        return true;
-    }
+
 
 
 

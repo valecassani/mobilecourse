@@ -1,17 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.quinny898.library.persistentsearch.SearchBox
+    android:layout_height="match_parent"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchbox_of_tutors_for_subject"
-        />
+        android:layout_height="70dp"
+        android:id="@+id/layout_search">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Inserisci una materia"
+            android:layout_margin="10dp"
+            android:id="@+id/search_tutor"/>
+
+    </RelativeLayout>
+
+
+    <com.gc.materialdesign.views.ButtonFloat
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        materialdesign:iconDrawable="@drawable/abc_ic_search_api_mtrl_alpha"
+        materialdesign:animate="false"
+        android:layout_alignBottom="@id/layout_search"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-32dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/search_tutor_button"/>
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/search_tutor_list"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/search_tutor_list"
+        android:layout_toEndOf="@id/search_tutor_button"/>
 
-</LinearLayout>
+</RelativeLayout>

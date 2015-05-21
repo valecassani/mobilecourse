@@ -1,30 +1,21 @@
 package it.polimi.mobilecourse.expenses;
 
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.facebook.AccessTokenTracker;
-import com.facebook.LoggingBehavior;
 
 import com.facebook.login.LoginManager;
-import com.google.android.gms.fitness.result.SessionStopResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 
 public class LandingFragment extends Fragment {
@@ -43,6 +34,9 @@ public class LandingFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         this.activity = (LandingActivity) getActivity();
+        if (activity == null) {
+            activity = new LandingActivity();
+        }
     }
 
     @Override
@@ -55,13 +49,7 @@ public class LandingFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
 
-
-       // this.activity = (LandingActivity) activity;
-    }
 
 
 
@@ -74,7 +62,6 @@ public class LandingFragment extends Fragment {
 
                 Intent myintent = new Intent(activity, LoginStudente.class);
                 startActivity(myintent);
-                activity.finish();
 
             }
         });
@@ -94,7 +81,8 @@ public class LandingFragment extends Fragment {
     }
 
     private void buttonsSActions() {
-        (activity).manageButton();
+
+
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,30 +1,25 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
-import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SearchRecentSuggestionsProvider;
-import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SearchRecentSuggestions;
-import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,8 +27,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.gc.materialdesign.views.ButtonFloat;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.quinny898.library.persistentsearch.SearchBox;
-import com.quinny898.library.persistentsearch.SearchResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,10 +46,11 @@ public class SearchFragment extends Fragment {
     private RequestQueue queue;
     private Context context;
     private ListView mListView;
-    private SearchBox search;
-    private FragmentActivity activity;
+    private AppCompatActivity activity;
     private DrawerLayout mDrawerLayout;
     private String query;
+    private EditText searchSubject;
+    private ButtonFloat searchButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,87 +61,33 @@ public class SearchFragment extends Fragment {
 
         mListView = (ListView)view.findViewById(R.id.search_tutor_list);
         activity = (AppCompatActivity)getActivity();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        search = (SearchBox) view.findViewById(R.id.searchbox_of_tutors_for_subject);
 
-        ContentResolver contentResolver = view.getContext().getContentResolver();
+        searchSubject = (EditText)view.findViewById(R.id.search_tutor);
 
-        String contentUri = "content://" + StudentSuggestionProvider.AUTHORITY + '/' + SearchManager.SUGGEST_URI_PATH_QUERY;
-        Uri uri = Uri.parse(contentUri);
-
-        Cursor cursor = contentResolver.query(uri, null, null, new String[]{query}, null);
-        if (cursor!=null) {
-            cursor.moveToFirst();
-        }
-
-        String[] columns = new String[] { SearchManager.SUGGEST_COLUMN_TEXT_1 };
-        int[] views = new int[] { R.id.name };
-
-
-        for(int x = 0; x < columns.length && x < 10; x++){
-            SearchResult searchResult = new SearchResult(columns[x],(Drawable) view.getResources().getDrawable(R.drawable.abc_ab_share_pack_mtrl_alpha));
-            search.addSearchable(searchResult);
-        }
-        search.setLogoText("Cerca una materia");
-        search.setMenuListener(new SearchBox.MenuListener() {
-
+        searchButton = (ButtonFloat)view.findViewById(R.id.search_tutor_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onMenuClick() {
-                //Hamburger has been clicked
-                mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-            }
+            public void onClick(View v) {
 
+                showResults(searchSubject.getText().toString());
+                searchSubject.setText("");
+            }
         });
-        Intent intent = getActivity().getIntent();
 
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(view.getContext(),
-                    StudentSuggestionProvider.AUTHORITY, StudentSuggestionProvider.MODE);
-
-            suggestions.saveRecentQuery(query, null);
-        }
-        search.setSearchListener(new SearchBox.SearchListener() {
-
-            @Override
-            public void onSearchOpened() {
-                //Use this to tint the screen
+        searchSubject.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View view, int keyCode, KeyEvent keyevent) {
+                //If the keyevent is a key-down event on the "enter" button
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    showResults(searchSubject.getText().toString());
+                    searchSubject.setText("");
+                    return true;
+                }
+                return false;
             }
-
-            @Override
-            public void onSearchClosed() {
-                //Use this to un-tint the screen
-            }
-
-            @Override
-            public void onSearchTermChanged() {
-                //clears the listview
-                items.clear();
-                mListView.setAdapter(null);
-            }
-
-            @Override
-            public void onSearch(String searchTerm) {
-
-                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(activity.getApplicationContext(),
-                        StudentSuggestionProvider.AUTHORITY, StudentSuggestionProvider.MODE);
-                suggestions.saveRecentQuery(searchTerm, null);
-                Log.i(TAG,"Query saved");
-                Toast.makeText(getActivity(), searchTerm + " Searched", Toast.LENGTH_LONG).show();
-                items.clear();
-                mListView.setAdapter(null);
-
-                showResults(searchTerm);
-
-            }
-
-            @Override
-            public void onSearchCleared() {
-
-            }
-
         });
+
+
+
         return view;
     }
 
@@ -214,20 +157,9 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == getActivity().RESULT_OK) {
-            ArrayList<String> matches = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            search.populateEditText(matches);
-        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public class StudentSuggestionProvider extends SearchRecentSuggestionsProvider {
-        public final static String AUTHORITY = "it.polimi.mobilecourse.expenses.StudentSuggestionProvider";
-        public final static int MODE = DATABASE_MODE_QUERIES;
 
-        public StudentSuggestionProvider() {
-            setupSuggestions(AUTHORITY, MODE);
-        }
-    }
 }
