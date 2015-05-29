@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,14 +41,10 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class StudentDataFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
 
     private RequestQueue queue;
 
-    // TODO: Rename and change types of parameters
     private final String TAG = "Student Data Fragment";
 
     private String username;
@@ -67,12 +64,10 @@ public class StudentDataFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment BlankFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static StudentDataFragment newInstance(String param1, String param2) {
         StudentDataFragment fragment = new StudentDataFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
 
         fragment.setArguments(args);
         return fragment;
@@ -161,8 +156,7 @@ public class StudentDataFragment extends Fragment {
 
 
         image = (ImageView)view.findViewById(R.id.immagine_prova);
-        DownloadImage di =new DownloadImage(image);
-        di.execute("IMAG0583.jpg");
+        Picasso.with(getActivity().getApplicationContext()).load("http://www.unishare.it/tutored/images/IMAG0612.jpg").into(image);
 
 
 

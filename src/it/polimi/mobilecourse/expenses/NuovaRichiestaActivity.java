@@ -153,7 +153,6 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         });
 
         getSupportActionBar().setTitle("Nuova richiesta");
-        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 

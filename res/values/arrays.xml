@@ -13,4 +13,10 @@
         <item>Luoghi / Negozi</item>
         <item>Tipi di pagamento</item>
     </string-array>
+    <string-array name="richieste_menu" >
+        <item>Modifica</item>
+        <item>Elimina</item>
+    </string-array>
+
+
 </resources>

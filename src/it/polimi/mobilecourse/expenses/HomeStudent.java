@@ -112,7 +112,7 @@ public class HomeStudent extends AppCompatActivity {
         }
 
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setElevation(25);
 
 
 

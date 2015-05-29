@@ -9,11 +9,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +48,7 @@ public class RichiesteFragment extends Fragment {
     private String idStudente;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fab;
+    private RichiesteAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,17 +74,44 @@ public class RichiesteFragment extends Fragment {
 
         fab = (FloatingActionButton) view.findViewById(R.id.fab_richieste);
         fab.attachToListView(mListView);
-        Log.i(TAG,"Button Created");
+        Log.i(TAG, "Button Created");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),NuovaRichiestaActivity.class);
+                Intent intent = new Intent(getActivity(), NuovaRichiestaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("student_id", idStudente);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
 
+            }
+        });
+
+
+        //azione su selezione normale
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(context,"Item Clicked " + position,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,RichiesteItemDetails.class);
+                Bundle bundle = new Bundle();
+                RichiestaItem item = (RichiestaItem) adapter.getItem(position);
+                bundle.putString("idRichiesta", item.getTesto());
+                startActivity(intent);
+            }
+
+
+        });
+
+        //azione su selezione lunga
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(context, "Item Loong clicked " + position, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 
@@ -118,7 +150,7 @@ public class RichiesteFragment extends Fragment {
 
 
                         }
-                        RichiesteAdapter adapter = new RichiesteAdapter(context, items);
+                        adapter = new RichiesteAdapter(context, items);
                         mListView.setAdapter(adapter);
                         swipeRefreshLayout.setRefreshing(false);
 
@@ -141,6 +173,18 @@ public class RichiesteFragment extends Fragment {
 
 
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.list_item) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+            String[] menuItems = getResources().getStringArray(R.array.richieste_menu);
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
     }
 
     @Override
