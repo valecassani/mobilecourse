@@ -68,9 +68,14 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                showResults(searchSubject.getText().toString());
-                searchSubject.setText("");
+                String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchSubject.getText().toString();
+                Intent intent = new Intent(context,SearchResultActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("query", url);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                //showResults(searchSubject.getText().toString());
+                //searchSubject.setText("");
             }
         });
 
@@ -119,7 +124,7 @@ public class SearchFragment extends Fragment {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, obj.toString());
-                                SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"));
+                                SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"),null);
                                 items.add(item);
 
 

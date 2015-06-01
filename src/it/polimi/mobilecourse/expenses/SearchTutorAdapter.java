@@ -48,7 +48,7 @@ public class SearchTutorAdapter extends BaseAdapter {
         }
 
         TextView nome = (TextView) convertView.findViewById(R.id.search_tutor_nome);
-        nome.setText(items.get(position).getNome());
+        nome.setText(items.get(position).getNome() + " " + items.get(position).getCognome());
         return convertView;
     }
 }

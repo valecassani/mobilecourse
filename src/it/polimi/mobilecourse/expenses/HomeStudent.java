@@ -4,8 +4,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -35,6 +37,7 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,11 +102,12 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
-        TextView nome = (TextView)findViewById(R.id.drawer_nome);
-        nome.setText(username+userId+" CIAO CIAO CIAO");
-        CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
-        DownloadImage downloadImage = new DownloadImage(circImgView);
-        downloadImage.doInBackground(Profile.getCurrentProfile().getProfilePictureUri(100, 100).toString());
+
+
+
+
+        loadUserInfos();
+
 
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
         if (toolbar != null) {
@@ -124,6 +128,7 @@ public class HomeStudent extends AppCompatActivity {
         //aggiunta icone al drawer
 
 
+
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_icon));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.com_facebook_button_like_icon_selected));
@@ -131,6 +136,8 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.ic_plusone_standard_off_client));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.abc_ic_search_api_mtrl_alpha));
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.abc_ic_search_api_mtrl_alpha));
 
 
         // setting the nav drawer list adapter
@@ -173,6 +180,60 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
+    }
+
+    private void loadUserInfos() {
+        Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
+
+        CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+        Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+        String url = null;
+        if (username != null) {
+            Log.i(TAG,"url for username");
+            url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
+        }    else {
+
+            if (userId != null) {
+                Log.d(TAG,"Used id query");
+                url = "http://www.unishare.it/tutored/student_by_id.php?id="+userId;
+            }
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            TextView nome = (TextView)findViewById(R.id.drawer_nome);
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, response.toString());
+                            nome.setText(obj.get("nome").toString() + " " + obj.get("cognome").toString());
+                            TextView mail = (TextView)findViewById(R.id.drawer_mail);
+                            mail.setText(obj.get("username").toString());
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
     }
 
     private void getUserIdFromMail() {
@@ -269,23 +330,26 @@ public class HomeStudent extends AppCompatActivity {
         Fragment fragment = null;
         switch (position) {
             case 0:
+                fragment = new HomeStudentFragment();
+                break;
+            case 1:
                 fragment = new SearchFragment();
                 getSupportActionBar().setTitle("Ricerca Tutor");
                 break;
-            case 1:
+            case 2:
                 fragment = new StudentDataFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("mail", username);
                 bundle.putString("id", userId);
                 fragment.setArguments(bundle);
                 break;
-            case 2:
+            case 3:
                 fragment = new RichiesteFragment();
                 bundle = new Bundle();
                 bundle.putString("student_id",userId);
                 fragment.setArguments(bundle);
                 break;
-            case 3:
+            case 4:
                 bundle = new Bundle();
                 bundle.putString("student_id",userId);
 

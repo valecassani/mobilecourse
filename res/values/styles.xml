@@ -9,6 +9,7 @@
         <!-- disable window actionbar, cause u have an toolbar -->
         <item name="windowActionBar">false</item>
 
+
     </style>
     <!-- ActionBar styles -->
 

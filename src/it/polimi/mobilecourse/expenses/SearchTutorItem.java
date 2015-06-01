@@ -6,10 +6,12 @@ package it.polimi.mobilecourse.expenses;
 public class SearchTutorItem {
     private String nome;
     private String cognome;
+    private String id;
 
-    public SearchTutorItem(String nome, String cognome) {
+    public SearchTutorItem(String nome, String cognome, String id) {
         this.nome = nome;
         this.cognome = cognome;
+        this.id = id;
     }
 
 
@@ -20,6 +22,8 @@ public class SearchTutorItem {
     public String getCognome() {
         return cognome;
     }
+
+    public String getId() {return id;}
 
 
 }

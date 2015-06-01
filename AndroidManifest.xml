@@ -6,8 +6,6 @@
 
     <uses-sdk android:minSdkVersion="14" />
 
-
-
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
@@ -21,16 +19,15 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="21" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-permission android:name="com.example.project.package.permission.MAPS_RECEIVE"/>
-
-
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-
+    <!-- The following two permissions are not required to use
+         Google Maps Android API v2, but are recommended. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <permission
         android:name="com.example.project.package.permission.MAPS_RECEIVE"
@@ -40,9 +37,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <provider android:name=".StudentSuggestionProvider"
-            android:authorities="it.polimi.mobilecourse.expenses.StudentSearchProvider"
-            android:exported="false"/>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -53,8 +47,8 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
+            android:value="@integer/google_play_services_version" />
         <activity
             android:name=".HomeTutor"
             android:theme="@style/AppTheme" >
@@ -62,12 +56,12 @@
         <activity
             android:name=".LandingActivity"
             android:theme="@style/Landing" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
 
 
         </activity>
@@ -123,6 +117,7 @@
                 android:resource="@xml/searchable" />
 
         </activity>
+        <activity android:name=".SearchTutorDetails"/>
         <activity android:name=".UploadToServer">
 
 

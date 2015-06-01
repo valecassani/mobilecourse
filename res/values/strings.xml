@@ -29,6 +29,7 @@
 
     <string-array name="student_drawer">
         <item>Home</item>
+        <item>Cerca</item>
         <item>Profilo</item>
         <item>Richieste</item>
         <item>Prenotazioni</item>

@@ -13,10 +13,12 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_awesome_toolbar"
+
             android:layout_height="56dp"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary">
+            android:background="?attr/colorPrimary"
+             >
 
         </android.support.v7.widget.Toolbar>
 
@@ -49,27 +51,46 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:id="@+id/drawer_infos"
-            android:background="#FFFFFF">
+            android:background="@drawable/ahagzjsozh"
+            >
             <com.pkmmte.view.CircularImageView
+                android:layout_marginTop="70dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                app:border="true"
+                android:layout_margin="8dp"
+                app:border="false"
                 app:border_color="#000"
                 app:border_width="4dp"
-                app:shadow="true"
+                app:shadow="true" t="@color/material_blue_500"
+                android:src="@drawable/landing_image"
                 android:id="@+id/drawer_image"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/drawer_nome"
-                android:textColor="#000"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/drawer_cognome"/>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drawer_nome"
+                    android:textColor="#000"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drawer_mail"
+                    android:layout_below="@id/drawer_nome"
+                    android:text="Space for email address"
+                    android:layout_marginLeft="16dp"
+                    />
+
+            </RelativeLayout>
+
+
         </RelativeLayout>
 
         <ListView
@@ -77,10 +98,10 @@
             android:id="@+id/student_drawer_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFCC80"
+            android:background="#FFFFFF"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"></ListView>
+            android:dividerHeight="0dp"/>
 
 
     </RelativeLayout>
