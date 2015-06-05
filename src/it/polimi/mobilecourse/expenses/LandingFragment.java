@@ -23,6 +23,8 @@ public class LandingFragment extends Fragment {
     private View view;
     private LandingActivity activity;
     private String str;
+    private Button butS;
+    private Button butT;
 
 
     int id;
@@ -42,9 +44,11 @@ public class LandingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
 
         view = inflater.inflate(R.layout.landing_fragment, container, false);
-        buttonsActions();
+        butS = (Button) view.findViewById(R.id.buttonStudente);
+        butT = (Button) view.findViewById(R.id.buttonTutor);
 
         return view;
     }
@@ -55,7 +59,7 @@ public class LandingFragment extends Fragment {
 
     public void buttonsActions() {
 
-        Button butS = (Button) view.findViewById(R.id.buttonStudente);
+
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +70,6 @@ public class LandingFragment extends Fragment {
             }
         });
 
-        Button butT = (Button) view.findViewById(R.id.buttonTutor);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +86,6 @@ public class LandingFragment extends Fragment {
     private void buttonsSActions() {
 
 
-        Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +100,6 @@ public class LandingFragment extends Fragment {
             }
         });
 
-        Button butT = (Button) view.findViewById(R.id.buttonTutor);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

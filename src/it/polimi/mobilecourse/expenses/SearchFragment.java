@@ -42,13 +42,10 @@ import java.util.ArrayList;
  */
 public class SearchFragment extends Fragment {
     private final String TAG = "Search Fragment";
-    private ArrayList<SearchTutorItem> items = new ArrayList<SearchTutorItem>();
+    private ArrayList<SearchTutorItem> items = new ArrayList<>();
     private RequestQueue queue;
     private Context context;
     private ListView mListView;
-    private AppCompatActivity activity;
-    private DrawerLayout mDrawerLayout;
-    private String query;
     private EditText searchSubject;
     private ButtonFloat searchButton;
 
@@ -60,7 +57,7 @@ public class SearchFragment extends Fragment {
         context = view.getContext();
 
         mListView = (ListView)view.findViewById(R.id.search_tutor_list);
-        activity = (AppCompatActivity)getActivity();
+
 
         searchSubject = (EditText)view.findViewById(R.id.search_tutor);
 
@@ -79,17 +76,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        searchSubject.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View view, int keyCode, KeyEvent keyevent) {
-                //If the keyevent is a key-down event on the "enter" button
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    showResults(searchSubject.getText().toString());
-                    searchSubject.setText("");
-                    return true;
-                }
-                return false;
-            }
-        });
 
 
 
@@ -160,11 +146,6 @@ public class SearchFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
 
 }

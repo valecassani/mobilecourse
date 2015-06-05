@@ -101,7 +101,7 @@
             android:label="@string/title_activity_help_ab" >
         </activity>
         <activity android:name=".NuovaRichiestaActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light"
+
             android:parentActivityName=".HomeStudent">
 
         </activity>

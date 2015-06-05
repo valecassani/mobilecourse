@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:id="@+id/drawer_infos"
-            android:background="@drawable/ahagzjsozh"
+            android:background="@color/background_floating_material_light"
             >
             <com.pkmmte.view.CircularImageView
                 android:layout_marginTop="70dp"

@@ -68,7 +68,6 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         callbackManager = CallbackManager.Factory.create();
         updateWithToken(AccessToken.getCurrentAccessToken());
         setLanding();
-        progress(true);
 
 
         showWelcome();
@@ -81,7 +80,6 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         //mb= new manageButton();
         //mb.execute((Void) null);
         //manageButton();
-
 
 
 

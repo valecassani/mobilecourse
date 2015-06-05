@@ -35,8 +35,8 @@ import java.util.ArrayList;
  */
 public class SearchResultActivity extends AppCompatActivity {
     private final String TAG = "SearchResultActivity";
-    Toolbar toolbar;
-    ListView mListView;
+    private Toolbar toolbar;
+    private ListView mListView;
     private ArrayList<SearchTutorItem> itemsTutor;
     private RequestQueue queue;
     private Context context;
@@ -52,7 +52,7 @@ public class SearchResultActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(25);
         getSupportActionBar().setHomeButtonEnabled(true);
         itemsTutor = new ArrayList<SearchTutorItem>();
-        context = getApplicationContext();
+        context = getBaseContext();
 
         mListView = (ListView) findViewById(R.id.search_list_item);
         queue= Volley.newRequestQueue(getApplicationContext());
@@ -90,17 +90,30 @@ public class SearchResultActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SearchResultActivity.this);
 
                                 builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
 
                                 AlertDialog dialog = builder.create();
-                                builder.setPositiveButton("Chiudi", new DialogInterface.OnClickListener() {
+                                if (dialog != null)
+                                    Log.i(TAG,"Dialog created");
+                                builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+                                        try {
+                                            dialog.wait(2000);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                         dialog.dismiss();
+
+                                        finish();
                                     }
                                 });
+
                                 dialog.show();
+
+
+
                             }
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
