@@ -44,5 +44,13 @@
         android:layout_above="@+id/map"
         android:layout_alignLeft="@+id/map" />
 
+    <com.gc.materialdesign.views.ButtonFlat
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/prenotaz_button"
+        android:text="Vai a prenotazione"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"/>
+
 
 </RelativeLayout>

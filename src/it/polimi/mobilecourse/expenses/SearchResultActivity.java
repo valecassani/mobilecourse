@@ -34,6 +34,8 @@ import java.util.ArrayList;
  * Created by valeriocassani on 28/04/15.
  */
 public class SearchResultActivity extends AppCompatActivity {
+
+    public static Activity activity;
     private final String TAG = "SearchResultActivity";
     private Toolbar toolbar;
     private ListView mListView;
@@ -42,9 +44,11 @@ public class SearchResultActivity extends AppCompatActivity {
     private Context context;
     private SearchTutorAdapter adapter;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.search_activity);
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
@@ -66,6 +70,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 SearchTutorItem item = (SearchTutorItem) adapter.getItem(position);
                 bundle.putString("idTutor", item.getId());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

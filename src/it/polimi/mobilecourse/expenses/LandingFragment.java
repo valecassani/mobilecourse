@@ -1,21 +1,30 @@
 package it.polimi.mobilecourse.expenses;
 
 
-
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.facebook.AccessTokenTracker;
+import com.facebook.LoggingBehavior;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.fitness.result.SessionStopResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 
 
 public class LandingFragment extends Fragment {
@@ -23,8 +32,6 @@ public class LandingFragment extends Fragment {
     private View view;
     private LandingActivity activity;
     private String str;
-    private Button butS;
-    private Button butT;
 
 
     int id;
@@ -36,40 +43,43 @@ public class LandingFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         this.activity = (LandingActivity) getActivity();
-        if (activity == null) {
-            activity = new LandingActivity();
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater,container,savedInstanceState);
 
         view = inflater.inflate(R.layout.landing_fragment, container, false);
-        butS = (Button) view.findViewById(R.id.buttonStudente);
-        butT = (Button) view.findViewById(R.id.buttonTutor);
+        buttonsActions();
 
         return view;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
+
+       // this.activity = (LandingActivity) activity;
+    }
 
 
 
     public void buttonsActions() {
 
-
+        Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent myintent = new Intent(activity, LoginStudente.class);
                 startActivity(myintent);
+                activity.finish();
 
             }
         });
 
+        Button butT = (Button) view.findViewById(R.id.buttonTutor);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +95,7 @@ public class LandingFragment extends Fragment {
 
     private void buttonsSActions() {
 
-
+        Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +110,7 @@ public class LandingFragment extends Fragment {
             }
         });
 
+        Button butT = (Button) view.findViewById(R.id.buttonTutor);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

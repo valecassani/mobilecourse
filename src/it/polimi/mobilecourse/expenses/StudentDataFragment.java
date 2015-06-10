@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ public class StudentDataFragment extends Fragment {
     private ImageView image;
     private String mParam1;
     private String mParam2;
+    private Button button;
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,9 +91,16 @@ public class StudentDataFragment extends Fragment {
 
         queue = Volley.newRequestQueue(view.getContext());
         username = getActivity().getIntent().getExtras().getString("mail");
-        Log.i(TAG,"Username received: " + username);
+        Log.i(TAG, "Username received: " + username);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
+        button = (Button)view.findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),"Invia cliccato", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (username != null) {
             Log.i(TAG,"url for username");
@@ -114,7 +123,7 @@ public class StudentDataFragment extends Fragment {
         final ProgressDialog pDialog = new ProgressDialog(view.getContext());
         pDialog.setMessage("Loading...");
 
-        final TextView mUsername = (TextView)view.findViewById(R.id.username);
+        final TextView mUsername = (TextView)view.findViewById(R.id.mail);
         final TextView mName = (TextView)view.findViewById(R.id.name);
 
 
@@ -155,8 +164,7 @@ public class StudentDataFragment extends Fragment {
         queue.add(jsonObjReq);
 
 
-        image = (ImageView)view.findViewById(R.id.immagine_prova);
-        Picasso.with(getActivity().getApplicationContext()).load("http://www.unishare.it/tutored/images/IMAG0612.jpg").into(image);
+
 
 
 
@@ -193,6 +201,8 @@ public class StudentDataFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
 
 
 

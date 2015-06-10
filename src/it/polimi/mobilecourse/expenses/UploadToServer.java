@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UploadToServer extends Activity {
+public class  UploadToServer extends Activity {
 
     TextView messageText;
     Button uploadButton;
@@ -102,7 +102,7 @@ public class UploadToServer extends Activity {
         String[] projection = {MediaStore.Images.Media.DATA};
         String res = null;
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if(cursor.moveToFirst()){;
+        if(cursor.moveToFirst()){
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }

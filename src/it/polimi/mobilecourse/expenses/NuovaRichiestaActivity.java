@@ -152,8 +152,12 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
             }
         });
 
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        setSupportActionBar(toolbar);
+
         getSupportActionBar().setTitle("Nuova richiesta");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(25);
 
 
 
@@ -219,7 +223,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
             };
         queue.add(jsObjRequest);
         Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
-        returnToFragmentRichieste();
+        finish();
 
 
     }
@@ -244,7 +248,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                returnToFragmentRichieste();
+                finish();
                 return true;
                 
 
@@ -253,15 +257,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
-    private void returnToFragmentRichieste(){
-        Intent intent = new Intent(this,HomeStudent.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("user_id",idStudente );
-        bundle.putString("Mail","");
-        bundle.putInt("position", 2);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+
 
 
     @Override
@@ -410,19 +406,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         } // End else block
     }
 
-    public String getPath(Uri uri) {
 
-        String[] projection = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
-
-    }
 
     public String getRealPathFromURI(Uri contentUri) {
         String res = null;
@@ -457,7 +441,6 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         }
     }
 
-    //fa partire il thread,l'argomento di execute() � l'immagine da scaricare
 
 
 

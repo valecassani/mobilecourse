@@ -48,46 +48,9 @@ public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
         if (convertView == null) {
             LayoutInflater mInflater = LayoutInflater.from(context);
             convertView = mInflater.inflate(R.layout.ripet_item,null);
-            SwipeLayout swipeLayout =  (SwipeLayout)convertView.findViewById(R.id.ripet_item);
+
 
 //set show mode.
-            swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
-
-//set drag edge.
-            swipeLayout.setDragEdge(SwipeLayout.DragEdge.Right);
-
-            swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-                @Override
-                public void onClose(SwipeLayout layout) {
-                    //when the SurfaceView totally cover the BottomView.
-                }
-
-                @Override
-                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-                    //you are swiping.
-                }
-
-                @Override
-                public void onStartOpen(SwipeLayout swipeLayout) {
-
-                }
-
-                @Override
-                public void onOpen(SwipeLayout layout) {
-                    //when the BottomView totally show.
-                }
-
-                @Override
-                public void onStartClose(SwipeLayout swipeLayout) {
-
-                }
-
-                @Override
-                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-                }
-            });
-
 
 
 
@@ -102,8 +65,7 @@ public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
         data.setText(items.get(position).getData());
 
 
-        ImageButton mImageButton = (ImageButton) convertView.findViewById(R.id.delete_rip_item);
-        mImageButton.setImageResource(R.drawable.ic_save);
+
 
 
 

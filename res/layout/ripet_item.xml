@@ -1,29 +1,13 @@
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/ripet_item">
     <!-- Bottom View Start-->
-    <RelativeLayout
-        android:background="#b8ff001c"
-        android:id="@+id/bottom_wrapper"
-        android:layout_width="160dp"
-        android:weightSum="1"
-        android:layout_height="match_parent"
-        >
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-
-            android:id="@+id/delete_rip_item"/>
-    </RelativeLayout>
 
     <!-- Bottom View End-->
 
     <!-- Surface View Start -->
     <LinearLayout
         android:padding="10dp"
-        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
@@ -41,4 +25,4 @@
 
     </LinearLayout>
     <!-- Surface View End -->
-</com.daimajia.swipe.SwipeLayout>
+</RelativeLayout>

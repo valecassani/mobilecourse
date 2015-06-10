@@ -1,22 +1,28 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +30,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.gc.materialdesign.views.Button;
 import com.melnykov.fab.FloatingActionButton;
@@ -49,6 +56,7 @@ public class RichiesteFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fab;
     private RichiesteAdapter adapter;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +64,7 @@ public class RichiesteFragment extends Fragment {
         items = new ArrayList<RichiestaItem>();
         queue = Volley.newRequestQueue(view.getContext());
         idStudente = getActivity().getIntent().getExtras().getString("user_id");
-        Log.i(TAG,"user id " + idStudente);
+        Log.i(TAG, "user id " + idStudente);
 
         mListView = (ListView) view.findViewById(R.id.richieste_list);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
@@ -68,6 +76,7 @@ public class RichiesteFragment extends Fragment {
                 showResults();
             }
         });
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Richieste");
 
 
         context = container.getContext();
@@ -93,31 +102,25 @@ public class RichiesteFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context,"Item Clicked " + position,Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context,RichiesteItemDetails.class);
-                Bundle bundle = new Bundle();
-                RichiestaItem item = (RichiestaItem) adapter.getItem(position);
-                bundle.putString("idRichiesta", item.getTesto());
-                startActivity(intent);
+                Toast.makeText(context, "Item Clicked " + position, Toast.LENGTH_SHORT).show();
+                startItemDetails(position);
+
             }
-
-
         });
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Attendere...");
+        progressDialog.setCancelable(false);
+
 
         //azione su selezione lunga
 
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, "Item Loong clicked " + position, Toast.LENGTH_SHORT).show();
 
-                return true;
-            }
-        });
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Richieste");
 
         showResults();
-
+        registerForContextMenu(mListView);
 
         return view;
     }
@@ -178,13 +181,47 @@ public class RichiesteFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
-        if (v.getId()==R.id.list_item) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-            String[] menuItems = getResources().getStringArray(R.array.richieste_menu);
-            for (int i = 0; i<menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
+
+
+            super.onCreateContextMenu(menu, v, menuInfo);
+            menu.setHeaderTitle("Context Menu");
+            menu.add(0, v.getId(), 0, "Modifica");
+            menu.add(0, v.getId(), 0, "Elimina");
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        AlertDialog dialog;
+        if (item.getTitle() == "Modifica") {
+            startItemDetails(info.position);
+        } else if (item.getTitle() == "Elimina") {
+            Toast.makeText(context, "Action 2 invoked", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Sei sicuro di voler eliminare?")
+                    .setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            progressDialog.show();
+                            removeItem(info.position);
+                            Toast.makeText(context,"Elemento eliminato",Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    })
+                    .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+
+                        }
+                    });
+            dialog = builder.create();
+            dialog.show();
+
+        } else {
+            return false;
         }
+        return true;
     }
 
     @Override
@@ -195,5 +232,66 @@ public class RichiesteFragment extends Fragment {
         super.onDestroy();
         queue.stop();
     }
+
+    private void removeItem(int position) {
+
+        RichiestaItem item = (RichiestaItem) adapter.getItem(position);
+        String delete_url = "http://www.unishare.it/tutored/remove_richiesta.php?id="
+                + item.getId();
+        RequestQueue queue1 = Volley.newRequestQueue(context);
+        JsonObjectRequest delete_request = new JsonObjectRequest(delete_url,
+                null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    int success = response.getInt("success");
+
+                    if (success == 1) {
+                        progressDialog.dismiss();
+                        Toast.makeText(context,
+                                "Deleted Successfully",
+                                Toast.LENGTH_SHORT).show();
+                        showResults();
+
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(context,
+                                "failed to delete", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Errore di connessione",Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue1.add(delete_request);
+
+
+    }
+
+    private void startItemDetails(int position) {
+        Intent intent = new Intent(context, RichiesteItemDetails.class);
+        Bundle bundle = new Bundle();
+        RichiestaItem item = (RichiestaItem) adapter.getItem(position);
+        bundle.putString("idRichiesta", item.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showResults();
+    }
+
 
 }

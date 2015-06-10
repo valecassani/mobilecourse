@@ -1,5 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +12,23 @@ import android.view.MenuItem;
  */
 public class RichiesteItemDetails extends AppCompatActivity {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
+    private String id;
+    private Intent intent;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_req_frag);
+        context = getApplicationContext();
+        intent = getIntent();
+        setContentView(R.layout.request_details);
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(25);
 
     }
 
@@ -30,13 +36,18 @@ public class RichiesteItemDetails extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-
+                this.finish();
                 return true;
+            default:
+                super.onOptionsItemSelected(item);
+
+
 
 
 
         }
-        return super.onOptionsItemSelected(item);
+        return false;
+
     }
 
 

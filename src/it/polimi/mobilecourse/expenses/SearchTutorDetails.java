@@ -1,6 +1,8 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,6 +18,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.gc.materialdesign.views.Button;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,6 +39,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -47,6 +60,9 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
     private TextView subjects;
+    private String idTutor;
+    private String nome;
+    private String cognome;
 
     public static final String TAG = SearchTutorDetails.class.getSimpleName();
 
@@ -62,7 +78,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(25);
-
+        idTutor = getIntent().getExtras().getString("idTutor");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -115,11 +131,74 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
 
 
+        showTutorDetails();
+
+
+
 
 
 
 
         }
+
+    private void showTutorDetails() {
+        String url = "http://www.unishare.it/tutored/tutor_data.php?id=" + idTutor;
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                            try {
+
+
+                                JSONObject obj = response.getJSONObject(0);
+                                Log.d(TAG, response.toString());
+                                nome = obj.getString("nome");
+                                Log.i(TAG, "Name set: " + nome );
+                                cognome = obj.getString("cognome");
+                                Log.i(TAG, "Surname set: " + cognome);
+                                Button button = (Button)findViewById(R.id.prenotaz_button);
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getBaseContext(), NuovaPrenotazioneActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("id", idTutor);
+                                        bundle.putString("nome", nome);
+                                        bundle.putString("cognome", cognome);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                });
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+
+
+            }
+        });
+
+        queue.add(request);
+
+
+
+    }
 
 
     @Override
@@ -131,9 +210,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         }
     }
 
-    private void showTutorData() {
 
-    }
 
 
 

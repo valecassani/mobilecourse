@@ -1,5 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
@@ -68,16 +69,21 @@ public class HomeStudent extends AppCompatActivity {
     private NavDrawerListAdapter mNavDrawerAdapter;
     private String userId;
     private boolean doubleBackToExitPressedOnce;
+    private int itemSelected;
+    public static Activity activity;
 
     public HomeStudent() {
+
+
 
 
     }
 
 
-    public void onCreate(Bundle savedInstanceState) {
+      public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
 
@@ -323,9 +329,11 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
+    public final void changePosition(int position) {
+        selectItem(position);
+    }
 
-
-    private void selectItem(int position) {
+    public void selectItem(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
@@ -368,7 +376,6 @@ public class HomeStudent extends AppCompatActivity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(mDrawerOptions[position]);
         mDrawerLayout.closeDrawer(mDrawerFragment);
     }
 
@@ -387,7 +394,20 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        selectItem(getIntent().getExtras().getInt("position"));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        selectItem(getIntent().getExtras().getInt("position"));
+
+
+    }
 
     private  class DrawerItemClickListener implements ListView.OnItemClickListener {
 

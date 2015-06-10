@@ -157,6 +157,7 @@ public class LoginStudente extends ActionBarActivity {
                             if (obj.getString("Response").equals("S")) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("mail",email);
+                                bundle.putString("user_id",obj.getString("id_utente").toString());
                                 Intent myintent = new Intent(LoginStudente.this, HomeStudent.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);

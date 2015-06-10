@@ -8,11 +8,13 @@ import java.sql.Date;
 public class RichiestaItem {
 
     private String idStudente;
+    private String id;
     private String testo;
     private String data;
     private String foto;
 
-    public RichiestaItem(String idStudente, String testo, String data, String foto) {
+    public RichiestaItem(String id, String testo, String data, String foto) {
+        this.id = id;
         this.foto = foto;
         this.testo = testo;
         this.data = data;
@@ -22,6 +24,8 @@ public class RichiestaItem {
     public String getIdStudente() {
         return idStudente;
     }
+
+    public String getId() { return id; }
 
     public String getTesto() {
         return testo;

@@ -56,6 +56,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLanding();
         loadDone = false;
         logged = false;
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -67,7 +68,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         };
         callbackManager = CallbackManager.Factory.create();
         updateWithToken(AccessToken.getCurrentAccessToken());
-        setLanding();
+
 
 
         showWelcome();
@@ -155,6 +156,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),"Errore di connessione",Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -339,6 +341,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
     public void onResume() {
         super.onResume();
+        manageButton();
         accessTokenTracker.startTracking();
     }
 
