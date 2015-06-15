@@ -11,10 +11,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
@@ -82,8 +84,9 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private String selectedPath;
     private String nameFile;
     private ProgressDialog progressDialog;
-    String upLoadServerUri = null;
-
+    private String upLoadServerUri = null;
+    private Button photoButton;
+    private String path;
     private int serverResponseCode;
 
     @Override
@@ -106,8 +109,16 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         imageButton = (Button)findViewById(R.id.buttonImage);
         imageButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+
                 openGallery(1);
             } });
+        photoButton = (Button)findViewById(R.id.buttonPhoto);
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +268,21 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
+    public void takePhoto() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        File folder = new File(Environment.getExternalStorageDirectory() + "/LoadImg");
 
+        if(!folder.exists())
+        {
+            folder.mkdir();
+        }
+        final Calendar c = Calendar.getInstance();
+        String new_Date= c.get(Calendar.DAY_OF_MONTH)+"-"+((c.get(Calendar.MONTH))+1)   +"-"+c.get(Calendar.YEAR) +" " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE)+ "-"+ c.get(Calendar.SECOND);
+        selectedPath=String.format(Environment.getExternalStorageDirectory() +"/TutoredPhotos/%s.png","Tutored" +new_Date);
+        File photo = new File(path);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photo));
+        startActivityForResult(intent, 2);
+    }
 
 
     @Override
@@ -425,15 +450,29 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
 
         if (resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
+
             if (requestCode == 1)
 
             {
-
+                Uri selectedImageUri = data.getData();
                 selectedPath = getRealPathFromURI(selectedImageUri);
 
                 System.out.println("selectedPath1 : " + selectedPath);
 
+
+            }
+
+            if(requestCode==2) {
+                System.out.println("Selected path from photo: " + path);
+                File imgFile = new  File(selectedPath);
+
+                if(imgFile.exists()) {
+                    System.out.println("File exists");
+
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ImageView imgView = (ImageView) findViewById(R.id.anteprima_immagine);
+                    imgView.setImageBitmap(Bitmap.createBitmap(myBitmap));
+                }
 
             }
 
