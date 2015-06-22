@@ -143,7 +143,7 @@ public class RichiesteFragment extends Fragment {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, response.toString());
                                 RichiestaItem item = new RichiestaItem(obj.getString("id"), obj.getString("testo"),
-                                        obj.getString("dataentro"), obj.getString("foto"));
+                                        obj.getString("dataentro"), obj.getString("foto"), obj.getString("titolo"));
                                 items.add(item);
 
 
@@ -283,7 +283,10 @@ public class RichiesteFragment extends Fragment {
         Intent intent = new Intent(context, RichiesteItemDetails.class);
         Bundle bundle = new Bundle();
         RichiestaItem item = (RichiestaItem) adapter.getItem(position);
-        bundle.putString("idRichiesta", item.getId());
+        bundle.putString("titolo", item.getTitolo());
+        bundle.putString("foto", item.getFoto());
+        bundle.putString("testo", item.getTesto());
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

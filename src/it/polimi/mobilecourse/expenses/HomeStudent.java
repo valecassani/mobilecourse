@@ -387,20 +387,9 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        selectItem(getIntent().getExtras().getInt("position"));
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        selectItem(getIntent().getExtras().getInt("position"));
 
 
-    }
+
 
     private  class DrawerItemClickListener implements ListView.OnItemClickListener {
 

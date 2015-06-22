@@ -70,7 +70,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         updateWithToken(AccessToken.getCurrentAccessToken());
 
 
-
+        progress(true);
         showWelcome();
         manageSession(savedInstanceState);
         if (logged == false) {
@@ -288,13 +288,13 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         fragmentTransaction.replace(R.id.fragreplace,lf).commit();
     }
 
-    /*private void hideButton(){
+    private void hideButton(){
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.hide(lf);
         fragmentTransaction.commitAllowingStateLoss();
 
-    }*/
+    }
 
     /*public class manageButton extends AsyncTask<Void,Void,Boolean> {
 

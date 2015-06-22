@@ -18,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -33,6 +34,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -65,6 +67,9 @@ import java.util.Map;
  * Created by Valerio on 17/04/2015.
  */
 public class NuovaRichiestaActivity extends ActionBarActivity implements View.OnClickListener{
+    private final String TAG = "Nuova RichiestaActivity";
+
+
 
     private RequestQueue queue;
     private Context context;
@@ -81,6 +86,7 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private DatePickerDialog datePickerDialog;
     private java.sql.Date dataToSend;
     private Dialog dialog;
+    private String titolo;
     private String selectedPath;
     private String nameFile;
     private ProgressDialog progressDialog;
@@ -129,8 +135,9 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                manageInput();
                                 progressDialog = ProgressDialog.show(NuovaRichiestaActivity.this, "", "Uploading file...", true);
+                                manageInput();
+
 
                                 new Thread(new Runnable() {
                                     public void run() {
@@ -157,12 +164,13 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(NuovaRichiestaActivity.this);
-                builder.setMessage("Vuoi inviare?").setPositiveButton("Yes", dialogClickListener)
+                builder.setMessage("Vuoi inviare?").setPositiveButton("Si", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
 
             }
         });
-
+        EditText textTitolo = (EditText)findViewById(R.id.titoloRichiesta);
+        titolo = textTitolo.getText().toString();
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
 
@@ -199,26 +207,29 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         }
 
         String url = "http://www.unishare.it/tutored/add_richiesta.php";
+        if (testo == null || titolo == null || selectedPath == null) {
+            Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
+        } else {
 
 
 
-        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
-                              new Response.Listener<String>()
-            {
-                @Override
-                public void onResponse(String response) {
-                // response
-                Log.d("Response", response);
-            }
-            },
+            StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            // response
+                            Log.d("Response", response);
+                        }
+                    },
                     new Response.ErrorListener()
-            {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                // error
-                Log.d("Error.Response", error.getMessage());
-            }
-            }
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.d("Error.Response", error.getMessage());
+                        }
+                    }
             ) {
                 @Override
                 protected Map<String, String> getParams()
@@ -227,14 +238,18 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     params.put("testo", testo);
                     params.put("data", dataToSend.toString());
                     params.put("id_studente", idStudente);
+                    params.put("titolo",titolo);
+                    Log.i(TAG, nameFile);
                     params.put("foto","tutored/images/"+nameFile);
 
                     return params;
                 }
             };
-        queue.add(jsObjRequest);
-        Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
-        finish();
+            queue.add(jsObjRequest);
+            Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
+            finish();
+
+        }
 
 
     }
@@ -278,8 +293,8 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         }
         final Calendar c = Calendar.getInstance();
         String new_Date= c.get(Calendar.DAY_OF_MONTH)+"-"+((c.get(Calendar.MONTH))+1)   +"-"+c.get(Calendar.YEAR) +" " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE)+ "-"+ c.get(Calendar.SECOND);
-        selectedPath=String.format(Environment.getExternalStorageDirectory() +"/TutoredPhotos/%s.png","Tutored" +new_Date);
-        File photo = new File(path);
+        selectedPath=String.format(Environment.getExternalStorageDirectory() +"/TutoredPhotos/%s.jpg","Tutored" +new_Date);
+        File photo = new File(selectedPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photo));
         startActivityForResult(intent, 2);
     }

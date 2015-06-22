@@ -10,6 +10,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -44,7 +46,7 @@ public class LoginSFragment extends Fragment {
 
     private final String TAG = "Login Student";
 
-    private LoginStudente activity;
+    private Activity activity;
     private ProgressBar progressView;
 
     private TextView mail;
@@ -112,7 +114,7 @@ public class LoginSFragment extends Fragment {
         super.onAttach(activity);
 
 
-        this.activity = (LoginStudente) activity;
+        this.activity =  activity;
     }
 
 
