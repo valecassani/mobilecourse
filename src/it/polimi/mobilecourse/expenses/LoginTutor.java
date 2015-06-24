@@ -1,14 +1,17 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,15 +40,14 @@ import java.util.Arrays;
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class LoginTutor extends AppCompatActivity {
-
+public class LoginTutor extends ActionBarActivity {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private String email;
     private String nome;
     private String cognome;
-    private static String TAG;
+
 
 
 
@@ -53,7 +55,6 @@ public class LoginTutor extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         try
@@ -71,34 +72,16 @@ public class LoginTutor extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-        TAG = getLocalClassName();
 
         setContentView(R.layout.login_tutor);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /*
-        Button butS=(Button) findViewById(R.id.buttonLogin);
-        butS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myintent = new Intent(v.getContext(), HomeTutor.class);
-                startActivity(myintent);
-
-            }
-        });
-
-        */
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile, email"));
-        Log.i(TAG,"Login button created");
         FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                Log.i("LoginStudente", "Entro nel ciclo per recuperare i dati");
+                Log.i("LoginTutor", "Entro nel ciclo per recuperare i dati");
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -170,11 +153,11 @@ public class LoginTutor extends AppCompatActivity {
 
                         try {
                             JSONObject obj = response.getJSONObject(0);
-                            if (obj.getString("Response").equals("T")) {
+                            if (obj.getString("Response").equals("N")) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("mail",email);
                                 bundle.putString("user_id",obj.getString("id_utente").toString());
-                                Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
+                                Intent myintent = new Intent(getApplicationContext(), HomeTutor.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
                             } else {
@@ -183,7 +166,7 @@ public class LoginTutor extends AppCompatActivity {
                                 bundle.putString("Mail", email);
                                 bundle.putString("Nome", nome);
                                 bundle.putString("Cognome",cognome);
-                                Intent myintent = new Intent(LoginTutor.this, RegistrationTutor.class);
+                                Intent myintent = new Intent(getApplicationContext(), RegistrationTutor.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
 
@@ -245,6 +228,9 @@ public class LoginTutor extends AppCompatActivity {
             Log.e("DLOutState", "Exception on worka FM.noteStateNotSaved", ex);
         }
     }
+
+
+
 
 
 }

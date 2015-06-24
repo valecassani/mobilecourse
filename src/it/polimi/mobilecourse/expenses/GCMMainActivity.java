@@ -28,11 +28,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends Activity{
+public class GCMMainActivity extends Activity{
 
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -238,7 +237,7 @@ public class MainActivity extends Activity{
 
     private SharedPreferences getGCMPreferences(Context context) {
 
-        return getSharedPreferences(MainActivity.class.getSimpleName(),
+        return getSharedPreferences(GCMMainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
 

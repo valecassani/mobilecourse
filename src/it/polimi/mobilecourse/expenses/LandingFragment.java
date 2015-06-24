@@ -4,6 +4,7 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -20,6 +21,7 @@ import com.facebook.LoggingBehavior;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.fitness.result.SessionStopResult;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,12 +39,30 @@ public class LandingFragment extends Fragment {
     int id;
     String nome;
 
+    public static final String EXTRA_MESSAGE = "message";
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    // please enter your sender id
+    String SENDER_ID = "420313149585";
+
+    static final String TAG = "GCMDemo";
+    GoogleCloudMessaging gcm;
+
+    TextView mDisplay;
+    EditText ed;
+    Context context;
+    String regid;
+    Integer tipo;
+    Integer id_utente;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
         this.activity = (LandingActivity) getActivity();
+        context = activity.getApplicationContext();
     }
 
     @Override
@@ -74,7 +94,6 @@ public class LandingFragment extends Fragment {
 
                 Intent myintent = new Intent(activity, LoginStudente.class);
                 startActivity(myintent);
-                activity.finish();
 
             }
         });
@@ -186,11 +205,12 @@ public class LandingFragment extends Fragment {
         if (response.compareTo("S") == 0) {
 
             str = "S";
-            String id_utente = result.getString("id_utente");
+            int id_utente = result.getInt("id_utente");
             nome = result.getString("nome");
             //System.out.println("nome "+nome);
-            id = Integer.parseInt(id_utente);
             buttonsSActions();
+            activity.startGCM(0,id_utente);
+            //tipo 0 studente 1 tutor
 
 
         }

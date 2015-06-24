@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 
 
@@ -129,7 +130,7 @@
             android:name=".NuovaPrenotazioneActivity"
             android:label="@string/title_activity_nuova_prenotazione" >
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".GCMMainActivity"
             android:theme="@style/Base.Theme.AppCompat.Light"
             >
 

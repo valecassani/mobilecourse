@@ -182,10 +182,17 @@ public class HomeStudent extends AppCompatActivity {
     }
 
     private void loadUserInfos() {
-        Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
-
         CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
-        Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+        if (Profile.getCurrentProfile() != null) {
+            Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
+
+            circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+            Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+        } else {
+            circImgView.setImageResource(R.drawable.dummy_profpic);
+        }
+
+
         String url = null;
         if (username != null) {
             Log.i(TAG,"url for username");

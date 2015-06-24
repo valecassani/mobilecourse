@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Username"
+        android:ems="10"
+        android:id="@+id/userT"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/pasT"
+        android:layout_marginTop="90dp"
+        android:layout_alignRight="@+id/pasT"/>
+
+    <EditText
+        android:layout_width="304dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/pasT"
+        android:hint="Password"
+        android:layout_below="@+id/userT"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accedi"
+        android:id="@+id/butAccess"
+        android:layout_below="@+id/pasT"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrati"
+        android:id="@+id/regT"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/noreg"
+        android:layout_centerHorizontal="true"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Non sei registrato?"
+        android:id="@+id/noreg"
+        android:layout_below="@+id/butAccess"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="oppure"
+        android:id="@+id/oppure"
+        android:layout_below="@+id/regT"
+        android:layout_above="@id/fb_login_button"
+        android:layout_centerHorizontal="true"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarLT"
+        android:visibility="gone"
+        android:layout_below="@id/butAccess"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+
+
+
+
+
+</RelativeLayout>

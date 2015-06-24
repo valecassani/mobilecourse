@@ -2,13 +2,14 @@ package it.polimi.mobilecourse.expenses;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -23,15 +24,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import javax.xml.datatype.Duration;
-import java.lang.reflect.Array;
-import java.security.KeyStore;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +70,23 @@ public class RegStudentFBFragment extends Fragment {
     private String mailS;
     private String passS;
     private String passDue;
+
+    public static final String EXTRA_MESSAGE = "message";
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    // please enter your sender id
+    String SENDER_ID = "420313149585";
+
+    static final String TAG = "GCMDemo";
+    GoogleCloudMessaging gcm;
+
+    TextView mDisplay;
+    EditText ed;
+    Context context;
+    String regid;
+    Integer tipo;
+    Integer id_utente;
 
 
 
@@ -152,16 +178,14 @@ public class RegStudentFBFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                itemUni=parent.getItemAtPosition(position).toString();
-                identifierUni=(parent.getSelectedItemPosition())+1;
-                idUni=String.valueOf(identifierUni);
+                itemUni = parent.getItemAtPosition(position).toString();
+                identifierUni = (parent.getSelectedItemPosition()) + 1;
+                idUni = String.valueOf(identifierUni);
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
-
 
 
             }
@@ -251,9 +275,14 @@ public class RegStudentFBFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
+                            System.out.println("response received");
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
                             Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata",Toast.LENGTH_SHORT);
-
+                            id_utente = obj.getInt("newid");
+                            startGCM(id_utente, 0);
+                            Intent myintent = new Intent(view.getContext(),HomeStudent.class);
+                            startActivity(myintent);
+                            getActivity().finish();
 
 
                         } catch (JSONException e) {
@@ -272,10 +301,7 @@ public class RegStudentFBFragment extends Fragment {
             }
         });
         queue.add(jsonObjReq);
-        Activity activity = new MainActivity();
-        Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(),LandingActivity.class);
-        startActivity(myintent);
+
 
 
 
@@ -398,5 +424,142 @@ public class RegStudentFBFragment extends Fragment {
 
 
     }
+
+    public void startGCM(int id_utente, int tipo) {
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this.getActivity());
+            regid = getRegistrationId(context);
+
+            if (!regid.isEmpty()) {
+                //parametri: id_utente,tipo utente
+                new RegisterBackground().execute(String.valueOf(id_utente), String.valueOf(tipo));
+            }
+
+        }
+        //
+
+    }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getActivity());
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this.getActivity(),
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private String getRegistrationId(Context context) {
+        final SharedPreferences prefs = getGCMPreferences(context);
+        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        if (registrationId.isEmpty()) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+
+        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int currentVersion = getAppVersion(context);
+        if (registeredVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            return "";
+        }
+        return registrationId;
+    }
+
+    private SharedPreferences getGCMPreferences(Context context) {
+
+        return this.getActivity().getSharedPreferences(GCMMainActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
+    }
+
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
+
+    class RegisterBackground extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            // TODO Auto-generated method stub
+            String msg = "";
+            try {
+                if (gcm == null) {
+                    gcm = GoogleCloudMessaging.getInstance(context);
+                }
+                regid = gcm.register(SENDER_ID);
+                msg = "Device registered, registration ID=" + regid;
+                System.out.println("regid" + regid);
+                Log.d("111", msg);
+                int id = Integer.parseInt(arg0[0]);
+                int tipo = Integer.parseInt(arg0[1]);
+                sendRegistrationIdToBackend(id, tipo);
+
+                // Persist the regID - no need to register again.
+                storeRegistrationId(context, regid);
+            } catch (IOException ex) {
+                msg = "Error :" + ex.getMessage();
+            }
+            return msg;
+        }
+
+
+        private void sendRegistrationIdToBackend(int id_utente, int tipo) {
+            // Your implementation here.
+
+
+            String url = "http://www.unishare.it/tutored/getdevice.php";
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("regid", regid));
+            params.add(new BasicNameValuePair("id_utente", Integer.toString(id_utente)));
+            params.add(new BasicNameValuePair("tipo", Integer.toString(tipo)));
+
+
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url);
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(params));
+            } catch (UnsupportedEncodingException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+            } catch (ClientProtocolException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+        }
+
+        private void storeRegistrationId(Context context, String regId) {
+            final SharedPreferences prefs = getGCMPreferences(context);
+            int appVersion = getAppVersion(context);
+            Log.i(TAG, "Saving regId on app version " + appVersion);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(PROPERTY_REG_ID, regId);
+            editor.putInt(PROPERTY_APP_VERSION, appVersion);
+            editor.commit();
+        }
+
+
+    }
+
 
 }
