@@ -94,7 +94,7 @@ public class LandingFragment extends Fragment {
     }
 
     private void buttonsSActions() {
-
+        (activity).manageButton();
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -72,12 +72,7 @@ public class HomeStudent extends AppCompatActivity {
     private int itemSelected;
     public static Activity activity;
 
-    public HomeStudent() {
 
-
-
-
-    }
 
 
       public void onCreate(Bundle savedInstanceState) {
@@ -108,8 +103,6 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
-
-
 
 
         loadUserInfos();
@@ -394,20 +387,9 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        selectItem(getIntent().getExtras().getInt("position"));
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        selectItem(getIntent().getExtras().getInt("position"));
 
 
-    }
+
 
     private  class DrawerItemClickListener implements ListView.OnItemClickListener {
 

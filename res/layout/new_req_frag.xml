@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+  >
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_awesome_toolbar"
         android:layout_height="56dp"
@@ -13,16 +14,26 @@
         android:background="?attr/colorPrimary">
 
     </android.support.v7.widget.Toolbar>
+    <EditText
+        android:id="@+id/titoloRichiesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="top"
+        android:hint="Titolo della Richiesta"
+        android:layout_below="@id/my_awesome_toolbar"
+        android:textStyle="bold"/>
 
 
 
     <EditText
         android:id="@+id/testoRichiesta"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_gravity="center_horizontal"
         android:gravity="top"
-        android:hint="Testo della Richiesta" />
+        android:hint="Testo della Richiesta"
+        android:layout_below="@id/titoloRichiesta"/>
 
     <EditText
         android:id="@+id/dataEntro"
@@ -31,19 +42,38 @@
         android:layout_gravity="center_horizontal"
         android:ems="10"
         android:hint="Selezionare una data"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_below="@id/testoRichiesta"/>
 
     <Button
         android:id="@+id/buttonImage"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Carica Immagine"></Button>
+        android:text="Carica Immagine"
+        android:layout_below="@id/dataEntro"></Button>
+    <Button
+        android:id="@+id/buttonPhoto"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Scatta Foto"
+        android:layout_below="@id/buttonImage"></Button>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/anteprima_immagine"
+        android:layout_alignBottom="@+id/buttonPhoto"
+        android:layout_toRightOf="@+id/buttonImage"
+        android:layout_marginLeft="87dp"
+        android:layout_below="@+id/buttonImage" />
 
     <Button
         android:id="@+id/buttonSendRich"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Invia" />
+        android:background="@color/material_blue_500"
+        android:text="Invia"
+        android:textColor="#FFF"
+        android:layout_alignParentBottom="true"/>
 
 
-</LinearLayout>
+</RelativeLayout>

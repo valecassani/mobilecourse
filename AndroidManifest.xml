@@ -25,6 +25,9 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -62,6 +65,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".ProvaUni" />
         <activity android:name=".HelpActivity" />
@@ -70,7 +74,15 @@
             android:label="Login Studente"
             android:theme="@style/Base.Theme.AppCompat.Light"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".LoginTutor" />
+        <activity android:name=".LoginTutor"
+            android:theme="@style/Base.Theme.AppCompat.Light"
+            >
+
+        </activity>
+        <activity
+            android:name=".RegistrationTutor">
+
+        </activity>
         <activity
             android:name=".RegistrationStudent"
             android:label="Nuovo studente"
@@ -117,6 +129,30 @@
             android:name=".NuovaPrenotazioneActivity"
             android:label="@string/title_activity_nuova_prenotazione" >
         </activity>
+        <activity android:name=".MainActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light"
+            >
+
+
+        </activity>
+
+        <activity android:name=".ReceiveActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light"
+            >
+
+
+        </activity>
+
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="it.polimi.mobilecourse.expenses" />
+            </intent-filter>
+        </receiver>
+        <service android:name="it.polimi.mobilecourse.expenses.GcmIntentService"></service>
+
     </application>
 
 </manifest>

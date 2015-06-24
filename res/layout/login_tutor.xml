@@ -21,13 +21,13 @@
 
     </fragment>
 
-    <Button
-        android:layout_width="100dp"
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/buttonLogin"
-        android:layout_marginLeft="45dp"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/fragLS" />
 
 
 

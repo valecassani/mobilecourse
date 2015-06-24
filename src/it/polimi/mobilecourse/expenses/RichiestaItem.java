@@ -12,12 +12,14 @@ public class RichiestaItem {
     private String testo;
     private String data;
     private String foto;
+    private String titolo;
 
-    public RichiestaItem(String id, String testo, String data, String foto) {
+    public RichiestaItem(String id, String testo, String data, String foto, String titolo) {
         this.id = id;
         this.foto = foto;
         this.testo = testo;
         this.data = data;
+        this.titolo = titolo;
         this.idStudente = idStudente;
     }
 
@@ -34,6 +36,8 @@ public class RichiestaItem {
     public String getData() {
         return data;
     }
+
+    public String getTitolo() {return titolo;}
 
     public String getFoto() {
         return foto;

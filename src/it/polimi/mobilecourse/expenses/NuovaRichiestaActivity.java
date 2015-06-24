@@ -11,11 +11,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -31,6 +34,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -63,6 +67,9 @@ import java.util.Map;
  * Created by Valerio on 17/04/2015.
  */
 public class NuovaRichiestaActivity extends ActionBarActivity implements View.OnClickListener{
+    private final String TAG = "Nuova RichiestaActivity";
+
+
 
     private RequestQueue queue;
     private Context context;
@@ -79,11 +86,13 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
     private DatePickerDialog datePickerDialog;
     private java.sql.Date dataToSend;
     private Dialog dialog;
+    private String titolo;
     private String selectedPath;
     private String nameFile;
     private ProgressDialog progressDialog;
-    String upLoadServerUri = null;
-
+    private String upLoadServerUri = null;
+    private Button photoButton;
+    private String path;
     private int serverResponseCode;
 
     @Override
@@ -106,8 +115,16 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         imageButton = (Button)findViewById(R.id.buttonImage);
         imageButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+
                 openGallery(1);
             } });
+        photoButton = (Button)findViewById(R.id.buttonPhoto);
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +135,9 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                manageInput();
                                 progressDialog = ProgressDialog.show(NuovaRichiestaActivity.this, "", "Uploading file...", true);
+                                manageInput();
+
 
                                 new Thread(new Runnable() {
                                     public void run() {
@@ -146,12 +164,13 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(NuovaRichiestaActivity.this);
-                builder.setMessage("Vuoi inviare?").setPositiveButton("Yes", dialogClickListener)
+                builder.setMessage("Vuoi inviare?").setPositiveButton("Si", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
 
             }
         });
-
+        EditText textTitolo = (EditText)findViewById(R.id.titoloRichiesta);
+        titolo = textTitolo.getText().toString();
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
 
@@ -188,26 +207,29 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         }
 
         String url = "http://www.unishare.it/tutored/add_richiesta.php";
+        if (testo == null || titolo == null || selectedPath == null) {
+            Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
+        } else {
 
 
 
-        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
-                              new Response.Listener<String>()
-            {
-                @Override
-                public void onResponse(String response) {
-                // response
-                Log.d("Response", response);
-            }
-            },
+            StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            // response
+                            Log.d("Response", response);
+                        }
+                    },
                     new Response.ErrorListener()
-            {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                // error
-                Log.d("Error.Response", error.getMessage());
-            }
-            }
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.d("Error.Response", error.getMessage());
+                        }
+                    }
             ) {
                 @Override
                 protected Map<String, String> getParams()
@@ -216,14 +238,18 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
                     params.put("testo", testo);
                     params.put("data", dataToSend.toString());
                     params.put("id_studente", idStudente);
+                    params.put("titolo",titolo);
+                    Log.i(TAG, nameFile);
                     params.put("foto","tutored/images/"+nameFile);
 
                     return params;
                 }
             };
-        queue.add(jsObjRequest);
-        Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
-        finish();
+            queue.add(jsObjRequest);
+            Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
+            finish();
+
+        }
 
 
     }
@@ -257,7 +283,21 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
+    public void takePhoto() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        File folder = new File(Environment.getExternalStorageDirectory() + "/LoadImg");
 
+        if(!folder.exists())
+        {
+            folder.mkdir();
+        }
+        final Calendar c = Calendar.getInstance();
+        String new_Date= c.get(Calendar.DAY_OF_MONTH)+"-"+((c.get(Calendar.MONTH))+1)   +"-"+c.get(Calendar.YEAR) +" " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE)+ "-"+ c.get(Calendar.SECOND);
+        selectedPath=String.format(Environment.getExternalStorageDirectory() +"/TutoredPhotos/%s.jpg","Tutored" +new_Date);
+        File photo = new File(selectedPath);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photo));
+        startActivityForResult(intent, 2);
+    }
 
 
     @Override
@@ -425,15 +465,29 @@ public class NuovaRichiestaActivity extends ActionBarActivity implements View.On
 
 
         if (resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
+
             if (requestCode == 1)
 
             {
-
+                Uri selectedImageUri = data.getData();
                 selectedPath = getRealPathFromURI(selectedImageUri);
 
                 System.out.println("selectedPath1 : " + selectedPath);
 
+
+            }
+
+            if(requestCode==2) {
+                System.out.println("Selected path from photo: " + path);
+                File imgFile = new  File(selectedPath);
+
+                if(imgFile.exists()) {
+                    System.out.println("File exists");
+
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ImageView imgView = (ImageView) findViewById(R.id.anteprima_immagine);
+                    imgView.setImageBitmap(Bitmap.createBitmap(myBitmap));
+                }
 
             }
 
