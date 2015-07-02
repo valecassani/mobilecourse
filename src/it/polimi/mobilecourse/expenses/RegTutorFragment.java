@@ -29,7 +29,6 @@ public class RegTutorFragment extends Fragment {
 
     private View view;
     private ProgressBar progressView;
-    private Spinner uniSpinner;
     private Spinner citySpinner;
     private Button submit;
     private CheckBox accept;
@@ -38,9 +37,7 @@ public class RegTutorFragment extends Fragment {
     private int identifierUni;
     private String itemC;
     private String idCity;
-    private String idUni;
     private String itemUni;
-    private ArrayAdapter<String> adapterUni;
     private ArrayAdapter<String> adapterCity;
 
     private String nameT;
@@ -62,6 +59,7 @@ public class RegTutorFragment extends Fragment {
 
         settingsReg();
         setSpinner();
+
 
         //registrazione
         submit.setOnClickListener(new View.OnClickListener() {
@@ -104,54 +102,23 @@ public class RegTutorFragment extends Fragment {
     private void settingsReg(){
 
         accept=(CheckBox)view.findViewById(R.id.checkBox);
-        progressView=(ProgressBar)view.findViewById(R.id.progressBarRT);
+        progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
 
-        adapterUni = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
-        adapterUni.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
         adapterCity = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapterCity.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        uniSpinner=(Spinner) view.findViewById(R.id.spinnerUni);
         citySpinner= (Spinner) view.findViewById(R.id.spinnerCitta);
-        submit=(Button) view.findViewById(R.id.regT);
+        submit=(Button) view.findViewById(R.id.regS);
 
     }
 
     private void setSpinner(){
         ms= new manageSpinner();
         ms.execute((Void) null);
-        manageUSpinner();
         manageCSpinner();
 
     }
 
-    private void manageUSpinner(){
-
-
-
-
-        uniSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                itemUni=parent.getItemAtPosition(position).toString();
-                identifierUni=(parent.getSelectedItemPosition())+1;
-                idUni=String.valueOf(identifierUni);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-
-
-
-            }
-        });
-
-
-
-
-    }
 
     private void manageCSpinner(){
 
@@ -184,12 +151,12 @@ public class RegTutorFragment extends Fragment {
     }
 
     private void getData(){
-        EditText name=(EditText) view.findViewById(R.id.nameT);
-        EditText surname=(EditText) view.findViewById(R.id.surnameT);
-        EditText cell=(EditText) view.findViewById(R.id.cellT);
-        EditText mail=(EditText) view.findViewById(R.id.mailT);
-        EditText pass=(EditText) view.findViewById(R.id.passT);
-        EditText passdue=(EditText) view.findViewById(R.id.pass2T);
+        EditText name=(EditText) view.findViewById(R.id.nameS);
+        EditText surname=(EditText) view.findViewById(R.id.surnameS);
+        EditText cell=(EditText) view.findViewById(R.id.cellS);
+        EditText mail=(EditText) view.findViewById(R.id.mailS);
+        EditText pass=(EditText) view.findViewById(R.id.passS);
+        EditText passdue=(EditText) view.findViewById(R.id.pass2S);
 
 
 
@@ -228,10 +195,10 @@ public class RegTutorFragment extends Fragment {
 
         String url="registration_tutor.php?username=".concat(mailT).concat("&").concat("password=").concat(passT).concat("&").concat("nome=")
                 .concat(nameT).concat("&").concat("cognome=").concat(surnameT).concat("&").concat("cellulare=").concat(cellT)
-                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity);
+                .concat("&").concat("id_citta=").concat(idCity);
         new RequestFtp().setParameters(activity, url, "regTutor", RegTutorFragment.this).execute();
         Toast.makeText(getActivity().getApplicationContext(), "Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(), HomeTutor.class);
+        Intent myintent = new Intent(view.getContext(), LandingActivity.class);
         startActivity(myintent);
 
 
@@ -259,7 +226,7 @@ public class RegTutorFragment extends Fragment {
         else{
 
 
-            Toast.makeText(getActivity().getApplicationContext(),"Utente giï¿½ registrato", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
             Intent myintent = new Intent(view.getContext(), LandingActivity.class);
             startActivity(myintent);
         }
@@ -320,17 +287,7 @@ public class RegTutorFragment extends Fragment {
 
 
 
-    public void arrayU(ArrayList<ObjDb> result){
 
-        int i=0;
-
-        while(i<result.size()) {
-            ObjDb res = result.get(i);
-            String str=res.get("nome");
-            adapterUni.add(str);
-            i++;
-        }
-    }
 
     public void arrayC(ArrayList<ObjDb> result){
         int i=0;
@@ -354,7 +311,6 @@ public class RegTutorFragment extends Fragment {
 
 
 
-            new RequestFtp().setParameters(activity, "univer.php", "spinnerUni", RegTutorFragment.this).execute();
 
             new RequestFtp().setParameters(activity, "cities.php", "spinnerCity", RegTutorFragment.this).execute();
 
@@ -372,11 +328,10 @@ public class RegTutorFragment extends Fragment {
 
 
 
-                uniSpinner.setAdapter(adapterUni);
-                uniSpinner.setPrompt("Seleziona tra le seguenti universitï¿½ la tua:");
+
 
                 citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti cittï¿½ la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
 
 
 

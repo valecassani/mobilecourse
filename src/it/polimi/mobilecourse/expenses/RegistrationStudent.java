@@ -32,7 +32,7 @@ public class RegistrationStudent extends HelpActivity {
         rsf=new RegStudentFragment();
         Bundle bundle = getIntent().getExtras();
         System.out.println("Bundle:" + bundle);
-        if(bundle.getString("Tipo").compareTo("FB")==0) {
+     if(bundle.getString("Tipo").compareTo("FB")==0) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragreplace, rsfbf);
@@ -63,10 +63,24 @@ public class RegistrationStudent extends HelpActivity {
             reg.arrayU(result);
         }
 
+        if(op=="getFacolta"){
+
+            RegStudentFragment reg=(RegStudentFragment) fragment;
+            reg.arrayF(result);
+        }
+
+
+
         if(op=="spinnerCity"){
 
             RegStudentFragment reg=(RegStudentFragment) fragment;
             reg.arrayC(result);
+        }
+
+        if(op=="getFacoltaFB"){
+
+            RegStudentFBFragment reg=(RegStudentFBFragment) fragment;
+            reg.arrayF(result);
         }
 
         if(op=="spinnerCityFB"){

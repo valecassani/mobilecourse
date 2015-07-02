@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -41,25 +42,20 @@ public class RegTutorFBFragment extends Fragment {
 
     private View view;
     private ProgressBar progressView;
-    private Spinner uniSpinner;
     private Spinner citySpinner;
     private Button submit;
     private RegistrationTutor activity;
     private manageSpinner ms=null;
-    private int identifierUni;
     private String itemC;
     private String idCity;
     private String idUni;
     private String itemUni;
-    private ArrayAdapter<String> adapterUni;
+    private CheckBox accept;
+
     private ArrayAdapter<String> adapterCity;
 
-    private String nameT;
-    private String surnameT;
+
     private String cellT;
-    private String mailT;
-    private String passT;
-    private String passDue;
 
 
 
@@ -123,12 +119,10 @@ public class RegTutorFBFragment extends Fragment {
         complete.setText(nome + ",completa il profilo.");
 
         progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
+        accept=(CheckBox)view.findViewById(R.id.checkBox);
 
-        adapterUni = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
-        adapterUni.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         adapterCity = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapterCity.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        uniSpinner=(Spinner) view.findViewById(R.id.spinnerUni);
         citySpinner= (Spinner) view.findViewById(R.id.spinnerCitta);
         submit=(Button) view.findViewById(R.id.regS);
 
@@ -137,39 +131,10 @@ public class RegTutorFBFragment extends Fragment {
     private void setSpinner(){
         ms= new manageSpinner();
         ms.execute((Void) null);
-        manageUSpinner();
         manageCSpinner();
 
     }
 
-    private void manageUSpinner(){
-
-
-
-
-        uniSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                itemUni=parent.getItemAtPosition(position).toString();
-                identifierUni=(parent.getSelectedItemPosition())+1;
-                idUni=String.valueOf(identifierUni);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-
-
-
-            }
-        });
-
-
-
-
-    }
 
     private void manageCSpinner(){
 
@@ -239,7 +204,7 @@ public class RegTutorFBFragment extends Fragment {
 
         String url="registration_tutor_fb.php?username=".concat(mailS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellT)
-                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity);
+                .concat("&").concat("id_citta=").concat(idCity);
         //new RequestFtp().setParameters(activity, url, "regTutor", RegStudentFBFragment.this).execute();
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
@@ -273,7 +238,7 @@ public class RegTutorFBFragment extends Fragment {
         queue.add(jsonObjReq);
 
         Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(),HomeTutor.class);
+        Intent myintent = new Intent(view.getContext(),LandingActivity.class);
         startActivity(myintent);
 
 
@@ -287,7 +252,7 @@ public class RegTutorFBFragment extends Fragment {
     private void controlField(){
 
 
-        if(isCellValid(cellT)==true ){
+        if(isCellValid(cellT)==true && accept.isChecked()){
 
 
 
@@ -330,17 +295,6 @@ public class RegTutorFBFragment extends Fragment {
 
 
 
-    public void arrayU(ArrayList<ObjDb> result){
-
-        int i=0;
-
-        while(i<result.size()) {
-            ObjDb res = result.get(i);
-            String str=res.get("nome");
-            adapterUni.add(str);
-            i++;
-        }
-    }
 
     public void arrayC(ArrayList<ObjDb> result){
         int i=0;
@@ -364,7 +318,6 @@ public class RegTutorFBFragment extends Fragment {
 
 
 
-            new RequestFtp().setParameters(activity, "univer.php", "spinnerUniFB", RegTutorFBFragment.this).execute();
 
             new RequestFtp().setParameters(activity, "cities.php", "spinnerCityFB", RegTutorFBFragment.this).execute();
 
@@ -382,11 +335,9 @@ public class RegTutorFBFragment extends Fragment {
 
 
 
-                uniSpinner.setAdapter(adapterUni);
-                uniSpinner.setPrompt("Seleziona tra le seguenti universitï¿½ la tua:");
 
                 citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti cittï¿½ la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
 
 
 

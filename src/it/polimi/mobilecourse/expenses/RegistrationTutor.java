@@ -12,74 +12,63 @@ import java.util.ArrayList;
  */
 public class RegistrationTutor extends HelpActivity {
 
+    private RegTutorFBFragment rtfbf;
+    private RegTutorFragment rtf;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.registration_tutor);
+
+        rtfbf= new RegTutorFBFragment();
+        rtf=new RegTutorFragment();
+        Bundle bundle = getIntent().getExtras();
+        System.out.println("Bundle:" + bundle);
+        if(bundle.getString("Tipo").compareTo("FB")==0) {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragreplace, rtfbf);
+            fragmentTransaction.commit();
+        }
+        else{
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragreplace, rtf);
+        fragmentTransaction.commit();
+        }
 
 
-        private RegTutorFBFragment rtfbf;
-        private RegTutorFragment rtf;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.registration_tutor);
-
-            rtfbf= new RegTutorFBFragment();
-            rtf=new RegTutorFragment();
-            Bundle bundle = getIntent().getExtras();
-            System.out.println("Bundle:" + bundle);
-            if(bundle.getString("Tipo").compareTo("FB")==0) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragreplace, rtfbf);
-                fragmentTransaction.commit();
-            }
-            else{
-
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragreplace, rtf);
-                fragmentTransaction.commit();
-            }
+    }
 
 
+
+
+
+    @Override
+    public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
+
+
+
+        if(op=="spinnerCity"){
+
+            RegTutorFragment reg=(RegTutorFragment) fragment;
+            reg.arrayC(result);
+        }
+
+        if(op=="spinnerCityFB"){
+
+            RegTutorFBFragment reg=(RegTutorFBFragment) fragment;
+            reg.arrayC(result);
         }
 
 
 
 
-
-        @Override
-        public void handleResult(ArrayList<ObjDb> result,String op,Fragment fragment){
-
-
-            if(op=="spinnerUni"){
-
-                RegTutorFragment reg=(RegTutorFragment) fragment;
-                reg.arrayU(result);
-            }
-
-            if(op=="spinnerCity"){
-
-                RegTutorFragment reg=(RegTutorFragment) fragment;
-                reg.arrayC(result);
-            }
-
-            if(op=="spinnerCityFB"){
-
-                RegTutorFragment reg=(RegTutorFragment) fragment;
-                reg.arrayC(result);
-            }
-
-            if(op=="spinnerUniFB"){
-
-                RegTutorFragment reg=(RegTutorFragment) fragment;
-                reg.arrayU(result);
-            }
-
-
-            if(op=="controlS"){
-                RegStudentFragment reg=(RegStudentFragment) fragment;
-                reg.duplicateMail(result);
-            }
-
+        if(op=="controlT"){
+            RegTutorFragment reg=(RegTutorFragment) fragment;
+            reg.duplicateMail(result);
         }
+
+    }
 }

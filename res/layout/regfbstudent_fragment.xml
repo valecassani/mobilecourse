@@ -18,8 +18,6 @@
 
 
 
-
-
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,9 +25,9 @@
                 android:ems="10"
                 android:id="@+id/cellS"
                 android:hint="Cellulare"
-                android:layout_marginTop="68dp"
-                android:layout_below="@+id/complete"
-                android:layout_toRightOf="@+id/textView5" />
+                android:layout_alignBottom="@+id/textView5"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="157dp" />
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -38,9 +36,8 @@
                 android:saveEnabled="true"
                 android:drawSelectorOnTop="true"
                 android:spinnerMode="dialog"
-                android:layout_below="@+id/textView5"
-                android:layout_alignRight="@+id/cellS"
-                android:layout_toRightOf="@+id/textView5" />
+                android:layout_above="@+id/textView6"
+                android:layout_alignParentLeft="true" />
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -52,9 +49,8 @@
 
                 android:spinnerMode="dialog"
                 android:clickable="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/textView6"
-                android:layout_alignRight="@+id/spinnerCitta" />
+                android:layout_above="@+id/editTextFac"
+                android:layout_alignParentLeft="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,9 +58,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Dove vivi?"
                 android:id="@+id/textView5"
-                android:layout_marginTop="56dp"
-                android:layout_below="@+id/cellS"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignTop="@+id/spinnerCitta"
+                android:layout_alignLeft="@+id/nameS"
+                android:layout_marginTop="-40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,7 +68,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Università"
                 android:id="@+id/textView6"
-                android:layout_below="@+id/spinnerCitta"
+                android:layout_above="@+id/spinnerUni"
                 android:layout_alignParentLeft="true" />
 
 
@@ -82,9 +78,9 @@
                 android:layout_height="wrap_content"
                 android:text="Registrati"
                 android:id="@+id/regS"
-                android:layout_marginTop="100dp"
-                android:layout_below="@+id/spinnerUni"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="52dp" />
 
 
 
@@ -102,12 +98,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/complete"
-                android:editable="true"
 
+                android:id="@+id/editTextFac"
+                android:text="Facoltà"
+                android:layout_above="@+id/spinnerFac"
+                android:layout_toRightOf="@+id/progressBarRS" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerFac"
+                android:saveEnabled="true"
+                android:drawSelectorOnTop="true"
+
+
+                android:spinnerMode="dialog"
+                android:clickable="true"
+                android:layout_above="@+id/checkBox"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accetto Termini e condizioni e informativa sulla privacy Tutored"
+                android:id="@+id/checkBox"
+                android:checked="false"
+                android:layout_above="@+id/regS"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="87dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Completa il profilo"
+                android:id="@+id/textView13"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="70dp" />
+                android:layout_alignRight="@+id/regS"
+                android:layout_marginTop="57dp" />
 
 
         </RelativeLayout>
