@@ -323,7 +323,7 @@ public class RegStudentFBFragment extends Fragment {
             }
         });
         queue.add(jsonObjReq);
-        Activity activity = new MainActivity();
+        Activity activity = new GCMMainActivity();
         Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
         Intent myintent = new Intent(view.getContext(),LandingActivity.class);
         startActivity(myintent);

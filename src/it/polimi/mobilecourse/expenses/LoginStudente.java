@@ -163,6 +163,7 @@ public class LoginStudente extends ActionBarActivity {
                                 Intent myintent = new Intent(LoginStudente.this, HomeStudent.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
+                                finish();
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("Tipo", "FB");

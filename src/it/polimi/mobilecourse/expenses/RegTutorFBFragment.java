@@ -124,7 +124,7 @@ public class RegTutorFBFragment extends Fragment {
         adapterCity = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapterCity.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         citySpinner= (Spinner) view.findViewById(R.id.spinnerCitta);
-        submit=(Button) view.findViewById(R.id.regS);
+        submit=(Button) view.findViewById(R.id.regT);
 
     }
 
@@ -248,22 +248,11 @@ public class RegTutorFBFragment extends Fragment {
 
 
 
-
     private void controlField(){
 
 
         if(isCellValid(cellT)==true && accept.isChecked()){
-
-
-
-
-
             completeReg();
-
-
-
-
-
         }
         else{
 

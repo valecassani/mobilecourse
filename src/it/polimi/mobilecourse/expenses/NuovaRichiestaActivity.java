@@ -23,6 +23,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,7 @@ import java.util.Map;
 /**
  * Created by Valerio on 17/04/2015.
  */
-public class NuovaRichiestaActivity extends ActionBarActivity implements View.OnClickListener{
+public class NuovaRichiestaActivity extends AppCompatActivity implements View.OnClickListener{
     private final String TAG = "Nuova RichiestaActivity";
 
 

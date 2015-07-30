@@ -30,9 +30,13 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -134,6 +138,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
             Toast.makeText(getApplicationContext(), "Login con Facebook avvenuto", Toast.LENGTH_SHORT);
 
 
+
             getEmail(currentAccessToken);
 
 
@@ -154,6 +159,8 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
         }
     }
+
+
 
     private void getEmail(AccessToken currentAccessToken) {
 
@@ -176,7 +183,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                             controlFbLogin();
 
 
-                        } catch (JSONException e) {
+                        } catch (JSONException | NullPointerException e) {
                             e.printStackTrace();
                             Toast.makeText(getApplicationContext(), "Errore di connessione", Toast.LENGTH_LONG).show();
                         }

@@ -122,7 +122,7 @@ public class LandingFragment extends Fragment {
                 Intent myintent = new Intent(v.getContext(), HomeStudent.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("Nome", nome);
-                mBundle.putString("user_id", Integer.toString(id));
+                mBundle.putString("user_id", Integer.toString(id_utente));
                 myintent.putExtras(mBundle);
                 startActivity(myintent);
 
@@ -205,7 +205,7 @@ public class LandingFragment extends Fragment {
         if (response.compareTo("S") == 0) {
 
             str = "S";
-            int id_utente = result.getInt("id_utente");
+            id_utente = result.getInt("id_utente");
             nome = result.getString("nome");
             //System.out.println("nome "+nome);
             buttonsSActions();

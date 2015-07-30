@@ -153,20 +153,21 @@ public class LoginTutor extends ActionBarActivity {
 
                         try {
                             JSONObject obj = response.getJSONObject(0);
-                            if (obj.getString("Response").equals("N")) {
+                            if (obj.getString("Response").equals("T")) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("mail",email);
                                 bundle.putString("user_id",obj.getString("id_utente").toString());
-                                Intent myintent = new Intent(getApplicationContext(), HomeTutor.class);
+                                Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
+                                finish();
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("Tipo", "FB");
                                 bundle.putString("Mail", email);
                                 bundle.putString("Nome", nome);
                                 bundle.putString("Cognome",cognome);
-                                Intent myintent = new Intent(getApplicationContext(), RegistrationTutor.class);
+                                Intent myintent = new Intent(LoginTutor.this, RegistrationTutor.class);
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
 

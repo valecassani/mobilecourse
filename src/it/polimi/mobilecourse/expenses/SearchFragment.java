@@ -71,8 +71,7 @@ public class SearchFragment extends Fragment {
                 bundle.putString("query", url);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                //showResults(searchSubject.getText().toString());
-                //searchSubject.setText("");
+
             }
         });
 
