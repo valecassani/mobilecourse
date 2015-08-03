@@ -226,7 +226,7 @@ public class RegTutorFragment extends Fragment {
         else{
 
 
-            Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Utente gia registrato", Toast.LENGTH_LONG).show();
             Intent myintent = new Intent(view.getContext(), LandingActivity.class);
             startActivity(myintent);
         }
@@ -331,7 +331,7 @@ public class RegTutorFragment extends Fragment {
 
 
                 citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti citta la tua:");
 
 
 

@@ -30,13 +30,9 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -207,7 +203,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
 
                         try {
                             JSONObject obj = response.getJSONObject(0);
@@ -218,6 +214,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                         Log.d("Landing", response.toString());
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

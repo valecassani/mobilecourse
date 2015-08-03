@@ -2,13 +2,10 @@ package it.polimi.mobilecourse.expenses;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -27,13 +24,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import javax.xml.datatype.Duration;
-import java.lang.reflect.Array;
-import java.security.KeyStore;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Matteo on 23/12/2014.
@@ -299,7 +291,7 @@ public class RegStudentFBFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
@@ -312,6 +304,7 @@ public class RegStudentFBFragment extends Fragment {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

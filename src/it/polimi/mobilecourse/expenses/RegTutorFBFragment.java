@@ -212,7 +212,7 @@ public class RegTutorFBFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
@@ -225,6 +225,7 @@ public class RegTutorFBFragment extends Fragment {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -326,7 +327,7 @@ public class RegTutorFBFragment extends Fragment {
 
 
                 citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti citta la tua:");
 
 
 

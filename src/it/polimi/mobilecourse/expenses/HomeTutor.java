@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,10 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.pkmmte.view.CircularImageView;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -129,6 +126,8 @@ public class HomeTutor extends AppCompatActivity {
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.abc_ic_search_api_mtrl_alpha));
 
+        mDrawerItems.add(new NavDrawerItem("Impostazioni Lezioni", R.drawable.com_facebook_button_send_icon));
+
 
         // setting the nav drawer list adapter
         mNavDrawerAdapter = new NavDrawerListAdapter(getApplicationContext(),
@@ -196,7 +195,7 @@ public class HomeTutor extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             TextView nome = (TextView)findViewById(R.id.drawer_nome);
                             JSONObject obj = response.getJSONObject(0);
@@ -212,6 +211,7 @@ public class HomeTutor extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -234,7 +234,7 @@ public class HomeTutor extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, obj.toString());
@@ -247,6 +247,7 @@ public class HomeTutor extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

@@ -8,21 +8,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -135,7 +130,7 @@ public class RichiesteFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         items.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
@@ -158,7 +153,7 @@ public class RichiesteFragment extends Fragment {
                         swipeRefreshLayout.setRefreshing(false);
 
 
-
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -243,7 +238,7 @@ public class RichiesteFragment extends Fragment {
                 null, new Response.Listener<JSONObject>() {
 
             @Override
-            public void onResponse(JSONObject response) {
+            public boolean onResponse(JSONObject response) {
 
                 try {
                     int success = response.getInt("success");
@@ -266,6 +261,7 @@ public class RichiesteFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                return false;
             }
         }, new Response.ErrorListener() {
 

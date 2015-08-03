@@ -21,7 +21,7 @@
 
         </ListView>
 
-    <com.gc.materialdesign.views.ButtonFloat
+    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/buttonFloat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

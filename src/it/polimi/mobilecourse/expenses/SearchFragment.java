@@ -2,24 +2,21 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,8 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.gc.materialdesign.views.ButtonFloat;
-import com.gc.materialdesign.views.ButtonRectangle;
-import com.quinny898.library.persistentsearch.SearchBox;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +35,7 @@ import java.util.ArrayList;
 /**
  * Created by valeriocassani on 15/04/15.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements LocationListener{
     private final String TAG = "Search Fragment";
     private ArrayList<SearchTutorItem> items = new ArrayList<>();
     private RequestQueue queue;
@@ -48,6 +43,14 @@ public class SearchFragment extends Fragment {
     private ListView mListView;
     private EditText searchSubject;
     private ButtonFloat searchButton;
+    private LocationManager locationManager;
+    private String provider;
+    private double lat;
+    private double lng;
+
+    private boolean isGPSEnabled;
+    private boolean isNetworkEnabled;
+    private boolean canGetLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,16 +59,31 @@ public class SearchFragment extends Fragment {
         queue= Volley.newRequestQueue(view.getContext());
         context = view.getContext();
 
-        mListView = (ListView)view.findViewById(R.id.search_tutor_list);
 
 
         searchSubject = (EditText)view.findViewById(R.id.search_tutor);
 
         searchButton = (ButtonFloat)view.findViewById(R.id.search_tutor_button);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchSubject.getText().toString();
+                Criteria criteria = new Criteria();
+                provider = locationManager.getBestProvider(criteria, false);
+                Location location = getLocation();
+                String url;
+                if (location != null) {
+                    Log.d(TAG,"Location is not null");
+                    Log.d(TAG,"Latitude : " + location.getLatitude() + "; Longitude : " + location.getLongitude());
+                    url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchSubject.getText().toString()+ "&lat="
+                            + location.getLatitude() + "&long=" + location.getLongitude() ;
+
+                } else {
+                    url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchSubject.getText().toString();
+                    Log.d(TAG, "Location is null");
+                }
+
                 Intent intent = new Intent(context,SearchResultActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("query", url);
@@ -75,6 +93,15 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        // Define the criteria how to select the locatioin provider -> use
+        // default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+
+
+
 
 
 
@@ -83,7 +110,7 @@ public class SearchFragment extends Fragment {
 
     private void showResults(String searchTerm) {
 
-        String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchTerm;
+        String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchTerm + "&lat=" + lat + "&long=" + lng;
 
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
@@ -91,7 +118,7 @@ public class SearchFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -128,6 +155,7 @@ public class SearchFragment extends Fragment {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -147,4 +175,105 @@ public class SearchFragment extends Fragment {
 
 
 
+    /* Request updates at startup */
+    @Override
+    public void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
+    }
+
+    /* Remove the locationlistener updates when Activity is paused */
+    @Override
+    public void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        lat =  location.getLatitude();
+        lng = location.getLongitude();
+        Log.d(TAG,"Latitude " + lat +", Longitude " + lng);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(getActivity(), "Enabled new provider " + provider,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    public Location getLocation() {
+        Location location = null;
+
+        //TODO aggiungere se esiste indirizzo da database e ottenere coordinate
+        try {
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            // getting GPS status
+            isGPSEnabled = locationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            // getting network status
+            isNetworkEnabled = locationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                // no network provider is enabled
+            } else {
+                this.canGetLocation = true;
+                if (isNetworkEnabled) {
+                    locationManager.requestLocationUpdates(
+                            LocationManager.NETWORK_PROVIDER,
+                            1,
+                            1, this);
+                    Log.d("Network", "Network Enabled");
+                    if (locationManager != null) {
+                        location = locationManager
+                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+
+                        }
+                    }
+                }
+                // if GPS Enabled get lat/long using GPS Services
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        locationManager.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER,
+                                1,
+                                1, this);
+                        Log.d("GPS", "GPS Enabled");
+                        if (locationManager != null) {
+                            location = locationManager
+                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return location;
+    }
 }
+
+
+
+
+

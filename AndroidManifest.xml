@@ -67,6 +67,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+
         </activity>
         <activity android:name=".ProvaUni" />
         <activity android:name=".HelpActivity" />
@@ -141,6 +142,21 @@
             android:theme="@style/Base.Theme.AppCompat.Light"
             >
 
+
+        </activity>
+
+        <activity android:name=".UpdateImage"
+            >
+
+
+
+
+        </activity>
+
+        <activity android:name=".UpdatePassword">
+
+        </activity>
+        <activity android:name=".UpdateInfo">
 
         </activity>
 

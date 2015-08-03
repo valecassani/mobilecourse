@@ -1,17 +1,13 @@
 package it.polimi.mobilecourse.expenses;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-
 
 
 import com.android.volley.Request;
@@ -152,7 +148,7 @@ public class LoginStudente extends ActionBarActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
 
                         try {
                             JSONObject obj = response.getJSONObject(0);
@@ -181,6 +177,7 @@ public class LoginStudente extends ActionBarActivity {
                         Log.d("Landing", response.toString());
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

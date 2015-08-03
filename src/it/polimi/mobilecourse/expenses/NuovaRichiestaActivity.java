@@ -1,10 +1,8 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,43 +10,29 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -218,9 +202,10 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
                     new Response.Listener<String>()
                     {
                         @Override
-                        public void onResponse(String response) {
+                        public boolean onResponse(String response) {
                             // response
                             Log.d("Response", response);
+                            return false;
                         }
                     },
                     new Response.ErrorListener()
@@ -294,7 +279,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
         }
         final Calendar c = Calendar.getInstance();
         String new_Date= c.get(Calendar.DAY_OF_MONTH)+"-"+((c.get(Calendar.MONTH))+1)   +"-"+c.get(Calendar.YEAR) +" " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE)+ "-"+ c.get(Calendar.SECOND);
-        selectedPath=String.format(Environment.getExternalStorageDirectory() +"/TutoredPhotos/%s.jpg","Tutored" +new_Date);
+        selectedPath=String.format(Environment.getExternalStorageDirectory() +"/%s.jpg","Tutored" +new_Date);
         File photo = new File(selectedPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photo));
         startActivityForResult(intent, 2);
@@ -472,6 +457,13 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
             {
                 Uri selectedImageUri = data.getData();
                 selectedPath = getRealPathFromURI(selectedImageUri);
+                File file = new File(selectedPath);
+
+                if (file.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    ImageView imgView = (ImageView) findViewById(R.id.anteprima_immagine);
+                    imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+                }
 
                 System.out.println("selectedPath1 : " + selectedPath);
 

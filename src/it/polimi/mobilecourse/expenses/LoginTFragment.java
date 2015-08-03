@@ -32,11 +32,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-
 /**
  * Created by Matteo on 23/12/2014.
  */
@@ -145,7 +140,7 @@ public class LoginTFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
@@ -157,6 +152,7 @@ public class LoginTFragment extends Fragment {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -225,6 +221,7 @@ public class LoginTFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Login corretto", Toast.LENGTH_LONG).show();
                 userId = result.getString("user_id");
                 Bundle bundle = new Bundle();
+                Intent intent = new Intent(getActivity().getApplicationContext(),HomeTutor.class);
                 bundle.putString("user_id", userId);
 
                 intent.putExtras(bundle);
