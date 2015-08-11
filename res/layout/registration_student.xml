@@ -1,19 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:tools="http://schemas.android.com/tools"
-        >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
 
-
-    <fragment android:layout_width="match_parent"
+    <LinearLayout android:orientation="vertical"
         android:layout_height="match_parent"
-        android:id="@+id/fragreplace"
-        android:name="it.polimi.mobilecourse.expenses.FragReplace"
-        tools:layout="@layout/frag_replace"/>
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="840dp"
+            >
 
 
 
 
-</RelativeLayout>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/cellT"
+                android:hint="Cellulare"
+                android:layout_marginTop="68dp"
+                android:layout_below="@+id/complete"
+                android:layout_toRightOf="@+id/textView5" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerCitta"
+                android:saveEnabled="true"
+                android:drawSelectorOnTop="true"
+                android:spinnerMode="dialog"
+                android:layout_below="@+id/textView5"
+                android:layout_alignRight="@+id/cellS"
+                android:layout_toRightOf="@+id/textView5" />
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dove vivi?"
+                android:id="@+id/textView5"
+                android:layout_marginTop="56dp"
+                android:layout_below="@+id/cellT"
+                android:layout_alignParentLeft="true" />
+
+
+
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrati"
+                android:id="@+id/regT"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBarRS"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_alignBottom="@+id/regT"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/complete"
+                android:editable="true"
+
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp" />
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

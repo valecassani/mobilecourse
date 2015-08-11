@@ -26,7 +26,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
 
     <uses-feature
@@ -57,9 +59,13 @@
             android:name=".HomeTutor"
             android:theme="@style/AppTheme" >
         </activity>
+        <activity android:name=".NuovaRecensione">
+
+        </activity>
         <activity
             android:name=".LandingActivity"
             android:theme="@style/Landing" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,14 +80,11 @@
             android:label="Login Studente"
             android:theme="@style/Base.Theme.AppCompat.Light"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".LoginTutor"
-            android:theme="@style/Base.Theme.AppCompat.Light"
-            >
-
-        </activity>
         <activity
-            android:name=".RegistrationTutor">
-
+            android:name=".LoginTutor"
+            android:theme="@style/Base.Theme.AppCompat.Light" >
+        </activity>
+        <activity android:name=".RegistrationTutor" >
         </activity>
         <activity
             android:name=".RegistrationStudent"
@@ -122,37 +125,46 @@
         </activity>
         <activity android:name=".SearchTutorDetails" />
         <activity android:name=".UploadToServer" >
-
         </activity>
         <activity android:name=".RichiesteItemDetails" />
         <activity
             android:name=".NuovaPrenotazioneActivity"
             android:label="@string/title_activity_nuova_prenotazione" >
         </activity>
-        <activity android:name=".MainActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light"
-            >
-
-
+        <activity
+            android:name=".GCMMainActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light" >
         </activity>
-
-        <activity android:name=".ReceiveActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light"
-            >
-
-
+        <activity
+            android:name=".ReceiveActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light" >
         </activity>
+        <activity android:name=".UpdateImage" >
+        </activity>
+        <activity android:name=".UpdatePassword" >
+        </activity>
+        <activity android:name=".UpdateInfo" >
+        </activity>
+        <activity android:name=".ImpostazLezioniTutor"></activity>
 
         <receiver
             android:name=".GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="it.polimi.mobilecourse.expenses" />
             </intent-filter>
         </receiver>
-        <service android:name="it.polimi.mobilecourse.expenses.GcmIntentService"></service>
 
+        <!-- This app has permission to register and receive data message. -->
+
+        <service android:name=".GcmIntentService" />
+        <service
+            android:name=".MyInstanceIDListenerService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

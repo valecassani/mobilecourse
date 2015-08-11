@@ -1,11 +1,9 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,15 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.pkmmte.view.CircularImageView;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 
 
 /**
@@ -134,7 +127,7 @@ public class StudentDataFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
@@ -147,6 +140,7 @@ public class StudentDataFragment extends Fragment {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

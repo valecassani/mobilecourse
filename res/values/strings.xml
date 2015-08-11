@@ -45,5 +45,6 @@
     <string name="search_hint">Cerca</string>
     <string name="title_activity_search_results">Risultati della Ricerca</string>
     <string name="title_activity_nuova_prenotazione">Nuova Prenotazione</string>
+    <string name="gcm_defaultSenderId">420313149585</string>
 
 </resources>

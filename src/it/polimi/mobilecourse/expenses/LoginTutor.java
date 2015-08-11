@@ -1,16 +1,12 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-
 
 
 import com.android.volley.Request;
@@ -26,6 +22,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +44,7 @@ public class LoginTutor extends ActionBarActivity {
     private String email;
     private String nome;
     private String cognome;
+    private GoogleCloudMessaging gcm;
 
 
 
@@ -74,8 +72,9 @@ public class LoginTutor extends ActionBarActivity {
         }
 
         setContentView(R.layout.login_tutor);
+        gcm = GoogleCloudMessaging.getInstance(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton)findViewById(R.id.fb_tutor_login_button);
+        loginButton = (LoginButton)findViewById(R.id.fb_login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile, email"));
         FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
             @Override
@@ -149,17 +148,21 @@ public class LoginTutor extends ActionBarActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
 
                         try {
                             JSONObject obj = response.getJSONObject(0);
-                            if (obj.getString("Response").equals("N")) {
+                            if (obj.getString("Response").equals("T")) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("mail",email);
-                                bundle.putString("user_id",obj.getString("id_utente").toString());
+                                bundle.putString("user_id", obj.getString("id_utente").toString());
                                 Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
+
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
+                                finish();
+
+
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("Tipo", "FB");
@@ -177,6 +180,7 @@ public class LoginTutor extends ActionBarActivity {
                         Log.d("Landing", response.toString());
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

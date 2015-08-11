@@ -3,15 +3,10 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,9 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.support.v7.widget.SearchView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,6 +57,8 @@ public class HomeStudent extends AppCompatActivity {
     private String username;
     private Toolbar toolbar;
     private int positionRequired;
+    private CircularImageView circImgView;
+    private SessionManager sessionManager;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -103,9 +98,11 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
+          sessionManager = new SessionManager(getApplicationContext());
+          sessionManager.createLoginSession(userId,"0");
 
 
-        loadUserInfos();
+          loadUserInfos();
 
 
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
@@ -182,10 +179,33 @@ public class HomeStudent extends AppCompatActivity {
     }
 
     private void loadUserInfos() {
-        Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
+        circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+        if (Profile.getCurrentProfile() != null) {
+            Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
 
-        CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
-        Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+            Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+        } else {
+            checkImageOnDatabase();
+
+        }
+
+        circImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),UpdateInfo.class);//rimettere updateImage
+                Bundle bundle = new Bundle();
+                bundle.putString("tipo","0");
+                bundle.putString("id",userId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+
+
+            }
+        });
+
+
+
         String url = null;
         if (username != null) {
             Log.i(TAG,"url for username");
@@ -205,7 +225,7 @@ public class HomeStudent extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             TextView nome = (TextView)findViewById(R.id.drawer_nome);
                             JSONObject obj = response.getJSONObject(0);
@@ -213,6 +233,18 @@ public class HomeStudent extends AppCompatActivity {
                             nome.setText(obj.get("nome").toString() + " " + obj.get("cognome").toString());
                             TextView mail = (TextView)findViewById(R.id.drawer_mail);
                             mail.setText(obj.get("username").toString());
+                            mail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getApplicationContext(),UpdatePassword.class);//rimettere updateImage
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("tipo","0");
+                                    bundle.putString("id",userId);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+
+                                }
+                            });
 
 
 
@@ -221,6 +253,7 @@ public class HomeStudent extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -235,6 +268,55 @@ public class HomeStudent extends AppCompatActivity {
         queue.add(jsonObjReq);
     }
 
+    private void checkImageOnDatabase() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://www.unishare.it/tutored/getImage.php?type_user=0&id="+userId;
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, obj.toString());
+                            String urlPhoto = obj.getString("url");
+                            if (urlPhoto.equals("no")) {
+                                circImgView.setImageResource(R.drawable.dummy_profpic);
+
+                            } else {
+                                Picasso.with(getApplicationContext()).load("http://www.unishare.it/tutored/" + urlPhoto).into(circImgView);
+
+                            }
+
+
+                            Log.d(TAG, "Assignment done of " + userId);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+
+// Adding request to request queue
+        queue.add(jsonObjReq);
+
+
+    }
+
     private void getUserIdFromMail() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
@@ -243,7 +325,7 @@ public class HomeStudent extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, obj.toString());
@@ -256,6 +338,7 @@ public class HomeStudent extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -308,9 +391,8 @@ public class HomeStudent extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
-                Intent intent = new Intent(HomeStudent.this,LandingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                sessionManager.logoutUser();
+                finish();
                 return true;
 
             default:
@@ -322,9 +404,6 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
-    public final void changePosition(int position) {
-        selectItem(position);
-    }
 
     public void selectItem(int position) {
         // update the main content by replacing fragments

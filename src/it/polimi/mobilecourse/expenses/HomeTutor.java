@@ -4,9 +4,9 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,26 +19,34 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.pkmmte.view.CircularImageView;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static it.polimi.mobilecourse.expenses.R.drawable.ic_action_lock_closed;
 
 
 public class HomeTutor extends AppCompatActivity {
@@ -55,6 +63,8 @@ public class HomeTutor extends AppCompatActivity {
     private String username;
     private Toolbar toolbar;
     private int positionRequired;
+    private ImageView lockPassword;
+    private SessionManager sessionManager;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -62,14 +72,19 @@ public class HomeTutor extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce;
     private int itemSelected;
     public static Activity activity;
+    private Service instanceIdService;
 
 
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         activity = this;
+
+
         setContentView(R.layout.student_home);
         Bundle data = getIntent().getExtras();
+
+
         /*
         if (data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
@@ -89,20 +104,41 @@ public class HomeTutor extends AppCompatActivity {
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
         */
+        userId = data.getString("user_id");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
+        lockPassword = (ImageView) findViewById(R.id.edit_password_icon);
+        lockPassword.setImageResource(ic_action_lock_closed);
+        lockPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Modifica Password", Toast.LENGTH_SHORT);
+
+                Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", userId);
+                bundle.putString("tipo", "1");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
 
         loadUserInfos();
+        registerGCM();
+        sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.createLoginSession(userId,"1");
+
 
 
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
         if (toolbar != null) {
             toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
+
         }
 
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
@@ -119,7 +155,7 @@ public class HomeTutor extends AppCompatActivity {
 
 
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_icon));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.ic_action_home));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.com_facebook_button_like_icon_selected));
 
@@ -128,6 +164,8 @@ public class HomeTutor extends AppCompatActivity {
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.abc_ic_search_api_mtrl_alpha));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.abc_ic_search_api_mtrl_alpha));
+
+        mDrawerItems.add(new NavDrawerItem("Impostazioni Lezioni", R.drawable.com_facebook_button_send_icon));
 
 
         // setting the nav drawer list adapter
@@ -172,20 +210,35 @@ public class HomeTutor extends AppCompatActivity {
 
     }
 
+    private void registerGCM() {
+
+        Intent intent = new Intent (getApplicationContext(),MyInstanceIDListenerService.class);
+        intent.putExtra("user_id",userId);
+        intent.putExtra("tipo","1");
+        startService(intent);
+
+    }
+
     private void loadUserInfos() {
         //Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
 
         CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
-        //Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+        circImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+                //Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
         String url = null;
         if (username != null) {
             Log.i(TAG,"url for username");
-            url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
+            url = "http://www.unishare.it/tutored/tutor_by_id.php?mail=" + username;
         }    else {
 
             if (userId != null) {
                 Log.d(TAG,"Used id query");
-                url = "http://www.unishare.it/tutored/student_by_id.php?id="+userId;
+                url = "http://www.unishare.it/tutored/tutor_by_id.php?id="+userId;
             }
         }
 
@@ -196,7 +249,7 @@ public class HomeTutor extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             TextView nome = (TextView)findViewById(R.id.drawer_nome);
                             JSONObject obj = response.getJSONObject(0);
@@ -212,6 +265,7 @@ public class HomeTutor extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -234,7 +288,7 @@ public class HomeTutor extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, obj.toString());
@@ -247,6 +301,7 @@ public class HomeTutor extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -262,6 +317,8 @@ public class HomeTutor extends AppCompatActivity {
 // Adding request to request queue
         queue.add(jsonObjReq);
     }
+
+
 
 
     @Override
@@ -299,9 +356,8 @@ public class HomeTutor extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
-                Intent intent = new Intent(this,LandingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                sessionManager.logoutUser();
+                finish();
                 return true;
 
             default:
@@ -349,9 +405,22 @@ public class HomeTutor extends AppCompatActivity {
                 fragment.setArguments(bundle);
                 break;
 
+            case 5:
+                bundle = new Bundle();
+                bundle.putString("id", userId);
+
+                Intent intent = new Intent(getApplicationContext(),ImpostazLezioniTutor.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
         }
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+
+        }
+
 
 
 

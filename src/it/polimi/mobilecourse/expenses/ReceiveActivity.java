@@ -29,9 +29,9 @@ public class ReceiveActivity extends Activity {
         String message = intent.getExtras().getString("message");
         try {
             json = new JSONObject(message);
-            //tipo di notifica cliccata(il tipo è una stringa)
+            //tipo di notifica cliccata(il tipo e una stringa)
             String notif = json.getString("notif");
-            //viene mostrato il tipo di notifica in una textview...si può togliere
+            //viene mostrato il tipo di notifica in una textview...si puo togliere
             type.setText(notif);
 
 

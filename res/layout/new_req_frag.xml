@@ -58,8 +58,8 @@
         android:text="Scatta Foto"
         android:layout_below="@id/buttonImage"></Button>
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:id="@+id/anteprima_immagine"
         android:layout_alignBottom="@+id/buttonPhoto"
         android:layout_toRightOf="@+id/buttonImage"

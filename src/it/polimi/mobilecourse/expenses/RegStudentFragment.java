@@ -32,16 +32,29 @@ public class RegStudentFragment extends Fragment {
     private ProgressBar progressView;
     private Spinner uniSpinner;
     private Spinner citySpinner;
+    private Spinner facSpinner;
     private Button submit;
     private RegistrationStudent activity;
-    private manageSpinner ms=null;
+    private manageCSpinner mcs=null;
+    private manageUSpinner mus=null;
+
+    private manageFSpinner mfs=null;
     private int identifierUni;
+    private CheckBox accept;
+
     private String itemC;
+    private String itemF;
     private String idCity;
     private String idUni;
+    private String idFac;
     private String itemUni;
     private ArrayAdapter<String> adapterUni;
     private ArrayAdapter<String> adapterCity;
+    private ArrayAdapter<String> adapterFac;
+
+    private ArrayList<String> listIdUni;
+    private ArrayList<String> listIdFac;
+
 
     private String nameS;
     private String surnameS;
@@ -105,21 +118,29 @@ public class RegStudentFragment extends Fragment {
     private void settingsReg(){
 
         progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
+        accept=(CheckBox)view.findViewById(R.id.checkBox);
 
         adapterUni = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapterUni.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         adapterCity = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapterCity.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        adapterFac = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
+        adapterFac.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         uniSpinner=(Spinner) view.findViewById(R.id.spinnerUni);
+        uniSpinner.setAdapter(adapterUni);
         citySpinner= (Spinner) view.findViewById(R.id.spinnerCitta);
+        citySpinner.setAdapter(adapterCity);
+        facSpinner=(Spinner)view.findViewById(R.id.spinnerFac);
+        facSpinner.setAdapter(adapterFac);
         submit=(Button) view.findViewById(R.id.regS);
 
     }
 
     private void setSpinner(){
-        ms= new manageSpinner();
-        ms.execute((Void) null);
-        manageUSpinner();
+        mcs= new manageCSpinner();
+        mcs.execute((Void) null);
+
         manageCSpinner();
 
     }
@@ -133,16 +154,19 @@ public class RegStudentFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                itemUni=parent.getItemAtPosition(position).toString();
-                identifierUni=(parent.getSelectedItemPosition())+1;
-                idUni=String.valueOf(identifierUni);
+                itemUni = parent.getItemAtPosition(position).toString();
+                identifierUni = (parent.getSelectedItemPosition()) + 1;
+                idUni=listIdUni.get(identifierUni-1);
+                adapterFac.clear();
+                mfs = new manageFSpinner();
+                mfs.execute(idUni);
+                manageFSpinner();
+
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
-
 
 
             }
@@ -163,8 +187,13 @@ public class RegStudentFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 itemC=parent.getItemAtPosition(position).toString();
-                idCity=String.valueOf((parent.getSelectedItemPosition())+1);
+                idCity=String.valueOf((parent.getSelectedItemPosition()) + 1);
 
+                adapterUni.clear();
+                mus= new manageUSpinner();
+                mus.execute(idCity);
+
+                manageUSpinner();
 
 
             }
@@ -182,6 +211,40 @@ public class RegStudentFragment extends Fragment {
 
 
     }
+
+    private void manageFSpinner(){
+
+
+        facSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                itemF=parent.getItemAtPosition(position).toString();
+
+                int pos=(parent.getSelectedItemPosition())+1;
+
+                idFac=listIdFac.get(pos-1);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+    }
+
+
 
     private void getData(){
         EditText name=(EditText) view.findViewById(R.id.nameS);
@@ -226,9 +289,9 @@ public class RegStudentFragment extends Fragment {
 
     private void completeReg(){
 
-        String url="registration.php?username=".concat(mailS).concat("&").concat("password=").concat(passS).concat("&").concat("nome=")
+        String url="registration_student.php?username=".concat(mailS).concat("&").concat("password=").concat(passS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellS)
-                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity);
+                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity).concat("&").concat("id_facolta=").concat(idFac);
         new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFragment.this).execute();
         Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
         Intent myintent = new Intent(view.getContext(), LandingActivity.class);
@@ -269,7 +332,7 @@ public class RegStudentFragment extends Fragment {
     private void controlField(){
 
 
-        if(isValidEmail(mailS)==true && isCellValid(cellS)==true ){
+        if(isValidEmail(mailS)==true && isCellValid(cellS)==true && accept.isChecked()){
 
             if(passS.compareTo(passDue)==0 && isPasswordValid(passS)==true){
 
@@ -324,10 +387,13 @@ public class RegStudentFragment extends Fragment {
 
         int i=0;
 
+        listIdUni=new ArrayList<String>();
         while(i<result.size()) {
             ObjDb res = result.get(i);
             String str=res.get("nome");
             adapterUni.add(str);
+            String strID=res.get("ID");
+            listIdUni.add(strID);
             i++;
         }
     }
@@ -344,19 +410,104 @@ public class RegStudentFragment extends Fragment {
 
     }
 
+    public void arrayF(ArrayList<ObjDb> result){
+
+        int i=0;
+
+        listIdFac=new ArrayList<String>();
+        while(i<result.size()) {
+            ObjDb res = result.get(i);
+            String str=res.get("nome");
+            adapterFac.add(str);
+            String idF=res.get("ID");
+            listIdFac.add(idF);
+            i++;
+        }
+
+    }
 
 
 
-    public class manageSpinner extends AsyncTask<Void,Void,Boolean>{
+
+    public class manageCSpinner extends AsyncTask<Void,Void,Boolean>{
 
         @Override
         protected Boolean doInBackground(Void ...params){
 
 
 
-            new RequestFtp().setParameters(activity, "univer.php", "spinnerUni", RegStudentFragment.this).execute();
 
             new RequestFtp().setParameters(activity, "cities.php", "spinnerCity", RegStudentFragment.this).execute();
+
+
+
+
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success){
+
+            if(success) {
+
+
+
+                citySpinner.setAdapter(adapterCity);
+                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
+
+
+
+            }
+        }
+
+
+
+
+    }
+
+    public class manageFSpinner extends AsyncTask<String,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(String ...params){
+
+            String id=params[0];
+
+            String url="getFacolta.php?iduni=".concat(id);
+            new RequestFtp().setParameters(activity, url, "getFacolta", RegStudentFragment.this).execute();
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success){
+
+            if(success) {
+
+
+
+                facSpinner.setAdapter(adapterFac);
+                facSpinner.setPrompt("Seleziona tra le seguenti facoltà la tua:");
+
+
+
+
+            }
+        }
+    }
+
+    public class manageUSpinner extends AsyncTask<String,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(String ...params){
+
+            String id=params[0];
+
+
+            String url="getUniFromCity.php?idcity=".concat(id);
+
+            new RequestFtp().setParameters(activity, url, "spinnerUni", RegStudentFragment.this).execute();
+
 
 
 
@@ -375,8 +526,6 @@ public class RegStudentFragment extends Fragment {
                 uniSpinner.setAdapter(adapterUni);
                 uniSpinner.setPrompt("Seleziona tra le seguenti università la tua:");
 
-                citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
 
 
 
@@ -387,5 +536,6 @@ public class RegStudentFragment extends Fragment {
 
 
     }
+
 
 }

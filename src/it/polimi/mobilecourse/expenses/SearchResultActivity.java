@@ -2,7 +2,6 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -92,7 +90,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(SearchResultActivity.this);
@@ -142,6 +140,7 @@ public class SearchResultActivity extends AppCompatActivity {
                         }
 
 
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 

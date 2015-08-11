@@ -1,175 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
 
 
-<LinearLayout android:orientation="vertical"
+    <LinearLayout android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
 
         android:weightSum="1">
 
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="840dp"
-                >
+            android:layout_width="match_parent"
+            android:layout_height="840dp"
+            >
 
-    <EditText
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:hint="Nome"
-            android:id="@+id/nameS"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="45dp"
-            android:layout_marginLeft="20dp"
-            />
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:hint="Nome"
+                android:id="@+id/nameS"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="45dp"
+                android:layout_marginLeft="20dp"
+                />
 
-    <EditText
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="Cognome"
-            android:ems="10"
-            android:id="@+id/surnameS"
-            android:layout_alignTop="@+id/nameS"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="0dp"
-            android:layout_gravity="right"
-            android:layout_weight="0.04"/>
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Cognome"
+                android:ems="10"
+                android:id="@+id/surnameS"
+                android:layout_alignTop="@+id/nameS"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_gravity="right"
+                android:layout_weight="0.04"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/mailS"
-            android:hint="Mail"
-            android:layout_below="@+id/cellS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/mailS"
+                android:hint="Mail"
+                android:layout_below="@+id/cellS"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="38dp"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:id="@+id/cellS"
-            android:hint="Cellulare"
-            android:layout_marginTop="41dp"
-            android:layout_below="@+id/nameS"
-            android:layout_alignLeft="@+id/mailS"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/cellS"
+                android:hint="Cellulare"
+                android:layout_marginTop="41dp"
+                android:layout_below="@+id/nameS"
+                android:layout_alignLeft="@+id/mailS"/>
 
-    <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerCitta"
-            android:saveEnabled="true"
-            android:drawSelectorOnTop="true"
-            android:layout_marginTop="76dp"
-        android:spinnerMode="dialog"
-        android:layout_below="@+id/mailS"
-        android:layout_alignLeft="@+id/mailS"
-        android:layout_alignRight="@+id/surnameS" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerCitta"
+                android:saveEnabled="true"
+                android:drawSelectorOnTop="true"
+                android:layout_marginTop="76dp"
+                android:spinnerMode="dialog"
+                android:layout_below="@+id/mailS"
+                android:layout_alignLeft="@+id/mailS"
+                android:layout_alignRight="@+id/surnameS" />
 
-    <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerUni"
-            android:saveEnabled="true"
-            android:drawSelectorOnTop="true"
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerUni"
+                android:saveEnabled="true"
+                android:drawSelectorOnTop="true"
 
 
-            android:spinnerMode="dialog"
-            android:layout_below="@+id/textView6"
-            android:layout_alignLeft="@+id/spinnerCitta"
-        android:clickable="true"
-        android:layout_alignRight="@+id/spinnerCitta" />
+                android:spinnerMode="dialog"
+                android:layout_below="@+id/textView6"
+                android:layout_alignLeft="@+id/spinnerCitta"
+                android:clickable="true"
+                android:layout_alignRight="@+id/spinnerCitta" />
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Dove vivi?"
-            android:id="@+id/textView5"
-        android:layout_alignTop="@+id/spinnerCitta"
-        android:layout_alignLeft="@+id/nameS"
-        android:layout_marginTop="-40dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dove vivi?"
+                android:id="@+id/textView5"
+                android:layout_alignTop="@+id/spinnerCitta"
+                android:layout_alignLeft="@+id/nameS"
+                android:layout_marginTop="-40dp" />
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Università"
-            android:id="@+id/textView6"
-            android:layout_below="@+id/spinnerCitta"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Università"
+                android:id="@+id/textView6"
+                android:layout_below="@+id/spinnerCitta"
+                android:layout_alignLeft="@+id/textView5"
+                android:layout_marginTop="20dp"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/passS"
-            android:layout_below="@+id/spinnerUni"
-            android:layout_alignLeft="@+id/spinnerUni"
-            android:layout_marginTop="69dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/passS"
+                android:layout_above="@+id/textView7"
+                android:layout_alignLeft="@+id/spinnerUni" />
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/pass2S"
-            android:layout_below="@+id/passS"
-            android:layout_alignLeft="@+id/passS"
-            android:layout_marginTop="88dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/pass2S"
+                android:layout_above="@+id/regS"
+                android:layout_alignLeft="@+id/passS"
+                android:layout_marginBottom="30dp" />
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registrati"
-            android:id="@+id/regS"
-            android:layout_below="@+id/pass2S"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="45dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrati"
+                android:id="@+id/regS"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Ripeti Password"
-                        android:id="@+id/textView7"
-                        android:layout_below="@+id/passS"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ripeti Password"
+                android:id="@+id/textView7"
+                android:layout_above="@+id/pass2S"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="35dp" />
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Password"
-                        android:id="@+id/textView8"
-                        android:layout_below="@+id/spinnerUni"
-                        android:layout_alignLeft="@+id/textView6"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Password"
+                android:id="@+id/textView8"
+                android:layout_above="@+id/passS"
+                android:layout_alignParentLeft="true" />
 
-                <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/progressBarRS"
-                    android:visibility="gone"
-                        style="?android:attr/progressBarStyleLarge"
-                    android:layout_alignBottom="@+id/regS"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="-15dp" />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBarRS"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_alignBottom="@+id/regS"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+
+                android:id="@+id/editTextFac"
+                android:text="Facoltà"
+                android:layout_below="@+id/spinnerUni"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/textView8" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerFac"
+                android:saveEnabled="true"
+                android:drawSelectorOnTop="true"
+
+
+                android:spinnerMode="dialog"
+                android:layout_below="@+id/editTextFac"
+                android:layout_alignLeft="@+id/spinnerCitta"
+                android:clickable="true"
+                android:layout_alignRight="@+id/spinnerCitta" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accetto Termini e condizioni e informativa sulla privacy Tutored"
+                android:id="@+id/checkBox"
+                android:checked="false"
+                android:layout_above="@+id/regS"
+                android:layout_alignParentLeft="true" />
 
 
         </RelativeLayout>
-</LinearLayout>
+    </LinearLayout>
 
 </ScrollView>
