@@ -35,9 +35,16 @@
         android:layout_width="wrap_content"
         android:text="Inserire una data"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ora_scelta"
+        android:layout_below="@id/data_scelta"
+        android:text="Inserire orario"/>
+
     <Button
         android:id="@+id/button_prenotazione"
-        android:layout_below="@id/data_scelta"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Invia prenotazione"/>

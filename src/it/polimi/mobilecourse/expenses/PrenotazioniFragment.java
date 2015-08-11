@@ -1,6 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -69,17 +70,19 @@ public class PrenotazioniFragment extends Fragment {
         context = view.getContext();
         queue = Volley.newRequestQueue(context);
         mListView = (ListView) view.findViewById(R.id.list_ripetizioni);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_richieste);
+        fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
         fab.attachToListView(mListView);
         Log.i(TAG, "Button Created");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NuovaPrenotazioneActivity.class);
+                Fragment fragment;
                 Bundle bundle = new Bundle();
-                bundle.putString("student_id", studentId );
-                intent.putExtras(bundle);
-                startActivity(intent);
+                bundle.putString("student_id", studentId);
+                fragment = new SearchFragment();
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
 
 
             }

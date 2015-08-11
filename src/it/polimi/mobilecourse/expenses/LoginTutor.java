@@ -22,6 +22,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,7 @@ public class LoginTutor extends ActionBarActivity {
     private String email;
     private String nome;
     private String cognome;
+    private GoogleCloudMessaging gcm;
 
 
 
@@ -70,6 +72,7 @@ public class LoginTutor extends ActionBarActivity {
         }
 
         setContentView(R.layout.login_tutor);
+        gcm = GoogleCloudMessaging.getInstance(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile, email"));
@@ -152,11 +155,14 @@ public class LoginTutor extends ActionBarActivity {
                             if (obj.getString("Response").equals("T")) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("mail",email);
-                                bundle.putString("user_id",obj.getString("id_utente").toString());
+                                bundle.putString("user_id", obj.getString("id_utente").toString());
                                 Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
+
                                 myintent.putExtras(bundle);
                                 startActivity(myintent);
                                 finish();
+
+
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("Tipo", "FB");

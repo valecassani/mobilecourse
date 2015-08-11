@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="644dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Opzioni aggiuntive per le lezioni"
+                android:id="@+id/textView20"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="39dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prima lezione gratis"
+                android:id="@+id/checkGratis"
+                android:layout_below="@+id/textView20"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="39dp"
+                android:checked="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lezioni a domicilio"
+                android:id="@+id/checkdom"
+                android:layout_below="@+id/checkGratis"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="37dp"
+                android:checked="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lezioni in sede propria"
+                android:id="@+id/checksede"
+                android:layout_below="@+id/checkdom"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="44dp"
+                android:checked="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lezioni di gruppo"
+                android:id="@+id/checkgruppo"
+                android:checked="false"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Salva"
+                android:id="@+id/save"
+                android:layout_below="@+id/checkgruppo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="55dp" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_alignTop="@+id/save"
+                android:layout_toRightOf="@+id/checkGratis" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

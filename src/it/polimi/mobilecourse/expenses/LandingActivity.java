@@ -79,6 +79,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
     static final String TAG = "GCMDemo";
     GoogleCloudMessaging gcm;
+    SessionManager sessionManager;
 
     TextView mDisplay;
     EditText ed;
@@ -86,6 +87,18 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     String regid;
     Integer tipo;
     Integer id_utente;
+
+    // Sharedpref file name
+    private static final String PREF_NAME = "AndroidHivePref";
+
+    // All Shared Preferences Keys
+    private static final String IS_LOGIN = "IsLoggedIn";
+
+    // User name (make variable public to access from outside)
+    public static final String KEY_ID = "id";
+
+    // Email address (make variable public to access from outside)
+    public static final String KEY_TIPO = "tipo";
 
 
     @Override
@@ -95,6 +108,9 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         loadDone = false;
         logged = false;
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+
+        sessionManager = new SessionManager(getApplicationContext());
         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
@@ -103,19 +119,39 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         };
         callbackManager = CallbackManager.Factory.create();
         updateWithToken(AccessToken.getCurrentAccessToken());
+        if (sessionManager.isLoggedIn()) {
+            System.out.println("logged in with session manager");
+            String id = sessionManager.getUserDetails().get(KEY_ID);
+            String tipo = sessionManager.getUserDetails().get(KEY_TIPO);
+            if (tipo.equals("0")) {
+                Intent intent = new Intent(getApplicationContext(),HomeStudent.class);
+                intent.putExtra("user_id",id);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getApplicationContext(),HomeTutor.class);
+                intent.putExtra("user_id",id);
+                startActivity(intent);
+            }
 
 
-        progress(true);
-        showWelcome();
-        manageSession(savedInstanceState);
-        if (logged == false) {
+        } else {
 
+
+            progress(true);
+            showWelcome();
+            manageSession(savedInstanceState);
+            if (logged == false) {
+
+
+            }
+
+            //mb= new manageButton();
+            //mb.execute((Void) null);
+            //manageButton();
 
         }
 
-        //mb= new manageButton();
-        //mb.execute((Void) null);
-        //manageButton();
+
 
 
     }
@@ -123,7 +159,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     private void manageSession(Bundle savedInstanceState) {
 
 
-        //è loggato entra qua
+
 
 
     }

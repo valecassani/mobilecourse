@@ -66,7 +66,7 @@
                 app:shadow="true" t="@color/material_blue_500"
                 android:src="@drawable/landing_image"
                 android:id="@+id/drawer_image"/>
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true">
@@ -74,21 +74,28 @@
                 <TextView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="24dp"
                     android:id="@+id/drawer_nome"
                     android:textColor="#000"
+                    android:layout_gravity="top"
                     android:layout_marginLeft="16dp"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="24dp"
                     android:id="@+id/drawer_mail"
-                    android:layout_below="@id/drawer_nome"
+                    android:layout_gravity="bottom"
                     android:text="Space for email address"
                     android:layout_marginLeft="16dp"
                     />
 
-            </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:id="@+id/edit_password_icon"/>
+
+            </FrameLayout>
 
 
         </RelativeLayout>

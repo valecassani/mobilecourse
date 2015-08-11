@@ -58,6 +58,7 @@ public class HomeStudent extends AppCompatActivity {
     private Toolbar toolbar;
     private int positionRequired;
     private CircularImageView circImgView;
+    private SessionManager sessionManager;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -97,9 +98,11 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
+          sessionManager = new SessionManager(getApplicationContext());
+          sessionManager.createLoginSession(userId,"0");
 
 
-        loadUserInfos();
+          loadUserInfos();
 
 
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
@@ -388,9 +391,8 @@ public class HomeStudent extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
-                Intent intent = new Intent(HomeStudent.this,LandingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                sessionManager.logoutUser();
+                finish();
                 return true;
 
             default:
@@ -402,9 +404,6 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
-    public final void changePosition(int position) {
-        selectItem(position);
-    }
 
     public void selectItem(int position) {
         // update the main content by replacing fragments

@@ -546,11 +546,7 @@ public class UpdateInfoStudentFragment extends Fragment {
 
             String url="getUniFromCity.php?idcity=".concat(id);
 
-            new RequestFtp().setParameters(activity, url, "spinnerUni", UpdateInfoStudentFragment.this).execute();
-
-
-
-
+            AsyncTask<Void, ArrayList<ObjDb>, ArrayList<ObjDb>> spinnerUni = new RequestFtp().setParameters(activity, url, "spinnerUni", UpdateInfoStudentFragment.this).execute();
 
 
             return true;

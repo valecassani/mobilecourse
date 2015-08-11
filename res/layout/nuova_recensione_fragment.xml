@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="774dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Puntualità"
+                android:id="@+id/textView21"
+                android:layout_marginTop="68dp"
+                android:layout_below="@+id/textNome"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Qui puoi valutare il tutor"
+                android:id="@+id/textNome"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="63dp" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/puntual"
+                android:layout_below="@+id/textView21"
+                android:layout_alignLeft="@+id/textView21" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Disponibilità"
+                android:id="@+id/textView22"
+                android:layout_below="@+id/puntual"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/disp"
+                android:layout_below="@+id/textView22"
+                android:layout_alignLeft="@+id/textView22" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Chiarezza"
+                android:id="@+id/textView23"
+                android:layout_below="@+id/disp"
+                android:layout_alignLeft="@+id/disp" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chiar"
+                android:layout_below="@+id/textView23"
+                android:layout_alignLeft="@+id/textView23" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Voto finale"
+                android:id="@+id/textView24"
+                android:layout_below="@+id/chiar"
+                android:layout_alignLeft="@+id/chiar" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/finale"
+                android:layout_below="@+id/textView24"
+                android:layout_alignLeft="@+id/textView24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Vuoi aggiungere un commento?"
+                android:id="@+id/textView25"
+                android:layout_below="@+id/finale"
+                android:layout_alignLeft="@+id/finale" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="(Opzionale)"
+                android:id="@+id/textView26"
+                android:layout_below="@+id/textView25"
+                android:layout_alignLeft="@+id/textView25" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:id="@+id/comment"
+                android:layout_below="@+id/textView26"
+                android:layout_alignLeft="@+id/textView26"
+                android:layout_alignRight="@+id/finale" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aggiungi recensione"
+                android:id="@+id/addRec"
+                android:layout_below="@+id/comment"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="71dp" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_alignTop="@+id/addRec"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

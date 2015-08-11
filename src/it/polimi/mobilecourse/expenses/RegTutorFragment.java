@@ -54,11 +54,13 @@ public class RegTutorFragment extends Fragment {
 
 
         view = inflater.inflate(R.layout.regt_frag, container, false);
-
+        progressView = (ProgressBar)view.findViewById(R.id.progressBarRT);
 
 
         settingsReg();
         setSpinner();
+
+        submit = (Button) view.findViewById(R.id.regT);
 
 
         //registrazione
@@ -102,7 +104,7 @@ public class RegTutorFragment extends Fragment {
     private void settingsReg(){
 
         accept=(CheckBox)view.findViewById(R.id.checkBox);
-        progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
+        progressView=(ProgressBar)view.findViewById(R.id.progressBarRT);
 
 
         adapterCity = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
@@ -151,12 +153,12 @@ public class RegTutorFragment extends Fragment {
     }
 
     private void getData(){
-        EditText name=(EditText) view.findViewById(R.id.nameS);
-        EditText surname=(EditText) view.findViewById(R.id.surnameS);
-        EditText cell=(EditText) view.findViewById(R.id.cellS);
-        EditText mail=(EditText) view.findViewById(R.id.mailS);
-        EditText pass=(EditText) view.findViewById(R.id.passS);
-        EditText passdue=(EditText) view.findViewById(R.id.pass2S);
+        EditText name=(EditText) view.findViewById(R.id.nameT);
+        EditText surname=(EditText) view.findViewById(R.id.surnameT);
+        EditText cell=(EditText) view.findViewById(R.id.cellT);
+        EditText mail=(EditText) view.findViewById(R.id.mailT);
+        EditText pass=(EditText) view.findViewById(R.id.passT);
+        EditText passdue=(EditText) view.findViewById(R.id.pass2T);
 
 
 

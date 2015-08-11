@@ -134,6 +134,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
     private void showTutorDetails() {
         String url = "http://www.unishare.it/tutored/tutor_data.php?id=" + idTutor;
+        Log.d(TAG,url);
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -156,13 +157,14 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                                 button.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getBaseContext(), NuovaPrenotazioneActivity.class);
+                                        Intent intent = new Intent(SearchTutorDetails.this, NuovaPrenotazioneActivity.class);
                                         Bundle bundle = new Bundle();
                                         bundle.putString("id", idTutor);
                                         bundle.putString("nome", nome);
                                         bundle.putString("cognome", cognome);
                                         intent.putExtras(bundle);
                                         startActivity(intent);
+                                        Log.d(TAG,"Intent staarted");
                                     }
                                 });
 

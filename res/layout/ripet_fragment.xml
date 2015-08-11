@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/swipe_prenotazioni"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:id="@+id/swipe_prenotazioni"
+        >
 
 
 
@@ -21,18 +28,18 @@
 
         </ListView>
 
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/buttonFloat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
         android:layout_marginRight="24dp"
         android:background="#1E88E5"
         materialdesign:animate="true"
         materialdesign:iconDrawable="@drawable/ic_plus" />
 
 
-</android.support.v4.widget.SwipeRefreshLayout>
-
-
+</FrameLayout>

@@ -1,5 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -18,7 +20,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -50,6 +55,7 @@ public class UpdateImageFragment extends Fragment {
     TextView url;
     ProgressDialog dialog = null;
     String selectedPath;
+    int ok;
 
 
 
@@ -77,52 +83,54 @@ public class UpdateImageFragment extends Fragment {
 
         });
 
-        upl.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            upl.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
 
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                progressDialog = ProgressDialog.show(activity, "", "Uploading file...", true);
-                                upl.setVisibility(View.GONE);
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    progressDialog = ProgressDialog.show(activity, "", "Uploading file...", true);
 
-                                new Thread(new Runnable() {
-                                    public void run() {
+                                    new Thread(new Runnable() {
+                                        public void run() {
 
-
-                                        uploadFile(selectedPath);
-
-                                    }
-                                }).start();
+                                            ok=uploadFile(selectedPath);
+                                            if(ok==0){
+                                                progressDialog.dismiss();
+                                            }
 
 
-                                uploadFile(selectedPath);
-                                break;
+                                        }
+                                    }).start();
 
-                            case DialogInterface.BUTTON_NEGATIVE:
 
-                                break;
+                                    uploadFile(selectedPath);
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+
+                                    break;
+                            }
                         }
-                    }
-                };
+                    };
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setMessage("Confermare l'immagine?").setPositiveButton("Si", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setMessage("Confermare l'immagine?").setPositiveButton("Si", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
 
 
-            }
-        });
+                }
+            });
 
-        photoButton = (Button)view.findViewById(R.id.photoButton);
-        photoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });
+            photoButton = (Button) view.findViewById(R.id.photoButton);
+            photoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    takePhoto();
+                }
+            });
 
 
 
@@ -171,7 +179,7 @@ public class UpdateImageFragment extends Fragment {
     public void openGallery(int req_code) {
 
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         startActivityForResult(Intent.createChooser(galleryIntent, "Select file to upload "), req_code);
 
@@ -207,142 +215,156 @@ public class UpdateImageFragment extends Fragment {
 
 
         String fileName = sourceFileUri;
-        System.out.println(selectedPath);
+        if(fileName!=null) {
+            System.out.println(selectedPath);
 
-        HttpURLConnection conn = null;
-        DataOutputStream dos;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-        File sourceFile = new File(sourceFileUri);
+            HttpURLConnection conn = null;
+            DataOutputStream dos;
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+            int bytesRead, bytesAvailable, bufferSize;
+            byte[] buffer;
+            int maxBufferSize = 1 * 1024 * 1024;
+            File sourceFile = new File(sourceFileUri);
 
-        if (!sourceFile.isFile()) {
+            if (!sourceFile.isFile()) {
+
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+
+                    }
+                });
+
+                Log.e("uploadFile", "Source File not exist :"
+                        + selectedPath);
+
+
+                return 0;
+
+            } else {
+                try {
+                    nameFile = sourceFile.getName();
+                    insertDb();
+
+                    // open a URL connection to the Servlet
+                    FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                    URL url = new URL(upLoadServerUri);
+
+                    // Open a HTTP  connection to  the URL
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true); // Allow Inputs
+                    conn.setDoOutput(true); // Allow Outputs
+                    conn.setUseCaches(false); // Don't use a Cached Copy
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                    conn.setRequestProperty("uploaded_file", fileName);
+
+                    dos = new DataOutputStream(conn.getOutputStream());
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "\"" + lineEnd);
+
+
+                    dos.writeBytes(lineEnd);
+
+                    // create a buffer of  maximum size
+                    bytesAvailable = fileInputStream.available();
+
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    buffer = new byte[bufferSize];
+
+                    // read file and write it into form...
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    while (bytesRead > 0) {
+
+                        dos.write(buffer, 0, bufferSize);
+                        bytesAvailable = fileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    }
+
+                    // send multipart form data necesssary after file data...
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                    // Responses from the server (code and message)
+                    serverResponseCode = conn.getResponseCode();
+                    String serverResponseMessage = conn.getResponseMessage();
+
+                    Log.i("uploadFile", "HTTP Response is : "
+                            + serverResponseMessage + ": " + serverResponseCode);
+
+                    if (serverResponseCode == 200) {
+
+
+                    }
+
+                    //close the streams //
+                    fileInputStream.close();
+                    dos.flush();
+                    dos.close();
+
+                } catch (MalformedURLException ex) {
+
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+
+                        }
+                    });
+                    ex.printStackTrace();
+
+
+                    Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+                } catch (Exception e) {
+
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+
+                        }
+                    });
+                    e.printStackTrace();
+
+
+                    Log.e("Upload Exception", "Exception : "
+                            + e.getMessage(), e);
+                }
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+
+                    }
+                });
+                return serverResponseCode;
+
+            } // End else block
+        }
+        else{
 
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    progressDialog.dismiss();
+                    Toast.makeText(getActivity().getApplicationContext(), "Nessuna immagine selezionata", Toast.LENGTH_LONG).show();
 
                 }
             });
-
-            Log.e("uploadFile", "Source File not exist :"
-                    + selectedPath);
 
 
             return 0;
+        }
 
-        } else {
-            try {
-                nameFile = sourceFile.getName();
-                insertDb();
-
-                // open a URL connection to the Servlet
-                FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL(upLoadServerUri);
-
-                // Open a HTTP  connection to  the URL
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true); // Allow Inputs
-                conn.setDoOutput(true); // Allow Outputs
-                conn.setUseCaches(false); // Don't use a Cached Copy
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Connection", "Keep-Alive");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("uploaded_file", fileName);
-
-                dos = new DataOutputStream(conn.getOutputStream());
-
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-
-                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""+ fileName + "\"" + lineEnd);
-
-
-
-                dos.writeBytes(lineEnd);
-
-                // create a buffer of  maximum size
-                bytesAvailable = fileInputStream.available();
-
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                buffer = new byte[bufferSize];
-
-                // read file and write it into form...
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                while (bytesRead > 0) {
-
-                    dos.write(buffer, 0, bufferSize);
-                    bytesAvailable = fileInputStream.available();
-                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                }
-
-                // send multipart form data necesssary after file data...
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                // Responses from the server (code and message)
-                serverResponseCode = conn.getResponseCode();
-                String serverResponseMessage = conn.getResponseMessage();
-
-                Log.i("uploadFile", "HTTP Response is : "
-                        + serverResponseMessage + ": " + serverResponseCode);
-
-                if (serverResponseCode == 200) {
-
-
-                }
-
-                //close the streams //
-                fileInputStream.close();
-                dos.flush();
-                dos.close();
-
-            } catch (MalformedURLException ex) {
-
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-
-                    }
-                });
-                ex.printStackTrace();
-
-
-
-                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
-            } catch (Exception e) {
-
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-
-                    }
-                });
-                e.printStackTrace();
-
-
-                Log.e("Upload Exception", "Exception : "
-                        + e.getMessage(), e);
-            }
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-
-                }
-            });
-            return serverResponseCode;
-
-        } // End else block
     }
 
 
@@ -351,7 +373,7 @@ public class UpdateImageFragment extends Fragment {
         String res = null;
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = activity.getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if(cursor.moveToFirst()){;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }
@@ -363,8 +385,6 @@ public class UpdateImageFragment extends Fragment {
 
         String url="update_image.php?type_user=".concat(tipo).concat("&id=").concat(id).concat("&url=images/").concat(nameFile.replace(" ","%20"));
         new RequestFtp().setParameters(activity, url, "setDataStudent", UpdateImageFragment.this).execute();
-        upl.setVisibility(View.VISIBLE);
-
 
     }
 
