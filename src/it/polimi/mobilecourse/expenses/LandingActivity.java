@@ -119,6 +119,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         };
         callbackManager = CallbackManager.Factory.create();
         updateWithToken(AccessToken.getCurrentAccessToken());
+       /*
         if (sessionManager.isLoggedIn()) {
             System.out.println("logged in with session manager");
             String id = sessionManager.getUserDetails().get(KEY_ID);
@@ -136,7 +137,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
         } else {
 
-
+ */
             progress(true);
             showWelcome();
             manageSession(savedInstanceState);
@@ -154,7 +155,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
 
 
-    }
+
 
     private void manageSession(Bundle savedInstanceState) {
 

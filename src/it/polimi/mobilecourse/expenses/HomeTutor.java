@@ -126,7 +126,6 @@ public class HomeTutor extends AppCompatActivity {
             }
         });
 
-
         loadUserInfos();
         registerGCM();
         sessionManager = new SessionManager(getApplicationContext());
@@ -282,7 +281,7 @@ public class HomeTutor extends AppCompatActivity {
 
     private void getUserIdFromMail() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
+        String url = "http://www.unishare.it/tutored/tutor_by_id.php?mail=" + username;
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {

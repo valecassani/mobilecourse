@@ -1,17 +1,14 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.RemoteController;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.identity.intents.AddressConstants;
-import com.quinny898.library.persistentsearch.SearchResult;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -39,9 +34,10 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-
-public class NuovaPrenotazioneActivity extends AppCompatActivity {
-
+/**
+ * Created by Valerio on 13/08/2015.
+ */
+public class PrenotazioneItemDetails extends AppCompatActivity {
     private Toolbar toolbar;
     private SimpleDateFormat simpleDateFormat;
     private TextView sceltaData;
@@ -87,7 +83,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar newCalendar = Calendar.getInstance();
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NuovaPrenotazioneActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getBaseContext(), new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -114,7 +110,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker = new TimePickerDialog(NuovaPrenotazioneActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog mTimePicker = new TimePickerDialog(getBaseContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -136,7 +132,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 inviaPrenotazione();
                 Bundle bundle = new Bundle();
                 bundle.putInt("position", 4);
-                Intent intent = new Intent(NuovaPrenotazioneActivity.this, HomeStudent.class);
+                Intent intent = new Intent(getApplicationContext(), HomeStudent.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
@@ -240,3 +236,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
 
 }
+
+
+
+

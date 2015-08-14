@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 public class GcmIntentService extends IntentService{
     Context context;
+    String msg;
+    String tipo;
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
@@ -35,7 +37,8 @@ public class GcmIntentService extends IntentService{
         // TODO Auto-generated method stub
         JSONObject obj;
         Bundle extras = intent.getExtras();
-        String msg = intent.getStringExtra("message");
+        msg = intent.getStringExtra("message");
+        tipo = intent.getStringExtra("tipo");
         String mex=null;
         System.out.println(msg);
         try {
@@ -76,9 +79,12 @@ public class GcmIntentService extends IntentService{
                 sendNotification(mex);
                 screenOn();
                 Log.i(TAG, "Received: " + extras.toString());
+                if (intent.getExtras().getString("type").equals("prenotazione")) {
+                    Intent myIntent = new Intent(getApplicationContext(),PrenotazioneItemDetails.class);
+                    startActivity(myIntent);
+                }
             }
         }
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager)

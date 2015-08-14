@@ -433,7 +433,7 @@ public class UpdateInfoStudentFragment extends Fragment {
         manageCSpinner();
 
         citySpinner.setSelection(idcittaU - 1);
-        System.out.println("Set città "+idcittaU);
+        System.out.println("Set citta "+idcittaU);
 
 
 
@@ -459,7 +459,7 @@ public class UpdateInfoStudentFragment extends Fragment {
         int pos=listIdFac.indexOf(id_facoltaU);
 
         facSpinner.setSelection(pos);
-        System.out.println("Set facoltà " + pos);
+        System.out.println("Set facolta " + pos);
 
 
     }
