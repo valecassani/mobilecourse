@@ -469,7 +469,7 @@ public class UpdateInfoTutorFragment extends Fragment {
 
         if(idcittaU!=0) {
             citySpinner.setSelection(idcittaU - 1);
-            System.out.println("Set città " + idcittaU);
+            System.out.println("Set citta " + idcittaU);
         }
         else{
             citySpinner.setSelection(0);
@@ -500,7 +500,7 @@ public class UpdateInfoTutorFragment extends Fragment {
             int pos = listIdFac.indexOf(id_facoltaU);
 
             facSpinner.setSelection(pos);
-            System.out.println("Set facoltà " + pos);
+            System.out.println("Set facolta " + pos);
         }
 
 
@@ -537,7 +537,7 @@ public class UpdateInfoTutorFragment extends Fragment {
                 citySpinner.setAdapter(adapterCity);
 
 
-                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti citta la tua:");
 
 
 
@@ -570,7 +570,7 @@ public class UpdateInfoTutorFragment extends Fragment {
 
 
                 facSpinner.setAdapter(adapterFac);
-                facSpinner.setPrompt("Seleziona tra le seguenti facoltà la tua:");
+                facSpinner.setPrompt("Seleziona tra le seguenti facolta la tua:");
 
 
 
@@ -607,7 +607,7 @@ public class UpdateInfoTutorFragment extends Fragment {
 
                 uniSpinner.setAdapter(adapterUni);
 
-                uniSpinner.setPrompt("Seleziona tra le seguenti università la tua:");
+                uniSpinner.setPrompt("Seleziona tra le seguenti universita la tua:");
 
 
 

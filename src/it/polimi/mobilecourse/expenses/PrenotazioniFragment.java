@@ -57,7 +57,14 @@ public class PrenotazioniFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.ripet_fragment, container, false);
-        studentId=getArguments().getString("student_id");
+        if (getArguments().getString("student_id")!= null) {
+            studentId=getArguments().getString("student_id");
+
+        } else {
+            if (getArguments().getString("tutor_id")!=null) {
+                tutorId=getArguments().getString("tutor_id");
+            }
+        }
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_prenotazioni);
         mSwipeRefresh.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
@@ -108,7 +115,7 @@ public class PrenotazioniFragment extends Fragment {
         String url;
 
         if (studentId != null) {
-            url = "http://www.unishare.it/tutored/search_prenotazione.php?id_studente="+1;
+            url = "http://www.unishare.it/tutored/search_prenotazione.php?id_studente=" + studentId;
         } else {
             url = "http://www.unishare.it/tutored/search_prenotazione.php?id_tutor=" + tutorId;
         }
@@ -139,8 +146,8 @@ public class PrenotazioniFragment extends Fragment {
 
                         }
 
-
                         return false;
+
                     }
                 }, new Response.ErrorListener() {
 

@@ -1,6 +1,5 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -22,8 +21,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -50,7 +54,9 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
     private Date data;
     private Time time;
+    private String id;
     private String idTutor;
+    private String idStudente;
 
 
 
@@ -65,8 +71,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(25);
         Bundle data = getIntent().getExtras();
-        idTutor = data.getString("id");
-        Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
+        id = data.getString("id");
+        Toast.makeText(getApplicationContext(), "Prenotazione id " + id, Toast.LENGTH_SHORT).show();
         String nomeTutor =data.getString("nome");
         String cognomeTutor = data.getString("cognome");
 
@@ -144,6 +150,53 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
         editTextCellulare = (EditText)findViewById(R.id.cellulare_nuova_prenotaz);
 
+        getDataFromSite();
+
+
+
+
+
+
+
+    }
+
+    private void getDataFromSite() {
+
+        String url = "http://www.unishare.it/tutored/prenotazione_by_id.php?id="+id;
+
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url,
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        // response
+                        try {
+                            JSONObject object = (JSONObject) response.get(0);
+                            Log.d("Response", response.toString());
+                            editTextCellulare.setText(object.getString("cellulare"));
+                            idTutor = object.getString("id_tutor");
+                            idStudente = object.getString("id_studente");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        return false;
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+
+    );
+        queue.add(jsObjRequest);
+        Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT);
+        finish();
 
 
 
@@ -166,13 +219,10 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
             Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
         }
 
-        String url = "http://www.unishare.it/tutored/add_prenotazione.php";
+        String url = "http://www.unishare.it/tutored/update_prenotazione.php";
         if (data == null && numeroCellulare == null ) {
             Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
         } else {
-
-
-
             StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>()
                     {
@@ -190,8 +240,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                             // error
                             Log.d("Error.Response", error.getMessage());
                         }
-                    }
-            ) {
+                    })
+             {
                 @Override
                 protected Map<String, String> getParams()
                 {
@@ -211,8 +261,9 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 }
             };
             queue.add(jsObjRequest);
-            Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT);
-            finish();
+
+
+
 
         }
     }
