@@ -144,9 +144,12 @@ public class HomeTutor extends AppCompatActivity {
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.user_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.prenot_icon));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.icon_materie));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.icon_logout));
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.prenot_icon));
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.icon_logout));
 
 
 
@@ -401,6 +404,11 @@ public class HomeTutor extends AppCompatActivity {
                 break;
 
             case 2:
+
+                //materie
+                break;
+
+            case 3:
                 //prenotazioni
                 //bundle = new Bundle();
                 //bundle.putString("student_id",userId);
@@ -409,7 +417,7 @@ public class HomeTutor extends AppCompatActivity {
                 //fragment.setArguments(bundle);
                 break;
 
-            case 3:
+            case 4:
                 //logout
 
 

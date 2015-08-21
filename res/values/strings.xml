@@ -39,6 +39,7 @@
     <string-array name="tutor_drawer">
         <item>Home</item>
         <item>Profilo</item>
+        <item>Materie</item>
         <item>Prenotazioni</item>
         <item>Logout</item>
     </string-array>
