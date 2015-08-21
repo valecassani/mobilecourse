@@ -93,11 +93,11 @@ public class LandingFragment extends Fragment {
 
 
         TextView accedi=(TextView)view.findViewById(R.id.textView2);
-        TextView lineuno=(TextView)view.findViewById(R.id.textView27);
-        TextView linedue=(TextView)view.findViewById(R.id.textView28);
+        //TextView lineuno=(TextView)view.findViewById(R.id.textView27);
+        //TextView linedue=(TextView)view.findViewById(R.id.textView28);
         accedi.setTypeface(myCustomFont);
-        lineuno.setTypeface(myCustomFont);
-        linedue.setTypeface(myCustomFont);
+        //lineuno.setTypeface(myCustomFont);
+        //linedue.setTypeface(myCustomFont);
 
     }
 
