@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
 
 
 
     <Button
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="Studente"
         android:id="@+id/buttonStudente"
-        android:layout_alignTop="@+id/buttonTutor"
-        android:layout_toLeftOf="@+id/textView2" />
+        android:layout_below="@id/textView2"
+        android:layout_toLeftOf="@id/textView2" />
 
     <Button
         android:layout_width="100dp"
@@ -19,8 +20,7 @@
         android:text="Tutor"
         android:id="@+id/buttonTutor"
         android:layout_below="@id/textView2"
-        android:layout_toRightOf="@id/textView2"
-        android:layout_marginTop="108dp"/>
+        android:layout_toRightOf="@id/textView2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,12 +28,27 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Accedi come:"
         android:id="@id/textView2"
+        android:layout_marginTop="168dp"
+        android:layout_below="@+id/textView28"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SUPERA CON SUCCESSO "
+        android:id="@+id/textView27"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="IL TUO PROSSIMO ESAME"
+        android:id="@+id/textView28"
+        android:layout_below="@+id/textView27"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

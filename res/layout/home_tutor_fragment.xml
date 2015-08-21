@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ecco i tutor della tua stessa città:"
+        android:text="Ecco le richieste degli studenti della tua stessa città:"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
@@ -17,13 +17,13 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tutor_list"
+        android:id="@+id/richieste_list"
         android:choiceMode="singleChoice"
         android:layout_below="@id/phr"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="#cccc"
-         />
+        />
 
 
 </RelativeLayout>
