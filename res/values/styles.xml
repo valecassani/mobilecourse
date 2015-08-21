@@ -11,10 +11,19 @@
 
 
     </style>
+
+    <style  name="PageTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+
+
+
+
+    </style>
     <!-- ActionBar styles -->
 
 
-    <color name="primaryColor">#EF6C00</color>
-    <color name="primaryColorDark">#E65100</color>
+    <color name="primaryColor">#A3FAF4</color>
+    <color name="primaryColorDark">#338E87</color>
 </resources>
 

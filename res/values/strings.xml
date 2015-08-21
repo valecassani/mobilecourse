@@ -33,7 +33,17 @@
         <item>Profilo</item>
         <item>Richieste</item>
         <item>Prenotazioni</item>
+        <item>Logout</item>
     </string-array>
+
+    <string-array name="tutor_drawer">
+        <item>Home</item>
+        <item>Profilo</item>
+        <item>Prenotazioni</item>
+        <item>Logout</item>
+    </string-array>
+
+
 
     <!-- array delle opzioni dell'applicazione nel bottom fragment -->
 

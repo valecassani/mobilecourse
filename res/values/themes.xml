@@ -8,7 +8,7 @@
         <item name="searchViewStyle">@style/MySearchViewStyle</item>
     </style>
 
-    <color name="custom_theme_color">#FF6633</color>
+    <color name="custom_theme_color">#A3FAF4</color>
     <color name="bottomcolor">#ff995b09</color>
     <color name="midcolor">#ff219940</color>
     <color name="topcolor">#ff998c12</color>
