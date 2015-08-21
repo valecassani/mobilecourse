@@ -224,7 +224,6 @@ public class RegTutorFBFragment extends Fragment {
                             e.printStackTrace();
                         }
 
-
                         return false;
                     }
                 }, new Response.ErrorListener() {
@@ -327,7 +326,7 @@ public class RegTutorFBFragment extends Fragment {
 
 
                 citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti citta la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti citt� la tua:");
 
 
 

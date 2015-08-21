@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,26 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
  * Created by Matteo on 03/08/2015.
  */
 public class ImpostazLezioniTutorFragment extends Fragment {
+
+    private static String TAG ="Impostazioni Lezioni Fragment";
 
     ProgressBar progressView;
     CheckBox gratisC;
@@ -34,6 +50,7 @@ public class ImpostazLezioniTutorFragment extends Fragment {
     String grup;
     String grat;
     String dom;
+    RequestQueue queue;
 
 
     View view;
@@ -45,8 +62,10 @@ public class ImpostazLezioniTutorFragment extends Fragment {
         view = inflater.inflate(R.layout.impostaz_lezioni_fragment, container, false);
         Bundle get=getArguments();
         id=get.getString("id");
+        queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
         field();
-        getData();
+        getDataVolley();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +78,8 @@ public class ImpostazLezioniTutorFragment extends Fragment {
 
             }
         });
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Impostazioni Aggiuntive");
+
 
         return view;
     }
@@ -71,7 +92,7 @@ public class ImpostazLezioniTutorFragment extends Fragment {
         super.onAttach(activity);
 
 
-        this.activity =  (ImpostazLezioniTutor)activity;
+
     }
 
 
@@ -100,6 +121,66 @@ public class ImpostazLezioniTutorFragment extends Fragment {
 
         String url="getSettingLesson.php?idutente=".concat(id);
         new RequestFtp().setParameters(activity, url, "getData", ImpostazLezioniTutorFragment.this).execute();
+
+    }
+
+    private void getDataVolley (){
+        String url ="http://www.unishare.it/tutored/getSettingLesson.php?idutente=".concat(id);
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, response.toString());
+                            setFieldsFromJson(obj);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+    }
+
+    private void setFieldsFromJson(JSONObject res) throws JSONException {
+
+        String gruppo=res.getString("gruppo");
+        String gratis=res.getString("gratis");
+        String domicilio=res.getString("domicilio");
+        String sedepropria=res.getString("sede_propria");
+
+        if(gruppo.compareTo("1")==0){
+            groupC.setChecked(true);
+        }
+        if(gratis.compareTo("1")==0){
+            gratisC.setChecked(true);
+        }
+        if(domicilio.compareTo("1")==0){
+            domicilioC.setChecked(true);
+        }
+        if(sedepropria.compareTo("1")==0){
+            sedeC.setChecked(true);
+        }
 
     }
 
@@ -183,7 +264,7 @@ public class ImpostazLezioniTutorFragment extends Fragment {
 
     private void saveSettings(){
 
-
+        /*
         String url="setting_lesson.php?idutente=".concat(id).concat("&gruppo=").concat(grup).concat("&sede_propria=").concat(sede_propria)
                 .concat("&domicilio=").concat(dom).concat("&gratis=").concat(grat);
         new RequestFtp().setParameters(activity, url, "settingLezioni", ImpostazLezioniTutorFragment.this).execute();
@@ -191,6 +272,45 @@ public class ImpostazLezioniTutorFragment extends Fragment {
         save.setVisibility(View.VISIBLE);
         Toast.makeText(getActivity().getApplicationContext(), "Modifiche salvate", Toast.LENGTH_LONG).show();
         activity.finish();
+
+        */
+
+        String url="http://www.unishare.it/tutored/setting_lesson.php?idutente=".concat(id).concat("&gruppo=").concat(grup).concat("&sede_propria=").concat(sede_propria)
+                .concat("&domicilio=").concat(dom).concat("&gratis=").concat(grat);
+
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, response.toString());
+                            progress(false);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
 
 
 

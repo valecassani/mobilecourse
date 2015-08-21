@@ -149,7 +149,6 @@ public class LoginSFragment extends Fragment {
                             e.printStackTrace();
                         }
 
-
                         return false;
                     }
                 }, new Response.ErrorListener() {

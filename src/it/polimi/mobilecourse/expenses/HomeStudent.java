@@ -192,7 +192,7 @@ public class HomeStudent extends AppCompatActivity {
         circImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),UpdateInfo.class);//rimettere updateImage
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);//rimettere updateImage
                 Bundle bundle = new Bundle();
                 bundle.putString("tipo","0");
                 bundle.putString("id",userId);
@@ -236,7 +236,7 @@ public class HomeStudent extends AppCompatActivity {
                             mail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(),UpdatePassword.class);//rimettere updateImage
+                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);//rimettere updateImage
                                     Bundle bundle = new Bundle();
                                     bundle.putString("tipo","0");
                                     bundle.putString("id",userId);
@@ -251,9 +251,8 @@ public class HomeStudent extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                         return false;
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -297,7 +296,6 @@ public class HomeStudent extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-
                         return false;
                     }
                 }, new Response.ErrorListener() {
@@ -336,7 +334,6 @@ public class HomeStudent extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                         return false;
                     }

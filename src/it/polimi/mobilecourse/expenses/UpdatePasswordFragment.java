@@ -172,7 +172,7 @@ public class UpdatePasswordFragment extends Fragment {
         }
         else{
 
-            Toast.makeText(getActivity().getApplicationContext(),"La vecchia password inserita non è corretta", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),"La vecchia password inserita non e corretta", Toast.LENGTH_LONG).show();
             progress(false);
             submit.setVisibility(View.VISIBLE);
 

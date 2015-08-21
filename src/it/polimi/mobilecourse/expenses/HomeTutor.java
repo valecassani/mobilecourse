@@ -36,6 +36,7 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,7 @@ import static it.polimi.mobilecourse.expenses.R.drawable.ic_action_lock_closed;
 
 public class HomeTutor extends AppCompatActivity {
 
-    private static String TAG ="Home Student";
+    private static String TAG ="Home Tutor";
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -73,6 +74,7 @@ public class HomeTutor extends AppCompatActivity {
     private int itemSelected;
     public static Activity activity;
     private Service instanceIdService;
+    private CircularImageView circImgView;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,7 @@ public class HomeTutor extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
+        circImgView = (CircularImageView)findViewById(R.id.drawer_image);
         lockPassword = (ImageView) findViewById(R.id.edit_password_icon);
         lockPassword.setImageResource(ic_action_lock_closed);
         lockPassword.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +212,54 @@ public class HomeTutor extends AppCompatActivity {
 
     }
 
+    private void checkImageOnDatabase() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://www.unishare.it/tutored/getImage.php?type_user=0&id="+userId;
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, obj.toString());
+                            String urlPhoto = obj.getString("url");
+                            if (urlPhoto.equals("no")) {
+                                circImgView.setImageResource(R.drawable.dummy_profpic);
+
+                            } else {
+                                Picasso.with(getApplicationContext()).load("http://www.unishare.it/tutored/" + urlPhoto).into(circImgView);
+
+                            }
+
+
+                            Log.d(TAG, "Assignment done of " + userId);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+
+// Adding request to request queue
+        queue.add(jsonObjReq);
+
+
+    }
+
     private void registerGCM() {
 
         Intent intent = new Intent (getApplicationContext(),MyInstanceIDListenerService.class);
@@ -262,9 +313,8 @@ public class HomeTutor extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                         return false;
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -298,9 +348,8 @@ public class HomeTutor extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                         return false;
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -368,9 +417,6 @@ public class HomeTutor extends AppCompatActivity {
 
 
 
-    public final void changePosition(int position) {
-        selectItem(position);
-    }
 
     public void selectItem(int position) {
         // update the main content by replacing fragments
@@ -393,12 +439,12 @@ public class HomeTutor extends AppCompatActivity {
             case 3:
                 fragment = new RichiesteFragment();
                 bundle = new Bundle();
-                bundle.putString("student_id",userId);
+                bundle.putString("tutor_id",userId);
                 fragment.setArguments(bundle);
                 break;
             case 4:
                 bundle = new Bundle();
-                bundle.putString("student_id",userId);
+                bundle.putString("tutor_id",userId);
 
                 fragment = new PrenotazioniFragment();
                 fragment.setArguments(bundle);
@@ -407,10 +453,9 @@ public class HomeTutor extends AppCompatActivity {
             case 5:
                 bundle = new Bundle();
                 bundle.putString("id", userId);
-
-                Intent intent = new Intent(getApplicationContext(),ImpostazLezioniTutor.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                getSupportActionBar().setTitle("Opzioni Aggiuntive");
+                fragment = new ImpostazLezioniTutorFragment();
+                fragment.setArguments(bundle);
 
         }
 
