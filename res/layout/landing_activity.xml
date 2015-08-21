@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <LinearLayout android:orientation="vertical"
+    <LinearLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
 
@@ -14,12 +13,23 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="640dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tutored_bg"
+                android:id="@+id/bg_landing"
+                android:layout_marginBottom="374dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="-30dp" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/landing_image"
+                android:src="@drawable/logo_white"
                 android:id="@+id/imgLanding"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -38,11 +48,13 @@
 
 
             <fragment android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="300dp"
                 android:id="@+id/fragreplace"
-                android:layout_below="@id/imgLanding"
+                android:layout_below="@id/bg_landing"
                 android:name="it.polimi.mobilecourse.expenses.FragReplace"
-                tools:layout="@layout/frag_replace">
+                tools:layout="@layout/frag_replace"
+                android:layout_marginTop="-350dp"
+                android:layout_marginBottom="50dp">
 
 
 
@@ -50,11 +62,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:id="@+id/welcomemessage"
-                ></RelativeLayout>
+                android:layout_toRightOf="@+id/progressBarRS"
+                android:layout_alignParentTop="true"></RelativeLayout>
 
         </RelativeLayout>
 
     </LinearLayout>
-</ScrollView>

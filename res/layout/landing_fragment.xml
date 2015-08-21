@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Studente"
         android:id="@+id/buttonStudente"
-        android:layout_below="@id/textView2"
+        android:layout_alignTop="@+id/buttonTutor"
         android:layout_toLeftOf="@id/textView2" />
 
     <Button
@@ -20,7 +20,8 @@
         android:text="Tutor"
         android:id="@+id/buttonTutor"
         android:layout_below="@id/textView2"
-        android:layout_toRightOf="@id/textView2" />
+        android:layout_toRightOf="@id/textView2"
+        android:layout_marginTop="58dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,27 +29,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Accedi come:"
         android:id="@id/textView2"
-        android:layout_marginTop="168dp"
-        android:layout_below="@+id/textView28"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SUPERA CON SUCCESSO "
-        android:id="@+id/textView27"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="IL TUO PROSSIMO ESAME"
-        android:id="@+id/textView28"
-        android:layout_below="@+id/textView27"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
 
 
 </RelativeLayout>
