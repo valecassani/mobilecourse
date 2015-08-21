@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,11 +137,11 @@ public class HomeTutorFragment extends Fragment {
 
                                     FragmentManager fragmentManager = getFragmentManager();
 
-                                    Fragment fragment = new RichiestaFragment();
+                                    Fragment fragment = new MostraRichiestaFragment();
                                      Bundle bundle = new Bundle();
                                      bundle.putString("idr", click.getId());
                                      fragment.setArguments(bundle);
-                                     fragmentManager.beginTransaction().replace(R.id.tutor_drawer_list,fragment);
+                                     fragmentManager.beginTransaction().replace(R.id.tutor_fragment,fragment).commit();
 
                                 }
                             });
