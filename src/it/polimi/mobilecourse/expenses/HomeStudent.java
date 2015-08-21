@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -107,7 +110,7 @@ public class HomeStudent extends AppCompatActivity {
 
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
         if (toolbar != null) {
-            toolbar.setTitle(R.string.app_name);
+            toolbar.setTitle("Home");
             setSupportActionBar(toolbar);
         }
 
@@ -125,18 +128,21 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.com_facebook_button_icon));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.home_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.com_facebook_button_like_icon_selected));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.abc_ic_search_api_mtrl_alpha));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.ic_plusone_standard_off_client));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.user_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.abc_ic_search_api_mtrl_alpha));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.richieste_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.abc_ic_search_api_mtrl_alpha));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.prenot_icon));
+
+          mDrawerItems.add(new NavDrawerItem(mDrawerOptions[5], R.drawable.icon_logout));
 
 
-        // setting the nav drawer list adapter
+
+          // setting the nav drawer list adapter
         mNavDrawerAdapter = new NavDrawerListAdapter(getApplicationContext(),
                 mDrawerItems);
         mDrawerList.setAdapter(mNavDrawerAdapter);
@@ -158,7 +164,7 @@ public class HomeStudent extends AppCompatActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -231,8 +237,12 @@ public class HomeStudent extends AppCompatActivity {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
                             nome.setText(obj.get("nome").toString() + " " + obj.get("cognome").toString());
+                            nome.setTextColor(Color.WHITE);
                             TextView mail = (TextView)findViewById(R.id.drawer_mail);
-                            mail.setText(obj.get("username").toString());
+                            SpannableString content=new SpannableString(obj.get("username").toString());
+                            content.setSpan(new UnderlineSpan(),0,obj.get("username").toString().length(),0);
+                            mail.setText(content);
+                            mail.setTextColor(Color.WHITE);
                             mail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -280,7 +290,7 @@ public class HomeStudent extends AppCompatActivity {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, obj.toString());
                             String urlPhoto = obj.getString("url");
-                            if (urlPhoto.equals("no")) {
+                            if (urlPhoto.equals("NO")) {
                                 circImgView.setImageResource(R.drawable.dummy_profpic);
 
                             } else {
@@ -479,5 +489,9 @@ public class HomeStudent extends AppCompatActivity {
     }
 
 
+    ///////
+    public String getUserId(){
+        return userId;
+    }
 
 }

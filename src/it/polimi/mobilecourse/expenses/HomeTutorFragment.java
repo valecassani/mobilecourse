@@ -3,6 +3,7 @@ package it.polimi.mobilecourse.expenses;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -29,15 +31,15 @@ import java.util.ArrayList;
 /**
  * Created by Valerio on 15/05/2015.
  */
-public class HomeStudentFragment extends Fragment {
+public class HomeTutorFragment extends Fragment {
 
-    private HomeStudent activity;
+    private HomeTutor activity;
     private CardView cardView;
 
-    private ArrayList<ListTutorItem> items = new ArrayList<>();
-    ListTutorAdapter adapter ;
+    private ArrayList<ListRichiesteItem> items = new ArrayList<>();
+    ListRichiesteAdapter adapter ;
 
-    private ListView list_tutor;
+    private ListView richieste_list;
     private String userId;
     private RequestQueue queue;
 
@@ -45,12 +47,14 @@ public class HomeStudentFragment extends Fragment {
     int no;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        View view = inflater.inflate(R.layout.home_tutor_fragment, container, false);
 
         queue= Volley.newRequestQueue(view.getContext());
 
         userId=activity.getUserId();
-        list_tutor=(ListView)view.findViewById(R.id.tutor_list);
+        richieste_list=(ListView)view.findViewById(R.id.richieste_list);
+
+
 
         getList();
 
@@ -62,7 +66,7 @@ public class HomeStudentFragment extends Fragment {
         super.onAttach(activity);
 
 
-        this.activity =  (HomeStudent)activity;
+        this.activity =  (HomeTutor)activity;
     }
 
 
@@ -78,8 +82,7 @@ public class HomeStudentFragment extends Fragment {
     public void getList(){
 
 
-
-        String url="http://www.unishare.it/tutored/getTutor.php?idstudente=".concat(userId);
+        String url="http://www.unishare.it/tutored/getRichieste.php?idtutor=".concat(userId);
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -95,18 +98,18 @@ public class HomeStudentFragment extends Fragment {
 
                                 AlertDialog dialog = builder.create();
                                 if (dialog != null)
-                                builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        try {
-                                            dialog.wait(2000);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        dialog.dismiss();
+                                    builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            try {
+                                                dialog.wait(2000);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                            dialog.dismiss();
 
-                                        activity.finish();
-                                    }
-                                });
+                                            activity.finish();
+                                        }
+                                    });
 
                                 dialog.show();
 
@@ -115,16 +118,35 @@ public class HomeStudentFragment extends Fragment {
                             }
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                ListTutorItem item = new ListTutorItem(obj.getString("nome"),obj.getString("cognome"),obj.getString("ID"),
-                                        obj.getString("uni"),obj.getString("media"),obj.getString("url"),obj.getString("idfb"));
+                                ListRichiesteItem item = new ListRichiesteItem(obj.getString("idr"),obj.getString("id_studente"),obj.getString("nome"),obj.getString("cognome"),
+                                        obj.getString("data_entro"),obj.getString("titolo"),
+                                        obj.getString("uni"),obj.getString("url"),obj.getString("idfb"));
+
                                 items.add(item);
 
 
 
                             }
 
-                            adapter = new ListTutorAdapter(activity.getApplicationContext(), items);
-                            list_tutor.setAdapter(adapter);
+                            adapter = new ListRichiesteAdapter(activity.getApplicationContext(), items);
+                            richieste_list.setAdapter(adapter);
+
+                            richieste_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Object o = richieste_list.getItemAtPosition(position);
+                                    ListRichiesteItem click = (ListRichiesteItem) o;
+
+                                    FragmentManager fragmentManager = getFragmentManager();
+
+                                    Fragment fragment = new RichiestaFragment();
+                                     Bundle bundle = new Bundle();
+                                     bundle.putString("idr", click.getId());
+                                     fragment.setArguments(bundle);
+                                     fragmentManager.beginTransaction().replace(R.id.tutor_drawer_list,fragment);
+
+                                }
+                            });
 
 
 

@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -39,6 +40,8 @@ public class LandingFragment extends Fragment {
     int id;
     String nome;
 
+    Typeface myCustomFont;
+
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
@@ -70,6 +73,9 @@ public class LandingFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.landing_fragment, container, false);
+        myCustomFont=Typeface.createFromAsset(activity.getAssets(), "font/Gotham-Book.ttf");
+
+        setFont();
         buttonsActions();
 
         return view;
@@ -83,11 +89,24 @@ public class LandingFragment extends Fragment {
        // this.activity = (LandingActivity) activity;
     }
 
+    private void setFont(){
+
+
+        TextView accedi=(TextView)view.findViewById(R.id.textView2);
+        TextView lineuno=(TextView)view.findViewById(R.id.textView27);
+        TextView linedue=(TextView)view.findViewById(R.id.textView28);
+        accedi.setTypeface(myCustomFont);
+        lineuno.setTypeface(myCustomFont);
+        linedue.setTypeface(myCustomFont);
+
+    }
+
 
 
     public void buttonsActions() {
 
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
+        butS.setTypeface(myCustomFont);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +118,7 @@ public class LandingFragment extends Fragment {
         });
 
         Button butT = (Button) view.findViewById(R.id.buttonTutor);
+        butT.setTypeface(myCustomFont);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +135,7 @@ public class LandingFragment extends Fragment {
     private void buttonsSActions() {
         (activity).manageButton();
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
+        butS.setTypeface(myCustomFont);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +151,7 @@ public class LandingFragment extends Fragment {
         });
 
         Button butT = (Button) view.findViewById(R.id.buttonTutor);
+        butT.setTypeface(myCustomFont);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +176,7 @@ public class LandingFragment extends Fragment {
         (activity).manageButton();
 
         Button butS = (Button) view.findViewById(R.id.buttonStudente);
+        butS.setTypeface(myCustomFont);
         butS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +188,7 @@ public class LandingFragment extends Fragment {
         });
 
         Button butT = (Button) view.findViewById(R.id.buttonTutor);
+        butT.setTypeface(myCustomFont);
         butT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

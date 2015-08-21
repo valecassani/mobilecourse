@@ -17,6 +17,7 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
     private Fragment fragment;
     private String op;
     private HelpActivity act;
+    private HelpABActivity act_ab;
 
     public RequestFtp setParameters(HelpActivity activity, String url,String op, Fragment fragment) {
         this.url = url;
@@ -25,6 +26,7 @@ public class RequestFtp extends AsyncTask<Void,ArrayList<ObjDb>,ArrayList<ObjDb>
         this.fragment = fragment;
         return this;
     }
+
 
 
     /** The system calls this to perform work in a worker thread and

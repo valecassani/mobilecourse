@@ -72,6 +72,8 @@ public class LoginTutor extends ActionBarActivity {
         }
 
         setContentView(R.layout.login_tutor);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         gcm = GoogleCloudMessaging.getInstance(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_login_button);

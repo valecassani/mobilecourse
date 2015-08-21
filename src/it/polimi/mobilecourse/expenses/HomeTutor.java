@@ -7,12 +7,16 @@ import android.app.FragmentManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
@@ -64,8 +69,8 @@ public class HomeTutor extends AppCompatActivity {
     private String username;
     private Toolbar toolbar;
     private int positionRequired;
-    private ImageView lockPassword;
     private SessionManager sessionManager;
+    private CircularImageView circImgView;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -74,7 +79,6 @@ public class HomeTutor extends AppCompatActivity {
     private int itemSelected;
     public static Activity activity;
     private Service instanceIdService;
-    private CircularImageView circImgView;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -83,11 +87,8 @@ public class HomeTutor extends AppCompatActivity {
         activity = this;
 
 
-        setContentView(R.layout.student_home);
+        setContentView(R.layout.tutor_home);
         Bundle data = getIntent().getExtras();
-
-
-        /*
         if (data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
             username = data.getString("mail");
@@ -102,32 +103,14 @@ public class HomeTutor extends AppCompatActivity {
 
             }
         }
-
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
-        */
-        userId = data.getString("user_id");
         mTitle = mDrawerTitle = getTitle();
-        mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
+        mDrawerOptions = getResources().getStringArray(R.array.tutor_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
-        mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
-        circImgView = (CircularImageView)findViewById(R.id.drawer_image);
-        lockPassword = (ImageView) findViewById(R.id.edit_password_icon);
-        lockPassword.setImageResource(ic_action_lock_closed);
-        lockPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Modifica Password", Toast.LENGTH_SHORT);
+        mDrawerList = (ListView) findViewById(R.id.tutor_drawer_list);
+        mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_tutor);
 
-                Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("id", userId);
-                bundle.putString("tipo", "1");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
 
         loadUserInfos();
         registerGCM();
@@ -157,17 +140,14 @@ public class HomeTutor extends AppCompatActivity {
 
 
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.ic_action_home));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.home_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.com_facebook_button_like_icon_selected));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.user_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.ic_plusone_standard_off_client));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.prenot_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.abc_ic_search_api_mtrl_alpha));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.icon_logout));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.abc_ic_search_api_mtrl_alpha));
-
-        mDrawerItems.add(new NavDrawerItem("Impostazioni Lezioni", R.drawable.com_facebook_button_send_icon));
 
 
         // setting the nav drawer list adapter
@@ -212,54 +192,6 @@ public class HomeTutor extends AppCompatActivity {
 
     }
 
-    private void checkImageOnDatabase() {
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://www.unishare.it/tutored/getImage.php?type_user=0&id="+userId;
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                url, null,
-                new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public boolean onResponse(JSONArray response) {
-                        try {
-                            JSONObject obj = response.getJSONObject(0);
-                            Log.d(TAG, obj.toString());
-                            String urlPhoto = obj.getString("url");
-                            if (urlPhoto.equals("no")) {
-                                circImgView.setImageResource(R.drawable.dummy_profpic);
-
-                            } else {
-                                Picasso.with(getApplicationContext()).load("http://www.unishare.it/tutored/" + urlPhoto).into(circImgView);
-
-                            }
-
-
-                            Log.d(TAG, "Assignment done of " + userId);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        return false;
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error: " + error.getMessage());
-                // hide the progress dialog
-
-            }
-        });
-
-
-// Adding request to request queue
-        queue.add(jsonObjReq);
-
-
-    }
-
     private void registerGCM() {
 
         Intent intent = new Intent (getApplicationContext(),MyInstanceIDListenerService.class);
@@ -270,16 +202,33 @@ public class HomeTutor extends AppCompatActivity {
     }
 
     private void loadUserInfos() {
-        //Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
+        circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+        if (Profile.getCurrentProfile() != null) {
+            Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
 
-        CircularImageView circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+            Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+        } else {
+            checkImageOnDatabase();
+
+        }
+
         circImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),UpdateInfo.class);//rimettere updateImage
+                Bundle bundle = new Bundle();
+                bundle.putString("tipo","1");
+                bundle.putString("id",userId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+
 
             }
         });
-                //Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
+
+
+
         String url = null;
         if (username != null) {
             Log.i(TAG,"url for username");
@@ -305,16 +254,33 @@ public class HomeTutor extends AppCompatActivity {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
                             nome.setText(obj.get("nome").toString() + " " + obj.get("cognome").toString());
+                            nome.setTextColor(Color.WHITE);
                             TextView mail = (TextView)findViewById(R.id.drawer_mail);
-                            mail.setText(obj.get("username").toString());
+                            SpannableString content=new SpannableString(obj.get("username").toString());
+                            content.setSpan(new UnderlineSpan(),0,obj.get("username").toString().length(),0);
+                            mail.setText(content);
+                            mail.setTextColor(Color.WHITE);
+                            mail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);//rimettere updateImage
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("tipo", "1");
+                                    bundle.putString("id", userId);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+
+                                }
+                            });
 
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        return false;
 
+
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -348,8 +314,9 @@ public class HomeTutor extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        return false;
 
+
+                        return false;
                     }
                 }, new Response.ErrorListener() {
 
@@ -417,51 +384,40 @@ public class HomeTutor extends AppCompatActivity {
 
 
 
-
     public void selectItem(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new HomeStudentFragment();
+                fragment = new HomeTutorFragment();
                 break;
             case 1:
-                fragment = new SearchFragment();
-                getSupportActionBar().setTitle("Ricerca Tutor");
-                break;
-            case 2:
-                fragment = new StudentDataFragment();
+                //profilo
+                /*fragment = new StudentDataFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("mail", username);
                 bundle.putString("id", userId);
-                fragment.setArguments(bundle);
+                fragment.setArguments(bundle);*/
                 break;
+
+            case 2:
+                //prenotazioni
+                //bundle = new Bundle();
+                //bundle.putString("student_id",userId);
+
+                //fragment = new PrenotazioniFragment();
+                //fragment.setArguments(bundle);
+                break;
+
             case 3:
-                fragment = new RichiesteFragment();
-                bundle = new Bundle();
-                bundle.putString("tutor_id",userId);
-                fragment.setArguments(bundle);
-                break;
-            case 4:
-                bundle = new Bundle();
-                bundle.putString("tutor_id",userId);
+                //logout
 
-                fragment = new PrenotazioniFragment();
-                fragment.setArguments(bundle);
-                break;
-
-            case 5:
-                bundle = new Bundle();
-                bundle.putString("id", userId);
-                getSupportActionBar().setTitle("Opzioni Aggiuntive");
-                fragment = new ImpostazLezioniTutorFragment();
-                fragment.setArguments(bundle);
 
         }
 
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+            fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.tutor_fragment, fragment).commit();
 
         }
 
@@ -476,7 +432,54 @@ public class HomeTutor extends AppCompatActivity {
         mDrawerLayout.closeDrawer(mDrawerFragment);
     }
 
+    private void checkImageOnDatabase() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://www.unishare.it/tutored/getImage.php?type_user=1&id="+userId;
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
 
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, obj.toString());
+                            String urlPhoto = obj.getString("url");
+                            if (urlPhoto.equals("NO")) {
+                                circImgView.setImageResource(R.drawable.dummy_profpic);
+
+                            } else {
+                                Picasso.with(getApplicationContext()).load("http://www.unishare.it/tutored/" + urlPhoto).into(circImgView);
+
+                            }
+
+
+                            Log.d(TAG, "Assignment done of " + userId);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+
+// Adding request to request queue
+        queue.add(jsonObjReq);
+
+
+    }
 
 
     @Override
@@ -502,6 +505,11 @@ public class HomeTutor extends AppCompatActivity {
 
         }
 
+    }
+
+    ///////
+    public String getUserId(){
+        return userId;
     }
 
 
