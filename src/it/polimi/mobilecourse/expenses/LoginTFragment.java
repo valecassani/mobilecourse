@@ -230,7 +230,7 @@ public class LoginTFragment extends Fragment {
             } else {
                 progress(false);
                 Toast.makeText(getActivity().getApplicationContext(), "Username e/o password errate", Toast.LENGTH_LONG).show();
-                showElements();
+                //showElements();
 
 
             }
