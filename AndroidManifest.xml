@@ -80,12 +80,22 @@
             android:name=".LoginStudente"
             android:label="Login Studente"
             android:theme="@style/PageTheme"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden">
+        <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:value="it.polimi.mobilecourse.expenses.LandingActivity"></meta-data>
+
+            </activity>
         <activity
             android:name=".LoginTutor"
             android:label="Login Tutor"
             android:theme="@style/PageTheme"
             android:windowSoftInputMode="stateHidden">
+
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.polimi.mobilecourse.expenses.LandingActivity"></meta-data>
+
+
+
         </activity>
         <activity android:name=".RegistrationTutor"
             android:theme="@style/PageTheme">

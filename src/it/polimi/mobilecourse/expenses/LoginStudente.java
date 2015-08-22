@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 
 import com.android.volley.Request;
@@ -231,7 +232,21 @@ public class LoginStudente extends ActionBarActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
 
+        switch(item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+        }
+
+    }
 
 
 }
