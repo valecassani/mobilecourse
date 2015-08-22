@@ -1,5 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -16,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -44,6 +48,7 @@ public class MostraRichiestaFragment extends Fragment {
     TextView data;
     ImageView fotor;
     Button accetta;
+    ProgressBar progress;
 
 
     //dati
@@ -65,6 +70,8 @@ public class MostraRichiestaFragment extends Fragment {
 
 
         view = inflater.inflate(R.layout.mostra_richiesta_fragment, container, false);
+        queue= Volley.newRequestQueue(view.getContext());
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
         Bundle bundle=this.getArguments();
@@ -91,17 +98,19 @@ public class MostraRichiestaFragment extends Fragment {
         fotot=(TextView)view.findViewById(R.id.fotoTesto);
         fotor=(ImageView)view.findViewById(R.id.fotoRichiesta);
         accetta=(Button)view.findViewById(R.id.buttonAccettaR);
+        progress=(ProgressBar)view.findViewById(R.id.progressBarRichiesta);
 
 
     }
 
     private void showRequest() {
+        progress(true);
         String url;
 
         url = "http://www.unishare.it/tutored/getDataRichiesta.php?idr=" + idr;
 
 
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {
 
@@ -109,6 +118,7 @@ public class MostraRichiestaFragment extends Fragment {
                     public boolean onResponse(JSONArray response) {
                             try {
                                 JSONObject obj = response.getJSONObject(0);
+                                System.out.println(obj);
                                 nomeR=obj.getString("nome");
                                 cognomeR=obj.getString("cognome");
                                 testoR=obj.getString("testo");
@@ -142,7 +152,7 @@ public class MostraRichiestaFragment extends Fragment {
             }
         });
 
-        //queue.add(jsonObjReq);
+        queue.add(jsonObjReq);
 
 
 
@@ -150,15 +160,15 @@ public class MostraRichiestaFragment extends Fragment {
 
     private void setField(){
 
-        nome.setText("Richiesta di "+nomeR + " "+cognomeR.substring(0,1)+".");
+       nome.setText("Richiesta di "+nomeR + " "+cognomeR.substring(0,1)+".");
         titolo.setText(titoloR);
-        testo.setText(titoloR);
+        testo.setText(testoR);
         data.setText("Entro il "+data_entroR.substring(0,10));
         if(uniR.compareTo("0")!=0){
-            uni.setText("Universit‡:"+uniR);
+            uni.setText("Universit√†:"+uniR);
         }
         if(facR.compareTo("0")!=0){
-            facolta.setText("Facolt‡:" + facR);
+            facolta.setText("Facolt√†:" + facR);
         }
         if(urlR.compareTo("0")!=0){
              downloadImage();
@@ -169,6 +179,7 @@ public class MostraRichiestaFragment extends Fragment {
         }
 
 
+        progress(false);
 
 
     }
@@ -176,6 +187,7 @@ public class MostraRichiestaFragment extends Fragment {
     private void downloadImage(){
         Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
         ).into(fotor);
+
     }
 
 
@@ -192,6 +204,22 @@ public class MostraRichiestaFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstancestate) {
         super.onActivityCreated(savedInstancestate);
+
+    }
+
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        progress.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progress.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
 
     }
 }

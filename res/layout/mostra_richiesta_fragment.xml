@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+<RelativeLayout  android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/nameRichiesta"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -17,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:id="@+id/titleRichiesta"
         android:layout_below="@+id/dataR"
         android:layout_alignLeft="@+id/nameRichiesta" />
@@ -26,7 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/testoRichiesta"
         android:layout_below="@+id/titleRichiesta"
         android:layout_marginTop="48dp"
@@ -39,7 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
         android:id="@+id/uniRichiesta"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/testoRichiesta" />
@@ -48,7 +49,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
         android:id="@+id/facRichiesta"
         android:layout_below="@+id/uniRichiesta"
         android:layout_alignLeft="@+id/uniRichiesta" />
@@ -64,8 +64,8 @@
         android:layout_marginTop="52dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/fotoRichiesta"
         android:layout_below="@+id/fotoTesto"
         android:layout_centerHorizontal="true"
@@ -78,8 +78,7 @@
         android:id="@+id/buttonAccettaR"
         style="?android:attr/borderlessButtonStyle"
         android:background="@color/primaryColorDark"
-
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/fotoRichiesta"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="5dp"
@@ -90,9 +89,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/dataR"
         android:layout_below="@+id/nameRichiesta"
         android:layout_alignRight="@+id/titleRichiesta" />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarRichiesta"
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="gone"
+        android:layout_above="@+id/uniRichiesta"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        />
+
 </RelativeLayout>
+
+
+
+</ScrollView>
+
+

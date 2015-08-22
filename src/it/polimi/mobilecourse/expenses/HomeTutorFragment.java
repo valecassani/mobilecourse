@@ -133,7 +133,8 @@ public class HomeTutorFragment extends Fragment {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     Object o = richieste_list.getItemAtPosition(position);
-                                    ListRichiesteItem click = (ListRichiesteItem) o;
+                                    System.out.println(o);
+                                    ListRichiesteItem click = ((ListRichiesteItem) o);
 
                                     FragmentManager fragmentManager = getFragmentManager();
 
@@ -141,6 +142,7 @@ public class HomeTutorFragment extends Fragment {
                                      Bundle bundle = new Bundle();
                                      bundle.putString("idr", click.getId());
                                      fragment.setArguments(bundle);
+                                    System.out.println("Bundle"+bundle);
                                      fragmentManager.beginTransaction().replace(R.id.tutor_fragment,fragment).commit();
 
                                 }
