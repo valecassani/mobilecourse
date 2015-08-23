@@ -3,10 +3,18 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
+
     >
+    <LinearLayout android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
 
 <RelativeLayout  android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="643dp"
+>
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,27 +71,16 @@
         android:layout_alignLeft="@+id/facRichiesta"
         android:layout_marginTop="52dp" />
 
-    <ImageView
+    <ImageButton
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/fotoRichiesta"
+        android:visibility="invisible"
+        android:layout_above="@+id/buttonAccettaR"
         android:layout_below="@+id/fotoTesto"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Invia notifica"
-        android:id="@+id/buttonAccettaR"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/primaryColorDark"
-        android:layout_below="@id/fotoRichiesta"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,16 +99,34 @@
         android:layout_above="@+id/uniRichiesta"
         android:layout_centerHorizontal="true" />
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Invia notifica"
+        android:id="@+id/buttonAccettaR"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@color/primaryColorDark"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
+
     <ImageView
         android:id="@+id/expanded_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        />
+        android:layout_above="@+id/fotoRichiesta"
+        android:layout_alignTop="@+id/dataR" />
+
 
 </RelativeLayout>
 
 
+
+</LinearLayout>
 
 </ScrollView>
 

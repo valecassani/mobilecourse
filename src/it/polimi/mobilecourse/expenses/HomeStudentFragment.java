@@ -1,5 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,16 +45,19 @@ public class HomeStudentFragment extends Fragment {
     private RequestQueue queue;
 
 
+    ProgressBar progress;
     int no;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
 
+        progress=(ProgressBar)view.findViewById(R.id.progressBarHomeS);
         queue= Volley.newRequestQueue(view.getContext());
 
         userId=activity.getUserId();
         list_tutor=(ListView)view.findViewById(R.id.tutor_list);
 
+        progress(true);
         getList();
 
         return view;
@@ -126,6 +132,7 @@ public class HomeStudentFragment extends Fragment {
                             adapter = new ListTutorAdapter(activity.getApplicationContext(), items);
                             list_tutor.setAdapter(adapter);
 
+                            progress(false);
 
 
 
@@ -151,6 +158,23 @@ public class HomeStudentFragment extends Fragment {
         queue.add(jsonObjReq);
 
     }
+
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        progress.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progress.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
+
+    }
+
 
 
 
