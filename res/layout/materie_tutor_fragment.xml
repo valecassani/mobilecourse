@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- A CardView that contains a TextView -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ecco le materie che hai inserito:"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:id="@+id/phr"/>
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/materie_list"
+        android:choiceMode="singleChoice"
+        android:layout_below="@id/phr"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#cccc"
+        android:layout_marginBottom="80dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+ Aggiungi materia"
+        android:id="@+id/buttonAddMateria"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@color/primaryColorDark"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarMaterie"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

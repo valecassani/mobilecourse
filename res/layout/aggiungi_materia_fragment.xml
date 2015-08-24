@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conferma"
+        android:id="@+id/confermaAdd"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@color/primaryColorDark"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp" />
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarAgg"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Nome materia"
+        android:ems="10"
+        android:id="@+id/nameM"
+        android:layout_below="@+id/progressBarAgg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/prezzoM"
+        android:layout_below="@+id/nameM"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:text="Prezzo/ora" />
+
+</RelativeLayout>
