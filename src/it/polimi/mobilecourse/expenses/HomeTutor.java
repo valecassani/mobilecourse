@@ -2,9 +2,11 @@ package it.polimi.mobilecourse.expenses;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -19,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -394,6 +397,7 @@ public class HomeTutor extends AppCompatActivity {
         switch (position) {
             case 0:
                 fragment = new HomeTutorFragment();
+
                 break;
             case 1:
                 //profilo
@@ -528,9 +532,22 @@ public class HomeTutor extends AppCompatActivity {
 
         int count=getFragmentManager().getBackStackEntryCount();
 
-        if(count==0){
+        if(getFragmentManager().findFragmentById(R.id.tutor_fragment) instanceof HomeTutorFragment){
 
-            super.onBackPressed();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
+
+            builder.setPositiveButton("Sì",null);
+            builder.setNegativeButton("No",null);
+
+            AlertDialog dialog = builder.create();
+
+
+            dialog.show();
+
+            //super.onBackPressed();
         }
         else{
             getFragmentManager().popBackStack();

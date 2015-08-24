@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/container"
 
+
     >
     <LinearLayout android:orientation="vertical"
         android:layout_height="match_parent"
@@ -76,8 +77,7 @@
         android:layout_height="150dp"
         android:id="@+id/fotoRichiesta"
         android:visibility="invisible"
-        android:layout_above="@+id/buttonAccettaR"
-        android:layout_below="@+id/fotoTesto"
+        android:layout_alignTop="@+id/fotoTesto"
         android:layout_centerHorizontal="true" />
 
 
@@ -113,13 +113,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
 
-    <ImageView
+    <it.polimi.mobilecourse.expenses.TouchImageView
         android:id="@+id/expanded_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        android:layout_above="@+id/fotoRichiesta"
-        android:layout_alignTop="@+id/dataR" />
+        android:layout_alignTop="@+id/dataR"
+        android:layout_alignBottom="@+id/fotoRichiesta"
+        android:layout_alignParentRight="true" />
+
+
 
 
 </RelativeLayout>

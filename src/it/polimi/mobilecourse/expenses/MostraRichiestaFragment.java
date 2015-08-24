@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -65,6 +67,7 @@ public class MostraRichiestaFragment extends Fragment {
     Button accetta;
     ProgressBar progress;
 
+    ScrollView sc;
 
     //dati
     String nomeR;
@@ -90,6 +93,7 @@ public class MostraRichiestaFragment extends Fragment {
 
 
         view = inflater.inflate(R.layout.mostra_richiesta_fragment, container, false);
+        sc=(ScrollView)view.findViewById(R.id.container);
         queue= Volley.newRequestQueue(view.getContext());
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
@@ -195,6 +199,7 @@ public class MostraRichiestaFragment extends Fragment {
         }
         else {
 
+
             fotot.setVisibility(View.GONE);
         }
 
@@ -208,14 +213,14 @@ public class MostraRichiestaFragment extends Fragment {
         Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
         ).into(fotor);
         fotor.setVisibility(View.VISIBLE);
-        /*Target t=new Target(){
+        Target t=new Target(){
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
 
                 fotor.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        zoomImageFromThumb(fotor, bitmap.getGenerationId());
+                        zoomImageFromThumb(fotor, bitmap);
 
 
                     }
@@ -236,7 +241,7 @@ public class MostraRichiestaFragment extends Fragment {
 
         };
         Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
-            ).into(t);*/
+            ).into(t);
 
 
 
@@ -249,7 +254,7 @@ public class MostraRichiestaFragment extends Fragment {
 
     }
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+    private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         if (mCurrentAnimator != null) {
@@ -257,9 +262,12 @@ public class MostraRichiestaFragment extends Fragment {
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) view.findViewById(
+        final TouchImageView expandedImageView = (TouchImageView) view.findViewById(
                 R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        expandedImageView.setImageBitmap(bitmap);
+
+
+
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -277,6 +285,7 @@ public class MostraRichiestaFragment extends Fragment {
                 .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
 
         // Adjust the start bounds to be the same aspect ratio as the final
         // bounds using the "center crop" technique. This prevents undesirable
@@ -350,6 +359,7 @@ public class MostraRichiestaFragment extends Fragment {
                     mCurrentAnimator.cancel();
                 }
 
+
                 // Animate the four positioning/sizing properties in parallel,
                 // back to their original values.
                 AnimatorSet set = new AnimatorSet();
@@ -383,6 +393,8 @@ public class MostraRichiestaFragment extends Fragment {
                 });
                 set.start();
                 mCurrentAnimator = set;
+
+
             }
         });
     }
