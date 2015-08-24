@@ -74,6 +74,7 @@ public class HomeTutor extends AppCompatActivity {
     private Toolbar toolbar;
     private int positionRequired;
     private SessionManager sessionManager;
+    private CircularImageView circImgView;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -82,9 +83,6 @@ public class HomeTutor extends AppCompatActivity {
     private int itemSelected;
     public static Activity activity;
     private Service instanceIdService;
-    private CircularImageView circImgView;
-
-    private ImageView lockPassword;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -95,9 +93,6 @@ public class HomeTutor extends AppCompatActivity {
 
         setContentView(R.layout.tutor_home);
         Bundle data = getIntent().getExtras();
-
-
-        /*
         if (data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
             username = data.getString("mail");
@@ -112,33 +107,14 @@ public class HomeTutor extends AppCompatActivity {
 
             }
         }
-
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
-        */
-        userId = data.getString("user_id");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.tutor_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.tutor_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_tutor);
-        mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
-        mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
-        lockPassword = (ImageView) findViewById(R.id.edit_password_icon);
-        lockPassword.setImageResource(ic_action_lock_closed);
-        lockPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Modifica Password", Toast.LENGTH_SHORT);
 
-                Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("id", userId);
-                bundle.putString("tipo", "1");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
 
         loadUserInfos();
         registerGCM();
@@ -174,7 +150,6 @@ public class HomeTutor extends AppCompatActivity {
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.icon_materie));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.abc_ic_search_api_mtrl_alpha));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.prenot_icon));
 
@@ -223,8 +198,6 @@ public class HomeTutor extends AppCompatActivity {
 
 
     }
-
-
 
     private void registerGCM() {
 
@@ -312,10 +285,9 @@ public class HomeTutor extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                         return false;
-
-
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -349,9 +321,9 @@ public class HomeTutor extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                         return false;
-
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -429,34 +401,36 @@ public class HomeTutor extends AppCompatActivity {
                 break;
             case 1:
                 //profilo
-                //fragment = new StudentDataFragment();
+                /*fragment = new StudentDataFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("mail", username);
                 bundle.putString("id", userId);
-                fragment.setArguments(bundle);
+                fragment.setArguments(bundle);*/
                 break;
-            case 3:
-                fragment = new RichiesteFragment();
-                bundle = new Bundle();
-                bundle.putString("student_id",userId);
-                fragment.setArguments(bundle);
 
             case 2:
 
                 //materie
+
+                fragment=new MaterieTutorFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("idt",userId);
+
+                fragment.setArguments(bundle);
                 break;
 
+            case 3:
+                //prenotazioni
+                //bundle = new Bundle();
+                //bundle.putString("student_id",userId);
 
+                //fragment = new PrenotazioniFragment();
+                //fragment.setArguments(bundle);
+                break;
 
-            case 5:
-                bundle = new Bundle();
-                bundle.putString("id", userId);
-
-                Intent intent = new Intent(getApplicationContext(),ImpostazLezioniTutor.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
             case 4:
                 //logout
+
 
         }
 
@@ -525,7 +499,6 @@ public class HomeTutor extends AppCompatActivity {
 
 
     }
-
 
 
     @Override
