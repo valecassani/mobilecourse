@@ -1,6 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -492,6 +493,34 @@ public class HomeStudent extends AppCompatActivity {
     ///////
     public String getUserId(){
         return userId;
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        int count=getFragmentManager().getBackStackEntryCount();
+
+        if(getFragmentManager().findFragmentById(R.id.tutor_fragment) instanceof HomeTutorFragment){
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
+
+            builder.setPositiveButton("Sì",null);
+            builder.setNegativeButton("No",null);
+
+            AlertDialog dialog = builder.create();
+
+
+            dialog.show();
+
+            //super.onBackPressed();
+        }
+        else{
+            getFragmentManager().popBackStack();
+        }
+
     }
 
 }

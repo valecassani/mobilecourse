@@ -57,7 +57,8 @@
 
         <activity
             android:name=".HomeTutor"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity android:name=".NuovaRecensione">
 
@@ -107,7 +108,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".HomeStudent"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
