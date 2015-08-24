@@ -168,7 +168,7 @@ public class RegTutorFBFragment extends Fragment {
 
     private void getData(){
 
-        EditText cell=(EditText) view.findViewById(R.id.cellS);
+        EditText cell=(EditText) view.findViewById(R.id.cellT);
 
 
 

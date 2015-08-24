@@ -61,10 +61,10 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_details);
 
-        toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
+
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
                 .getMap();
-        setSupportActionBar(toolbar);
+
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

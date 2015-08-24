@@ -64,9 +64,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nuova_prenotazione);
         context = getApplicationContext();
         queue = Volley.newRequestQueue(context);
-        toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
 
-        setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(25);
         Bundle data = getIntent().getExtras();
         idTutor = data.getString("id");
@@ -119,7 +117,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
                         sceltaOra.setText(selectedHour + ":" + selectedMinute);
-                        time.setTime(selectedHour);
+                        //time.setTime(selectedHour);
                     }
                 }, hour, minute, true);
 
@@ -141,7 +139,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                SearchResultActivity.activity.finish();
+               // SearchResultActivity.activity.finish();
 
             }
         });

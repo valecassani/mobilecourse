@@ -8,13 +8,23 @@
     tools:context="it.polimi.mobilecourse.expenses.NuovaPrenotazioneActivity"
     >
 
-      <TextView android:text="Nuova Prenotazione" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+
+        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        >
+
+    </android.support.v7.widget.Toolbar>
+
 
     <TextView
         android:id="@+id/tutor_selezionato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/my_awesome_toolbar"
         android:layout_margin="5dp"/>
 
     <TextView
@@ -43,11 +53,11 @@
         android:layout_alignRight="@+id/my_awesome_toolbar"></Button>
 
     <Button
-        android:id="@+id/button_prenotazione"
+        android:id="@+id/button_conferma_prenotazione"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Invia prenotazione"
+        android:text="Conferma"
         android:layout_alignRight="@+id/ora_scelta_button"
         android:layout_alignParentLeft="true" />
 
