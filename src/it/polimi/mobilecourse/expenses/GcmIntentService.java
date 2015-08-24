@@ -56,11 +56,11 @@ public class GcmIntentService extends IntentService{
 
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString(),null);
+                sendNotification("Send error: " + extras.toString());
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_DELETED.equals(messageType)) {
                 sendNotification("Deleted messages on server: " +
-                        extras.toString(),null);
+                        extras.toString());
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -76,20 +76,17 @@ public class GcmIntentService extends IntentService{
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 //sendNotification("Received: " + extras.toString());
-
+                sendNotification(mex);
                 screenOn();
                 Log.i(TAG, "Received: " + extras.toString());
                 if (intent.getExtras().getString("type").equals("prenotazione")) {
                     Intent myIntent = new Intent(getApplicationContext(),PrenotazioneItemDetails.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id",extras.getString("id_prenotazione"));
-                    myIntent.putExtras(bundle);
-                    sendNotification(mex,myIntent);
+                    startActivity(myIntent);
                 }
             }
         }
     }
-    private void sendNotification(String msg,Intent intent) {
+    private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -97,7 +94,7 @@ public class GcmIntentService extends IntentService{
         Intent myintent = new Intent(this, ReceiveActivity.class);
         myintent.putExtra("message", msg);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                myintent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //l'iconcina te l'ho messa nella cartella e va in drawable-hdpi
         NotificationCompat.Builder mBuilder =

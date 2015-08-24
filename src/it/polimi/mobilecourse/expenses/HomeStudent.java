@@ -84,17 +84,19 @@ public class HomeStudent extends AppCompatActivity {
         if (data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
             username = data.getString("mail");
+        }
+
+        if (data.getString("user_id") != null) {
+
+            Log.i(TAG, "userid: " + data.getString("user_id"));
+
+            userId = data.getString("user_id");
+        } else {
             getUserIdFromMail();
             Log.i(TAG, "userid: " + userId);
-        } else {
-            if (data.getString("user_id") != null) {
-                Log.i(TAG, "userid: " + data.getString("user_id"));
 
-                userId = data.getString("user_id");
-            } else {
-
-            }
         }
+
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
         mTitle = mDrawerTitle = getTitle();
@@ -444,19 +446,31 @@ public class HomeStudent extends AppCompatActivity {
                 fragment = new PrenotazioniFragment();
                 fragment.setArguments(bundle);
                 break;
+            case 6:
+                LoginManager.getInstance().logOut();
+                sessionManager.logoutUser();
+                finish();
+                break;
 
         }
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerLayout.closeDrawer(mDrawerFragment);
+
+        }
 
 
 
 
 
 
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerFragment);
+
+
     }
 
 
