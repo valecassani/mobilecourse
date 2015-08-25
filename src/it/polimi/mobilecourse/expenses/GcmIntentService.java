@@ -19,13 +19,14 @@ import android.util.Log;
 import org.json.JSONObject;
 
 public class GcmIntentService extends IntentService{
-    Context context;
-    String msg;
-    String tipo;
+    private Context context;
+    private String msg;
+    private String tipo;
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
+    private NotificationCompat.Builder builder;
     public static final String TAG = "GCM Demo";
+    private Intent receivedIntent;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -36,10 +37,12 @@ public class GcmIntentService extends IntentService{
     protected void onHandleIntent(Intent intent) {
         // TODO Auto-generated method stub
         JSONObject obj;
+        receivedIntent = intent;
         Bundle extras = intent.getExtras();
         msg = intent.getStringExtra("message");
-        tipo = intent.getStringExtra("tipo");
+        tipo = intent.getStringExtra("type");
         String mex=null;
+        String type = null;
         System.out.println(msg);
         try {
 
@@ -56,11 +59,11 @@ public class GcmIntentService extends IntentService{
 
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
+                sendNotification("Send error: " + extras.toString(),null);
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_DELETED.equals(messageType)) {
                 sendNotification("Deleted messages on server: " +
-                        extras.toString());
+                        extras.toString(),null);
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -76,25 +79,35 @@ public class GcmIntentService extends IntentService{
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 //sendNotification("Received: " + extras.toString());
-                sendNotification(mex);
+                sendNotification(msg,tipo);
                 screenOn();
                 Log.i(TAG, "Received: " + extras.toString());
-                if (intent.getExtras().getString("type").equals("prenotazione")) {
-                    Intent myIntent = new Intent(getApplicationContext(),PrenotazioneItemDetails.class);
-                    startActivity(myIntent);
-                }
+
+
             }
         }
     }
-    private void sendNotification(String msg) {
+    private void sendNotification(String msg, String type) {
+
+
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent myintent = null;
+        PendingIntent contentIntent = null;
 
-        Intent myintent = new Intent(this, ReceiveActivity.class);
-        myintent.putExtra("message", msg);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                myintent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if(type.equals("prenotazione")) {
+            System.out.println("Notifica di tipo prenotazione");
+            myintent = new Intent(this, PrenotazioneItemDetails.class);
+            myintent.putExtra("message", msg);
+            myintent.putExtra("id",receivedIntent.getStringExtra("id_prenotazione"));
+            contentIntent = PendingIntent.getActivity(this, 0,
+                    myintent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        }
+
+
+
 
         //l'iconcina te l'ho messa nella cartella e va in drawable-hdpi
         NotificationCompat.Builder mBuilder =

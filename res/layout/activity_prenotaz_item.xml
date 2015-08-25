@@ -8,17 +8,6 @@
     tools:context="it.polimi.mobilecourse.expenses.NuovaPrenotazioneActivity"
     >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_awesome_toolbar"
-
-        android:layout_height="56dp"
-        android:layout_width="match_parent"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        >
-
-    </android.support.v7.widget.Toolbar>
-
 
     <TextView
         android:id="@+id/tutor_selezionato"
@@ -49,23 +38,15 @@
         android:id="@+id/ora_scelta_button"
         android:text="Click per selezionare l'ora"
         android:layout_alignBaseline="@+id/button_materia"
-        android:layout_alignBottom="@+id/button_materia"
-        android:layout_alignRight="@+id/my_awesome_toolbar"></Button>
+        android:layout_alignBottom="@+id/button_materia" ></Button>
 
-    <Button
-        android:id="@+id/button_conferma_prenotazione"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Conferma"
-        android:layout_alignRight="@+id/ora_scelta_button"
-        android:layout_alignParentLeft="true" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/button_materia"
+        android:id="@id/button_materia"
         android:layout_below="@+id/ora_scelta"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="47dp"
@@ -80,6 +61,13 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:hint="Cellulare" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/button_conferma_prenotazione"
+        android:text="Conferma Prenotazione"/>
 
 
 </RelativeLayout>

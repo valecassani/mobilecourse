@@ -1,6 +1,5 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -50,31 +49,28 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
     private Date data;
     private Time time;
-    private String idTutor;
+    private String idPrenotazione;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nuova_prenotazione);
+        setContentView(R.layout.activity_prenotaz_item);
         context = getApplicationContext();
         queue = Volley.newRequestQueue(context);
-        toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
 
-        setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(25);
         Bundle data = getIntent().getExtras();
-        idTutor = data.getString("id");
-        Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
-        String nomeTutor =data.getString("nome");
-        String cognomeTutor = data.getString("cognome");
+        idPrenotazione = data.getString("id");
+        Toast.makeText(getApplicationContext(), "Prenotazione id " + idPrenotazione, Toast.LENGTH_SHORT).show();
+        String displayIdPrenotazione =data.getString("id_prenotazione");
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView mTutorSelezionato = (TextView) findViewById(R.id.tutor_selezionato);
-        mTutorSelezionato.setText(nomeTutor + " " + cognomeTutor);
+        mTutorSelezionato.setText(displayIdPrenotazione);
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
@@ -125,7 +121,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         });
 
 
-        Button sendButton = (Button)findViewById(R.id.button_prenotazione);
+        Button sendButton = (Button)findViewById(R.id.button_conferma_prenotazione);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +133,6 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                SearchResultActivity.activity.finish();
 
             }
         });
@@ -197,21 +192,25 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 {
 
                     Map<String, String>  params = new HashMap<String, String>();
+                   /*
                     params.put("id_studente", sessionManager.getUserDetails().get("id") );
                     params.put("data", data.toString());
-                    params.put("id_tutor", idTutor);
+                    params.put("id_tutor", idPrenotazione);
                     //params.put("ora", sceltaOra.toString());
                     params.put("materia","");
                     params.put("note","");
                     params.put("cellulare",numeroCellulare);
-                    params.put("confermato","0");
+                    */
+                    params.put("confermato","1");
 
 
                     return params;
                 }
             };
             queue.add(jsObjRequest);
-            Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Prenotazione Confermata", Toast.LENGTH_SHORT);
+            Intent intent = new Intent(this,HomeTutor.class);
+
             finish();
 
         }
