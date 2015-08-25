@@ -117,10 +117,11 @@
         android:id="@+id/expanded_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/buttonAccettaR"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:visibility="invisible"
-        android:layout_alignTop="@+id/dataR"
-        android:layout_alignBottom="@+id/fotoRichiesta"
-        android:layout_alignParentRight="true" />
+         />
 
 
 

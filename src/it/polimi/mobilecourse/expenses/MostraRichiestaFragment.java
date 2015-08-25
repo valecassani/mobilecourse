@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -259,6 +260,14 @@ public class MostraRichiestaFragment extends Fragment {
     private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
+
+        sc.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
@@ -359,6 +368,7 @@ public class MostraRichiestaFragment extends Fragment {
             public void onClick(View view) {
                 if (mCurrentAnimator != null) {
                     mCurrentAnimator.cancel();
+                    sc.setOnTouchListener(null);
                 }
 
 
@@ -383,6 +393,7 @@ public class MostraRichiestaFragment extends Fragment {
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+                        sc.setOnTouchListener(null);
                         mCurrentAnimator = null;
                     }
 
@@ -391,6 +402,8 @@ public class MostraRichiestaFragment extends Fragment {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
+                        sc.setOnTouchListener(null);
+
                     }
                 });
                 set.start();
