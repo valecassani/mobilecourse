@@ -1,39 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+
+
+    >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Conferma"
-        android:id="@+id/confermaAdd"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/primaryColorDark"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp" />
 
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBarAgg"
-        android:visibility="gone"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Nome materia"
+        android:hint="Nome materia"
         android:ems="10"
         android:id="@+id/nameM"
-        android:layout_below="@+id/progressBarAgg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp" />
 
@@ -46,6 +36,32 @@
         android:layout_below="@+id/nameM"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
-        android:text="Prezzo/ora" />
+        android:hint="Prezzo/ora" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conferma"
+        android:id="@+id/confermaAdd"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@color/primaryColorDark"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/prezzoM"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentLeft="true" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarAgg"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_below="@id/prezzoM"
+android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
+
+    </ScrollView>
