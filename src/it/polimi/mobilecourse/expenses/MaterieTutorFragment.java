@@ -51,6 +51,7 @@ public class MaterieTutorFragment extends Fragment {
 
     //campi
     ProgressBar progress;
+    Button add;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
 
     ListMaterieAdapter adapter ;
@@ -72,17 +73,37 @@ public class MaterieTutorFragment extends Fragment {
         materie_list=(ListView)view.findViewById(R.id.materie_list);
 
 
+
         queue= Volley.newRequestQueue(view.getContext());
         queueEl= Volley.newRequestQueue(view.getContext());
 
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Materie");
 
         Bundle bundle=this.getArguments();
         idt=bundle.getString("idt");
 
 
+
         getMaterie();
+
+        add=(Button)view.findViewById(R.id.buttonAddMateria);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+
+                Fragment fragment = new AggiungiMateriaFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("idt", idt);
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.tutor_fragment,fragment).addToBackStack(null).commit();
+
+
+            }
+        });
 
 
 

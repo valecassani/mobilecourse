@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,10 @@ public class HomeTutorFragment extends Fragment {
 
         userId=activity.getUserId();
         richieste_list=(ListView)view.findViewById(R.id.richieste_list);
+
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Home Tutor");
 
 
         progress(true);

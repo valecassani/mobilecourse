@@ -97,6 +97,8 @@ public class MostraRichiestaFragment extends Fragment {
         queue= Volley.newRequestQueue(view.getContext());
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Dati richiesta");
+
 
         Bundle bundle=this.getArguments();
         idr=bundle.getString("idr");
