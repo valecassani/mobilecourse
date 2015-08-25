@@ -48,7 +48,7 @@ public class RichiesteAdapter extends BaseAdapter{
         TextView testo = (TextView) convertView.findViewById(R.id.testoRichiesta);
         TextView dataEntro = (TextView) convertView.findViewById(R.id.data_entro_value);
 
-        testo.setText(items.get(position).getTesto());
+        testo.setText(items.get(position).getTitolo());
         dataEntro.setText(items.get(position).getData());
 
 

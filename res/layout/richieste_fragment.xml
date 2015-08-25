@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+
+
+    >
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,36 +18,36 @@
 
         android:id="@+id/swipe_richieste"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="587dp"
         android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/richieste_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-
-
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab_richieste"
-        android:layout_width="wrap_content"
+
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_plus"
-        fab:fab_colorNormal="@color/primary"
-        fab:fab_colorPressed="@color/primary_pressed"
-        fab:fab_colorRipple="@color/ripple" />
 
+        android:layout_below="@id/richieste_list"
+        android:text="+ Nuova richiesta"
+    android:id="@+id/buttonAddRequest"
+    style="?android:attr/borderlessButtonStyle"
+    android:background="@color/primaryColorDark"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+        android:layout_gravity="center_horizontal|bottom" />
 
-
-
+    <ListView
+        android:id="@+id/richieste_list"
+        android:layout_width="match_parent"
+        android:layout_height="489dp"
+        android:layout_gravity="center_horizontal|top"></ListView>
 
 
 </FrameLayout>
 
 
 
+</ScrollView>

@@ -1,6 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.gc.materialdesign.views.Button;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -49,7 +50,7 @@ public class RichiesteFragment extends Fragment {
     private Button newRichiestaButton;
     private String idStudente;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton fab;
+    private Button fab;
     private RichiesteAdapter adapter;
     private ProgressDialog progressDialog;
 
@@ -71,22 +72,24 @@ public class RichiesteFragment extends Fragment {
                 showResults();
             }
         });
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Richieste");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Le tue richieste");
 
 
         context = container.getContext();
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_richieste);
-        fab.attachToListView(mListView);
+        fab = (Button) view.findViewById(R.id.buttonAddRequest);
+
         Log.i(TAG, "Button Created");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NuovaRichiestaActivity.class);
+                FragmentManager fragmentManager = getFragmentManager();
+
+                Fragment fragment = new NuovaRichiestaActivity();
                 Bundle bundle = new Bundle();
                 bundle.putString("student_id", idStudente);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.student_fragment,fragment).addToBackStack(null).commit();
 
 
             }
@@ -112,7 +115,6 @@ public class RichiesteFragment extends Fragment {
 
 
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Richieste");
 
         showResults();
         registerForContextMenu(mListView);

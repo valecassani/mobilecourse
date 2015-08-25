@@ -1,8 +1,10 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,8 +20,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -51,13 +55,15 @@ import java.util.Map;
 /**
  * Created by Valerio on 17/04/2015.
  */
-public class NuovaRichiestaActivity extends AppCompatActivity implements View.OnClickListener{
+public class NuovaRichiestaActivity extends Fragment{
     private final String TAG = "Nuova RichiestaActivity";
 
 
+    private View view;
 
     private RequestQueue queue;
     private Context context;
+    private HomeStudent activity;
     private EditText mTesto;
     private static EditText mDataEntro;
     private Button sendButton;
@@ -81,29 +87,33 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
     private int serverResponseCode;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_req_frag);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.new_req_frag, container, false);
 
         upLoadServerUri = "http://www.unishare.it/tutored/upload_to_server.php";
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nuova richiesta");
 
-        context = getApplicationContext();
-        queue= Volley.newRequestQueue(context);
-        idStudente = getIntent().getExtras().getString("student_id");
-        mTesto = (EditText)findViewById(R.id.testoRichiesta);
-        mDataEntro = (EditText)findViewById(R.id.dataEntro);
-        sendButton = (Button)findViewById(R.id.buttonSendRich);
+
+        queue= Volley.newRequestQueue(view.getContext());
+
+        Bundle bundle=this.getArguments();
+        idStudente=bundle.getString("student_id");
+
+        mTesto = (EditText)view.findViewById(R.id.testoRichiesta);
+        mDataEntro = (EditText)view.findViewById(R.id.dataEntro);
+        sendButton = (Button)view.findViewById(R.id.buttonSendRich);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        setDateDialog();
-        imageButton = (Button)findViewById(R.id.buttonImage);
+        //setDateDialog();
+        imageButton = (Button)view.findViewById(R.id.buttonImage);
         imageButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
                 openGallery(1);
             } });
-        photoButton = (Button)findViewById(R.id.buttonPhoto);
+        photoButton = (Button)view.findViewById(R.id.buttonPhoto);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +122,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
         });
 
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        /*sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -153,20 +163,15 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
                         .setNegativeButton("No", dialogClickListener).show();
 
             }
-        });
-        EditText textTitolo = (EditText)findViewById(R.id.titoloRichiesta);
+        });*/
+        EditText textTitolo = (EditText)view.findViewById(R.id.titoloRichiesta);
         titolo = textTitolo.getText().toString();
-        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setTitle("Nuova richiesta");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(25);
 
 
 
 
-        return;
+
+        return view;
     }
 
     public void openGallery(int req_code) {
@@ -233,18 +238,18 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
             };
             queue.add(jsObjRequest);
             Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
-            finish();
+            activity.finish();
 
         }
 
 
     }
-
+    /*
     private void setDateDialog(){
         mDataEntro.setOnClickListener(this);
 
         Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        datePickerDialog = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -253,14 +258,14 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
+                this.getActivity().finish();
                 return true;
                 
 
@@ -286,12 +291,12 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
     }
 
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         if(v == mDataEntro) {
             datePickerDialog.show();
         }
-    }
+    }*/
 
     public int uploadFile(String sourceFileUri) {
         progressDialog.show();
@@ -380,7 +385,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
 
                 if (serverResponseCode == 200) {
 
-                    runOnUiThread(new Runnable() {
+                    this.getActivity().runOnUiThread(new Runnable() {
                         public void run() {
 
                             String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
@@ -388,7 +393,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
                                     + selectedPath;
 
                             
-                            Toast.makeText(NuovaRichiestaActivity.this, "File Upload Complete.",
+                            Toast.makeText(activity, "File Upload Complete.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -404,9 +409,9 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
                 progressDialog.dismiss();
                 ex.printStackTrace();
 
-                runOnUiThread(new Runnable() {
+                this.getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(NuovaRichiestaActivity.this, "MalformedURLException",
+                        Toast.makeText(activity, "MalformedURLException",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -417,9 +422,9 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
                 progressDialog.dismiss();
                 e.printStackTrace();
 
-                runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(NuovaRichiestaActivity.this, "Got Exception : see logcat ",
+                        Toast.makeText(activity, "Got Exception : see logcat ",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -437,7 +442,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
     public String getRealPathFromURI(Uri contentUri) {
         String res = null;
         String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        Cursor cursor = activity.getContentResolver().query(contentUri, proj, null, null, null);
         if(cursor.moveToFirst()){;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
@@ -450,7 +455,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
-        if (resultCode == RESULT_OK) {
+        if (resultCode == activity.RESULT_OK) {
 
             if (requestCode == 1)
 
@@ -461,7 +466,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
 
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    ImageView imgView = (ImageView) findViewById(R.id.anteprima_immagine);
+                    ImageView imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
                 }
 
@@ -478,7 +483,7 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
                     System.out.println("File exists");
 
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    ImageView imgView = (ImageView) findViewById(R.id.anteprima_immagine);
+                    ImageView imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     imgView.setImageBitmap(Bitmap.createBitmap(myBitmap));
                 }
 
@@ -489,7 +494,20 @@ public class NuovaRichiestaActivity extends AppCompatActivity implements View.On
     }
 
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
+
+        this.activity = (HomeStudent) activity;
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstancestate) {
+        super.onActivityCreated(savedInstancestate);
+
+    }
 
 
 
