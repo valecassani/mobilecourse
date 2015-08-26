@@ -1,10 +1,15 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,22 +17,29 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -80,11 +92,19 @@ public class NuovaRichiestaActivity extends Fragment{
     private String titolo;
     private String selectedPath;
     private String nameFile;
-    private ProgressDialog progressDialog;
+    private ImageView imgView;
+    private ProgressBar progress;
     private String upLoadServerUri = null;
     private Button photoButton;
     private String path;
     private int serverResponseCode;
+    private ImageView expanded;
+    private Animator mCurrentAnimator;
+    private EditText textTitolo;
+
+    private int mShortAnimationDuration;
+    private boolean exist=false;
+    private Bitmap bitmap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,17 +116,22 @@ public class NuovaRichiestaActivity extends Fragment{
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nuova richiesta");
 
 
+        context=activity.getApplicationContext();
         queue= Volley.newRequestQueue(view.getContext());
 
         Bundle bundle=this.getArguments();
         idStudente=bundle.getString("student_id");
 
+        textTitolo = (EditText)view.findViewById(R.id.titoloRichiesta);
+
         mTesto = (EditText)view.findViewById(R.id.testoRichiesta);
         mDataEntro = (EditText)view.findViewById(R.id.dataEntro);
+        progress=(ProgressBar)view.findViewById(R.id.progressBarNewR);
+        expanded=(ImageView)view.findViewById(R.id.expanded_imageR);
         sendButton = (Button)view.findViewById(R.id.buttonSendRich);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        //setDateDialog();
+        setDateDialog();
         imageButton = (Button)view.findViewById(R.id.buttonImage);
         imageButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -122,50 +147,69 @@ public class NuovaRichiestaActivity extends Fragment{
         });
 
 
-        /*sendButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                progressDialog = ProgressDialog.show(NuovaRichiestaActivity.this, "", "Uploading file...", true);
-                                manageInput();
+                if (exist == true) {
 
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    //progressDialog = ProgressDialog.show(activity, "", "Uploading file...", true);
 
-                                new Thread(new Runnable() {
-                                    public void run() {
-                                        runOnUiThread(new Runnable() {
-                                            public void run() {
+                                    progress(true);
 
-                                            }
-                                        });
+                                    new Thread(new Runnable() {
+                                        public void run() {
+                                            activity.runOnUiThread(new Runnable() {
+                                                public void run() {
 
-                                        uploadFile(selectedPath);
+                                                }
+                                            });
 
-                                    }
-                                }).start();
+                                            uploadFile upl=new uploadFile();
+                                            upl.execute(selectedPath);
+                                            //uploadFile(selectedPath);
 
+                                        }
+                                    }).start();
 
-                                uploadFile(selectedPath);
-                                break;
+                                    manageInput();
 
-                            case DialogInterface.BUTTON_NEGATIVE:
+                                    //uploadFile upl=new uploadFile();
+                                    //upl.execute(selectedPath);
+                                    //uploadFile(selectedPath);
+                                    break;
 
-                                break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+
+                                    break;
+                            }
                         }
-                    }
-                };
+                    };
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(NuovaRichiestaActivity.this);
-                builder.setMessage("Vuoi inviare?").setPositiveButton("Si", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setMessage("Vuoi inviare?").setPositiveButton("Si", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
+
+
+
+
+                }
+                else{
+
+                    Toast.makeText(context,"Aggiungi una immagine",Toast.LENGTH_LONG).show();
+                }
 
             }
-        });*/
-        EditText textTitolo = (EditText)view.findViewById(R.id.titoloRichiesta);
-        titolo = textTitolo.getText().toString();
+
+        });
 
 
 
@@ -181,10 +225,13 @@ public class NuovaRichiestaActivity extends Fragment{
 
         startActivityForResult(Intent.createChooser(galleryIntent, "Select file to upload "), req_code);
 
+
     }
 
     private void manageInput() {
         testo = mTesto.getText().toString();
+        titolo = textTitolo.getText().toString();
+
         try {
             data = new SimpleDateFormat("dd-MM-yyyy").parse(mDataEntro.getText().toString());
             dataToSend = new java.sql.Date(data.getTime());
@@ -230,23 +277,34 @@ public class NuovaRichiestaActivity extends Fragment{
                     params.put("data", dataToSend.toString());
                     params.put("id_studente", idStudente);
                     params.put("titolo",titolo);
-                    Log.i(TAG, nameFile);
-                    params.put("foto","tutored/images/"+nameFile);
+                    //Log.i(TAG, nameFile);
+                    params.put("foto","images/"+nameFile);
 
                     return params;
                 }
             };
             queue.add(jsObjRequest);
             Toast.makeText(context, "Richiesta Aggiunta", Toast.LENGTH_SHORT);
-            activity.finish();
+            //activity.finish();
 
         }
 
 
     }
-    /*
+
     private void setDateDialog(){
-        mDataEntro.setOnClickListener(this);
+
+        mDataEntro.setInputType(InputType.TYPE_NULL);
+        mDataEntro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(v == mDataEntro) {
+                    datePickerDialog.show();
+                }
+
+            }
+        });
 
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -258,7 +316,7 @@ public class NuovaRichiestaActivity extends Fragment{
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -288,18 +346,18 @@ public class NuovaRichiestaActivity extends Fragment{
         File photo = new File(selectedPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photo));
         startActivityForResult(intent, 2);
+
     }
 
 
-    /*@Override
-    public void onClick(View v) {
-        if(v == mDataEntro) {
-            datePickerDialog.show();
-        }
-    }*/
+private class uploadFile extends AsyncTask<String,Void,Integer> {
 
-    public int uploadFile(String sourceFileUri) {
-        progressDialog.show();
+
+    @Override
+    protected Integer doInBackground(String... params) {
+
+
+        String sourceFileUri = params[0];
 
 
         String fileName = sourceFileUri;
@@ -317,7 +375,6 @@ public class NuovaRichiestaActivity extends Fragment{
 
         if (!sourceFile.isFile()) {
 
-            progressDialog.dismiss();
 
             Log.e("uploadFile", "Source File not exist :"
                     + selectedPath);
@@ -348,8 +405,7 @@ public class NuovaRichiestaActivity extends Fragment{
 
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
 
-                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""+ fileName + "\"" + lineEnd);
-
+                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "\"" + lineEnd);
 
 
                 dos.writeBytes(lineEnd);
@@ -385,31 +441,45 @@ public class NuovaRichiestaActivity extends Fragment{
 
                 if (serverResponseCode == 200) {
 
-                    this.getActivity().runOnUiThread(new Runnable() {
+
+
+                    /*getActivity().runOnUiThread(new Runnable() {
                         public void run() {
 
                             String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
                                     + " http://www.unishare.it/tutored/images/"
                                     + selectedPath;
 
-                            
-                            Toast.makeText(activity, "File Upload Complete.",
-                                    Toast.LENGTH_SHORT).show();
+
+
                         }
-                    });
+                    });*/
                 }
 
                 //close the streams //
                 fileInputStream.close();
                 dos.flush();
                 dos.close();
+                //torna indietro
+                FragmentManager fragmentManager = getFragmentManager();
+
+                Fragment fragment = new RichiesteFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", idStudente);
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "Richiesta aggiunta correttamente!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
 
             } catch (MalformedURLException ex) {
 
-                progressDialog.dismiss();
                 ex.printStackTrace();
 
-                this.getActivity().runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(activity, "MalformedURLException",
                                 Toast.LENGTH_SHORT).show();
@@ -419,7 +489,6 @@ public class NuovaRichiestaActivity extends Fragment{
                 Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
             } catch (Exception e) {
 
-                progressDialog.dismiss();
                 e.printStackTrace();
 
                 activity.runOnUiThread(new Runnable() {
@@ -431,11 +500,24 @@ public class NuovaRichiestaActivity extends Fragment{
                 Log.e("Upload Exception", "Exception : "
                         + e.getMessage(), e);
             }
-            progressDialog.dismiss();
             return serverResponseCode;
 
         } // End else block
     }
+
+    @Override
+    protected void onPostExecute(Integer result){
+
+
+
+
+    }
+
+
+
+
+}
+
 
 
 
@@ -465,9 +547,10 @@ public class NuovaRichiestaActivity extends Fragment{
                 File file = new File(selectedPath);
 
                 if (file.exists()) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    ImageView imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
+                    bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+                    exist=true;
                 }
 
                 System.out.println("selectedPath1 : " + selectedPath);
@@ -482,14 +565,26 @@ public class NuovaRichiestaActivity extends Fragment{
                 if(imgFile.exists()) {
                     System.out.println("File exists");
 
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    ImageView imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
-                    imgView.setImageBitmap(Bitmap.createBitmap(myBitmap));
+                    bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
+                    imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+                    exist=true;
                 }
 
             }
 
 
+        }
+        if(exist==true) {
+            mShortAnimationDuration = getResources().getInteger(
+                    android.R.integer.config_shortAnimTime);
+            imgView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    zoomImageFromThumb(imgView, bitmap);
+
+                }
+            });
         }
     }
 
@@ -506,6 +601,170 @@ public class NuovaRichiestaActivity extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstancestate) {
         super.onActivityCreated(savedInstancestate);
+
+    }
+
+    private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
+        // If there's an animation in progress, cancel it
+        // immediately and proceed with this one.
+
+
+
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+        }
+
+        // Load the high-resolution "zoomed-in" image.
+        final ImageView expandedImageView = (ImageView) view.findViewById(
+                R.id.expanded_imageR);
+        expandedImageView.setImageBitmap(bitmap);
+
+
+
+        // Calculate the starting and ending bounds for the zoomed-in image.
+        // This step involves lots of math. Yay, math.
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        // The start bounds are the global visible rectangle of the thumbnail,
+        // and the final bounds are the global visible rectangle of the container
+        // view. Also set the container view's offset as the origin for the
+        // bounds, since that's the origin for the positioning animation
+        // properties (X, Y).
+        thumbView.getGlobalVisibleRect(startBounds);view.
+                findViewById(R.id.containerR)
+                .getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+
+        // Adjust the start bounds to be the same aspect ratio as the final
+        // bounds using the "center crop" technique. This prevents undesirable
+        // stretching during the animation. Also calculate the start scaling
+        // factor (the end scaling factor is always 1.0).
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        // Hide the thumbnail and show the zoomed-in view. When the animation
+        // begins, it will position the zoomed-in view in the place of the
+        // thumbnail.
+        thumbView.setAlpha(0f);
+        expandedImageView.setVisibility(View.VISIBLE);
+
+        // Set the pivot point for SCALE_X and SCALE_Y transformations
+        // to the top-left corner of the zoomed-in view (the default
+        // is the center of the view).
+        expandedImageView.setPivotX(0f);
+        expandedImageView.setPivotY(0f);
+
+        // Construct and run the parallel animation of the four translation and
+        // scale properties (X, Y, SCALE_X, and SCALE_Y).
+        AnimatorSet set = new AnimatorSet();
+        set
+                .play(ObjectAnimator.ofFloat(expandedImageView, View.X,
+                        startBounds.left, finalBounds.left))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
+                        startBounds.top, finalBounds.top))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X,
+                        startScale, 1f)).with(ObjectAnimator.ofFloat(expandedImageView,
+                View.SCALE_Y, startScale, 1f));
+        set.setDuration(mShortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mCurrentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                mCurrentAnimator = null;
+            }
+        });
+        set.start();
+        mCurrentAnimator = set;
+
+        // Upon clicking the zoomed-in image, it should zoom back down
+        // to the original bounds and show the thumbnail instead of
+        // the expanded image.
+        final float startScaleFinal = startScale;
+        expandedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCurrentAnimator != null) {
+                    mCurrentAnimator.cancel();
+                }
+
+
+                // Animate the four positioning/sizing properties in parallel,
+                // back to their original values.
+                AnimatorSet set = new AnimatorSet();
+                set.play(ObjectAnimator
+                        .ofFloat(expandedImageView, View.X, startBounds.left))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView,
+                                        View.Y,startBounds.top))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView,
+                                        View.SCALE_X, startScaleFinal))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView,
+                                        View.SCALE_Y, startScaleFinal));
+                set.setDuration(mShortAnimationDuration);
+                set.setInterpolator(new DecelerateInterpolator());
+                set.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        thumbView.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        mCurrentAnimator = null;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        thumbView.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        mCurrentAnimator = null;
+
+                    }
+                });
+                set.start();
+                mCurrentAnimator = set;
+
+
+            }
+        });
+    }
+
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        progress.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progress.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
 
     }
 

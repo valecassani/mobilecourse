@@ -25,19 +25,9 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@id/richieste_list"
-        android:text="+ Nuova richiesta"
-    android:id="@+id/buttonAddRequest"
-    style="?android:attr/borderlessButtonStyle"
-    android:background="@color/primaryColorDark"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-        android:layout_gravity="center_horizontal|bottom" />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="605dp">
 
     <ListView
         android:id="@+id/richieste_list"
@@ -45,6 +35,21 @@
         android:layout_height="489dp"
         android:layout_gravity="center_horizontal|top"></ListView>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+ Nuova richiesta"
+        android:id="@+id/buttonAddRequest"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@color/primaryColorDark"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_below="@+id/richieste_list"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="49dp" />
+
+</RelativeLayout>
 
 </FrameLayout>
 

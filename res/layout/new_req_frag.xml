@@ -3,17 +3,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
+    android:id="@+id/containerR"
 
 
     >
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<RelativeLayout
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
+
   >
 
     <EditText
@@ -36,7 +34,8 @@
         android:layout_gravity="center_horizontal"
         android:gravity="top"
         android:hint="Testo della Richiesta"
-        android:layout_below="@id/titoloRichiesta"/>
+        android:layout_below="@+id/titoloRichiesta"
+        android:layout_alignRight="@+id/buttonPhoto" />
 
     <EditText
         android:id="@+id/dataEntro"
@@ -45,6 +44,7 @@
         android:layout_gravity="center_horizontal"
         android:ems="10"
         android:hint="Inserire una data"
+        android:focusable="false"
         android:inputType="date"
         android:layout_below="@id/testoRichiesta"/>
 
@@ -61,29 +61,16 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Scatta Foto"
-        android:layout_alignTop="@+id/buttonImage"
-        android:layout_alignLeft="@+id/anteprima_immagine"></Button>
+        android:layout_above="@+id/anteprima_immagine"
+        android:layout_alignRight="@+id/buttonSendRich"></Button>
     <ImageView
         android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_height="300dp"
         android:id="@+id/anteprima_immagine"
-        android:layout_alignBottom="@+id/buttonPhoto"
-        android:layout_toRightOf="@+id/buttonImage"
-        android:layout_marginLeft="87dp"
-        android:layout_below="@+id/buttonImage" />
+        android:layout_below="@+id/buttonImage"
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/buttonSendRich"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/material_blue_500"
-        android:text="Invia"
-        android:textColor="#FFF"
-        android:layout_below="@+id/anteprima_immagine"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -93,6 +80,37 @@
         android:id="@+id/textView27"
         android:layout_alignBaseline="@+id/buttonImage"
         android:layout_alignBottom="@+id/buttonImage"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonSendRich"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/material_blue_500"
+        android:text="Invia"
+        android:textColor="#FFF"
+        android:layout_below="@+id/anteprima_immagine"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp" />
+
+    <ImageView
+        android:id="@+id/expanded_imageR"
+        android:layout_width="300dp"
+        android:layout_height="600dp"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/titoloRichiesta"
+        android:layout_alignLeft="@+id/anteprima_immagine" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarNewR"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 
