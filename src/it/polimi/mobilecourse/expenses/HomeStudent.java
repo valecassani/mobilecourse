@@ -514,7 +514,7 @@ public class HomeStudent extends AppCompatActivity {
 
         int count=getFragmentManager().getBackStackEntryCount();
 
-        if(getFragmentManager().findFragmentById(R.id.tutor_fragment) instanceof HomeTutorFragment){
+        if(getFragmentManager().findFragmentById(R.id.student_fragment) instanceof HomeStudentFragment){
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
