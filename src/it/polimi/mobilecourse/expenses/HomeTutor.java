@@ -405,11 +405,11 @@ public class HomeTutor extends AppCompatActivity {
 
             case 3:
                 //prenotazioni
-                //bundle = new Bundle();
-                //bundle.putString("student_id",userId);
+                bundle = new Bundle();
+                bundle.putString("tutor_id",userId);
 
-                //fragment = new PrenotazioniFragment();
-                //fragment.setArguments(bundle);
+                fragment = new PrenotazioniFragment();
+                fragment.setArguments(bundle);
                 break;
 
             case 4:
@@ -551,9 +551,23 @@ public class HomeTutor extends AppCompatActivity {
 
             builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
 
-            builder.setPositiveButton("Sì", null);
-            builder.setNegativeButton("No", null);
+            builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
+                    LoginManager.getInstance().logOut();
+                    sessionManager.logoutUser();
+                    HomeTutor.this.finish();
+
+
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
             AlertDialog dialog = builder.create();
 
 
