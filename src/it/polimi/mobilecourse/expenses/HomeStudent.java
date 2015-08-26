@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -446,11 +447,38 @@ public class HomeStudent extends AppCompatActivity {
                 fragment = new PrenotazioniFragment();
                 fragment.setArguments(bundle);
                 break;
-            case 6:
-                LoginManager.getInstance().logOut();
-                sessionManager.logoutUser();
-                finish();
+            case 5:
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
+
+                builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        LoginManager.getInstance().logOut();
+                        sessionManager.logoutUser();
+                        HomeStudent.this.finish();
+
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+
+
+                dialog.show();
+
                 break;
+
+
+
 
         }
 

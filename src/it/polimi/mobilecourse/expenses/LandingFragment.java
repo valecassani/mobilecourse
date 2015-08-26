@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -249,6 +250,7 @@ public class LandingFragment extends Fragment {
 
         }
         if (nome != null && nome.compareTo("") != 0) {
+            Log.d(TAG, "Nome arrivato " + nome);
             setNomeWelcome(nome);
         }
         if (response.compareTo("N") == 0) {

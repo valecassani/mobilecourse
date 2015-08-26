@@ -61,7 +61,7 @@ import static it.polimi.mobilecourse.expenses.R.drawable.ic_action_lock_closed;
 
 public class HomeTutor extends AppCompatActivity {
 
-    private static String TAG ="Home Tutor";
+    private static String TAG = "Home Tutor";
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -98,15 +98,15 @@ public class HomeTutor extends AppCompatActivity {
             username = data.getString("mail");
             getUserIdFromMail();
             Log.i(TAG, "userid: " + userId);
-        } else {
-            if (data.getString("user_id") != null) {
-                Log.i(TAG, "userid: " + data.getString("user_id"));
-
-                userId = data.getString("user_id");
-            } else {
-
-            }
         }
+        if (data.getString("user_id") != null) {
+            Log.i(TAG, "userid: " + data.getString("user_id"));
+
+            userId = data.getString("user_id");
+        } else {
+
+        }
+
         if (data.getInt("position") != 0)
             positionRequired = data.getInt("position");
         mTitle = mDrawerTitle = getTitle();
@@ -119,11 +119,10 @@ public class HomeTutor extends AppCompatActivity {
         loadUserInfos();
         registerGCM();
         sessionManager = new SessionManager(getApplicationContext());
-        sessionManager.createLoginSession(userId,"1");
+        sessionManager.createLoginSession(userId, "1");
 
 
-
-        toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         if (toolbar != null) {
             toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
@@ -134,7 +133,6 @@ public class HomeTutor extends AppCompatActivity {
         getSupportActionBar().setElevation(25);
 
 
-
         // set a custom shadow that overlays the main content when the drawer opens
 
         mDrawerItems = new ArrayList<NavDrawerItem>();
@@ -143,8 +141,7 @@ public class HomeTutor extends AppCompatActivity {
         //aggiunta icone al drawer
 
 
-
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.home_icon));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0], R.drawable.home_icon));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.user_icon));
 
@@ -156,7 +153,6 @@ public class HomeTutor extends AppCompatActivity {
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.icon_logout));
 
 
-
         // setting the nav drawer list adapter
         mNavDrawerAdapter = new NavDrawerListAdapter(getApplicationContext(),
                 mDrawerItems);
@@ -166,7 +162,6 @@ public class HomeTutor extends AppCompatActivity {
         // set up the drawer's list view with items and click listener
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -196,20 +191,19 @@ public class HomeTutor extends AppCompatActivity {
         selectItem(positionRequired);
 
 
-
     }
 
     private void registerGCM() {
 
-        Intent intent = new Intent (getApplicationContext(),MyInstanceIDListenerService.class);
-        intent.putExtra("user_id",userId);
-        intent.putExtra("tipo","1");
+        Intent intent = new Intent(getApplicationContext(), MyInstanceIDListenerService.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("tipo", "1");
         startService(intent);
 
     }
 
     private void loadUserInfos() {
-        circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+        circImgView = (CircularImageView) findViewById(R.id.drawer_image);
         if (Profile.getCurrentProfile() != null) {
             Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
 
@@ -222,29 +216,27 @@ public class HomeTutor extends AppCompatActivity {
         circImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),UpdateInfo.class);//rimettere updateImage
+                Intent intent = new Intent(getApplicationContext(), UpdateInfo.class);//rimettere updateImage
                 Bundle bundle = new Bundle();
-                bundle.putString("tipo","1");
-                bundle.putString("id",userId);
+                bundle.putString("tipo", "1");
+                bundle.putString("id", userId);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
 
 
             }
         });
 
 
-
         String url = null;
         if (username != null) {
-            Log.i(TAG,"url for username");
+            Log.i(TAG, "url for username");
             url = "http://www.unishare.it/tutored/tutor_by_id.php?mail=" + username;
-        }    else {
+        } else {
 
             if (userId != null) {
-                Log.d(TAG,"Used id query");
-                url = "http://www.unishare.it/tutored/tutor_by_id.php?id="+userId;
+                Log.d(TAG, "Used id query");
+                url = "http://www.unishare.it/tutored/tutor_by_id.php?id=" + userId;
             }
         }
 
@@ -257,14 +249,14 @@ public class HomeTutor extends AppCompatActivity {
                     @Override
                     public boolean onResponse(JSONArray response) {
                         try {
-                            TextView nome = (TextView)findViewById(R.id.drawer_nome);
+                            TextView nome = (TextView) findViewById(R.id.drawer_nome);
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
                             nome.setText(obj.get("nome").toString() + " " + obj.get("cognome").toString());
                             nome.setTextColor(Color.WHITE);
-                            TextView mail = (TextView)findViewById(R.id.drawer_mail);
-                            SpannableString content=new SpannableString(obj.get("username").toString());
-                            content.setSpan(new UnderlineSpan(),0,obj.get("username").toString().length(),0);
+                            TextView mail = (TextView) findViewById(R.id.drawer_mail);
+                            SpannableString content = new SpannableString(obj.get("username").toString());
+                            content.setSpan(new UnderlineSpan(), 0, obj.get("username").toString().length(), 0);
                             mail.setText(content);
                             mail.setTextColor(Color.WHITE);
                             mail.setOnClickListener(new View.OnClickListener() {
@@ -279,7 +271,6 @@ public class HomeTutor extends AppCompatActivity {
 
                                 }
                             });
-
 
 
                         } catch (JSONException e) {
@@ -341,8 +332,6 @@ public class HomeTutor extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -350,9 +339,6 @@ public class HomeTutor extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
-
-
 
 
     @Override
@@ -369,7 +355,7 @@ public class HomeTutor extends AppCompatActivity {
     //metodo per far aprire e chiudere il drawer col bottone
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         switch (item.getItemId()) {
@@ -387,8 +373,6 @@ public class HomeTutor extends AppCompatActivity {
         }
 
     }
-
-
 
 
     public void selectItem(int position) {
@@ -412,9 +396,9 @@ public class HomeTutor extends AppCompatActivity {
 
                 //materie
 
-                fragment=new MaterieTutorFragment();
+                fragment = new MaterieTutorFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("idt",userId);
+                bundle.putString("idt", userId);
 
                 fragment.setArguments(bundle);
                 break;
@@ -429,7 +413,36 @@ public class HomeTutor extends AppCompatActivity {
                 break;
 
             case 4:
-                //logout
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
+
+                builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        LoginManager.getInstance().logOut();
+                        sessionManager.logoutUser();
+                        HomeTutor.this.finish();
+
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+
+
+                dialog.show();
+
+                break;
+
+
 
 
         }
@@ -441,11 +454,6 @@ public class HomeTutor extends AppCompatActivity {
         }
 
 
-
-
-
-
-
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerFragment);
@@ -453,7 +461,7 @@ public class HomeTutor extends AppCompatActivity {
 
     private void checkImageOnDatabase() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://www.unishare.it/tutored/getImage.php?type_user=1&id="+userId;
+        String url = "http://www.unishare.it/tutored/getImage.php?type_user=1&id=" + userId;
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {
@@ -514,9 +522,7 @@ public class HomeTutor extends AppCompatActivity {
     }
 
 
-
-
-    private  class DrawerItemClickListener implements ListView.OnItemClickListener {
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -528,25 +534,25 @@ public class HomeTutor extends AppCompatActivity {
     }
 
     ///////
-    public String getUserId(){
+    public String getUserId() {
         return userId;
     }
 
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
-        int count=getFragmentManager().getBackStackEntryCount();
+        int count = getFragmentManager().getBackStackEntryCount();
 
-        if(getFragmentManager().findFragmentById(R.id.tutor_fragment) instanceof HomeTutorFragment){
+        if (getFragmentManager().findFragmentById(R.id.tutor_fragment) instanceof HomeTutorFragment) {
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
             builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
 
-            builder.setPositiveButton("Sì",null);
-            builder.setNegativeButton("No",null);
+            builder.setPositiveButton("Sì", null);
+            builder.setNegativeButton("No", null);
 
             AlertDialog dialog = builder.create();
 
@@ -554,8 +560,7 @@ public class HomeTutor extends AppCompatActivity {
             dialog.show();
 
             //super.onBackPressed();
-        }
-        else{
+        } else {
             getFragmentManager().popBackStack();
         }
 

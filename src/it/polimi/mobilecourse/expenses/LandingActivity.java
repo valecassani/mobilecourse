@@ -119,25 +119,27 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         };
         callbackManager = CallbackManager.Factory.create();
         updateWithToken(AccessToken.getCurrentAccessToken());
-       /*
+
         if (sessionManager.isLoggedIn()) {
             System.out.println("logged in with session manager");
+            showWelcome();
+
             String id = sessionManager.getUserDetails().get(KEY_ID);
             String tipo = sessionManager.getUserDetails().get(KEY_TIPO);
             if (tipo.equals("0")) {
-                Intent intent = new Intent(getApplicationContext(),HomeStudent.class);
-                intent.putExtra("user_id",id);
+                Intent intent = new Intent(getApplicationContext(), HomeStudent.class);
+                intent.putExtra("user_id", id);
                 startActivity(intent);
             } else {
-                Intent intent = new Intent(getApplicationContext(),HomeTutor.class);
-                intent.putExtra("user_id",id);
+                Intent intent = new Intent(getApplicationContext(), HomeTutor.class);
+                intent.putExtra("user_id", id);
                 startActivity(intent);
             }
 
 
         } else {
 
- */
+
             progress(true);
             showWelcome();
             manageSession(savedInstanceState);
@@ -151,6 +153,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
             //manageButton();
 
         }
+    }
 
 
 
@@ -334,7 +337,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
         System.out.println("logged true");
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragreplace, lf).commit();
+        fragmentTransaction.replace(R.id.fragreplace, lf).commitAllowingStateLoss();
     }
 
     private void hideButton() {
