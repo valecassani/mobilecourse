@@ -125,7 +125,7 @@
             android:label="@string/title_activity_help_ab" >
         </activity>
         <activity
-            android:name=".NuovaRichiestaActivity"
+            android:name=".NuovaRichiestaFragment"
             android:theme="@style/PageTheme"
             android:parentActivityName=".HomeStudent" >
         </activity>

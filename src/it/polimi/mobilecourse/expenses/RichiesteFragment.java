@@ -29,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,7 +84,7 @@ public class RichiesteFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
 
-                Fragment fragment = new NuovaRichiestaActivity();
+                Fragment fragment = new NuovaRichiestaFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("student_id", idStudente);
                 fragment.setArguments(bundle);

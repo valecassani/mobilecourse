@@ -67,7 +67,7 @@ import java.util.Map;
 /**
  * Created by Valerio on 17/04/2015.
  */
-public class NuovaRichiestaActivity extends Fragment{
+public class NuovaRichiestaFragment extends Fragment{
     private final String TAG = "Nuova RichiestaActivity";
 
 
