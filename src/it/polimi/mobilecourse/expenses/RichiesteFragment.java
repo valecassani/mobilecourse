@@ -1,5 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -52,6 +53,7 @@ public class RichiesteFragment extends Fragment {
     private Button fab;
     private RichiesteAdapter adapter;
     private ProgressDialog progressDialog;
+    private HomeStudent activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,19 +90,20 @@ public class RichiesteFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("student_id", idStudente);
                 fragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.student_fragment,fragment).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
 
 
             }
         });
+        registerForContextMenu(mListView);
 
 
         //azione su selezione normale
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, "Item Clicked " + position, Toast.LENGTH_SHORT).show();
-                startItemDetails(position);
+                view.showContextMenu();
+
 
             }
         });
@@ -110,13 +113,9 @@ public class RichiesteFragment extends Fragment {
         progressDialog.setCancelable(false);
 
 
-        //azione su selezione lunga
-
-
 
 
         showResults();
-        registerForContextMenu(mListView);
 
         return view;
     }
@@ -132,6 +131,31 @@ public class RichiesteFragment extends Fragment {
 
                     @Override
                     public boolean onResponse(JSONArray response) {
+                        if (response.length() == 0) {
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+
+                            builder.setMessage("Nessuna richiesta inserita").setTitle("Le tue richieste");
+
+                            android.app.AlertDialog dialog = builder.create();
+                            if (dialog != null)
+                                builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        try {
+                                            dialog.wait(2000);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        dialog.dismiss();
+                                        activity.finish();
+
+                                    }
+                                });
+
+                            dialog.show();
+
+
+
+                        }
                         items.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
@@ -180,9 +204,9 @@ public class RichiesteFragment extends Fragment {
 
 
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.setHeaderTitle("Context Menu");
-            menu.add(0, v.getId(), 0, "Modifica");
-            menu.add(0, v.getId(), 0, "Elimina");
+            menu.setHeaderTitle("Cosa vuoi fare?");
+            menu.add(0, v.getId(), 0, "Modifica richiesta");
+            menu.add(0, v.getId(), 0, "Elimina richiesta");
 
     }
 
@@ -190,10 +214,9 @@ public class RichiesteFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         AlertDialog dialog;
-        if (item.getTitle() == "Modifica") {
+        if (item.getTitle() == "Modifica richiesta") {
             startItemDetails(info.position);
-        } else if (item.getTitle() == "Elimina") {
-            Toast.makeText(context, "Action 2 invoked", Toast.LENGTH_SHORT).show();
+        } else if (item.getTitle() == "Elimina richiesta") {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Sei sicuro di voler eliminare?")
                     .setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
@@ -246,9 +269,7 @@ public class RichiesteFragment extends Fragment {
 
                     if (success == 1) {
                         progressDialog.dismiss();
-                        Toast.makeText(context,
-                                "Deleted Successfully",
-                                Toast.LENGTH_SHORT).show();
+
                         showResults();
 
                     } else {
@@ -277,20 +298,38 @@ public class RichiesteFragment extends Fragment {
     }
 
     private void startItemDetails(int position) {
-        Intent intent = new Intent(context, RichiesteItemDetails.class);
         Bundle bundle = new Bundle();
         RichiestaItem item = (RichiestaItem) adapter.getItem(position);
-        bundle.putString("titolo", item.getTitolo());
-        bundle.putString("foto", item.getFoto());
-        bundle.putString("testo", item.getTesto());
-        intent.putExtras(bundle);
-        startActivity(intent);
+        FragmentManager fragmentManager = getFragmentManager();
+
+        Fragment fragment = new ModificaRichiestaFragment();
+        bundle.putString("idr", item.getId());
+        fragment.setArguments(bundle);
+        System.out.println("Bundle" + bundle);
+        fragmentManager.beginTransaction().replace(R.id.student_fragment,fragment).addToBackStack(null).commit();
+
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         showResults();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+
+        this.activity = (HomeStudent) activity;
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstancestate) {
+        super.onActivityCreated(savedInstancestate);
+
     }
 
 
