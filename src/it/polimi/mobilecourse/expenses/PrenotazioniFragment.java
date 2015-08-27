@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -43,6 +44,7 @@ public class PrenotazioniFragment extends Fragment {
     private String tutorId;
     private SwipeRefreshLayout mSwipeRefresh;
     private FloatingActionButton fab;
+    private PrenotazioniAdapter adapter;
 
     public PrenotazioniFragment() {
         items = new ArrayList<PrenotazioniItem>();
@@ -95,6 +97,22 @@ public class PrenotazioniFragment extends Fragment {
             }
         });
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startItemDetails(position);
+            }
+        });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                return false;
+            }
+        });
+
 
 
         showElements();
@@ -131,7 +149,7 @@ public class PrenotazioniFragment extends Fragment {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, response.toString());
-                                PrenotazioniItem item = new PrenotazioniItem(obj.getString("materia"),obj.getString("data"),
+                                PrenotazioniItem item = new PrenotazioniItem(obj.getString("id"),obj.getString("materia"),obj.getString("data"),
                                         obj.getString("cellulare"));
                                 items.add(item);
 
@@ -140,7 +158,7 @@ public class PrenotazioniFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            PrenotazioniAdapter adapter = new PrenotazioniAdapter(context,R.id.list_ripetizioni,items);
+                            adapter = new PrenotazioniAdapter(context,R.id.list_ripetizioni,items);
                             mListView.setAdapter(adapter);
                             mSwipeRefresh.setRefreshing(false);
 
@@ -164,6 +182,16 @@ public class PrenotazioniFragment extends Fragment {
 
 
 
+    }
+
+
+    private void startItemDetails(int position) {
+        Intent intent = new Intent(context, PrenotazioneItemDetails.class);
+        Bundle bundle = new Bundle();
+        PrenotazioniItem item =  adapter.getItem(position);
+        bundle.putString("titolo", item.getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

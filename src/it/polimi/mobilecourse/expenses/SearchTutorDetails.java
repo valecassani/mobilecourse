@@ -50,6 +50,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     private Location loc2;
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
+    private TextView tutorCognome;
     private TextView subjects;
     private String idTutor;
     private String nome;
@@ -117,7 +118,9 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         );
 
-        tutorNome = (TextView) findViewById(R.id.tutor_nome);
+        tutorNome = (TextView) findViewById(R.id.search_tutor_name);
+        tutorCognome = (TextView) findViewById(R.id.search_tutor_surname);
+
         subjects = (TextView) findViewById(R.id.tutor_details_subjects);
 
 
@@ -150,9 +153,11 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                                 JSONObject obj = response.getJSONObject(0);
                                 Log.d(TAG, response.toString());
                                 nome = obj.getString("nome");
+                                tutorNome.setText(nome);
                                 Log.i(TAG, "Name set: " + nome );
                                 cognome = obj.getString("cognome");
                                 Log.i(TAG, "Surname set: " + cognome);
+                                tutorCognome.setText(cognome);
                                 Button button = (Button)findViewById(R.id.prenotaz_button);
                                 button.setOnClickListener(new View.OnClickListener() {
                                     @Override

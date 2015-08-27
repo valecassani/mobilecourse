@@ -31,11 +31,12 @@ public class PrenotazioniItem {
     private String data;
     private String materia;
     private String cellulare;
+    private String id;
 
     public PrenotazioniItem(){}
 
 
-    public PrenotazioniItem(String materia, String data, String cellulare) {
+    public PrenotazioniItem(String id, String materia, String data, String cellulare) {
         this.materia = materia;
         this.data = data;
         this.cellulare=cellulare;
@@ -57,4 +58,6 @@ public class PrenotazioniItem {
     public String getCellulare() {
         return cellulare;
     }
+
+    public String getId() {return id;}
 }

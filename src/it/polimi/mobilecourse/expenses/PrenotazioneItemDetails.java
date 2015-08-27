@@ -1,8 +1,10 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +23,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -37,8 +44,10 @@ import java.util.Map;
  * Created by Valerio on 13/08/2015.
  */
 public class PrenotazioneItemDetails extends AppCompatActivity {
-    private Toolbar toolbar;
+
+    private static final String TAG = "PrenotazioneItemDet";
     private SimpleDateFormat simpleDateFormat;
+    private SimpleDateFormat simpleTimeFormat;
     private TextView sceltaData;
     private TextView sceltaOra;
     private Context context;
@@ -46,10 +55,19 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private Button sceltaOraButton;
     private EditText editTextCellulare;
     private SessionManager sessionManager;
+    private TextView mTextViewMateria;
+
+    private String idStudente;
+    private String idTutor;
+    private String note;
+    private String confermato;
 
     private Date data;
-    private Time time;
+    private Date time;
     private String idPrenotazione;
+    private Button sendButton;
+
+
 
 
 
@@ -69,12 +87,13 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView mTutorSelezionato = (TextView) findViewById(R.id.tutor_selezionato);
-        mTutorSelezionato.setText(displayIdPrenotazione);
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
+        simpleTimeFormat = new SimpleDateFormat("HH-mm-ss",Locale.US);
+
         sceltaData = (TextView)findViewById(R.id.data_scelta);
+
         sceltaData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +117,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         sessionManager = new SessionManager(getApplicationContext());
         System.out.println(sessionManager.getUserDetails().get("id"));
 
+
+        mTextViewMateria = (TextView)findViewById(R.id.button_materia);
         sceltaOra = (TextView) findViewById(R.id.ora_scelta);
         sceltaOraButton = (Button) findViewById(R.id.ora_scelta_button);
         sceltaOraButton.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +130,12 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 TimePickerDialog mTimePicker = new TimePickerDialog(getBaseContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+                        Calendar newTime = Calendar.getInstance();
+                        newTime.set(selectedHour,selectedMinute);
                         sceltaOra.setText(selectedHour + ":" + selectedMinute);
-                        time.setTime(selectedHour);
+
+
                     }
                 }, hour, minute, true);
 
@@ -121,7 +145,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         });
 
 
-        Button sendButton = (Button)findViewById(R.id.button_conferma_prenotazione);
+        sendButton = (Button)findViewById(R.id.button_conferma_prenotazione);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,10 +163,74 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
         editTextCellulare = (EditText)findViewById(R.id.cellulare_nuova_prenotaz);
 
+        populateData();
 
 
 
 
+
+
+
+
+
+    }
+
+    private void populateData() {
+
+        String url = "http://www.unishare.it/tutored/prenotazione_by_id.php?id="+idPrenotazione;
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        Log.d(TAG,response.toString());
+
+                        try {
+
+                            JSONObject obj = (JSONObject)response.get(0);
+                            sceltaData.setText(obj.getString("data"));
+                            sceltaOra.setText(obj.getString("ora_inizio"));
+                            mTextViewMateria.setText(obj.getString("materia"));
+                            editTextCellulare.setText(obj.getString("cellulare"));
+                            idStudente = obj.getString("id_studente");
+                            idTutor = obj.getString("id_tutor");
+                            confermato = obj.getString("confermato");
+
+                            note = obj.getString("note");
+                            if (confermato.equals("1") ) {
+                                sendButton.setVisibility(View.INVISIBLE);
+                            }
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+
+
+        });
+
+        queue.add(jsonObjReq);
 
 
     }
@@ -192,15 +280,15 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 {
 
                     Map<String, String>  params = new HashMap<String, String>();
-                   /*
-                    params.put("id_studente", sessionManager.getUserDetails().get("id") );
+
+                    params.put("id_studente", idStudente );
                     params.put("data", data.toString());
-                    params.put("id_tutor", idPrenotazione);
+                    params.put("id_tutor",idTutor );
                     //params.put("ora", sceltaOra.toString());
                     params.put("materia","");
-                    params.put("note","");
+                    params.put("note",note);
                     params.put("cellulare",numeroCellulare);
-                    */
+
                     params.put("confermato","1");
 
 
@@ -210,6 +298,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
             queue.add(jsObjRequest);
             Toast.makeText(context, "Prenotazione Confermata", Toast.LENGTH_SHORT);
             Intent intent = new Intent(this,HomeTutor.class);
+            startActivity(intent);
 
             finish();
 
