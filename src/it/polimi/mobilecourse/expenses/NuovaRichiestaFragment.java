@@ -770,15 +770,5 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
 
 
 
-    //thread che scarica l'immagine
-
-
-
-    //funzione chiamata da onPostExecute e che setta l'immagine.img � un ImageView del file xml dell'activity.
-    //devi far girare le funzioni cos�,se no rompe :(
-
-
-//in realt� al thread tu passi il path che ti arriva da db (es. tutored/images/nome.jpg). basta che cambi il path
-// che usa la funzione downloadImageFromPath ,mettendo ("http://www.unishare.it/"+params[0])
 
 }
