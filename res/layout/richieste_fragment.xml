@@ -56,6 +56,26 @@
             android:layout_alignParentLeft="true"
             android:layout_marginTop="49dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nessuna richiesta inserita"
+            android:id="@+id/norequest"
+            android:visibility="invisible"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="137dp" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressRichieste"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_alignTop="@+id/norequest"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 

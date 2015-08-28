@@ -1,5 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -21,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -55,6 +59,9 @@ public class RichiesteFragment extends Fragment {
     private ProgressDialog progressDialog;
     private HomeStudent activity;
 
+    TextView nor;
+    ProgressBar progress;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.richieste_fragment, container, false);
@@ -66,6 +73,8 @@ public class RichiesteFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.richieste_list);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_richieste);
+        nor=(TextView)view.findViewById(R.id.norequest);
+        progress=(ProgressBar)view.findViewById(R.id.progressRichieste);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -123,6 +132,8 @@ public class RichiesteFragment extends Fragment {
     private void showResults() {
         String url;
 
+        progress(true);
+
         url = "http://www.unishare.it/tutored/get_richieste.php?id_studente="+ idStudente;
 
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
@@ -132,26 +143,11 @@ public class RichiesteFragment extends Fragment {
                     @Override
                     public boolean onResponse(JSONArray response) {
                         if (response.length() == 0) {
-                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
 
-                            builder.setMessage("Nessuna richiesta inserita").setTitle("Le tue richieste");
+                            progress(false);
+                            nor.setVisibility(View.VISIBLE);
 
-                            android.app.AlertDialog dialog = builder.create();
-                            if (dialog != null)
-                                builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        try {
-                                            dialog.wait(2000);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        dialog.dismiss();
-                                        activity.finish();
 
-                                    }
-                                });
-
-                            dialog.show();
 
 
 
@@ -175,6 +171,7 @@ public class RichiesteFragment extends Fragment {
                         }
                         adapter = new RichiesteAdapter(context, items);
                         mListView.setAdapter(adapter);
+                        progress(false);
                         swipeRefreshLayout.setRefreshing(false);
 
 
@@ -332,5 +329,20 @@ public class RichiesteFragment extends Fragment {
 
     }
 
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        progress.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progress.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
+
+    }
 
 }

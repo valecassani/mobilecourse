@@ -124,8 +124,9 @@
                 android:layout_width="wrap_content"
                 android:text="Scatta Foto"
 
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/dataMR"></Button>
+                android:layout_below="@+id/dataMR"
+                android:layout_toRightOf="@+id/fotoTestoMR"
+                android:layout_marginTop="100dp"></Button>
 
 
             <TextView
