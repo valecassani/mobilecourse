@@ -69,4 +69,139 @@ public class Functions {
         }
         return bmp;
     }
+
+
+    public static String convertiData(String data){
+       String result;
+        result=data.substring(8,10);
+        String mese=data.substring(5,7);
+        switch(mese){
+
+            case "01":
+                result=result.concat(" Gennaio ");
+                break;
+            case "02":
+                result=result.concat(" Febbraio ");
+
+                break;
+            case "03":
+                result=result.concat(" Marzo ");
+
+                break;
+            case "04":
+                result=result.concat(" Aprile ");
+
+                break;
+            case "05":
+                result=result.concat(" Maggio ");
+
+                break;
+            case "06":
+                result=result.concat(" Giugno ");
+
+                break;
+            case "07":
+                result=result.concat(" Luglio ");
+
+                break;
+            case "08":
+                result=result.concat(" Agosto ");
+
+                break;
+            case "09":
+                result=result.concat(" Settembre ");
+
+                break;
+            case "10":
+                result=result.concat(" Ottobre ");
+
+                break;
+            case "11":
+                result=result.concat(" Novembre ");
+
+                break;
+            case "12":
+                result=result.concat(" Dicembre ");
+
+                break;
+
+
+
+
+        }
+
+        result=result.concat(data.substring(0,4));
+
+
+
+
+       return  result;
+    }
+
+    public static String convertiDataDialog(String data){
+        String result;
+        result=data.substring(0,2);
+        String mese=data.substring(3,5);
+        switch(mese){
+
+            case "01":
+                result=result.concat(" Gennaio ");
+                break;
+            case "02":
+                result=result.concat(" Febbraio ");
+
+                break;
+            case "03":
+                result=result.concat(" Marzo ");
+
+                break;
+            case "04":
+                result=result.concat(" Aprile ");
+
+                break;
+            case "05":
+                result=result.concat(" Maggio ");
+
+                break;
+            case "06":
+                result=result.concat(" Giugno ");
+
+                break;
+            case "07":
+                result=result.concat(" Luglio ");
+
+                break;
+            case "08":
+                result=result.concat(" Agosto ");
+
+                break;
+            case "09":
+                result=result.concat(" Settembre ");
+
+                break;
+            case "10":
+                result=result.concat(" Ottobre ");
+
+                break;
+            case "11":
+                result=result.concat(" Novembre ");
+
+                break;
+            case "12":
+                result=result.concat(" Dicembre ");
+
+                break;
+
+
+
+
+        }
+
+        result=result.concat(data.substring(6,10));
+
+
+
+
+        return  result;
+    }
 }
