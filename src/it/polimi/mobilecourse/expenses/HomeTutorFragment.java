@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,6 +46,7 @@ public class HomeTutorFragment extends Fragment {
     private ListView richieste_list;
     private String userId;
     private RequestQueue queue;
+    private TextView nor;
 
     final String TAG="Home Tutor";
     int no;
@@ -55,6 +57,8 @@ public class HomeTutorFragment extends Fragment {
 
         progress=(ProgressBar)view.findViewById(R.id.progressBarHome);
         queue= Volley.newRequestQueue(view.getContext());
+        nor=(TextView)view.findViewById(R.id.norequestT);
+
 
         userId=activity.getUserId();
         richieste_list=(ListView)view.findViewById(R.id.richieste_list);
@@ -101,28 +105,10 @@ public class HomeTutorFragment extends Fragment {
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
-
-                                AlertDialog dialog = builder.create();
-                                if (dialog != null)
-                                    builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            try {
-                                                dialog.wait(2000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
-                                            dialog.dismiss();
-
-                                            activity.finish();
-                                        }
-                                    });
-
-                                dialog.show();
 
 
+
+                                nor.setVisibility(View.VISIBLE);
 
                             }
                             items.clear();

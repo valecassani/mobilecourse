@@ -242,6 +242,12 @@ public class ModificaRichiestaFragment extends Fragment {
         titolo=(EditText)view.findViewById(R.id.titleRichiestaMR);
         data=(EditText)view.findViewById(R.id.dataMR);
         save=(Button)view.findViewById(R.id.buttonSave);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData();
+            }
+        });
         photo=(Button)view.findViewById(R.id.buttonPhotoMR);
         gallery=(Button)view.findViewById(R.id.buttonImageMR);
         img=(ImageButton)view.findViewById(R.id.fotoRichiestaMR);
