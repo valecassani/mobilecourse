@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -55,6 +56,8 @@ public class RichiesteFragment extends Fragment {
     private ProgressDialog progressDialog;
     private HomeStudent activity;
 
+    TextView nor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.richieste_fragment, container, false);
@@ -66,6 +69,7 @@ public class RichiesteFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.richieste_list);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_richieste);
+        nor=(TextView)view.findViewById(R.id.norequest);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -132,26 +136,10 @@ public class RichiesteFragment extends Fragment {
                     @Override
                     public boolean onResponse(JSONArray response) {
                         if (response.length() == 0) {
-                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
 
-                            builder.setMessage("Nessuna richiesta inserita").setTitle("Le tue richieste");
+                            nor.setVisibility(View.VISIBLE);
 
-                            android.app.AlertDialog dialog = builder.create();
-                            if (dialog != null)
-                                builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        try {
-                                            dialog.wait(2000);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        dialog.dismiss();
-                                        activity.finish();
 
-                                    }
-                                });
-
-                            dialog.show();
 
 
 
