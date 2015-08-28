@@ -1,5 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -21,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +60,7 @@ public class RichiesteFragment extends Fragment {
     private HomeStudent activity;
 
     TextView nor;
+    ProgressBar progress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class RichiesteFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_richieste);
         nor=(TextView)view.findViewById(R.id.norequest);
+        progress=(ProgressBar)view.findViewById(R.id.progressRichieste);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -127,6 +132,8 @@ public class RichiesteFragment extends Fragment {
     private void showResults() {
         String url;
 
+        progress(true);
+
         url = "http://www.unishare.it/tutored/get_richieste.php?id_studente="+ idStudente;
 
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
@@ -137,6 +144,7 @@ public class RichiesteFragment extends Fragment {
                     public boolean onResponse(JSONArray response) {
                         if (response.length() == 0) {
 
+                            progress(false);
                             nor.setVisibility(View.VISIBLE);
 
 
@@ -163,6 +171,7 @@ public class RichiesteFragment extends Fragment {
                         }
                         adapter = new RichiesteAdapter(context, items);
                         mListView.setAdapter(adapter);
+                        progress(false);
                         swipeRefreshLayout.setRefreshing(false);
 
 
@@ -320,5 +329,20 @@ public class RichiesteFragment extends Fragment {
 
     }
 
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        progress.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progress.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
+
+    }
 
 }

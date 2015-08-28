@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -38,6 +39,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -548,8 +550,10 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
 
                 if (file.exists()) {
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
                     imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+
                     exist=true;
                 }
 
@@ -568,6 +572,7 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
                     bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+
                     exist=true;
                 }
 
