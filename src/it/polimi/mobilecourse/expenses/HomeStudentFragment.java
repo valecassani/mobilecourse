@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,13 +44,15 @@ public class HomeStudentFragment extends Fragment {
     private ListView list_tutor;
     private String userId;
     private RequestQueue queue;
+    private TextView not;
+    private View view;
 
 
     ProgressBar progress;
     int no;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        view = inflater.inflate(R.layout.home_fragment, container, false);
 
         progress=(ProgressBar)view.findViewById(R.id.progressBarHomeS);
         queue= Volley.newRequestQueue(view.getContext());
@@ -95,30 +98,16 @@ public class HomeStudentFragment extends Fragment {
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
 
-                                AlertDialog dialog = builder.create();
-                                if (dialog != null)
-                                builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        try {
-                                            dialog.wait(2000);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        dialog.dismiss();
-
-                                        activity.finish();
-                                    }
-                                });
-
-                                dialog.show();
+                                not=(TextView)view.findViewById(R.id.noTutor);
+                                not.setVisibility(View.VISIBLE);
 
 
 
                             }
+                            items.clear();
+
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 ListTutorItem item = new ListTutorItem(obj.getString("nome"),obj.getString("cognome"),obj.getString("ID"),
