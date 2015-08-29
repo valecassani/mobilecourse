@@ -5,15 +5,19 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -33,7 +37,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -82,7 +88,6 @@ public class ModificaRichiestaFragment extends Fragment {
     private EditText titolo;
     private EditText data;
     private ImageButton img;
-    private ImageView expimg;
     private Button save;
     private Date date;
 
@@ -92,10 +97,13 @@ public class ModificaRichiestaFragment extends Fragment {
     private String nameFile;
     private int serverResponseCode;
     private String upLoadServerUri = null;
+    private String dataInvio;
 
 
 
     SimpleDateFormat dateFormatter;
+    SimpleDateFormat dateFormatInvio;
+
     DatePickerDialog datePickerDialog;
     Bitmap bitmap;
     String path;
@@ -137,6 +145,8 @@ public class ModificaRichiestaFragment extends Fragment {
         idr=bundle.getString("idr");
 
         getDati();
+
+
 
 
 
@@ -202,6 +212,7 @@ public class ModificaRichiestaFragment extends Fragment {
 
                             urlR=obj.getString("foto");
                             data_entroR=obj.getString("data_entro");
+                            dataInvio=data_entroR.substring(0,10);
 
                             setField();
 
@@ -242,12 +253,9 @@ public class ModificaRichiestaFragment extends Fragment {
         titolo=(EditText)view.findViewById(R.id.titleRichiestaMR);
         data=(EditText)view.findViewById(R.id.dataMR);
         save=(Button)view.findViewById(R.id.buttonSave);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendData();
-            }
-        });
+
+
+
         photo=(Button)view.findViewById(R.id.buttonPhotoMR);
         gallery=(Button)view.findViewById(R.id.buttonImageMR);
         img=(ImageButton)view.findViewById(R.id.fotoRichiestaMR);
@@ -263,51 +271,75 @@ public class ModificaRichiestaFragment extends Fragment {
                 takePhoto();
             }
         });
-        expimg=(ImageView)view.findViewById(R.id.expanded_imageMR);
 
         testo.setText(testoR);
         titolo.setText(titoloR);
-        data.setText(Functions.convertiData(data_entroR.substring(0,10)));
+        data.setText(Functions.convertiData(data_entroR.substring(0, 10)));
         setDateDialog();
 
 
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                save.setEnabled(false);
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //progressDialog = ProgressDialog.show(activity, "", "Uploading file...", true);
+
+                                progress(true);
+
+
+                                new Thread(new Runnable() {
+                                    public void run() {
+                                        activity.runOnUiThread(new Runnable() {
+                                            public void run() {
+
+                                            }
+                                        });
+
+                                        if (exist == true) {
+                                            uploadFile upl = new uploadFile();
+                                            upl.execute(selectedPath);
+
+                                        }
+                                    }
+                                }).start();
+
+                                sendData();
+
+
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+
+                                break;
+                        }
+                    }
+                };
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage("Vuoi inviare le modifiche?").setPositiveButton("Si", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+
+            }
+
+
+        });
 
         Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
         ).into(img);
 
         img.setVisibility(View.VISIBLE);
 
-        Target t=new Target(){
-            @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                img.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        zoomImageFromThumb(img, bitmap);
-
-
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-
-
-        };
-        Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
-        ).into(t);
 
 
         progress(false);
@@ -319,158 +351,13 @@ public class ModificaRichiestaFragment extends Fragment {
     }
 
 
-    private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
-        // If there's an animation in progress, cancel it
-        // immediately and proceed with this one.
 
-
-
-        if (mCurrentAnimator != null) {
-            mCurrentAnimator.cancel();
-        }
-
-        // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) view.findViewById(
-                R.id.expanded_imageMR);
-        expandedImageView.setImageBitmap(bitmap);
-
-
-
-
-        // Calculate the starting and ending bounds for the zoomed-in image.
-        // This step involves lots of math. Yay, math.
-        final Rect startBounds = new Rect();
-        final Rect finalBounds = new Rect();
-        final Point globalOffset = new Point();
-
-        // The start bounds are the global visible rectangle of the thumbnail,
-        // and the final bounds are the global visible rectangle of the container
-        // view. Also set the container view's offset as the origin for the
-        // bounds, since that's the origin for the positioning animation
-        // properties (X, Y).
-        thumbView.getGlobalVisibleRect(startBounds);view.
-                findViewById(R.id.container)
-                .getGlobalVisibleRect(finalBounds, globalOffset);
-        startBounds.offset(-globalOffset.x, -globalOffset.y);
-        finalBounds.offset(-globalOffset.x, -globalOffset.y);
-
-
-        // Adjust the start bounds to be the same aspect ratio as the final
-        // bounds using the "center crop" technique. This prevents undesirable
-        // stretching during the animation. Also calculate the start scaling
-        // factor (the end scaling factor is always 1.0).
-        float startScale;
-        if ((float) finalBounds.width() / finalBounds.height()
-                > (float) startBounds.width() / startBounds.height()) {
-            // Extend start bounds horizontally
-            startScale = (float) startBounds.height() / finalBounds.height();
-            float startWidth = startScale * finalBounds.width();
-            float deltaWidth = (startWidth - startBounds.width()) / 2;
-            startBounds.left -= deltaWidth;
-            startBounds.right += deltaWidth;
-        } else {
-            // Extend start bounds vertically
-            startScale = (float) startBounds.width() / finalBounds.width();
-            float startHeight = startScale * finalBounds.height();
-            float deltaHeight = (startHeight - startBounds.height()) / 2;
-            startBounds.top -= deltaHeight;
-            startBounds.bottom += deltaHeight;
-        }
-
-        // Hide the thumbnail and show the zoomed-in view. When the animation
-        // begins, it will position the zoomed-in view in the place of the
-        // thumbnail.
-        thumbView.setAlpha(0f);
-        expandedImageView.setVisibility(View.VISIBLE);
-
-        // Set the pivot point for SCALE_X and SCALE_Y transformations
-        // to the top-left corner of the zoomed-in view (the default
-        // is the center of the view).
-        expandedImageView.setPivotX(0f);
-        expandedImageView.setPivotY(0f);
-
-        // Construct and run the parallel animation of the four translation and
-        // scale properties (X, Y, SCALE_X, and SCALE_Y).
-        AnimatorSet set = new AnimatorSet();
-        set
-                .play(ObjectAnimator.ofFloat(expandedImageView, View.X,
-                        startBounds.left, finalBounds.left))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
-                        startBounds.top, finalBounds.top))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X,
-                        startScale, 1f)).with(ObjectAnimator.ofFloat(expandedImageView,
-                View.SCALE_Y, startScale, 1f));
-        set.setDuration(mShortAnimationDuration);
-        set.setInterpolator(new DecelerateInterpolator());
-        set.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mCurrentAnimator = null;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                mCurrentAnimator = null;
-            }
-        });
-        set.start();
-        mCurrentAnimator = set;
-
-        // Upon clicking the zoomed-in image, it should zoom back down
-        // to the original bounds and show the thumbnail instead of
-        // the expanded image.
-        final float startScaleFinal = startScale;
-        expandedImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCurrentAnimator != null) {
-                    mCurrentAnimator.cancel();
-                }
-
-
-                // Animate the four positioning/sizing properties in parallel,
-                // back to their original values.
-                AnimatorSet set = new AnimatorSet();
-                set.play(ObjectAnimator
-                        .ofFloat(expandedImageView, View.X, startBounds.left))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView,
-                                        View.Y,startBounds.top))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView,
-                                        View.SCALE_X, startScaleFinal))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView,
-                                        View.SCALE_Y, startScaleFinal));
-                set.setDuration(mShortAnimationDuration);
-                set.setInterpolator(new DecelerateInterpolator());
-                set.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        thumbView.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
-                        mCurrentAnimator = null;
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        thumbView.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
-                        mCurrentAnimator = null;
-
-                    }
-                });
-                set.start();
-                mCurrentAnimator = set;
-
-
-            }
-        });
-    }
 
     private void setDateDialog(){
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormatInvio = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+
 
         data.setInputType(InputType.TYPE_NULL);
         data.setOnClickListener(new View.OnClickListener() {
@@ -489,8 +376,11 @@ public class ModificaRichiestaFragment extends Fragment {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
+
                 newDate.set(year, monthOfYear, dayOfMonth);
-                System.out.println(dateFormatter.format(newDate.getTime()));
+                dataInvio=dateFormatInvio.format(newDate.getTime()).substring(0,10);
+                System.out.println(dataInvio);
+
                 data.setText(Functions.convertiDataDialog(dateFormatter.format(newDate.getTime())));
             }
 
@@ -540,6 +430,7 @@ public class ModificaRichiestaFragment extends Fragment {
                 if (file.exists()) {
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     img.setImageBitmap(Bitmap.createBitmap(bitmap));
+
                     exist=true;
                 }
 
@@ -557,6 +448,7 @@ public class ModificaRichiestaFragment extends Fragment {
 
                     bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     img.setImageBitmap(Bitmap.createBitmap(bitmap));
+
                     exist=true;
                 }
 
@@ -564,17 +456,7 @@ public class ModificaRichiestaFragment extends Fragment {
 
 
         }
-        if(exist==true) {
-            mShortAnimationDuration = getResources().getInteger(
-                    android.R.integer.config_shortAnimTime);
-            img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    zoomImageFromThumb(img, bitmap);
 
-                }
-            });
-        }
     }
 
     public String getRealPathFromURI(Uri contentUri) {
@@ -597,19 +479,28 @@ public class ModificaRichiestaFragment extends Fragment {
 
 
         try {
-            date = new SimpleDateFormat("dd-MM-yyyy").parse(data.getText().toString());
+            date = new SimpleDateFormat("dd-MM-yyyy").parse(dataInvio);
             dataToSend = new java.sql.Date(date.getTime());
             Log.i("Nuova Richiesta", "Parse data ok  " + data.toString());
 
         } catch (ParseException e) {
             e.printStackTrace();
-        } catch (NullPointerException e) {
-            Toast.makeText(activity.getApplicationContext(), "Mancano dei dati", Toast.LENGTH_SHORT);
+            progress(false);
+            save.setEnabled(true);
         }
 
         String url = "http://www.unishare.it/tutored/update_richiesta.php";
         if (testo.getText().toString().compareTo("")==0 || titolo.getText().toString().compareTo("")==0 ) {
-            Toast.makeText(activity.getApplicationContext(),"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(activity, "Mancano dei dati",
+                            Toast.LENGTH_LONG).show();
+
+                }
+            });
+            progress(false);
+            save.setEnabled(true);
+
         } else {
 
 
@@ -638,17 +529,35 @@ public class ModificaRichiestaFragment extends Fragment {
                 {
                     Map<String, String>  params = new HashMap<String, String>();
                     params.put("testo", testo.getText().toString());
-                    params.put("data", dataToSend.toString());
+                    params.put("data", dataInvio);
                     params.put("idr", idr);
                     params.put("titolo",titolo.getText().toString());
-                    params.put("foto","images/"+nameFile);
+                    if(exist==true) {
+                        params.put("foto", "images/" + nameFile);
+                    }
+                    else{
+                        params.put("foto", "N");
 
+                    }
                     return params;
                 }
             };
             queue.add(jsObjRequest);
-            Toast.makeText(activity.getApplicationContext(), "Richiesta modificata correttamente", Toast.LENGTH_SHORT);
-            //activity.finish();
+            //torna indietro
+            FragmentManager fragmentManager = getFragmentManager();
+
+            Fragment fragment = new RichiesteFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("user_id", id_studente);
+            fragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
+
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(activity, "Richiesta modificata correttamente!",
+                            Toast.LENGTH_LONG).show();
+                }
+            });            //activity.finish();
 
         }
 
@@ -766,20 +675,7 @@ public class ModificaRichiestaFragment extends Fragment {
                     fileInputStream.close();
                     dos.flush();
                     dos.close();
-                    //torna indietro
-                    FragmentManager fragmentManager = getFragmentManager();
 
-                    Fragment fragment = new RichiesteFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("user_id", id_studente);
-                    fragment.setArguments(bundle);
-                    fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(activity, "Richiesta modificata correttamente!",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
 
                 } catch (MalformedURLException ex) {
 
@@ -823,6 +719,8 @@ public class ModificaRichiestaFragment extends Fragment {
 
 
     }
+
+
 }
 
 

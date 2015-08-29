@@ -68,9 +68,11 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:id="@+id/fotoRichiestaMR"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
                 android:visibility="invisible"
-                android:layout_alignTop="@+id/fotoTestoMR"
                 android:layout_centerHorizontal="true"
+                android:layout_below="@+id/buttonImageMR"
                 android:layout_marginTop="40dp" />
 
 
@@ -81,9 +83,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/progressBarMR"
-                style="?android:attr/progressBarStyleLarge"
                 android:visibility="gone"
-                android:layout_centerHorizontal="true" />
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonImageMR" />
 
 
             <Button
@@ -93,21 +96,14 @@
                 android:id="@+id/buttonSave"
                 style="?android:attr/borderlessButtonStyle"
                 android:background="@color/primaryColorDark"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="-30dp" />
 
-            <ImageView
-                android:id="@+id/expanded_imageMR"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/buttonSave"
-                android:visibility="invisible"
-                android:layout_toRightOf="@+id/fotoTestoMR"
-                android:layout_alignTop="@+id/dataMR"
-                android:layout_alignRight="@+id/fotoRichiestaMR" />
+
 
             <Button
                 android:id="@+id/buttonImageMR"
@@ -124,9 +120,8 @@
                 android:layout_width="wrap_content"
                 android:text="Scatta Foto"
 
-                android:layout_below="@+id/dataMR"
-                android:layout_toRightOf="@+id/fotoTestoMR"
-                android:layout_marginTop="100dp"></Button>
+                android:layout_below="@+id/textView27"
+                ></Button>
 
 
             <TextView
@@ -135,7 +130,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="oppure"
                 android:id="@+id/textView27"
-                android:layout_alignTop="@+id/buttonImageMR"
+                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
