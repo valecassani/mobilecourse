@@ -96,14 +96,18 @@ public class GcmIntentService extends IntentService{
         Intent myintent = null;
         PendingIntent contentIntent = null;
 
-        if(type.equals("prenotazione")) {
-            System.out.println("Notifica di tipo prenotazione");
+         if(type.equals("prenotazione")) {
+
             myintent = new Intent(this, PrenotazioneItemDetails.class);
             myintent.putExtra("message", msg);
             myintent.putExtra("id",receivedIntent.getStringExtra("id_prenotazione"));
             contentIntent = PendingIntent.getActivity(this, 0,
                     myintent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        } else {
+            if (type.equals("richiesta")) {
+
+            }
         }
 
 

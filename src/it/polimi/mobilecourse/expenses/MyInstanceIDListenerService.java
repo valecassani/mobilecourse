@@ -61,7 +61,7 @@ public class MyInstanceIDListenerService extends IntentService {
                         @Override
                         public boolean onResponse(String response) {
                             // response
-                            Log.d("Response", response);
+                            Log.d("Response GCM Reg", response);
 
                             return false;
                         }
@@ -79,7 +79,7 @@ public class MyInstanceIDListenerService extends IntentService {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("id_utente", userId);
                     params.put("regid", finalToken);
-                    params.put("tipo", "1");
+                    params.put("tipo", tipo);
 
 
                     return params;

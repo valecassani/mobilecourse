@@ -56,6 +56,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private EditText editTextCellulare;
     private SessionManager sessionManager;
     private TextView mTextViewMateria;
+    private Button sceltaDataButton;
 
     private String idStudente;
     private String idTutor;
@@ -66,9 +67,6 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private Date time;
     private String idPrenotazione;
     private Button sendButton;
-
-
-
 
 
     @Override
@@ -82,7 +80,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         idPrenotazione = data.getString("id");
         Toast.makeText(getApplicationContext(), "Prenotazione id " + idPrenotazione, Toast.LENGTH_SHORT).show();
-        String displayIdPrenotazione =data.getString("id_prenotazione");
+        String displayIdPrenotazione = data.getString("id_prenotazione");
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -90,15 +88,16 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        simpleTimeFormat = new SimpleDateFormat("HH-mm-ss",Locale.US);
+        simpleTimeFormat = new SimpleDateFormat("HH-mm-ss", Locale.US);
 
-        sceltaData = (TextView)findViewById(R.id.data_scelta);
+        sceltaData = (TextView) findViewById(R.id.data_scelta);
+        sceltaDataButton = (Button) findViewById(R.id.button_data);
 
-        sceltaData.setOnClickListener(new View.OnClickListener() {
+        sceltaDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar newCalendar = Calendar.getInstance();
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getBaseContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PrenotazioneItemDetails.this, new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -118,7 +117,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         System.out.println(sessionManager.getUserDetails().get("id"));
 
 
-        mTextViewMateria = (TextView)findViewById(R.id.button_materia);
+        mTextViewMateria = (TextView) findViewById(R.id.button_materia);
         sceltaOra = (TextView) findViewById(R.id.ora_scelta);
         sceltaOraButton = (Button) findViewById(R.id.ora_scelta_button);
         sceltaOraButton.setOnClickListener(new View.OnClickListener() {
@@ -127,12 +126,12 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker = new TimePickerDialog(getBaseContext(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog mTimePicker = new TimePickerDialog(PrenotazioneItemDetails.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
                         Calendar newTime = Calendar.getInstance();
-                        newTime.set(selectedHour,selectedMinute);
+                        newTime.set(selectedHour, selectedMinute);
                         sceltaOra.setText(selectedHour + ":" + selectedMinute);
 
 
@@ -145,39 +144,26 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         });
 
 
-        sendButton = (Button)findViewById(R.id.button_conferma_prenotazione);
+        sendButton = (Button) findViewById(R.id.button_conferma_prenotazione);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inviaPrenotazione();
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", 4);
-                Intent intent = new Intent(getApplicationContext(), HomeStudent.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                confermaPrenotazione();
+
 
             }
         });
 
-        editTextCellulare = (EditText)findViewById(R.id.cellulare_nuova_prenotaz);
+        editTextCellulare = (EditText) findViewById(R.id.cellulare_nuova_prenotaz);
 
         populateData();
-
-
-
-
-
-
-
 
 
     }
 
     private void populateData() {
 
-        String url = "http://www.unishare.it/tutored/prenotazione_by_id.php?id="+idPrenotazione;
+        String url = "http://www.unishare.it/tutored/prenotazione_by_id.php?id=" + idPrenotazione;
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -185,11 +171,11 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
                     @Override
                     public boolean onResponse(JSONArray response) {
-                        Log.d(TAG,response.toString());
+                        Log.d(TAG, response.toString());
 
                         try {
 
-                            JSONObject obj = (JSONObject)response.get(0);
+                            JSONObject obj = (JSONObject) response.get(0);
                             sceltaData.setText(obj.getString("data"));
                             sceltaOra.setText(obj.getString("ora_inizio"));
                             mTextViewMateria.setText(obj.getString("materia"));
@@ -199,21 +185,14 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                             confermato = obj.getString("confermato");
 
                             note = obj.getString("note");
-                            if (confermato.equals("1") ) {
+                            if (confermato.equals("1")) {
                                 sendButton.setVisibility(View.INVISIBLE);
                             }
-
-
-
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
-
 
 
                         return false;
@@ -235,7 +214,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
     }
 
-    private void inviaPrenotazione() {
+    private void confermaPrenotazione() {
         final String numeroCellulare = editTextCellulare.getText().toString();
 
         try {
@@ -249,61 +228,58 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
             Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
         }
 
-        String url = "http://www.unishare.it/tutored/add_prenotazione.php";
-        if (data == null && numeroCellulare == null ) {
-            Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
-        } else {
+        String url = "http://www.unishare.it/tutored/update_prenotazione.php";
 
 
-
-            StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>()
-                    {
-                        @Override
-                        public boolean onResponse(String response) {
-                            // response
-                            Log.d("Response", response);
-                            return false;
-                        }
-                    },
-                    new Response.ErrorListener()
-                    {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // error
-                            Log.d("Error.Response", error.getMessage());
-                        }
+        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public boolean onResponse(String response) {
+                        // response
+                        Log.d("Response Upd Prenot", response);
+                        return false;
                     }
-            ) {
-                @Override
-                protected Map<String, String> getParams()
-                {
-
-                    Map<String, String>  params = new HashMap<String, String>();
-
-                    params.put("id_studente", idStudente );
-                    params.put("data", data.toString());
-                    params.put("id_tutor",idTutor );
-                    //params.put("ora", sceltaOra.toString());
-                    params.put("materia","");
-                    params.put("note",note);
-                    params.put("cellulare",numeroCellulare);
-
-                    params.put("confermato","1");
-
-
-                    return params;
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.getMessage());
+                    }
                 }
-            };
-            queue.add(jsObjRequest);
-            Toast.makeText(context, "Prenotazione Confermata", Toast.LENGTH_SHORT);
-            Intent intent = new Intent(this,HomeTutor.class);
-            startActivity(intent);
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
 
-            finish();
+                Map<String, String> params = new HashMap<String, String>();
 
-        }
+                params.put("id_studente", idStudente);
+                params.put("data", data.toString());
+                params.put("id_tutor", idTutor);
+                //params.put("ora", sceltaOra.toString());
+                params.put("materia", "");
+                params.put("note", note);
+                params.put("cellulare", numeroCellulare);
+                params.put("id_prenotazione", idPrenotazione);
+
+                params.put("confermato", "1");
+
+
+                return params;
+            }
+        };
+        queue.add(jsObjRequest);
+        Toast.makeText(context, "Prenotazione Confermata", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, HomeTutor.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("user_id", idTutor);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        finish();
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -315,12 +291,9 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 return true;
 
 
-
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

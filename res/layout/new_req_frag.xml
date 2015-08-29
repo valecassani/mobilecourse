@@ -29,7 +29,6 @@
         android:gravity="top"
         android:maxLength="35"
         android:hint="Titolo della Richiesta"
-        android:layout_below="@id/my_awesome_toolbar"
         android:textStyle="bold"/>
 
 

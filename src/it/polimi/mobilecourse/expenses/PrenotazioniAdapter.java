@@ -1,6 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,10 @@ public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
 
         title.setText(items.get(position).getMateria());
         data.setText(items.get(position).getData());
+
+        if (items.get(position).isConfermato()) {
+            title.setTypeface(Typeface.DEFAULT_BOLD);
+        }
 
 
 

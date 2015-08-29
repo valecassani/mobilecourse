@@ -61,11 +61,14 @@ public class RequestFtp extends AsyncTask<Void, ArrayList<ObjDb>, ArrayList<ObjD
             act.handleResult(result, op, fragment);
 
 
-        } else if (result == null) {
-            Toast.makeText(act.getApplicationContext(), R.string.error_connection, Toast.LENGTH_SHORT).show();
-            return;
+        } else {
+            if (result == null) {
+                Toast.makeText(act.getApplicationContext(), R.string.error_connection, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            act_ab.handleResult(result, op, fragment);
         }
-        act_ab.handleResult(result, op, fragment);
+
 
 
     }

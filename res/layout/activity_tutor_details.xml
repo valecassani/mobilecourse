@@ -57,25 +57,34 @@
         android:layout_alignTop="@+id/search_tutor_name"
         android:layout_toRightOf="@+id/textView27" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/search_tutor_name"
+        android:id="@id/search_tutor_name"
+        android:textSize="25dp"
+        android:textStyle="bold"
         android:layout_below="@+id/search_tutor_surname"
-        android:layout_alignLeft="@id/search_tutor_surname" />
+        android:layout_alignLeft="@id/search_tutor_surname"
+        android:layout_marginLeft="300dp"/>
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
         android:id="@id/search_tutor_surname"
-        android:layout_below="@+id/textView27"
-        android:layout_alignRight="@+id/tutor_nome" />
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_marginLeft="300dp"
+
+  />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_materie_tutor"
+        android:layout_above ="@id/map"/>
+
+
+
 
 
 </RelativeLayout>
