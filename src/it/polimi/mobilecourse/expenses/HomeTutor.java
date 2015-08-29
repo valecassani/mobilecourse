@@ -40,6 +40,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -89,21 +90,29 @@ public class HomeTutor extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         activity = this;
+        sessionManager = new SessionManager(getApplicationContext());
+
+
+        if (!FacebookSdk.isInitialized()) {
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        }
 
 
         setContentView(R.layout.tutor_home);
         Bundle data = getIntent().getExtras();
-        if (data.getString("mail") != null) {
+        if (data != null && data.getString("mail") != null) {
             Log.i(TAG, "username: " + data.getString("mail"));
             username = data.getString("mail");
             getUserIdFromMail();
             Log.i(TAG, "userid: " + userId);
         }
-        if (data.getString("user_id") != null) {
+        if (data != null && data.getString("user_id") != null) {
             Log.i(TAG, "userid: " + data.getString("user_id"));
 
             userId = data.getString("user_id");
         } else {
+
+            userId = sessionManager.getUserDetails().get("id");
 
         }
 
@@ -118,7 +127,6 @@ public class HomeTutor extends AppCompatActivity {
 
         loadUserInfos();
         registerGCM();
-        sessionManager = new SessionManager(getApplicationContext());
         sessionManager.createLoginSession(userId, "1");
 
 

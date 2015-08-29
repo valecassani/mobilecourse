@@ -50,7 +50,7 @@ import java.util.ArrayList;
  */
 public class HomeStudent extends AppCompatActivity {
 
-    private static String TAG ="Home Student";
+    private static String TAG = "Home Student";
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -73,9 +73,7 @@ public class HomeStudent extends AppCompatActivity {
     public static Activity activity;
 
 
-
-
-      public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         activity = this;
@@ -105,14 +103,15 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
-          sessionManager = new SessionManager(getApplicationContext());
-          sessionManager.createLoginSession(userId,"0");
+        sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.createLoginSession(userId, "0");
 
 
-          loadUserInfos();
+        loadUserInfos();
+        registerGCM();
 
 
-        toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         if (toolbar != null) {
             toolbar.setTitle("Home");
             setSupportActionBar(toolbar);
@@ -120,6 +119,7 @@ public class HomeStudent extends AppCompatActivity {
 
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(25);
+
 
 
 
@@ -131,8 +131,7 @@ public class HomeStudent extends AppCompatActivity {
         //aggiunta icone al drawer
 
 
-
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0],R.drawable.home_icon));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[0], R.drawable.home_icon));
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[1], R.drawable.abc_ic_search_api_mtrl_alpha));
 
@@ -142,11 +141,10 @@ public class HomeStudent extends AppCompatActivity {
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.prenot_icon));
 
-          mDrawerItems.add(new NavDrawerItem(mDrawerOptions[5], R.drawable.icon_logout));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[5], R.drawable.icon_logout));
 
 
-
-          // setting the nav drawer list adapter
+        // setting the nav drawer list adapter
         mNavDrawerAdapter = new NavDrawerListAdapter(getApplicationContext(),
                 mDrawerItems);
         mDrawerList.setAdapter(mNavDrawerAdapter);
@@ -155,7 +153,6 @@ public class HomeStudent extends AppCompatActivity {
         // set up the drawer's list view with items and click listener
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -185,11 +182,10 @@ public class HomeStudent extends AppCompatActivity {
         selectItem(positionRequired);
 
 
-
     }
 
     private void loadUserInfos() {
-        circImgView = (CircularImageView)findViewById(R.id.drawer_image);
+        circImgView = (CircularImageView) findViewById(R.id.drawer_image);
         if (Profile.getCurrentProfile() != null) {
             Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
 
@@ -202,29 +198,27 @@ public class HomeStudent extends AppCompatActivity {
         circImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);//rimettere updateImage
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);//rimettere updateImage
                 Bundle bundle = new Bundle();
-                bundle.putString("tipo","0");
-                bundle.putString("id",userId);
+                bundle.putString("tipo", "0");
+                bundle.putString("id", userId);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
 
 
             }
         });
 
 
-
         String url = null;
         if (username != null) {
-            Log.i(TAG,"url for username");
+            Log.i(TAG, "url for username");
             url = "http://www.unishare.it/tutored/student_by_id.php?mail=" + username;
-        }    else {
+        } else {
 
             if (userId != null) {
-                Log.d(TAG,"Used id query");
-                url = "http://www.unishare.it/tutored/student_by_id.php?id="+userId;
+                Log.d(TAG, "Used id query");
+                url = "http://www.unishare.it/tutored/student_by_id.php?id=" + userId;
             }
         }
 
@@ -237,29 +231,28 @@ public class HomeStudent extends AppCompatActivity {
                     @Override
                     public boolean onResponse(JSONArray response) {
                         try {
-                            TextView nome = (TextView)findViewById(R.id.drawer_nome);
+                            TextView nome = (TextView) findViewById(R.id.drawer_nome);
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
                             nome.setText(obj.get("nome").toString() + " " + obj.get("cognome").toString());
                             nome.setTextColor(Color.WHITE);
-                            TextView mail = (TextView)findViewById(R.id.drawer_mail);
-                            SpannableString content=new SpannableString(obj.get("username").toString());
-                            content.setSpan(new UnderlineSpan(),0,obj.get("username").toString().length(),0);
+                            TextView mail = (TextView) findViewById(R.id.drawer_mail);
+                            SpannableString content = new SpannableString(obj.get("username").toString());
+                            content.setSpan(new UnderlineSpan(), 0, obj.get("username").toString().length(), 0);
                             mail.setText(content);
                             mail.setTextColor(Color.WHITE);
                             mail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);//rimettere updateImage
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);//rimettere updateImage
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("tipo","0");
-                                    bundle.putString("id",userId);
+                                    bundle.putString("tipo", "0");
+                                    bundle.putString("id", userId);
                                     intent.putExtras(bundle);
                                     startActivity(intent);
 
                                 }
                             });
-
 
 
                         } catch (JSONException e) {
@@ -281,9 +274,18 @@ public class HomeStudent extends AppCompatActivity {
         queue.add(jsonObjReq);
     }
 
+    private void registerGCM () {
+
+        Intent intent = new Intent(getApplicationContext(), MyInstanceIDListenerService.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("tipo", "0");
+        startService(intent);
+
+    }
+
     private void checkImageOnDatabase() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://www.unishare.it/tutored/getImage.php?type_user=0&id="+userId;
+        String url = "http://www.unishare.it/tutored/getImage.php?type_user=0&id=" + userId;
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONArray>() {
@@ -367,18 +369,6 @@ public class HomeStudent extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     public void selectItem(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
@@ -400,12 +390,12 @@ public class HomeStudent extends AppCompatActivity {
             case 3:
                 fragment = new RichiesteFragment();
                 bundle = new Bundle();
-                bundle.putString("student_id",userId);
+                bundle.putString("student_id", userId);
                 fragment.setArguments(bundle);
                 break;
             case 4:
                 bundle = new Bundle();
-                bundle.putString("student_id",userId);
+                bundle.putString("student_id", userId);
 
                 fragment = new PrenotazioniFragment();
                 fragment.setArguments(bundle);
@@ -441,8 +431,6 @@ public class HomeStudent extends AppCompatActivity {
                 break;
 
 
-
-
         }
 
         if (fragment != null) {
@@ -456,15 +444,7 @@ public class HomeStudent extends AppCompatActivity {
         }
 
 
-
-
-
-
-
-
     }
-
-
 
 
     @Override
@@ -480,10 +460,7 @@ public class HomeStudent extends AppCompatActivity {
     }
 
 
-
-
-
-    private  class DrawerItemClickListener implements ListView.OnItemClickListener {
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -496,16 +473,16 @@ public class HomeStudent extends AppCompatActivity {
 
 
     ///////
-    public String getUserId(){
+    public String getUserId() {
         return userId;
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
-        int count=getFragmentManager().getBackStackEntryCount();
+        int count = getFragmentManager().getBackStackEntryCount();
 
-        if(getFragmentManager().findFragmentById(R.id.student_fragment) instanceof HomeStudentFragment){
+        if (getFragmentManager().findFragmentById(R.id.student_fragment) instanceof HomeStudentFragment) {
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -536,8 +513,7 @@ public class HomeStudent extends AppCompatActivity {
             dialog.show();
 
             //super.onBackPressed();
-        }
-        else{
+        } else {
             getFragmentManager().popBackStack();
         }
 

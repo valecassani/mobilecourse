@@ -8,18 +8,16 @@
     tools:context="it.polimi.mobilecourse.expenses.NuovaPrenotazioneActivity"
     >
 
-      <TextView android:text="Nuova Prenotazione" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <TextView
         android:id="@+id/tutor_selezionato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:layout_marginTop="50dp"/>
 
     <TextView
         android:id="@+id/data_scelta"
-        android:layout_below="@id/tutor_selezionato"
+        android:layout_marginTop="100dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Inserire una data"/>
@@ -37,10 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ora_scelta_button"
-        android:text="Click per selezionare l'ora"
-        android:layout_alignBaseline="@+id/button_materia"
-        android:layout_alignBottom="@+id/button_materia"
-        android:layout_alignRight="@+id/my_awesome_toolbar"></Button>
+        android:text="Ora"
+        android:layout_alignTop="@+id/ora_scelta"
+        android:layout_toRightOf="@+id/cellulare_nuova_prenotaz" />
 
     <Button
         android:id="@+id/button_prenotazione"
@@ -51,15 +48,22 @@
         android:layout_alignRight="@+id/ora_scelta_button"
         android:layout_alignParentLeft="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_data"
+        android:text="Data"
+        android:layout_alignTop="@+id/data_scelta"
+        android:layout_toRightOf="@+id/cellulare_nuova_prenotaz" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/button_materia"
-        android:layout_below="@+id/ora_scelta"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="47dp"
-        android:text="materia" />
+        android:id="@+id/materia_prenotazione"
+        android:text="materia"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,7 +64,7 @@ public class SearchResultActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(context, "Item Clicked " + position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context,SearchTutorDetails.class);
+                Intent intent = new Intent(context, SearchTutorDetails.class);
                 Bundle bundle = new Bundle();
                 SearchTutorItem item = (SearchTutorItem) adapter.getItem(position);
                 bundle.putString("idTutor", item.getId());
@@ -71,6 +72,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
 

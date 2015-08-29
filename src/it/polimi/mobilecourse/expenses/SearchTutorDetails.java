@@ -1,5 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,7 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,12 +43,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class SearchTutorDetails extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Toolbar toolbar;
     private GoogleMap map;
@@ -50,10 +58,16 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     private Location loc2;
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
-    private TextView subjects;
+    private TextView tutorCognome;
+    private ListView mListMaterie;
+    private ListMaterieAdapterNoDelete adapter;
     private String idTutor;
     private String nome;
     private String cognome;
+    private String materiaSelezionata;
+    private ArrayList<ListMaterieItem> items = new ArrayList<>();
+    private Spinner spinnerMaterie;
+
 
     public static final String TAG = SearchTutorDetails.class.getSimpleName();
 
@@ -117,24 +131,108 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         );
 
-        tutorNome = (TextView) findViewById(R.id.tutor_nome);
-        subjects = (TextView) findViewById(R.id.tutor_details_subjects);
+        tutorNome = (TextView) findViewById(R.id.search_tutor_name);
+        tutorCognome = (TextView) findViewById(R.id.search_tutor_surname);
+        spinnerMaterie = (Spinner) findViewById(R.id.spinner_materie_tutor);
 
 
 
         showTutorDetails();
+        getMaterieForTutor();
 
 
+    }
+
+    private void getMaterieForTutor() {
 
 
+        String url = "http://www.unishare.it/tutored/getMaterie.php?idtutor=".concat(idTutor);
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            if (response.length() == 0) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SearchTutorDetails.this);
+
+                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
+
+                                AlertDialog dialog = builder.create();
+                                if (dialog != null)
+                                    builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            try {
+                                                dialog.wait(2000);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+
+                                dialog.show();
 
 
+                            }
+                            items.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                ListMaterieItem item = new ListMaterieItem(obj.getString("idm"), obj.getString("nome"), obj.getString("prezzo"));
 
-        }
+                                items.add(item);
+
+
+                            }
+
+
+                            adapter = new ListMaterieAdapterNoDelete(getApplicationContext(), items);
+
+                            spinnerMaterie.setAdapter(adapter);
+                            spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    materiaSelezionata = items.get(position).getNome();
+                                    Log.d(TAG,"Materia selezionata: " + materiaSelezionata);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
+    }
 
     private void showTutorDetails() {
         String url = "http://www.unishare.it/tutored/tutor_data.php?id=" + idTutor;
-        Log.d(TAG,url);
+        Log.d(TAG, url);
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -144,35 +242,25 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
                     @Override
                     public boolean onResponse(JSONArray response) {
-                            try {
+                        try {
 
 
-                                JSONObject obj = response.getJSONObject(0);
-                                Log.d(TAG, response.toString());
-                                nome = obj.getString("nome");
-                                Log.i(TAG, "Name set: " + nome );
-                                cognome = obj.getString("cognome");
-                                Log.i(TAG, "Surname set: " + cognome);
-                                Button button = (Button)findViewById(R.id.prenotaz_button);
-                                button.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(SearchTutorDetails.this, NuovaPrenotazioneActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("id", idTutor);
-                                        bundle.putString("nome", nome);
-                                        bundle.putString("cognome", cognome);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                        Log.d(TAG,"Intent staarted");
-                                    }
-                                });
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG, response.toString());
+                            nome = obj.getString("nome");
+                            tutorNome.setText(nome);
+                            Log.i(TAG, "Name set: " + nome);
+                            cognome = obj.getString("cognome");
+                            Log.i(TAG, "Surname set: " + cognome);
+
+                            tutorCognome.setText(cognome);
+
+                            manageButton();
 
 
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
                         return false;
@@ -190,7 +278,30 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         queue.add(request);
 
 
+    }
 
+    private void manageButton() {
+
+        Button button = (Button) findViewById(R.id.prenotaz_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchTutorDetails.this, NuovaPrenotazioneActivity.class);
+                Bundle bundle = new Bundle();
+                if (materiaSelezionata == null) {
+                    Toast.makeText(getApplicationContext(), "Seleziona una materia", Toast.LENGTH_SHORT).show();
+                } else {
+                    bundle.putString("id", idTutor);
+                    bundle.putString("nome", nome);
+                    bundle.putString("cognome", cognome);
+                    bundle.putString("materia", materiaSelezionata);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                }
+
+            }
+        });
     }
 
 
@@ -202,9 +313,6 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
             mGoogleApiClient.disconnect();
         }
     }
-
-
-
 
 
     public LatLng getLocationFromAddress(String strAddress) {
@@ -222,7 +330,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
             location.getLatitude();
             location.getLongitude();
 
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
 
         } catch (Exception ex) {
 
@@ -233,14 +341,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     }
 
 
-
-
-
-
-
-
-
-@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -253,21 +354,13 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     }
 
 
-
-
-
-
-
-
-
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Location services connected.");
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
-        }
-        else {
+        } else {
             handleNewLocation(location);
         }
     }
@@ -287,20 +380,6 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         handleNewLocation(location);
     }
 
-    private void handleNewLocation(Location location) {
-        Log.d(TAG, location.toString());
-
-        double currentLatitude = location.getLatitude();
-        double currentLongitude = location.getLongitude();
-        LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-
-        MarkerOptions options = new MarkerOptions()
-                .position(latLng)
-                .title("I am here!");
-        map.addMarker(options);
-        map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-    }
-
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
@@ -315,4 +394,19 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     public void onProviderDisabled(String provider) {
 
     }
+
+    private void handleNewLocation(Location location) {
+        Log.d(TAG, location.toString());
+
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
+        LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title("I am here!");
+        map.addMarker(options);
+        map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
 }

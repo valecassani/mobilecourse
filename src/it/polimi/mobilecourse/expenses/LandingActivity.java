@@ -171,7 +171,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     private void updateWithToken(final AccessToken currentAccessToken) {
 
         if (currentAccessToken != null) {
-            Toast.makeText(getApplicationContext(), "Login con Facebook avvenuto", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Login con Facebook avvenuto", Toast.LENGTH_SHORT).show();
 
 
 
@@ -187,7 +187,7 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                     //se non è loggato in fb,escono bottoni semplici che mandano a pagine di login
                     FragmentManager fragMan = getFragmentManager();
                     FragmentTransaction fragTrans = fragMan.beginTransaction();
-                    fragTrans.replace(R.id.fragreplace, lf).commit();
+                    fragTrans.replace(R.id.fragreplace, lf).commitAllowingStateLoss();
                     progress(false);
 
                 }

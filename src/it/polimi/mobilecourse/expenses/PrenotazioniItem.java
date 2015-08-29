@@ -31,14 +31,20 @@ public class PrenotazioniItem {
     private String data;
     private String materia;
     private String cellulare;
+    private String id;
+    private boolean confermato;
+    private String durata;
 
     public PrenotazioniItem(){}
 
 
-    public PrenotazioniItem(String materia, String data, String cellulare) {
+    public PrenotazioniItem(String id, String materia, String data, String cellulare, String durata, boolean confermato) {
         this.materia = materia;
         this.data = data;
         this.cellulare=cellulare;
+        this.id = id;
+        this.durata = durata;
+        this.confermato = confermato;
 
     }
 
@@ -56,5 +62,12 @@ public class PrenotazioniItem {
 
     public String getCellulare() {
         return cellulare;
+    }
+
+    public String getId() {return id;}
+
+    public boolean isConfermato() {return confermato;}
+
+    public String getDurata() { return durata;
     }
 }

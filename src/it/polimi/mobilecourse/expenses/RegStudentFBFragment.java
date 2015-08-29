@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +61,7 @@ public class RegStudentFBFragment extends Fragment {
     private ArrayList<String> listIdFac;
 
     private String cellS;
+    private String facebookId;
 
 
 
@@ -70,7 +72,7 @@ public class RegStudentFBFragment extends Fragment {
         view = inflater.inflate(R.layout.regfbstudent_fragment, container, false);
 
 
-
+        getFacebookId();
 
         settingsReg();
         setSpinner();
@@ -96,7 +98,10 @@ public class RegStudentFBFragment extends Fragment {
         return view;
     }
 
+    private void getFacebookId() {
 
+        facebookId = Profile.getCurrentProfile().getId();
+    }
 
 
     @Override
@@ -283,7 +288,7 @@ public class RegStudentFBFragment extends Fragment {
 
         String url="registration_student_fb.php?username=".concat(mailS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellS)
-                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity).concat("&").concat("id_facolta=").concat(idFac);
+                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity).concat("&").concat("id_facolta=").concat(idFac).concat("id_fb=".concat(facebookId));
         new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFBFragment.this).execute();
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,

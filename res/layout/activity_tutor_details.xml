@@ -12,7 +12,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/tutor_nome"
         android:layout_margin="15dp"
-        android:layout_below="@+id/my_awesome_toolbar"
         android:layout_alignLeft="@+id/tutor_details_subjects"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="false" />
@@ -20,7 +19,7 @@
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -43,6 +42,49 @@
         android:text="Vai a prenotazione"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tutor_nome"
+        android:layout_alignLeft="@+id/tutor_details_subjects" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:layout_alignTop="@+id/search_tutor_name"
+        android:layout_toRightOf="@+id/textView27" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/search_tutor_name"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/search_tutor_surname"
+        android:layout_alignLeft="@id/search_tutor_surname"
+        android:layout_marginLeft="300dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/search_tutor_surname"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_marginLeft="300dp"
+
+  />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_materie_tutor"
+        android:layout_above ="@id/map"/>
+
+
+
 
 
 </RelativeLayout>

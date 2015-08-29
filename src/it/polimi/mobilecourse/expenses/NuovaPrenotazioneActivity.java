@@ -30,6 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.identity.intents.AddressConstants;
 import com.quinny898.library.persistentsearch.SearchResult;
 
+import org.w3c.dom.Text;
+
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,20 +44,24 @@ import java.util.Map;
 
 public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
+    private static String TAG = "NuovaPrenotazione";
+
     private Toolbar toolbar;
     private SimpleDateFormat simpleDateFormat;
     private TextView sceltaData;
     private TextView sceltaOra;
+    private TextView mMateriaText;
     private Context context;
     private RequestQueue queue;
     private Button sceltaOraButton;
+    private Button sceltaDataButton;
     private EditText editTextCellulare;
     private SessionManager sessionManager;
+    private String materia;
 
     private Date data;
     private Time time;
     private String idTutor;
-
 
 
     @Override
@@ -68,9 +74,12 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(25);
         Bundle data = getIntent().getExtras();
         idTutor = data.getString("id");
+        materia = data.getString("materia");
+        Log.d(TAG, "Materia arrivata: " + materia);
         Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
-        String nomeTutor =data.getString("nome");
+        String nomeTutor = data.getString("nome");
         String cognomeTutor = data.getString("cognome");
+
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -78,10 +87,14 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         TextView mTutorSelezionato = (TextView) findViewById(R.id.tutor_selezionato);
         mTutorSelezionato.setText(nomeTutor + " " + cognomeTutor);
 
+        mMateriaText = (TextView) findViewById(R.id.materia_prenotazione);
+        mMateriaText.setText(materia);
+
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        sceltaData = (TextView)findViewById(R.id.data_scelta);
-        sceltaData.setOnClickListener(new View.OnClickListener() {
+        sceltaData = (TextView) findViewById(R.id.data_scelta);
+        sceltaDataButton = (Button) findViewById(R.id.button_data);
+        sceltaDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar newCalendar = Calendar.getInstance();
@@ -127,7 +140,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         });
 
 
-        Button sendButton = (Button)findViewById(R.id.button_prenotazione);
+        Button sendButton = (Button) findViewById(R.id.button_prenotazione);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,17 +152,12 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
                 startActivity(intent);
-               // SearchResultActivity.activity.finish();
+                // SearchResultActivity.activity.finish();
 
             }
         });
 
-        editTextCellulare = (EditText)findViewById(R.id.cellulare_nuova_prenotaz);
-
-
-
-
-
+        editTextCellulare = (EditText) findViewById(R.id.cellulare_nuova_prenotaz);
 
 
     }
@@ -158,66 +166,68 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         final String numeroCellulare = editTextCellulare.getText().toString();
 
         try {
-            data = new SimpleDateFormat("dd-MM-yyyy").parse(sceltaData.getText().toString());
-            time = null;
-            Log.i("Nuova Richiesta", "Parse data ok  " + data.toString());
+            if (sceltaData != null && !editTextCellulare.getText().toString().equals("")) {
+                data = new SimpleDateFormat("dd-MM-yyyy").parse(sceltaData.getText().toString());
+                time = null;
+                Log.i("Nuova Richiesta", "Parse data ok  " + data.toString());
+
+            } else {
+                Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT).show();
+
+
+            }
+
 
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT).show();
         }
 
         String url = "http://www.unishare.it/tutored/add_prenotazione.php";
-        if (data == null && numeroCellulare == null ) {
-            Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
-        } else {
 
 
-
-            StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>()
-                    {
-                        @Override
-                        public boolean onResponse(String response) {
-                            // response
-                            Log.d("Response", response);
-                            return false;
-                        }
-                    },
-                    new Response.ErrorListener()
-                    {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // error
-                            Log.d("Error.Response", error.getMessage());
-                        }
+        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public boolean onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        return false;
                     }
-            ) {
-                @Override
-                protected Map<String, String> getParams()
-                {
-
-                    Map<String, String>  params = new HashMap<String, String>();
-                    params.put("id_studente", sessionManager.getUserDetails().get("id") );
-                    params.put("data", data.toString());
-                    params.put("id_tutor", idTutor);
-                    //params.put("ora", sceltaOra.toString());
-                    params.put("materia","");
-                    params.put("note","");
-                    params.put("cellulare",numeroCellulare);
-                    params.put("confermato","0");
-
-
-                    return params;
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.getMessage());
+                    }
                 }
-            };
-            queue.add(jsObjRequest);
-            Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT);
-            finish();
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
 
-        }
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_studente", sessionManager.getUserDetails().get("id"));
+                params.put("data", data.toString());
+                params.put("id_tutor", idTutor);
+                //params.put("ora", sceltaOra.toString());
+                params.put("materia", materia);
+                params.put("note", "");
+                params.put("cellulare", numeroCellulare);
+                params.put("confermato", "0");
+
+
+                return params;
+            }
+        };
+        queue.add(jsObjRequest);
+        Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT).show();
+        finish();
+
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -229,12 +239,9 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 return true;
 
 
-
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }
