@@ -67,6 +67,8 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     private String materiaSelezionata;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
     private Spinner spinnerMaterie;
+    private String idMateriaSelezionata;
+    private String prezzoMateriaSelezionata;
 
 
     public static final String TAG = SearchTutorDetails.class.getSimpleName();
@@ -198,6 +200,8 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     materiaSelezionata = items.get(position).getNome();
+                                    prezzoMateriaSelezionata = items.get(position).getPrezzo();
+                                    idMateriaSelezionata = items.get(position).getId();
                                     Log.d(TAG,"Materia selezionata: " + materiaSelezionata);
 
                                 }
@@ -295,6 +299,8 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                     bundle.putString("nome", nome);
                     bundle.putString("cognome", cognome);
                     bundle.putString("materia", materiaSelezionata);
+                    bundle.putString("prezzo",prezzoMateriaSelezionata);
+                    bundle.putString("materia_id",idMateriaSelezionata);
                     intent.putExtras(bundle);
                     startActivity(intent);
 

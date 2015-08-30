@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private SimpleDateFormat simpleTimeFormat;
     private TextView sceltaData;
     private TextView sceltaOra;
+
     private Context context;
     private RequestQueue queue;
     private Button sceltaOraButton;
@@ -57,15 +59,19 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private SessionManager sessionManager;
     private TextView mTextViewMateria;
     private Button sceltaDataButton;
+    private NumberPicker durataPicker;
+
 
     private String idStudente;
     private String idTutor;
     private String note;
     private String confermato;
 
-    private Date data;
-    private Date time;
+    private String date;
+    private String time;
     private String idPrenotazione;
+    private String materia;
+    private String durata;
     private Button sendButton;
 
 
@@ -103,6 +109,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         sceltaData.setText(simpleDateFormat.format(newDate.getTime()));
+                        date = simpleDateFormat.format(newDate.getTime());
+
 
                     }
 
@@ -130,8 +138,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-                        Calendar newTime = Calendar.getInstance();
-                        newTime.set(selectedHour, selectedMinute);
+                        time = selectedHour + ":" + selectedMinute;
                         sceltaOra.setText(selectedHour + ":" + selectedMinute);
 
 
@@ -156,6 +163,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
         editTextCellulare = (EditText) findViewById(R.id.cellulare_nuova_prenotaz);
 
+
+
         populateData();
 
 
@@ -177,8 +186,11 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
                             JSONObject obj = (JSONObject) response.get(0);
                             sceltaData.setText(obj.getString("data"));
+                            date=obj.getString("data");
                             sceltaOra.setText(obj.getString("ora_inizio"));
-                            mTextViewMateria.setText(obj.getString("materia"));
+                            time=obj.getString("ora_inizio");
+                            mTextViewMateria.setText(obj.getString("nome_materia"));
+                            materia = obj.getString("materia");
                             editTextCellulare.setText(obj.getString("cellulare"));
                             idStudente = obj.getString("id_studente");
                             idTutor = obj.getString("id_tutor");
@@ -218,12 +230,9 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         final String numeroCellulare = editTextCellulare.getText().toString();
 
         try {
-            data = new SimpleDateFormat("dd-MM-yyyy").parse(sceltaData.getText().toString());
-            time = null;
-            Log.i("Nuova Richiesta", "Parse data ok  " + data.toString());
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+
         } catch (NullPointerException e) {
             Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
         }
@@ -254,10 +263,11 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("id_studente", idStudente);
-                params.put("data", data.toString());
+                params.put("data", date);
                 params.put("id_tutor", idTutor);
-                //params.put("ora", sceltaOra.toString());
-                params.put("materia", "");
+                params.put("ora", time);
+                params.put("durata", "");
+                params.put("materia", materia);
                 params.put("note", note);
                 params.put("cellulare", numeroCellulare);
                 params.put("id_prenotazione", idPrenotazione);

@@ -48,6 +48,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private SimpleDateFormat simpleDateFormat;
+    private SimpleDateFormat anotherDateFormat;
     private TextView sceltaData;
     private TextView sceltaOra;
     private TextView mMateriaText;
@@ -59,9 +60,12 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private String materia;
 
-    private Date data;
-    private Time time;
+    private String durata;
+    private String date;
+    private String time;
     private String idTutor;
+    private String prezzoOrario;
+    private String materiaId;
 
 
     @Override
@@ -75,6 +79,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         idTutor = data.getString("id");
         materia = data.getString("materia");
+        prezzoOrario = data.getString("prezzo");
+        materiaId = data.getString("materia_id");
         Log.d(TAG, "Materia arrivata: " + materia);
         Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
         String nomeTutor = data.getString("nome");
@@ -91,6 +97,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         mMateriaText.setText(materia);
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        anotherDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         sceltaData = (TextView) findViewById(R.id.data_scelta);
         sceltaDataButton = (Button) findViewById(R.id.button_data);
@@ -102,7 +109,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
+                        date = anotherDateFormat.format(newDate.getTime());
                         sceltaData.setText(simpleDateFormat.format(newDate.getTime()));
 
                     }
@@ -128,7 +135,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 TimePickerDialog mTimePicker = new TimePickerDialog(NuovaPrenotazioneActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                        time = selectedHour + ":" + selectedMinute;
                         sceltaOra.setText(selectedHour + ":" + selectedMinute);
                         //time.setTime(selectedHour);
                     }
@@ -167,9 +174,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
         try {
             if (sceltaData != null && !editTextCellulare.getText().toString().equals("")) {
-                data = new SimpleDateFormat("dd-MM-yyyy").parse(sceltaData.getText().toString());
-                time = null;
-                Log.i("Nuova Richiesta", "Parse data ok  " + data.toString());
+
 
             } else {
                 Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT).show();
@@ -178,8 +183,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             }
 
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+
         } catch (NullPointerException e) {
             Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT).show();
         }
@@ -209,13 +213,29 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_studente", sessionManager.getUserDetails().get("id"));
-                params.put("data", data.toString());
+                Log.d(TAG, sessionManager.getUserDetails().get("id"));
+                params.put("data", date);
+                Log.d(TAG, date);
+
                 params.put("id_tutor", idTutor);
-                //params.put("ora", sceltaOra.toString());
-                params.put("materia", materia);
+                Log.d(TAG, idTutor);
+
+                params.put("ora", time);
+                Log.d(TAG, time);
+
+                //params.put("durata","");
+                params.put("materia", materiaId);
+                Log.d(TAG, materia);
+
                 params.put("note", "");
+                Log.d(TAG, "");
+
                 params.put("cellulare", numeroCellulare);
+                Log.d(TAG, numeroCellulare);
+
                 params.put("confermato", "0");
+                Log.d(TAG, "0");
+
 
 
                 return params;

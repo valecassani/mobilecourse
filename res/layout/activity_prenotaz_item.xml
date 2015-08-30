@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:fitsSystemWindows="true"
     tools:context="it.polimi.mobilecourse.expenses.NuovaPrenotazioneActivity"
-    >
+    android:id="@+id/">
 
 
     <TextView
@@ -20,29 +20,29 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:text="Inserire una data"
-        android:layout_above="@+id/ora_scelta"
-        android:layout_alignLeft="@+id/ora_scelta"
-        android:layout_marginBottom="29dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="89dp"
+        android:layout_below="@+id/prenot_tutor_name" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
         android:id="@+id/ora_scelta"
         android:text="Inserire orario"
-        android:layout_alignTop="@+id/ora_scelta_button"
-        android:layout_alignLeft="@+id/cellulare_nuova_prenotaz" />
+        android:layout_alignBottom="@id/ora_scelta_button"
+        android:layout_alignRight="@+id/imagePrenotTutor" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@id/ora_scelta_button"
         android:text="Orario"
-        android:layout_above="@+id/button_materia"
-        android:layout_alignLeft="@+id/editText2" />
+        android:layout_above="@+id/cellulare_nuova_prenotaz"
+        android:layout_alignLeft="@+id/button_data" />
 
 
 
@@ -52,10 +52,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/button_materia"
         android:text="materia"
-        android:layout_marginBottom="73dp"
-        android:layout_above="@+id/cellulare_nuova_prenotaz"
-        android:layout_alignParentLeft="true"
-        android:layout_alignLeft="@id/ora_scelta"/>
+        android:layout_alignTop="@+id/prenot_tutor_name"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -64,9 +62,8 @@
         android:ems="10"
         android:id="@+id/cellulare_nuova_prenotaz"
         android:hint="Cellulare"
-        android:layout_above="@+id/button_conferma_prenotazione"
-        android:layout_alignLeft="@+id/tutor_selezionato"
-        android:layout_marginBottom="200dp" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -98,21 +95,13 @@
         android:layout_alignTop="@+id/tutor_selezionato"
         android:layout_alignParentRight="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/prenot_tutor_name"
-        android:layout_alignLeft="@+id/prenot_tutor_name" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_data"
         android:text="Data"
         android:layout_alignTop="@+id/data_scelta"
-        android:layout_alignLeft="@id/ora_scelta_button" />
+        android:layout_alignLeft="@+id/prenot_tutor_name" />
 
     <Button
         android:layout_width="match_parent"
@@ -125,8 +114,6 @@
         style="?android:attr/borderlessButtonStyle"
         android:background="@color/primaryColorDark"
         android:layout_above="@id/button_conferma_prenotazione"/>
-
-
 
 
 </RelativeLayout>
