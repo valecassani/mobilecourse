@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -47,8 +51,33 @@ public class SearchTutorAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.search_tutor_item, null);
         }
 
-        TextView nome = (TextView) convertView.findViewById(R.id.search_tutor_nome);
-        nome.setText(items.get(position).getNome() + " " + items.get(position).getCognome());
+        TextView nome = (TextView) convertView.findViewById(R.id.ricerca_tutor_nome);
+        TextView uni= (TextView) convertView.findViewById(R.id.ricerca_tutor_uni);
+        RatingBar media = (RatingBar) convertView.findViewById(R.id.ricerca_tutor_media);
+        CircularImageView img = (CircularImageView) convertView.findViewById(R.id.search_tutor_image);
+
+
+        nome.setText(items.get(position).getNome() + " " + items.get(position).getCognome().substring(0, 1) + ".");
+        uni.setText(items.get(position).getUni());
+        if (items.get(position).getMedia() != 0) {
+            media.setRating(items.get(position).getMedia());
+        } else {
+            media.setVisibility(View.GONE);
+        }
+        if (items.get(position).getUrl().compareTo(" ") == 0) {
+            img.setImageResource(R.drawable.dummy_profpic);
+        } else if (items.get(position).getUrl().compareTo("face") == 0) {
+
+            Picasso.with(context.getApplicationContext()).load("https://graph.facebook.com/" + items.get(position).getIdfb() + "/picture"
+            ).into(img);
+
+
+
+        } else {
+            Picasso.with(context.getApplicationContext()).load("http://www.unishare.it/tutored/" + items.get(position).getUrl()
+            ).into(img);
+
+        }
         return convertView;
     }
 }

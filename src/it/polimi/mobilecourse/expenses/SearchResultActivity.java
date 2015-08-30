@@ -122,7 +122,9 @@ public class SearchResultActivity extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, obj.toString());
-                                SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"),obj.getString("id"));
+                                SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"),
+                                        obj.getString("id"),obj.getString("uni"),obj.getString("media"),
+                                        obj.getString("url"),obj.getString("idfb"));
                                 itemsTutor.add(item);
 
 

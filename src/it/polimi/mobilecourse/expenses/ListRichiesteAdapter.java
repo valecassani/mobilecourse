@@ -72,7 +72,7 @@ public class ListRichiesteAdapter extends BaseAdapter {
 
         nome.setText(items.get(position).getNome() + " " + items.get(position).getCognome().substring(0, 1) + ".");
         titolo.setText(items.get(position).getTitolo());
-        data.setText("Entro il "+items.get(position).getData_entro().substring(0,10));
+        data.setText("Entro il "+Functions.convertiData(items.get(position).getData_entro().substring(0,10)));
 
         if (items.get(position).getUrl().compareTo(" ") == 0) {
             img.setImageResource(R.drawable.dummy_profpic);

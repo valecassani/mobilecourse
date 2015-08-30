@@ -190,7 +190,7 @@ public class MostraRichiestaFragment extends Fragment {
        nome.setText("Richiesta di " + nomeR + " " + cognomeR.substring(0, 1) + ".");
         titolo.setText(titoloR);
         testo.setText(testoR);
-        data.setText("Entro il " + data_entroR.substring(0, 10));
+        data.setText("Entro il " + Functions.convertiData(data_entroR.substring(0, 10)));
         if(uniR.compareTo("0")!=0){
             uni.setText("Università:"+uniR);
         }
@@ -213,8 +213,12 @@ public class MostraRichiestaFragment extends Fragment {
     }
 
     private void downloadImage(){
+
+
+
         Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
         ).into(fotor);
+
         fotor.setVisibility(View.VISIBLE);
         Target t=new Target(){
             @Override
