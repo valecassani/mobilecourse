@@ -57,6 +57,7 @@ public class MaterieTutorFragment extends Fragment {
     ListMaterieAdapter adapter ;
 
     private ListView materie_list;
+    private TextView nomaterie;
 
 
 
@@ -71,6 +72,7 @@ public class MaterieTutorFragment extends Fragment {
         view = inflater.inflate(R.layout.materie_tutor_fragment, container, false);
         progress=(ProgressBar)view.findViewById(R.id.progressBarMaterie);
         materie_list=(ListView)view.findViewById(R.id.materie_list);
+        nomaterie=(TextView)view.findViewById(R.id.nomaterieT);
 
 
 
@@ -142,27 +144,11 @@ public class MaterieTutorFragment extends Fragment {
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
 
-                                AlertDialog dialog = builder.create();
-                                if (dialog != null)
-                                    builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            try {
-                                                dialog.wait(2000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
-                                            dialog.dismiss();
 
-                                            activity.finish();
-                                        }
-                                    });
 
-                                dialog.show();
-
+                                nomaterie.setVisibility(View.VISIBLE);
 
 
                             }
