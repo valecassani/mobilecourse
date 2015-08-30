@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ public class SearchFragment extends Fragment implements LocationListener{
     private RequestQueue queue;
     private Context context;
     private ListView mListView;
+    private TextView nores;
     private EditText searchSubject;
     private ButtonFloat searchButton;
     private LocationManager locationManager;
@@ -62,6 +64,7 @@ public class SearchFragment extends Fragment implements LocationListener{
 
 
         searchSubject = (EditText)view.findViewById(R.id.search_tutor);
+        nores=(TextView)view.findViewById(R.id.noresultR);
 
         searchButton = (ButtonFloat)view.findViewById(R.id.search_tutor_button);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -121,22 +124,15 @@ public class SearchFragment extends Fragment implements LocationListener{
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
-
-                                AlertDialog dialog = builder.create();
-                                builder.setPositiveButton("Chiudi", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                dialog.show();
+                                nores.setVisibility(View.VISIBLE);
                             }
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, obj.toString());
-                                SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"),null);
+                                SearchTutorItem item = new SearchTutorItem(obj.getString("nome"),obj.getString("cognome"),
+                                        obj.getString("id"),obj.getString("uni"),obj.getString("media"),
+                                        obj.getString("url"),obj.getString("idfb"));
                                 items.add(item);
 
 

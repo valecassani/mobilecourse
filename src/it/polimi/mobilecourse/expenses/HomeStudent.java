@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -371,34 +373,43 @@ public class HomeStudent extends AppCompatActivity {
 
     public void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = null;
+        final Fragment[] fragment = {null};
+
         switch (position) {
             case 0:
-                fragment = new HomeStudentFragment();
+                fragment[0] = new HomeStudentFragment();
                 break;
             case 1:
-                fragment = new SearchFragment();
-                getSupportActionBar().setTitle("Ricerca Tutor");
+
+                fragment[0] = new SearchFragment();
+                getSupportActionBar().setTitle("Ricerca per materie");
+
+
+
+
+
+
+
                 break;
             case 2:
-                fragment = new StudentDataFragment();
+                fragment[0] = new StudentDataFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("mail", username);
                 bundle.putString("id", userId);
-                fragment.setArguments(bundle);
+                fragment[0].setArguments(bundle);
                 break;
             case 3:
-                fragment = new RichiesteFragment();
+                fragment[0] = new RichiesteFragment();
                 bundle = new Bundle();
                 bundle.putString("student_id", userId);
-                fragment.setArguments(bundle);
+                fragment[0].setArguments(bundle);
                 break;
             case 4:
                 bundle = new Bundle();
                 bundle.putString("student_id", userId);
 
-                fragment = new PrenotazioniFragment();
-                fragment.setArguments(bundle);
+                fragment[0] = new PrenotazioniFragment();
+                fragment[0].setArguments(bundle);
                 break;
             case 5:
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -433,9 +444,9 @@ public class HomeStudent extends AppCompatActivity {
 
         }
 
-        if (fragment != null) {
+        if (fragment[0] != null) {
             FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment).commit();
+            fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.student_fragment, fragment[0]).commit();
 
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
@@ -518,5 +529,9 @@ public class HomeStudent extends AppCompatActivity {
         }
 
     }
+
+
+
+
 
 }
