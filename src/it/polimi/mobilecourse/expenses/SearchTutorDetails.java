@@ -144,8 +144,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         );
 
-        tutorNome = (TextView) view.findViewById(R.id.search_tutor_name);
-        tutorCognome = (TextView) view.findViewById(R.id.search_tutor_surname);
+        tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
+        tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
         spinnerMaterie = (Spinner) view.findViewById(R.id.spinner_materie_tutor);
 
 
