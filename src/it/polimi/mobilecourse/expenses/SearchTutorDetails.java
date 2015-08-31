@@ -133,8 +133,8 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         );
 
-        tutorNome = (TextView) findViewById(R.id.search_tutor_name);
-        tutorCognome = (TextView) findViewById(R.id.search_tutor_surname);
+        tutorNome = (TextView) findViewById(R.id.tutor_nome);
+        tutorCognome = (TextView) findViewById(R.id.tutor_cognome);
         spinnerMaterie = (Spinner) findViewById(R.id.spinner_materie_tutor);
 
 

@@ -2,6 +2,7 @@ package it.polimi.mobilecourse.expenses;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -73,6 +74,9 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private String materia;
     private String durata;
     private Button sendButton;
+    private TextView textDurata;
+    private int prezzo;
+    private String prezzoOrario;
 
 
     @Override
@@ -196,9 +200,12 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                             idTutor = obj.getString("id_tutor");
                             confermato = obj.getString("confermato");
 
+
                             note = obj.getString("note");
                             if (confermato.equals("1")) {
                                 sendButton.setVisibility(View.INVISIBLE);
+                                sceltaDataButton.setVisibility(View.INVISIBLE);
+                                sceltaOraButton.setVisibility(View.INVISIBLE);
                             }
 
 
@@ -303,6 +310,38 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showPicker()
+    {
+
+        final Dialog d = new Dialog(PrenotazioneItemDetails.this);
+        d.setTitle("Durata Riptezione");
+        d.setContentView(R.layout.dialog_number);
+        Button b1 = (Button) d.findViewById(R.id.button1);
+        Button b2 = (Button) d.findViewById(R.id.button2);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        np.setMaxValue(24);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prezzo = Integer.parseInt(prezzoOrario) * np.getValue();
+                textDurata.setText("Prezzo totale: " + prezzo + " Euro");
+                d.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss(); // dismiss the dialog
+            }
+        });
+        d.show();
+
+
     }
 
 

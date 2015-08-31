@@ -57,7 +57,7 @@ public class SearchTutorAdapter extends BaseAdapter {
         CircularImageView img = (CircularImageView) convertView.findViewById(R.id.search_tutor_image);
 
 
-        nome.setText(items.get(position).getNome() + " " + items.get(position).getCognome().substring(0, 1) + ".");
+        nome.setText(items.get(position).getNome() + " " + items.get(position).getCognome());
         uni.setText(items.get(position).getUni());
         if (items.get(position).getMedia() != 0) {
             media.setRating(items.get(position).getMedia());

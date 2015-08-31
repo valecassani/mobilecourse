@@ -1,8 +1,10 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RemoteController;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -59,6 +62,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private EditText editTextCellulare;
     private SessionManager sessionManager;
     private String materia;
+    private Button sceltaDurataButton;
 
     private String durata;
     private String date;
@@ -66,6 +70,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private String idTutor;
     private String prezzoOrario;
     private String materiaId;
+    private TextView textDurata;
+    private int prezzo;
 
 
     @Override
@@ -81,6 +87,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         materia = data.getString("materia");
         prezzoOrario = data.getString("prezzo");
         materiaId = data.getString("materia_id");
+        Log.d(TAG,"prezzo arrivato: " + prezzoOrario);
         Log.d(TAG, "Materia arrivata: " + materia);
         Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
         String nomeTutor = data.getString("nome");
@@ -124,6 +131,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         sessionManager = new SessionManager(getApplicationContext());
         System.out.println(sessionManager.getUserDetails().get("id"));
 
+        textDurata = (TextView)findViewById(R.id.durata_text);
+
         sceltaOra = (TextView) findViewById(R.id.ora_scelta);
         sceltaOraButton = (Button) findViewById(R.id.ora_scelta_button);
         sceltaOraButton.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +155,13 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             }
         });
 
-
+        sceltaDurataButton = (Button) findViewById(R.id.button_durata);
+        sceltaDurataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPicker();
+            }
+        });
         Button sendButton = (Button) findViewById(R.id.button_prenotazione);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,7 +238,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 params.put("ora", time);
                 Log.d(TAG, time);
 
-                //params.put("durata","");
+                params.put("durata", textDurata.getText().toString());
                 params.put("materia", materiaId);
                 Log.d(TAG, materia);
 
@@ -244,6 +259,43 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         queue.add(jsObjRequest);
         Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT).show();
         finish();
+
+    }
+
+    private void calcolaPrezzo() {
+
+    }
+
+    public void showPicker()
+    {
+
+        final Dialog d = new Dialog(NuovaPrenotazioneActivity.this);
+        d.setTitle("Durata Riptezione");
+        d.setContentView(R.layout.dialog_number);
+        Button b1 = (Button) d.findViewById(R.id.button1);
+        Button b2 = (Button) d.findViewById(R.id.button2);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        np.setMaxValue(24);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prezzo = Integer.parseInt(prezzoOrario) * np.getValue();
+                textDurata.setText("Prezzo totale: " + prezzo + " Euro");
+                calcolaPrezzo();
+                d.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss(); // dismiss the dialog
+            }
+        });
+        d.show();
+
 
     }
 

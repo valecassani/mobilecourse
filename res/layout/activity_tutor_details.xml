@@ -10,11 +10,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tutor_cognome"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignRight="@+id/map" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/tutor_nome"
-        android:layout_margin="15dp"
-        android:layout_alignLeft="@+id/tutor_details_subjects"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="false" />
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_below="@id/tutor_cognome"
+        android:layout_alignRight="@+id/map" />
 
     <fragment
         android:id="@+id/map"
@@ -43,25 +51,18 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"/>
 
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tutor_nome"
-        android:layout_alignLeft="@+id/tutor_details_subjects" />
-
-    <ImageView
+      <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageView"
+        android:id="@id/imageView"
         android:layout_alignTop="@+id/search_tutor_name"
-        android:layout_toRightOf="@+id/textView27" />
+       />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@id/search_tutor_name"
-        android:textSize="25dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@+id/search_tutor_surname"
         android:layout_alignLeft="@id/search_tutor_surname"
@@ -72,7 +73,7 @@
         android:layout_height="wrap_content"
         android:id="@id/search_tutor_surname"
         android:textStyle="bold"
-        android:textSize="25dp"
+        android:textSize="16sp"
         android:layout_marginLeft="300dp"
 
   />
@@ -81,7 +82,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_materie_tutor"
-        android:layout_above ="@id/map"/>
+        android:layout_above ="@id/map"
+        android:layout_below="@id/tutor_nome"/>
 
 
 
