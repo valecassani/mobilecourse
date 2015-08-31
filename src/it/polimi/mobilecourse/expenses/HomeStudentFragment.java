@@ -29,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Valerio on 15/05/2015.
@@ -118,7 +120,16 @@ public class HomeStudentFragment extends Fragment {
 
                             }
 
+                            Collections.sort(items, new Comparator<ListTutorItem>() {
+                                @Override
+                                public int compare(ListTutorItem lhs, ListTutorItem rhs) {
+
+                                    return (int)rhs.getMedia()-(int)lhs.getMedia();
+                                }
+                            });
+
                             adapter = new ListTutorAdapter(activity.getApplicationContext(), items);
+
                             list_tutor.setAdapter(adapter);
 
                             progress(false);

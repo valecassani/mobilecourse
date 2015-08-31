@@ -1,7 +1,11 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,23 +38,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by valeriocassani on 15/04/15.
  */
-public class SearchFragment extends Fragment implements LocationListener{
+public class SearchFragment extends Fragment {
     private final String TAG = "Search Fragment";
     private ArrayList<SearchTutorItem> items = new ArrayList<>();
+    private HomeStudent activity;
     private RequestQueue queue;
     private Context context;
     private ListView mListView;
     private TextView nores;
     private EditText searchSubject;
     private ButtonFloat searchButton;
+    private ProgressBar progress;
+
     private LocationManager locationManager;
     private String provider;
     private double lat;
     private double lng;
+    private View view;
+    private TextView testa;
 
     private boolean isGPSEnabled;
     private boolean isNetworkEnabled;
@@ -56,7 +69,7 @@ public class SearchFragment extends Fragment implements LocationListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_fragment, container, false);
+        view = inflater.inflate(R.layout.search_fragment, container, false);
 
         queue= Volley.newRequestQueue(view.getContext());
         context = view.getContext();
@@ -65,14 +78,19 @@ public class SearchFragment extends Fragment implements LocationListener{
 
         searchSubject = (EditText)view.findViewById(R.id.search_tutor);
         nores=(TextView)view.findViewById(R.id.noresultR);
+        testa=(TextView)view.findViewById(R.id.testa);
 
         searchButton = (ButtonFloat)view.findViewById(R.id.search_tutor_button);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        mListView=(ListView)view.findViewById(R.id.result_tutor_search);
+        progress=(ProgressBar)view.findViewById(R.id.progressBarRicercaTutor);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Criteria criteria = new Criteria();
+
+                showResults(searchSubject.getText().toString());
+                /*Criteria criteria = new Criteria();
                 provider = locationManager.getBestProvider(criteria, false);
                 Location location = getLocation();
                 String url;
@@ -91,16 +109,16 @@ public class SearchFragment extends Fragment implements LocationListener{
                 Bundle bundle = new Bundle();
                 bundle.putString("query", url);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivity(intent);*/
 
             }
         });
 
         // Define the criteria how to select the locatioin provider -> use
         // default
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
+        //Criteria criteria = new Criteria();
+        //provider = locationManager.getBestProvider(criteria, false);
+        //Location location = locationManager.getLastKnownLocation(provider);
 
 
 
@@ -111,9 +129,11 @@ public class SearchFragment extends Fragment implements LocationListener{
         return view;
     }
 
-    private void showResults(String searchTerm) {
+    private void showResults(final String searchTerm) {
 
-        String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchTerm + "&lat=" + lat + "&long=" + lng;
+        progress(true);
+
+        String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchTerm ;
 
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
@@ -127,6 +147,8 @@ public class SearchFragment extends Fragment implements LocationListener{
 
                                 nores.setVisibility(View.VISIBLE);
                             }
+                            items.clear();
+
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, obj.toString());
@@ -139,10 +161,41 @@ public class SearchFragment extends Fragment implements LocationListener{
 
                             }
 
-                            SearchTutorAdapter adapter = new SearchTutorAdapter(context, items);
+                            Collections.sort(items, new Comparator<SearchTutorItem>() {
+                                @Override
+                                public int compare(SearchTutorItem lhs, SearchTutorItem rhs) {
+
+                                    return (int) rhs.getMedia() - (int) lhs.getMedia();
+                                }
+                            });
+
+                            SearchTutorAdapter adapter = new SearchTutorAdapter(activity.getApplicationContext(), items);
                             mListView.setAdapter(adapter);
 
 
+                            testa.setText("Risultati della ricerca per '" + searchTerm + "'");
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Object o = mListView.getItemAtPosition(position);
+                                    System.out.println(o);
+                                    SearchTutorItem click = ((SearchTutorItem) o);
+
+                                    FragmentManager fragmentManager = getFragmentManager();
+
+                                    Fragment fragment = new SearchTutorDetails();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("idt", click.getId());
+                                    fragment.setArguments(bundle);
+                                    System.out.println("Bundle" + bundle);
+                                    fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
+
+                                }
+                            });
+
+
+                            progress(false);
 
 
 
@@ -175,24 +228,24 @@ public class SearchFragment extends Fragment implements LocationListener{
     @Override
     public void onResume() {
         super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
+        //locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 
     /* Remove the locationlistener updates when Activity is paused */
     @Override
     public void onPause() {
         super.onPause();
-        locationManager.removeUpdates(this);
+        //locationManager.removeUpdates(this);
     }
 
-    @Override
+   /* @Override
     public void onLocationChanged(Location location) {
         lat =  location.getLatitude();
         lng = location.getLongitude();
-        Log.d(TAG,"Latitude " + lat +", Longitude " + lng);
-    }
+        Log.d(TAG, "Latitude " + lat + ", Longitude " + lng);
+    }*/
 
-    @Override
+   /* @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         // TODO Auto-generated method stub
 
@@ -266,6 +319,30 @@ public class SearchFragment extends Fragment implements LocationListener{
         }
 
         return location;
+    }*/
+
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        progress.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progress.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+
+        this.activity =  (HomeStudent)activity;
     }
 }
 

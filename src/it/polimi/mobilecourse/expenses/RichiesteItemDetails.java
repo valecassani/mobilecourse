@@ -39,7 +39,7 @@ public class RichiesteItemDetails extends AppCompatActivity {
         setContentView(R.layout.request_details);
         toolbar = (Toolbar)findViewById(R.id.my_awesome_toolbar);
 
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setElevation(25);

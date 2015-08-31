@@ -1,6 +1,9 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -11,8 +14,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -47,10 +52,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchTutorDetails extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+public class SearchTutorDetails extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Toolbar toolbar;
+    private HomeStudent activity;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -69,13 +75,17 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
     private Spinner spinnerMaterie;
     private String idMateriaSelezionata;
     private String prezzoMateriaSelezionata;
+    private View view;
+    private Context context;
 
 
     public static final String TAG = SearchTutorDetails.class.getSimpleName();
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutor_details);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_tutor_details, container, false);
+
+        context = view.getContext();
+
 
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
@@ -83,10 +93,11 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(25);
-        idTutor = getIntent().getExtras().getString("idTutor");
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Dati tutor");
+
+        idTutor = getArguments().getString("idt");
+        mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -133,9 +144,9 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         );
 
-        tutorNome = (TextView) findViewById(R.id.tutor_nome);
-        tutorCognome = (TextView) findViewById(R.id.tutor_cognome);
-        spinnerMaterie = (Spinner) findViewById(R.id.spinner_materie_tutor);
+        tutorNome = (TextView) view.findViewById(R.id.search_tutor_name);
+        tutorCognome = (TextView) view.findViewById(R.id.search_tutor_surname);
+        spinnerMaterie = (Spinner) view.findViewById(R.id.spinner_materie_tutor);
 
 
 
@@ -143,6 +154,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         getMaterieForTutor();
 
 
+        return view;
     }
 
     private void getMaterieForTutor() {
@@ -150,7 +162,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
         String url = "http://www.unishare.it/tutored/getMaterie.php?idtutor=".concat(idTutor);
 
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -160,7 +172,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SearchTutorDetails.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
                                 builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
 
@@ -193,7 +205,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                             }
 
 
-                            adapter = new ListMaterieAdapterNoDelete(getApplicationContext(), items);
+                            adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
 
                             spinnerMaterie.setAdapter(adapter);
                             spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -238,7 +250,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         String url = "http://www.unishare.it/tutored/tutor_data.php?id=" + idTutor;
         Log.d(TAG, url);
 
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -286,21 +298,21 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
     private void manageButton() {
 
-        Button button = (Button) findViewById(R.id.prenotaz_button);
+        Button button = (Button) view.findViewById(R.id.prenotaz_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SearchTutorDetails.this, NuovaPrenotazioneActivity.class);
+                Intent intent = new Intent(activity, NuovaPrenotazioneActivity.class);
                 Bundle bundle = new Bundle();
                 if (materiaSelezionata == null) {
-                    Toast.makeText(getApplicationContext(), "Seleziona una materia", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity.getApplicationContext(), "Seleziona una materia", Toast.LENGTH_SHORT).show();
                 } else {
                     bundle.putString("id", idTutor);
                     bundle.putString("nome", nome);
                     bundle.putString("cognome", cognome);
                     bundle.putString("materia", materiaSelezionata);
-                    bundle.putString("prezzo",prezzoMateriaSelezionata);
-                    bundle.putString("materia_id",idMateriaSelezionata);
+                    bundle.putString("prezzo", prezzoMateriaSelezionata);
+                    bundle.putString("materia_id", idMateriaSelezionata);
                     intent.putExtras(bundle);
                     startActivity(intent);
 
@@ -312,7 +324,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
@@ -323,7 +335,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
 
     public LatLng getLocationFromAddress(String strAddress) {
 
-        Geocoder coder = new Geocoder(this);
+        Geocoder coder = new Geocoder(activity);
         List<Address> address;
         LatLng p1 = null;
 
@@ -352,7 +364,7 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                this.finish();
+                activity.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -413,6 +425,14 @@ public class SearchTutorDetails extends AppCompatActivity implements GoogleApiCl
                 .title("I am here!");
         map.addMarker(options);
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+
+        this.activity = (HomeStudent) activity;
     }
 
 }
