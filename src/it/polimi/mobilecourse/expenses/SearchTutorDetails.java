@@ -20,9 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +34,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.gc.materialdesign.views.Button;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -77,6 +78,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private String prezzoMateriaSelezionata;
     private View view;
     private Context context;
+    private TabHost th;
 
 
     public static final String TAG = SearchTutorDetails.class.getSimpleName();
@@ -86,6 +88,25 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         context = view.getContext();
 
+
+        th=(TabHost)view.findViewById(R.id.tabHost);
+        th.setup();
+        TabHost.TabSpec ts=th.newTabSpec("Profilo");
+        ts.setContent(R.id.tab1);
+        ts.setIndicator("Profilo");
+        th.addTab(ts);
+
+        ts=th.newTabSpec("Recensioni");
+        ts.setContent(R.id.tab2);
+        ts.setIndicator("Recensioni");
+
+        th.addTab(ts);
+        ts=th.newTabSpec("Materie");
+
+        ts.setContent(R.id.tab3);
+        ts.setIndicator("Materie");
+
+        th.addTab(ts);
 
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
