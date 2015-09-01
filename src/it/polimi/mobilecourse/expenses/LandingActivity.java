@@ -171,7 +171,6 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
     private void updateWithToken(final AccessToken currentAccessToken) {
 
         if (currentAccessToken != null) {
-            Toast.makeText(getApplicationContext(), "Login con Facebook avvenuto", Toast.LENGTH_SHORT).show();
 
 
 
