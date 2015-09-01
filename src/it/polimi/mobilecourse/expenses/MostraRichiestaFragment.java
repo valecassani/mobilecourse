@@ -12,11 +12,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,6 +96,7 @@ public class MostraRichiestaFragment extends Fragment {
     Button accetta;
     Button download;
 
+    String filep;
     ProgressBar progress;
 
     ScrollView sc;
@@ -527,7 +530,7 @@ public class MostraRichiestaFragment extends Fragment {
                     }
                 } finally {
                     output.close();
-                    addImageToGallery(storagePath.toString()+ "/imageRichiesta.jpg",activity);
+                    filep=addImageToGallery(storagePath.toString()+ "/imageRichiesta.jpg",activity);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -556,8 +559,11 @@ public class MostraRichiestaFragment extends Fragment {
 
                 NotificationManager nm=(NotificationManager)activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 int mnot=001;
-                //PendingIntent pi;
-                //mBuilder.setContentIntent()
+
+                Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(filep).build();
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                PendingIntent contentIntent= PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                mBuilder.setContentIntent(contentIntent);
                 nm.notify(mnot,mBuilder.build());
 
 
@@ -575,18 +581,23 @@ public class MostraRichiestaFragment extends Fragment {
 
     }
 
-    public static void addImageToGallery(final String filePath, final Context context) {
+    public static String addImageToGallery(final String filePath, final Context context) {
 
         ContentValues values = new ContentValues();
 
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, "imageRichiesta");
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "imageRichiesta");
+
         values.put(MediaStore.MediaColumns.DATA, filePath);
-        values.put(MediaStore.MediaColumns.TITLE,"imageRichiesta");
+        values.put(MediaStore.MediaColumns.TITLE, "imageRichiesta");
+
+
 
 
         context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        return filePath;
     }
 
 }

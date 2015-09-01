@@ -18,10 +18,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -44,6 +43,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +67,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
     private TextView tutorCognome;
+    private String idfb;
+    private String urlFoto;
     private ListView mListMaterie;
     private ListMaterieAdapterNoDelete adapter;
     private String idTutor;
@@ -75,6 +78,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
     private Spinner spinnerMaterie;
     private String idMateriaSelezionata;
+    private CircularImageView im;
     private String prezzoMateriaSelezionata;
     private View view;
     private Context context;
@@ -92,19 +96,19 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         th=(TabHost)view.findViewById(R.id.tabHost);
         th.setup();
         TabHost.TabSpec ts=th.newTabSpec("Profilo");
-        ts.setContent(R.id.tab1);
+        ts.setContent(R.id.linearLayout);
         ts.setIndicator("Profilo");
         th.addTab(ts);
 
-        ts=th.newTabSpec("Recensioni");
-        ts.setContent(R.id.tab2);
-        ts.setIndicator("Recensioni");
+        ts=th.newTabSpec("Materie");
+        ts.setContent(R.id.linearLayout2);
+        ts.setIndicator("Materie");
 
         th.addTab(ts);
-        ts=th.newTabSpec("Materie");
+        ts=th.newTabSpec("Recensioni");
 
-        ts.setContent(R.id.tab3);
-        ts.setIndicator("Materie");
+        ts.setContent(R.id.linearLayout3);
+        ts.setIndicator("Recensioni");
 
         th.addTab(ts);
 
@@ -167,7 +171,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
         tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
-        spinnerMaterie = (Spinner) view.findViewById(R.id.spinner_materie_tutor);
+        im=(CircularImageView)view.findViewById(R.id.foto);
+        //spinnerMaterie = (Spinner) view.findViewById(R.id.spinner_materie_tutor);
 
 
 
@@ -228,10 +233,10 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
                             adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
 
-                            spinnerMaterie.setAdapter(adapter);
-                            spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            //spinnerMaterie.setAdapter(adapter);
+                            /*spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                               @Override
+                               public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     materiaSelezionata = items.get(position).getNome();
                                     prezzoMateriaSelezionata = items.get(position).getPrezzo();
                                     idMateriaSelezionata = items.get(position).getId();
@@ -244,7 +249,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
                                 }
-                            });
+                            });*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -289,6 +294,11 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             Log.i(TAG, "Name set: " + nome);
                             cognome = obj.getString("cognome");
                             Log.i(TAG, "Surname set: " + cognome);
+                            idfb = obj.getString("idfb");
+
+                            urlFoto = obj.getString("url");
+
+                            setPhoto();
 
                             tutorCognome.setText(cognome);
 
@@ -341,6 +351,28 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
             }
         });
+    }
+
+    private void setPhoto(){
+
+        if(idfb.compareTo("")!=0){
+
+            Picasso.with(context.getApplicationContext()).load("https://graph.facebook.com/" +idfb + "/picture"
+            ).into(im);
+        }
+        else if(urlFoto.compareTo("")!=0){
+
+
+            Picasso.with(context.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlFoto
+            ).into(im);
+
+        }
+        else{
+            im.setImageResource(R.drawable.dummy_profpic);
+        }
+
+
+
     }
 
 
