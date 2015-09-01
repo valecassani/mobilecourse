@@ -7,12 +7,24 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -26,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,13 +49,24 @@ import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Matteo on 20/08/2015.
@@ -56,6 +80,8 @@ public class MostraRichiestaFragment extends Fragment {
     private View view;
     String idr;
 
+    NotificationCompat.Builder mBuilder;
+
     //campi
     TextView nome;
     TextView titolo;
@@ -66,6 +92,8 @@ public class MostraRichiestaFragment extends Fragment {
     TextView data;
     ImageButton fotor;
     Button accetta;
+    Button download;
+
     ProgressBar progress;
 
     ScrollView sc;
@@ -116,15 +144,19 @@ public class MostraRichiestaFragment extends Fragment {
 
     private void setGraphics(){
 
+        mBuilder=new NotificationCompat.Builder(activity).
+                setSmallIcon(R.drawable.gmc_img).setContentTitle("Tutored").setContentText("Immagine scaricata");
+
         nome=(TextView)view.findViewById(R.id.nameRichiesta);
         titolo=(TextView)view.findViewById(R.id.titleRichiesta);
         testo=(TextView)view.findViewById(R.id.testoRichiesta);
         facolta=(TextView)view.findViewById(R.id.facRichiesta);
         uni=(TextView)view.findViewById(R.id.uniRichiesta);
         data=(TextView)view.findViewById(R.id.dataR);
-        fotot=(TextView)view.findViewById(R.id.fotoTesto);
-        fotor=(ImageButton)view.findViewById(R.id.fotoRichiesta);
+
         accetta=(Button)view.findViewById(R.id.buttonAccettaR);
+        download=(Button)view.findViewById(R.id.buttonDownload);
+
         progress=(ProgressBar)view.findViewById(R.id.progressBarRichiesta);
 
 
@@ -202,8 +234,8 @@ public class MostraRichiestaFragment extends Fragment {
         }
         else {
 
+            download.setVisibility(View.GONE);
 
-            fotot.setVisibility(View.GONE);
         }
 
 
@@ -216,7 +248,18 @@ public class MostraRichiestaFragment extends Fragment {
 
 
 
-        Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progress(true);
+
+                downloadBitmap db=new downloadBitmap();
+               db.execute("http://www.unishare.it/tutored/" + urlR);
+
+            }
+        });
+
+        /*Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
         ).into(fotor);
 
         fotor.setVisibility(View.VISIBLE);
@@ -256,12 +299,12 @@ public class MostraRichiestaFragment extends Fragment {
 
 
         mShortAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
+                android.R.integer.config_shortAnimTime);*/
 
 
     }
 
-    private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
+    /*private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 
@@ -416,7 +459,7 @@ public class MostraRichiestaFragment extends Fragment {
 
             }
         });
-    }
+    }*/
 
 
 
@@ -451,5 +494,104 @@ public class MostraRichiestaFragment extends Fragment {
 
     }
 
+    public class downloadBitmap extends AsyncTask<String,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(String ...params){
+
+            String urls=params[0];
+
+
+            URL url = null;
+            try {
+                url = new URL(urls);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            InputStream input = null;
+            try {
+                input = url.openStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                //The sdcard directory e.g. '/sdcard' can be used directly, or
+                //more safely abstracted with getExternalStorageDirectory()
+                File storagePath = Environment.getExternalStorageDirectory();
+                OutputStream output = new FileOutputStream (storagePath + "/imageRichiesta.jpg");
+                try {
+                    byte[] buffer = new byte[2048];
+                    int bytesRead = 0;
+                    while ((bytesRead = input.read(buffer, 0, buffer.length)) >= 0) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                } finally {
+                    output.close();
+                    addImageToGallery(storagePath.toString()+ "/imageRichiesta.jpg",activity);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success){
+
+            if(success) {
+
+
+                NotificationManager nm=(NotificationManager)activity.getSystemService(Context.NOTIFICATION_SERVICE);
+                int mnot=001;
+                //PendingIntent pi;
+                //mBuilder.setContentIntent()
+                nm.notify(mnot,mBuilder.build());
+
+
+                progress(false);
+               Toast.makeText(activity,"Immagine scaricata correttamente",Toast.LENGTH_LONG).show();
+
+
+
+
+            }
+        }
+
+
+
+
+    }
+
+    public static void addImageToGallery(final String filePath, final Context context) {
+
+        ContentValues values = new ContentValues();
+
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, "imageRichiesta");
+        values.put(MediaStore.MediaColumns.DATA, filePath);
+        values.put(MediaStore.MediaColumns.TITLE,"imageRichiesta");
+
+
+        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
 
 }
+
+
+
+
+
