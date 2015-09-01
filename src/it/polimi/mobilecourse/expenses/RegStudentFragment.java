@@ -83,7 +83,6 @@ public class RegStudentFragment extends Fragment {
             public void onClick(View v) {
 
 
-                submit.setVisibility(View.GONE);
                 progress(true);
                 getData();
 
@@ -323,8 +322,8 @@ public class RegStudentFragment extends Fragment {
 
 
             Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
-            Intent myintent = new Intent(view.getContext(), LandingActivity.class);
-            startActivity(myintent);
+            progress(false);
+
             }
 
     }
@@ -355,7 +354,7 @@ public class RegStudentFragment extends Fragment {
         }
         else{
 
-            Toast.makeText(getActivity().getApplicationContext(),"Mail o Cellulare non validi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Campi non validi", Toast.LENGTH_SHORT).show();
             progress(false);
             submit.setVisibility(View.VISIBLE);
 

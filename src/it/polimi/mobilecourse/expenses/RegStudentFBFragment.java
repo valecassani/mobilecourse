@@ -288,8 +288,7 @@ public class RegStudentFBFragment extends Fragment {
 
         String url="registration_student_fb.php?username=".concat(mailS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellS)
-                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity).concat("&").concat("id_facolta=").concat(idFac).concat("id_fb=".concat(facebookId));
-        new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFBFragment.this).execute();
+                .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity).concat("&").concat("id_facolta=").concat(idFac).concat("&id_fb=".concat(facebookId));
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 "http://www.unishare.it/tutored/"+url, null,
@@ -300,7 +299,6 @@ public class RegStudentFBFragment extends Fragment {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
-                            Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata",Toast.LENGTH_SHORT);
 
 
 
@@ -352,7 +350,7 @@ public class RegStudentFBFragment extends Fragment {
         }
         else{
 
-            Toast.makeText(getActivity().getApplicationContext(),"Cellulare non valido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Campi non validi", Toast.LENGTH_SHORT).show();
             progress(false);
             submit.setVisibility(View.VISIBLE);
 
@@ -434,7 +432,7 @@ public class RegStudentFBFragment extends Fragment {
 
 
 
-            new RequestFtp().setParameters(activity, "cities.php", "spinnerCity", RegStudentFBFragment.this).execute();
+            new RequestFtp().setParameters(activity, "cities.php", "spinnerCityFB", RegStudentFBFragment.this).execute();
 
 
 
@@ -503,7 +501,7 @@ public class RegStudentFBFragment extends Fragment {
 
             String url="getUniFromCity.php?idcity=".concat(id);
 
-            new RequestFtp().setParameters(activity, url, "spinnerUni", RegStudentFBFragment.this).execute();
+            new RequestFtp().setParameters(activity, url, "spinnerUniFB", RegStudentFBFragment.this).execute();
 
 
 

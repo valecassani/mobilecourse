@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +55,9 @@ public class RegTutorFBFragment extends Fragment {
 
     private ArrayAdapter<String> adapterCity;
 
+    private String facebookId;
+
+
 
     private String cellT;
 
@@ -65,6 +69,8 @@ public class RegTutorFBFragment extends Fragment {
 
         view = inflater.inflate(R.layout.regfbtutor_fragment, container, false);
 
+
+        getFacebookId();
 
 
 
@@ -78,8 +84,7 @@ public class RegTutorFBFragment extends Fragment {
             public void onClick(View v) {
 
 
-                submit.setVisibility(View.GONE);
-                progress(true);
+             progress(true);
                 getData();
                 controlField();
 
@@ -145,9 +150,8 @@ public class RegTutorFBFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                itemC=parent.getItemAtPosition(position).toString();
-                idCity=String.valueOf((parent.getSelectedItemPosition())+1);
-
+                itemC = parent.getItemAtPosition(position).toString();
+                idCity = String.valueOf((parent.getSelectedItemPosition()) + 1);
 
 
             }
@@ -156,14 +160,17 @@ public class RegTutorFBFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
 
-
-
             }
         });
 
 
 
 
+    }
+
+    private void getFacebookId() {
+
+        facebookId = Profile.getCurrentProfile().getId();
     }
 
     private void getData(){
@@ -204,7 +211,7 @@ public class RegTutorFBFragment extends Fragment {
 
         String url="registration_tutor_fb.php?username=".concat(mailS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellT)
-                .concat("&").concat("id_citta=").concat(idCity);
+                .concat("&").concat("id_citta=").concat(idCity).concat("&id_fb=".concat(facebookId));
         //new RequestFtp().setParameters(activity, url, "regTutor", RegStudentFBFragment.this).execute();
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
@@ -216,7 +223,6 @@ public class RegTutorFBFragment extends Fragment {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
-                            Toast.makeText(getActivity().getApplicationContext(), "Registrazione completata", Toast.LENGTH_SHORT);
 
 
 
@@ -256,7 +262,7 @@ public class RegTutorFBFragment extends Fragment {
         }
         else{
 
-            Toast.makeText(getActivity().getApplicationContext(),"Cellulare non valido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Campi non validi", Toast.LENGTH_SHORT).show();
             progress(false);
             submit.setVisibility(View.VISIBLE);
 
@@ -326,7 +332,7 @@ public class RegTutorFBFragment extends Fragment {
 
 
                 citySpinner.setAdapter(adapterCity);
-                citySpinner.setPrompt("Seleziona tra le seguenti citt� la tua:");
+                citySpinner.setPrompt("Seleziona tra le seguenti città la tua:");
 
 
 

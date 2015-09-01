@@ -162,9 +162,8 @@
                 android:id="@+id/progressBarRS"
                 android:visibility="gone"
                 style="?android:attr/progressBarStyleLarge"
-                android:layout_alignBottom="@+id/regS"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-15dp" />
+                android:layout_alignTop="@+id/checkBox"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -237,6 +237,9 @@ public class LoginSFragment extends Fragment {
     private void registration(View v){
 
         Intent myi=new Intent(v.getContext(),RegistrationStudent.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("Tipo","Mail");
+        myi.putExtras(bundle);
         startActivity(myi);
 
     }
