@@ -92,6 +92,8 @@ public class RegTutorFBFragment extends Fragment {
             }
         });
 
+        getFacebookId();
+
 
 
         return view;
@@ -112,6 +114,14 @@ public class RegTutorFBFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstancestate) {
         super.onActivityCreated(savedInstancestate);
+
+    }
+
+    private void getFacebookId() {
+
+        facebookId = Profile.getCurrentProfile().getId();
+        System.out.println(facebookId);
+        Log.d("Reg tutor fb", "id facebook: " + facebookId);
 
     }
 
@@ -168,10 +178,7 @@ public class RegTutorFBFragment extends Fragment {
 
     }
 
-    private void getFacebookId() {
 
-        facebookId = Profile.getCurrentProfile().getId();
-    }
 
     private void getData(){
 
@@ -223,6 +230,15 @@ public class RegTutorFBFragment extends Fragment {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
+                            Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
+                            Intent myintent = new Intent(getActivity(),HomeTutor.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("user_id", obj.getString("newid"));
+
+
+                            myintent.putExtras(bundle);
+
+                            startActivity(myintent);
 
 
 
@@ -243,9 +259,7 @@ public class RegTutorFBFragment extends Fragment {
         });
         queue.add(jsonObjReq);
 
-        Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(),LandingActivity.class);
-        startActivity(myintent);
+
 
 
 

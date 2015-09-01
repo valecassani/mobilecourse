@@ -242,11 +242,18 @@ public class LandingFragment extends Fragment {
         if (response.compareTo("T") == 0) {
 
             str = "T";
+
+            buttonsTActions();
+
+
+        }
+
+        if (response.compareTo("ST") == 0) {
+            str = "ST";
             String id_utente = result.getString("id_utente");
             nome = result.getString("nome");
             id = Integer.parseInt(id_utente);
-            buttonsTActions();
-
+            buttonsSTActions();
 
         }
         if (nome != null && nome.compareTo("") != 0) {
@@ -257,6 +264,45 @@ public class LandingFragment extends Fragment {
             LoginManager.getInstance().logOut();
             buttonsActions();
         }
+
+
+    }
+
+    private void buttonsSTActions() {
+        (activity).manageButton();
+
+        Button butS = (Button) view.findViewById(R.id.buttonStudente);
+        butS.setTypeface(myCustomFont);
+        butS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myintent = new Intent(v.getContext(), HomeStudent.class);
+                startActivity(myintent);
+
+            }
+        });
+
+        Button butT = (Button) view.findViewById(R.id.buttonTutor);
+        butT.setTypeface(myCustomFont);
+        butT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myintent = new Intent(v.getContext(), HomeTutor.class);
+                startActivity(myintent);
+
+            }
+        });
+        try {
+            ((manageListener) activity).manageButton();
+        }
+        catch(ClassCastException cce){
+
+        }
+
+
+
 
 
     }

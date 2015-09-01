@@ -155,27 +155,44 @@ public class LoginTutor extends ActionBarActivity {
 
                         try {
                             JSONObject obj = response.getJSONObject(0);
-                            if (obj.getString("Response").equals("T")) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString("mail",email);
-                                bundle.putString("user_id", obj.getString("id_utente").toString());
-                                Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
 
-                                myintent.putExtras(bundle);
-                                startActivity(myintent);
-                                finish();
+                            if (response.length() == 2) {
+                                JSONObject obj2 = response.getJSONObject(1);
+                                if (obj2.getString("Response").equals("T")) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("mail",email);
+                                    bundle.putString("user_id", obj2.getString("id_utente").toString());
+                                    Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
 
+                                    myintent.putExtras(bundle);
+                                    startActivity(myintent);
+                                    finish();
 
+                                }
                             } else {
-                                Bundle bundle = new Bundle();
-                                bundle.putString("Tipo", "FB");
-                                bundle.putString("Mail", email);
-                                bundle.putString("Nome", nome);
-                                bundle.putString("Cognome",cognome);
-                                Intent myintent = new Intent(LoginTutor.this, RegistrationTutor.class);
-                                myintent.putExtras(bundle);
-                                startActivity(myintent);
 
+                                if (obj.getString("Response").equals("T")) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("mail", email);
+                                    bundle.putString("user_id", obj.getString("id_utente").toString());
+                                    Intent myintent = new Intent(LoginTutor.this, HomeTutor.class);
+
+                                    myintent.putExtras(bundle);
+                                    startActivity(myintent);
+                                    finish();
+
+
+                                } else {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("Tipo", "FB");
+                                    bundle.putString("Mail", email);
+                                    bundle.putString("Nome", nome);
+                                    bundle.putString("Cognome", cognome);
+                                    Intent myintent = new Intent(LoginTutor.this, RegistrationTutor.class);
+                                    myintent.putExtras(bundle);
+                                    startActivity(myintent);
+
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

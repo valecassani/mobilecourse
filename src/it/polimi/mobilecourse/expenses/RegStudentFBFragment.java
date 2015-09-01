@@ -101,6 +101,7 @@ public class RegStudentFBFragment extends Fragment {
     private void getFacebookId() {
 
         facebookId = Profile.getCurrentProfile().getId();
+
     }
 
 

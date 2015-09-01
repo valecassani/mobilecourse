@@ -116,7 +116,7 @@ public class HomeTutor extends AppCompatActivity {
 
         }
 
-        if (data.getInt("position") != 0)
+        if (data != null && data.getInt("position") != 0)
             positionRequired = data.getInt("position");
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.tutor_drawer);

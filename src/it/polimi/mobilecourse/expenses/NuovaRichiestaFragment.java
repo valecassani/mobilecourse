@@ -242,12 +242,12 @@ public class NuovaRichiestaFragment extends Fragment{
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT).show();
         }
 
         String url = "http://www.unishare.it/tutored/add_richiesta.php";
         if (testo == null || titolo == null || selectedPath == null) {
-            Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG);
+            Toast.makeText(context,"Hai lasciato dei campi vuoti",Toast.LENGTH_LONG).show();
         } else {
 
 
