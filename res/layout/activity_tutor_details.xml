@@ -237,12 +237,7 @@
 
                             />
 
-                            <Spinner
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/spinner_materie_tutor"
-                                android:layout_above ="@id/map"
-                                android:layout_below="@id/tutor_nome"/>
+
 
                         </RelativeLayout>
                     </ScrollView>
@@ -290,9 +285,8 @@
                         android:text="Nessuna materia trovata"
                         android:id="@+id/nomat"
                         android:visibility="invisible"
-                        android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="137dp" />
+                         />
 
                 </LinearLayout>
 

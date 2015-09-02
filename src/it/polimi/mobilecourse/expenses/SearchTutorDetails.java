@@ -133,7 +133,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Dati tutor");
 
         idTutor = getArguments().getString("idt");
-        mGoogleApiClient = new GoogleApiClient.Builder(activity)
+        /*mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -178,7 +178,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                                     }
                                 }
 
-        );
+        );*/
 
         tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
         tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
@@ -312,23 +312,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
                             mat_tutor.setAdapter(adapter);
 
-                            //spinnerMaterie.setAdapter(adapter);
-                            /*spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                               @Override
-                               public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    materiaSelezionata = items.get(position).getNome();
-                                    prezzoMateriaSelezionata = items.get(position).getPrezzo();
-                                    idMateriaSelezionata = items.get(position).getId();
-                                    Log.d(TAG,"Materia selezionata: " + materiaSelezionata);
 
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-
-                                }
-                            });*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -458,10 +442,10 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     @Override
     public void onPause() {
         super.onPause();
-        if (mGoogleApiClient.isConnected()) {
+/*        if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
             mGoogleApiClient.disconnect();
-        }
+        }*/
     }
 
 
@@ -557,6 +541,17 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                 .title("I am here!");
         map.addMarker(options);
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        MapFragment f=(MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        if(f!=null){
+
+            getFragmentManager().beginTransaction().remove(f).commit();
+        }
+
     }
 
     @Override
