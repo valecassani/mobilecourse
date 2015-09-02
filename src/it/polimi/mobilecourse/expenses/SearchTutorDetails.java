@@ -67,16 +67,27 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
     private TextView tutorCognome;
+    private TextView nomat;
+    private TextView norec;
+
+
     private String idfb;
     private String urlFoto;
     private ListView mListMaterie;
     private ListMaterieAdapterNoDelete adapter;
+    private ListRecensioniAdapter adapterRec;
+
     private String idTutor;
     private String nome;
     private String cognome;
     private String materiaSelezionata;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
+    private ArrayList<ListRecensioneItem> itemsRec = new ArrayList<>();
+
     private Spinner spinnerMaterie;
+    private ListView mat_tutor;
+    private ListView rec_tutor;
+
     private String idMateriaSelezionata;
     private CircularImageView im;
     private String prezzoMateriaSelezionata;
@@ -172,15 +183,97 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
         tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
         im=(CircularImageView)view.findViewById(R.id.foto);
-        //spinnerMaterie = (Spinner) view.findViewById(R.id.spinner_materie_tutor);
+
+        mat_tutor=(ListView)view.findViewById(R.id.mat_tutor);
+        rec_tutor=(ListView)view.findViewById(R.id.rec_tutor);
+
+        nomat=(TextView)view.findViewById(R.id.nomat);
+        norec=(TextView)view.findViewById(R.id.norec);
 
 
 
         showTutorDetails();
         getMaterieForTutor();
+        getRecForTutor();
 
 
         return view;
+    }
+
+    private void getRecForTutor() {
+
+
+        String url = "http://www.unishare.it/tutored/getRecensioni.php?idutente=".concat(idTutor);
+
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            if (response.length() == 0) {
+
+                                norec.setVisibility(View.VISIBLE);
+
+
+                            }
+                            itemsRec.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                ListRecensioneItem item = new ListRecensioneItem(obj.getString("idstudente"), obj.getString("nome"),obj.getString("cognome"), Float.parseFloat(obj.getString("puntualita")),
+                                        Float.parseFloat(obj.getString("disponibilita")),Float.parseFloat(obj.getString("chiarezza")),Float.parseFloat(obj.getString("voto_finale")),obj.getString("foto"),obj.getString("idfb"));
+
+                                itemsRec.add(item);
+
+
+                            }
+
+
+
+                            adapterRec = new ListRecensioniAdapter(activity.getApplicationContext(), itemsRec);
+
+                            rec_tutor.setAdapter(adapterRec);
+
+                            //spinnerMaterie.setAdapter(adapter);
+                            /*spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                               @Override
+                               public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    materiaSelezionata = items.get(position).getNome();
+                                    prezzoMateriaSelezionata = items.get(position).getPrezzo();
+                                    idMateriaSelezionata = items.get(position).getId();
+                                    Log.d(TAG,"Materia selezionata: " + materiaSelezionata);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+
+                                }
+                            });*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
     }
 
     private void getMaterieForTutor() {
@@ -198,25 +291,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
-
-                                AlertDialog dialog = builder.create();
-                                if (dialog != null)
-                                    builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            try {
-                                                dialog.wait(2000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
-                                            dialog.dismiss();
-
-                                        }
-                                    });
-
-                                dialog.show();
+                                nomat.setVisibility(View.VISIBLE);
 
 
                             }
@@ -231,7 +307,10 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             }
 
 
+
                             adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
+
+                            mat_tutor.setAdapter(adapter);
 
                             //spinnerMaterie.setAdapter(adapter);
                             /*spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

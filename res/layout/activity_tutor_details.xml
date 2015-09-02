@@ -283,6 +283,17 @@
                         android:background="#cccc"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Nessuna materia trovata"
+                        android:id="@+id/nomat"
+                        android:visibility="invisible"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="137dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -300,6 +311,17 @@
                         android:dividerHeight="0dp"
                         android:background="#cccc"
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Nessuna recensione inserita"
+                        android:id="@+id/norec"
+                        android:visibility="invisible"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="137dp" />
 
                 </LinearLayout>
             </FrameLayout>
