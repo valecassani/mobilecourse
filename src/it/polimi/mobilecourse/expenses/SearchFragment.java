@@ -133,7 +133,7 @@ public class SearchFragment extends Fragment {
 
         progress(true);
 
-        String url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchTerm ;
+        String url = "http://www.unishare.it/tutored/search_tutor.php?search=" + searchTerm ;
 
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
