@@ -13,8 +13,132 @@
         android:weightSum="1">
 
         <RelativeLayout  android:layout_width="match_parent"
-            android:layout_height="643dp"
+            android:layout_height="757dp"
             >
+
+
+            <com.pkmmte.view.CircularImageView
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/studface"
+                android:layout_alignTop="@+id/textNome"
+                android:layout_centerHorizontal="true" />
+
+
+
+            />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:layout_below="@+id/studface"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Puntualità"
+                android:id="@+id/textView21"
+                android:layout_marginTop="42dp"
+                android:layout_below="@+id/title"
+                android:layout_alignLeft="@+id/textView22" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:id="@+id/textNome"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="63dp" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/puntualMostra"
+                android:layout_below="@+id/textView21"
+                android:layout_alignLeft="@+id/textView21" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Disponibilità"
+                android:id="@+id/textView22"
+                android:layout_below="@+id/puntualMostra"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dispMostra"
+                android:layout_below="@+id/textView22"
+                android:layout_alignLeft="@+id/textView22" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Chiarezza"
+                android:id="@+id/textView23"
+                android:layout_below="@+id/dispMostra"
+                android:layout_alignLeft="@+id/dispMostra" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chiarMostra"
+                android:layout_below="@+id/textView23"
+                android:layout_alignLeft="@+id/textView23" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Voto finale"
+                android:id="@+id/textView24"
+                android:layout_below="@+id/chiarMostra"
+                android:layout_alignLeft="@+id/chiarMostra" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/finaleMostra"
+                android:layout_below="@+id/textView24"
+                android:layout_alignLeft="@+id/textView24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Vuoi aggiungere un commento?"
+                android:id="@+id/textView25"
+                android:layout_below="@+id/finaleMostra"
+                android:layout_alignLeft="@+id/finaleMostra" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="(Opzionale)"
+                android:id="@+id/textView26"
+                android:layout_below="@+id/textView25"
+                android:layout_alignLeft="@+id/textView25" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/commentMostra"
+                android:layout_below="@+id/textView26"
+                android:layout_alignLeft="@+id/textView26"
+                android:layout_alignRight="@+id/finaleMostra" />
 
 
     <ProgressBar
@@ -23,8 +147,8 @@
         android:id="@+id/progressBarRecensione"
         android:visibility="gone"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_alignTop="@+id/addRec"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/studface" />
 
 
         </RelativeLayout>

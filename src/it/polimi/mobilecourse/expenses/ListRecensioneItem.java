@@ -22,6 +22,7 @@ public class ListRecensioneItem {
 
 
     private Float voto_finale;
+    private String idrec;
 
 
 
@@ -32,9 +33,10 @@ public class ListRecensioneItem {
 
 
 
-    public ListRecensioneItem(String idstudente,String nome, String cognome,Float puntualita,Float disponibilita,Float chiarezza,Float voto_finale,String foto,String idfb) {
+    public ListRecensioneItem(String idrec,String idstudente,String nome, String cognome,Float puntualita,Float disponibilita,Float chiarezza,Float voto_finale,String foto,String idfb) {
 
         this.idstudente = idstudente;
+        this.idrec=idrec;
         this.nome = nome;
         this.foto=foto;
         this.idfb=idfb;
@@ -84,8 +86,13 @@ public class ListRecensioneItem {
         return foto;
     }
 
+    public String getIdrec() {
+        return idrec;
+    }
+
     public String getIdfb() {
         return idfb;
+
     }
 
 }

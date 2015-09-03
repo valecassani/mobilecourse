@@ -12,8 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Matteo on 03/09/2015.
@@ -25,6 +33,17 @@ public class MostraRecensioneFragment extends Fragment {
     RequestQueue queue;
     private String idrec;
     private ProgressBar progress;
+
+    private String idfb;
+    private String foto;
+    private String nome;
+    private String cognome;
+
+    private String puntualita;
+    private String disponibilita;
+    private String chiarezza;
+    private String voto_finale;
+    private String commento;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +59,7 @@ public class MostraRecensioneFragment extends Fragment {
 
         Bundle bundle=this.getArguments();
         idrec=bundle.getString("idrec");
+        getRecData();
 
 
 
@@ -76,6 +96,68 @@ public class MostraRecensioneFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstancestate) {
         super.onActivityCreated(savedInstancestate);
+
+    }
+
+    private void getRecData(){
+
+        progress(true);
+        String url;
+
+        url = "http://www.unishare.it/tutored/getRecensioneData.php?idrec=" + idrec;
+
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            System.out.println(obj);
+                            /*nomeR=obj.getString("nome");
+                            cognomeR=obj.getString("cognome");
+                            testoR=obj.getString("testo");
+                            titoloR=obj.getString("titolo");
+                            id_studente=obj.getString("id_studente");
+                            regid=obj.getString("regid");
+                            uniR=obj.getString("uni");
+                            facR=obj.getString("facolta");
+                            urlR=obj.getString("foto");
+                            data_entroR=obj.getString("data_entro");
+                            setField();*/
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
+
+
+
+
+
+
 
     }
 

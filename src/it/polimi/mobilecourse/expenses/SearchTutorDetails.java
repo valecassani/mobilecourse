@@ -250,7 +250,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             itemsRec.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                ListRecensioneItem item = new ListRecensioneItem(obj.getString("idstudente"), obj.getString("nome"),obj.getString("cognome"), Float.parseFloat(obj.getString("puntualita")),
+                                ListRecensioneItem item = new ListRecensioneItem(obj.getString("idrec"),obj.getString("idstudente"), obj.getString("nome"),obj.getString("cognome"), Float.parseFloat(obj.getString("puntualita")),
                                         Float.parseFloat(obj.getString("disponibilita")),Float.parseFloat(obj.getString("chiarezza")),Float.parseFloat(obj.getString("voto_finale")),obj.getString("foto"),obj.getString("idfb"));
 
                                 itemsRec.add(item);
@@ -263,6 +263,30 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             adapterRec = new ListRecensioniAdapter(activity.getApplicationContext(), itemsRec);
 
                             rec_tutor.setAdapter(adapterRec);
+
+                            rec_tutor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                                            Object o = rec_tutor.getItemAtPosition(position);
+                                            System.out.println(o);
+                                            ListRecensioneItem click = ((ListRecensioneItem) o);
+
+                                            FragmentManager fragmentManager = getFragmentManager();
+
+                                            Fragment fragment = new MostraRichiestaFragment();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("idrec", click.getIdrec());
+                                            fragment.setArguments(bundle);
+                                            System.out.println("Bundle" + bundle);
+                                            fragmentManager.beginTransaction().replace(R.id.student_fragment,fragment).addToBackStack(null).commit();
+
+                                        }
+                                    });
+
+
+
 
                             //spinnerMaterie.setAdapter(adapter);
                             /*spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

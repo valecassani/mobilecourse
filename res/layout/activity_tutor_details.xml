@@ -220,6 +220,7 @@
                                 style="?android:attr/borderlessButtonStyle"
                                 android:background="@color/primaryColorDark"
 
+
                                 android:layout_alignParentBottom="true"
                                 android:layout_alignParentLeft="true"
                                 android:layout_marginLeft="5dp"
@@ -295,7 +296,7 @@
 
 
                     <ListView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:id="@+id/mat_tutor"
                         android:choiceMode="singleChoice"
@@ -311,9 +312,9 @@
                         android:text="Nessuna materia trovata"
                         android:id="@+id/nomat"
                         android:visibility="invisible"
+                        android:layout_below="@+id/mat_tutor"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                         />
+                        android:layout_marginTop="93dp" />
 
                     </RelativeLayout>
                     </ScrollView>
@@ -342,7 +343,7 @@
                         android:fitsSystemWindows="true">
 
                     <ListView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:id="@+id/rec_tutor"
                         android:choiceMode="singleChoice"
@@ -368,21 +369,24 @@
                         android:layout_height="wrap_content"
                         android:text="+ Nuova Recensione"
                         android:id="@+id/buttonNewRec"
+
                         style="?android:attr/borderlessButtonStyle"
                         android:background="@color/primaryColorDark"
-                        android:layout_marginBottom="10dp"
-                        android:layout_below="@id/rec_tutor"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true" />
+                        android:layout_below="@+id/norec"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="295dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="10dp" />
 
 
                     </RelativeLayout>
                     </ScrollView>
 
                 </LinearLayout>
+
             </FrameLayout>
+
         </LinearLayout>
     </TabHost>
 </LinearLayout>
