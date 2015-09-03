@@ -149,6 +149,7 @@ public class MostraRichiestaFragment extends Fragment {
 
         mBuilder=new NotificationCompat.Builder(activity).
                 setSmallIcon(R.drawable.gmc_img).setContentTitle("Tutored").setContentText("Immagine scaricata");
+        mBuilder.setAutoCancel(true);
 
         nome=(TextView)view.findViewById(R.id.nameRichiesta);
         titolo=(TextView)view.findViewById(R.id.titleRichiesta);
@@ -558,13 +559,12 @@ public class MostraRichiestaFragment extends Fragment {
 
 
                 NotificationManager nm=(NotificationManager)activity.getSystemService(Context.NOTIFICATION_SERVICE);
-                int mnot=001;
 
-                Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(filep).build();
+                Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(filep.replace("%2","/")).build();
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                PendingIntent contentIntent= PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent contentIntent= PendingIntent.getActivity(activity, 0, intent, 0);
                 mBuilder.setContentIntent(contentIntent);
-                nm.notify(mnot,mBuilder.build());
+                nm.notify(0,mBuilder.build());
 
 
                 progress(false);
@@ -588,6 +588,8 @@ public class MostraRichiestaFragment extends Fragment {
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, "imageRichiesta");
+
+
 
         values.put(MediaStore.MediaColumns.DATA, filePath);
         values.put(MediaStore.MediaColumns.TITLE, "imageRichiesta");

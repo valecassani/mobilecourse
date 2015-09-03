@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+
+
+    >
+    <LinearLayout android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
+
+        <RelativeLayout  android:layout_width="match_parent"
+            android:layout_height="643dp"
+            >
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarRecensione"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_alignTop="@+id/addRec"
+        android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+

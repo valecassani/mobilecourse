@@ -1,8 +1,12 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -58,6 +63,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Toolbar toolbar;
+    private ProgressBar progressView;
     private HomeStudent activity;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
@@ -70,6 +76,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private TextView nomat;
     private TextView norec;
 
+    private Button newRec;
 
     private String idfb;
     private String urlFoto;
@@ -100,6 +107,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_tutor_details, container, false);
+        progressView=(ProgressBar)view.findViewById(R.id.progressBarTut);
 
         context = view.getContext();
 
@@ -181,6 +189,23 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         );*/
 
         tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
+        newRec=(Button)view.findViewById(R.id.buttonNewRec);
+        newRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle forFrag=new Bundle();
+                forFrag.putString("idstudente",activity.getUserId());
+                forFrag.putString("idtutor",idTutor);
+
+
+                NuovaRecensioneFragment nrf=new NuovaRecensioneFragment() ;
+                nrf.setArguments(forFrag);
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.student_fragment, nrf).addToBackStack(null).commit();
+            }
+        });
         tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
         im=(CircularImageView)view.findViewById(R.id.foto);
 
@@ -192,6 +217,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
 
+
+        progress(true);
         showTutorDetails();
         getMaterieForTutor();
         getRecForTutor();
@@ -337,6 +364,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     private void showTutorDetails() {
         String url = "http://www.unishare.it/tutored/tutor_data.php?id=" + idTutor;
+
+
         Log.d(TAG, url);
 
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
@@ -435,6 +464,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         }
 
 
+        progress(false);
 
     }
 
@@ -560,6 +590,23 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
         this.activity = (HomeStudent) activity;
+    }
+
+
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
+
     }
 
 }

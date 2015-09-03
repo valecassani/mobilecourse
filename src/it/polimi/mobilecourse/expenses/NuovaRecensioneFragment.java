@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +19,25 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Queue;
+
 /**
  * Created by Matteo on 04/08/2015.
  */
 public class NuovaRecensioneFragment extends Fragment {
 
-    NuovaRecensione activity;
+    HomeStudent activity;
     private View view;
 
     //prova commit
@@ -36,29 +52,30 @@ public class NuovaRecensioneFragment extends Fragment {
     EditText commento;
     Button addRec;
     String nome;
+    RequestQueue queue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         view = inflater.inflate(R.layout.nuova_recensione_fragment, container, false);
+        progressView=(ProgressBar) view.findViewById(R.id.progressBar);
+
+
+        queue= Volley.newRequestQueue(view.getContext());
+
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nuova Recensione");
+
         Bundle get=getArguments();
         idstudente=get.getString("idstudente");
         idtutor=get.getString("idtutor");
-        nome=get.getString("nome");
-        field();
+        getInfoTutor();
 
 
 
-        addRec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                addRec.setVisibility(View.GONE);
-                progress(true);
-                saveMarks();
-            }
-        });
 
 
 
@@ -73,7 +90,7 @@ public class NuovaRecensioneFragment extends Fragment {
         super.onAttach(activity);
 
 
-        this.activity = (NuovaRecensione) activity;
+        this.activity = (HomeStudent) activity;
     }
 
 
@@ -91,15 +108,101 @@ public class NuovaRecensioneFragment extends Fragment {
 
     private void saveMarks(){
 
-        String url="nuova_recensione.php?idstudente=".concat(idstudente).concat("&idtutor=").concat(idtutor).concat("&puntual=")
+        String url="http://www.unishare.it/tutored/nuova_recensione.php?idstudente=".concat(idstudente).concat("&idtutor=").concat(idtutor).concat("&puntual=")
                 .concat(String.valueOf(puntual.getRating())).concat("&disp=").concat(String.valueOf(disp.getRating())).
                 concat("&chiar=").concat(String.valueOf(chiar.getRating())).concat("&finale=")
                 .concat(String.valueOf(finale.getRating())).concat("&commento=").concat(commento.getText().toString().replace(" ", "%20"));
 
-        new RequestFtp().setParameters(activity, url, "saveMarks", NuovaRecensioneFragment.this).execute();
-        progress(false);
-        addRec.setVisibility(View.VISIBLE);
-        Toast.makeText(getActivity().getApplicationContext(), "Recensione inserita", Toast.LENGTH_LONG).show();
+        //new RequestFtp().setParameters(activity, url, "saveMarks", NuovaRecensioneFragment.this).execute();
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+
+                            progress(false);
+                            addRec.setVisibility(View.VISIBLE);
+                            Toast.makeText(getActivity().getApplicationContext(), "Recensione inserita", Toast.LENGTH_LONG).show();
+                            Bundle forFrag=new Bundle();
+                            forFrag.putString("idt",idtutor);
+
+
+                            SearchTutorDetails nrf=new SearchTutorDetails() ;
+                            nrf.setArguments(forFrag);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.student_fragment, nrf).addToBackStack(null).commit();
+
+
+
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
+
+    }
+
+    private void getInfoTutor(){
+
+        progress(true);
+
+        String url="http://www.unishare.it/tutored/tutor_data.php?id=".concat(idtutor);
+        //new RequestFtp().setParameters(activity, url, "saveMarks", NuovaRecensioneFragment.this).execute();
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+
+                            JSONObject obj = response.getJSONObject(0);
+                            System.out.println(obj);
+                            nome=obj.getString("nome");
+                            field();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
 
 
     }
@@ -123,10 +226,11 @@ public class NuovaRecensioneFragment extends Fragment {
     private void field(){
 
         float ratingstep=0.5f;
-        progressView=(ProgressBar) view.findViewById(R.id.progressBar);
 
         name=(TextView)view.findViewById(R.id.textNome);
-        name.setText("Qui puoi valutare il tutor " + nome);
+        name.setText("Qui puoi valutare " + nome);
+
+        progress(false);
 
         chiar=(RatingBar)view.findViewById(R.id.chiar);
         chiar.setStepSize(ratingstep);
@@ -141,12 +245,24 @@ public class NuovaRecensioneFragment extends Fragment {
 
         addRec=(Button)view.findViewById(R.id.addRec);
 
+        addRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                addRec.setVisibility(View.GONE);
+                progress(true);
+                saveMarks();
+            }
+        });
 
 
 
 
 
     }
+
+
+
+
 
 }

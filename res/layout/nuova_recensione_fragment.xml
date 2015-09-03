@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Qui puoi valutare il tutor"
+                android:text=""
                 android:id="@+id/textNome"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
@@ -121,9 +121,11 @@
                 android:layout_alignRight="@+id/finale" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Aggiungi recensione"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@color/primaryColorDark"
                 android:id="@+id/addRec"
                 android:layout_below="@+id/comment"
                 android:layout_centerHorizontal="true"

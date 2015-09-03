@@ -39,9 +39,10 @@
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
         android:id="@+id/rec_val"
-        android:layout_alignTop="@+id/rec_nome"
-        android:layout_alignRight="@+id/rec_nome"
-        android:layout_marginRight="31dp" />
+
+        android:layout_marginRight="31dp"
+        android:layout_toRightOf="@id/stud_image"
+        android:layout_below="@id/rec_nome"/>
 
 
 
