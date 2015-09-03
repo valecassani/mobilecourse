@@ -200,12 +200,14 @@ public class HomeStudent extends AppCompatActivity {
         circImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);//rimettere updateImage
-                Bundle bundle = new Bundle();
-                bundle.putString("tipo", "0");
-                bundle.putString("id", userId);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (Profile.getCurrentProfile() == null) {
+                    Intent intent = new Intent(getApplicationContext(), UpdateImage.class);//rimettere updateImage
+                    Bundle bundle = new Bundle();
+                    bundle.putString("tipo", "0");
+                    bundle.putString("id", userId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
 
 
             }
@@ -246,7 +248,7 @@ public class HomeStudent extends AppCompatActivity {
                             mail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);//rimettere updateImage
+                                    Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);//rimettere updateImage
                                     Bundle bundle = new Bundle();
                                     bundle.putString("tipo", "0");
                                     bundle.putString("id", userId);

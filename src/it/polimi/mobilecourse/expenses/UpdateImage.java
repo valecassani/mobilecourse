@@ -4,13 +4,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
 /**
  * Created by Matteo on 26/07/2015.
  */
-public class UpdateImage extends HelpActivity {
+public class UpdateImage extends HelpABActivity {
 
     private UpdateImageFragment uif;
 
@@ -25,6 +26,10 @@ public class UpdateImage extends HelpActivity {
         //System.out.println("Bundle:" + bundle);
         String id=bundle.getString("id"); //id dell'utente
         String tipo=bundle.getString("tipo");
+
+        getSupportActionBar().setElevation(25);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle forFrag=new Bundle();
         forFrag.putString("id",id);
@@ -53,6 +58,20 @@ public class UpdateImage extends HelpActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
 
+        switch(item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+        }
+
+    }
 
 }

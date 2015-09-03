@@ -224,12 +224,15 @@ public class HomeTutor extends AppCompatActivity {
         circImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UpdateInfo.class);//rimettere updateImage
-                Bundle bundle = new Bundle();
-                bundle.putString("tipo", "1");
-                bundle.putString("id", userId);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (Profile.getCurrentProfile() == null) {
+                    Intent intent = new Intent(getApplicationContext(), UpdateImage.class);//rimettere updateImage
+                    Bundle bundle = new Bundle();
+                    bundle.putString("tipo", "1");
+                    bundle.putString("id", userId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
 
 
             }
