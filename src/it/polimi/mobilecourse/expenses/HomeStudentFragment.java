@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -131,6 +133,25 @@ public class HomeStudentFragment extends Fragment {
                             adapter = new ListTutorAdapter(activity.getApplicationContext(), items);
 
                             list_tutor.setAdapter(adapter);
+
+                            list_tutor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Object o = list_tutor.getItemAtPosition(position);
+                                    System.out.println(o);
+                                    ListTutorItem click = ((ListTutorItem) o);
+
+                                    FragmentManager fragmentManager = getFragmentManager();
+
+                                    Fragment fragment = new SearchTutorDetails();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("idt", click.getId());
+                                    fragment.setArguments(bundle);
+                                    System.out.println("Bundle" + bundle);
+                                    fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
+
+                                }
+                            });
 
                             progress(false);
 

@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="805dp"
-    android:fitsSystemWindows="true">
-
-
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TabHost
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tabHost"
-        android:layout_marginTop="60dp">
+        android:id="@+id/tabHost">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,8 +16,7 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"></TabWidget>
+                android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -32,10 +24,13 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/tab1"
+                    android:id="@+id/linearLayout"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+
 
                     <ScrollView
                         android:layout_width="match_parent"
@@ -47,227 +42,219 @@
 
 
 
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="wrap_content"
-                        android:layout_height="805dp"
-                        android:fitsSystemWindows="true">
+                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="wrap_content"
+                            android:layout_height="805dp"
+                            android:fitsSystemWindows="true">
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/tutor_cognome"
-                        android:layout_marginTop="145dp"
-                        android:layout_alignRight="@+id/map"
-                        android:layout_marginRight="140dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/tutor_nome"
-                        android:layout_alignRight="@+id/foto"
-                        android:layout_marginRight="28dp"
-                        android:layout_alignTop="@+id/tutor_cognome"
-                        android:layout_marginLeft="140dp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:id="@+id/tutor_cognome"
+                                android:layout_marginTop="145dp"
+                                android:layout_alignRight="@+id/map"
+                                android:layout_marginRight="140dp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:id="@+id/tutor_nome"
+                                android:layout_alignRight="@+id/foto"
+                                android:layout_marginRight="28dp"
+                                android:layout_alignTop="@+id/tutor_cognome"
+                                android:layout_marginLeft="140dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/tutor_citta"
-                        android:layout_alignRight="@+id/foto"
-                        android:layout_marginRight="28dp"
-                        android:layout_alignTop="@+id/tutor_nome"
-                        android:layout_marginLeft="140dp" />
-
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/tutor_eta"
-                        android:layout_below="@id/tutor_citta"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="140dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/tutor_textv"
-                        android:text="Occupazione"
-                        android:layout_below="@id/tutor_eta"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/tutor_occupazione"
-                        android:layout_below="@id/tutor_textv"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textView1"
-                        android:text="Esperienze da tutor:"
-                        android:layout_below="@id/tutor_occupazione"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/tutor_esptutor"
-                        android:layout_below="@id/textView1"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textv2"
-                        android:text="Esperienze universitarie:"
-                        android:layout_below="@id/tutor_esptutor"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/tutor_espuni"
-                        android:layout_below="@id/textv2"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textv3"
-                        android:text="Università:"
-                        android:layout_below="@id/tutor_espuni"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/tutor_uni"
-                        android:layout_below="@id/textv3"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textv4"
-                        android:text="Facoltà:"
-                        android:layout_below="@id/tutor_uni"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/tutor_fac"
-                        android:layout_below="@id/textv4"
-                        android:layout_marginRight="28dp"
-
-                        android:layout_marginLeft="5dp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:id="@+id/tutor_citta"
+                                android:layout_alignRight="@+id/foto"
+                                android:layout_marginRight="28dp"
+                                android:layout_alignTop="@+id/tutor_nome"
+                                android:layout_marginLeft="140dp" />
 
 
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:id="@+id/tutor_eta"
+                                android:layout_below="@id/tutor_citta"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="140dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/tutor_textv"
+                                android:text="Occupazione"
+                                android:layout_below="@id/tutor_eta"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/tutor_occupazione"
+                                android:layout_below="@id/tutor_textv"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/textView1"
+                                android:text="Esperienze da tutor:"
+                                android:layout_below="@id/tutor_occupazione"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/tutor_esptutor"
+                                android:layout_below="@id/textView1"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/textv2"
+                                android:text="Esperienze universitarie:"
+                                android:layout_below="@id/tutor_esptutor"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/tutor_espuni"
+                                android:layout_below="@id/textv2"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/textv3"
+                                android:text="Università:"
+                                android:layout_below="@id/tutor_espuni"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/tutor_uni"
+                                android:layout_below="@id/textv3"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/textv4"
+                                android:text="Facoltà:"
+                                android:layout_below="@id/tutor_uni"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/tutor_fac"
+                                android:layout_below="@id/textv4"
+                                android:layout_marginRight="28dp"
+
+                                android:layout_marginLeft="5dp" />
 
 
 
 
 
-                    <fragment
-                        android:id="@+id/map"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:name="com.google.android.gms.maps.MapFragment"
-                        android:layout_marginTop="533dp"
-                        android:layout_alignRight="@+id/prenotaz_button"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginLeft="10dp" />
 
 
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/prenotaz_button"
-                        android:text="Vai a prenotazione"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:background="@color/primaryColorDark"
-
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" />
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:id="@+id/foto"
-                        android:layout_above="@+id/tutor_nome"
-                        android:layout_centerHorizontal="true" />
+                            <fragment
+                                android:id="@+id/map"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:name="com.google.android.gms.maps.MapFragment"
+                                android:layout_marginTop="533dp"
+                                android:layout_alignRight="@+id/prenotaz_button"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="10dp" />
 
 
 
-                    />
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/prenotaz_button"
+                                android:text="Vai a prenotazione"
+                                style="?android:attr/borderlessButtonStyle"
+                                android:background="@color/primaryColorDark"
 
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_materie_tutor"
-                        android:layout_above ="@id/map"
-                        android:layout_below="@id/tutor_nome"/>
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp" />
 
-                    </RelativeLayout>
+                              <com.pkmmte.view.CircularImageView
+
+                            android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:id="@+id/foto"
+                                android:layout_above="@+id/tutor_nome"
+                                android:layout_centerHorizontal="true" />
+
+
+
+                            />
+
+
+
+                        </RelativeLayout>
                     </ScrollView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
 
 
-                    <ListView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rec_tutor"
-                        android:choiceMode="singleChoice"
-                        android:divider="@android:color/transparent"
-                        android:dividerHeight="0dp"
-                        android:background="#cccc"
-                        />
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -275,10 +262,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/tab3"
+                    android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
 
                     <ListView
                         android:layout_width="match_parent"
@@ -290,12 +278,47 @@
                         android:background="#cccc"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Nessuna materia trovata"
+                        android:id="@+id/nomat"
+                        android:visibility="invisible"
+                        android:layout_centerHorizontal="true"
+                         />
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rec_tutor"
+                        android:choiceMode="singleChoice"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0dp"
+                        android:background="#cccc"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Nessuna recensione inserita"
+                        android:id="@+id/norec"
+                        android:visibility="invisible"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="137dp" />
 
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
     </TabHost>
-
 </LinearLayout>

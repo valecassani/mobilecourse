@@ -62,24 +62,9 @@
         android:layout_below="@+id/uniRichiesta"
         android:layout_alignLeft="@+id/uniRichiesta" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Foto"
-        android:id="@+id/fotoTesto"
-        android:layout_below="@+id/facRichiesta"
-        android:layout_alignLeft="@+id/facRichiesta"
-        android:layout_marginTop="52dp" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:id="@+id/fotoRichiesta"
-        android:visibility="invisible"
-        android:layout_alignTop="@+id/fotoTesto"
-        android:layout_centerHorizontal="true" />
+
 
 
 
@@ -114,15 +99,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
 
-    <it.polimi.mobilecourse.expenses.TouchImageView
-        android:id="@+id/expanded_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Scarica foto"
+        android:id="@+id/buttonDownload"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@color/com_facebook_button_send_background_color"
+        android:layout_marginBottom="85dp"
         android:layout_above="@+id/buttonAccettaR"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="invisible"
-         />
+        android:layout_centerHorizontal="true" />
 
 
 

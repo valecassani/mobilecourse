@@ -18,10 +18,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -44,6 +43,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,15 +67,29 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
     private TextView tutorCognome;
+    private TextView nomat;
+    private TextView norec;
+
+
+    private String idfb;
+    private String urlFoto;
     private ListView mListMaterie;
     private ListMaterieAdapterNoDelete adapter;
+    private ListRecensioniAdapter adapterRec;
+
     private String idTutor;
     private String nome;
     private String cognome;
     private String materiaSelezionata;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
+    private ArrayList<ListRecensioneItem> itemsRec = new ArrayList<>();
+
     private Spinner spinnerMaterie;
+    private ListView mat_tutor;
+    private ListView rec_tutor;
+
     private String idMateriaSelezionata;
+    private CircularImageView im;
     private String prezzoMateriaSelezionata;
     private View view;
     private Context context;
@@ -92,19 +107,19 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         th=(TabHost)view.findViewById(R.id.tabHost);
         th.setup();
         TabHost.TabSpec ts=th.newTabSpec("Profilo");
-        ts.setContent(R.id.tab1);
+        ts.setContent(R.id.linearLayout);
         ts.setIndicator("Profilo");
         th.addTab(ts);
 
-        ts=th.newTabSpec("Recensioni");
-        ts.setContent(R.id.tab2);
-        ts.setIndicator("Recensioni");
+        ts=th.newTabSpec("Materie");
+        ts.setContent(R.id.linearLayout2);
+        ts.setIndicator("Materie");
 
         th.addTab(ts);
-        ts=th.newTabSpec("Materie");
+        ts=th.newTabSpec("Recensioni");
 
-        ts.setContent(R.id.tab3);
-        ts.setIndicator("Materie");
+        ts.setContent(R.id.linearLayout3);
+        ts.setIndicator("Recensioni");
 
         th.addTab(ts);
 
@@ -118,7 +133,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Dati tutor");
 
         idTutor = getArguments().getString("idt");
-        mGoogleApiClient = new GoogleApiClient.Builder(activity)
+        /*mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -163,19 +178,102 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                                     }
                                 }
 
-        );
+        );*/
 
         tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
         tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
-        spinnerMaterie = (Spinner) view.findViewById(R.id.spinner_materie_tutor);
+        im=(CircularImageView)view.findViewById(R.id.foto);
+
+        mat_tutor=(ListView)view.findViewById(R.id.mat_tutor);
+        rec_tutor=(ListView)view.findViewById(R.id.rec_tutor);
+
+        nomat=(TextView)view.findViewById(R.id.nomat);
+        norec=(TextView)view.findViewById(R.id.norec);
 
 
 
         showTutorDetails();
         getMaterieForTutor();
+        getRecForTutor();
 
 
         return view;
+    }
+
+    private void getRecForTutor() {
+
+
+        String url = "http://www.unishare.it/tutored/getRecensioni.php?idutente=".concat(idTutor);
+
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            if (response.length() == 0) {
+
+                                norec.setVisibility(View.VISIBLE);
+
+
+                            }
+                            itemsRec.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                ListRecensioneItem item = new ListRecensioneItem(obj.getString("idstudente"), obj.getString("nome"),obj.getString("cognome"), Float.parseFloat(obj.getString("puntualita")),
+                                        Float.parseFloat(obj.getString("disponibilita")),Float.parseFloat(obj.getString("chiarezza")),Float.parseFloat(obj.getString("voto_finale")),obj.getString("foto"),obj.getString("idfb"));
+
+                                itemsRec.add(item);
+
+
+                            }
+
+
+
+                            adapterRec = new ListRecensioniAdapter(activity.getApplicationContext(), itemsRec);
+
+                            rec_tutor.setAdapter(adapterRec);
+
+                            //spinnerMaterie.setAdapter(adapter);
+                            /*spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                               @Override
+                               public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    materiaSelezionata = items.get(position).getNome();
+                                    prezzoMateriaSelezionata = items.get(position).getPrezzo();
+                                    idMateriaSelezionata = items.get(position).getId();
+                                    Log.d(TAG,"Materia selezionata: " + materiaSelezionata);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+
+                                }
+                            });*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
     }
 
     private void getMaterieForTutor() {
@@ -193,25 +291,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                     public boolean onResponse(JSONArray response) {
                         try {
                             if (response.length() == 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-                                builder.setMessage("Nessun Risultato").setTitle("Risultati ricerca");
-
-                                AlertDialog dialog = builder.create();
-                                if (dialog != null)
-                                    builder.setNeutralButton("Chiudi", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            try {
-                                                dialog.wait(2000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
-                                            dialog.dismiss();
-
-                                        }
-                                    });
-
-                                dialog.show();
+                                nomat.setVisibility(View.VISIBLE);
 
 
                             }
@@ -226,25 +307,12 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             }
 
 
+
                             adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
 
-                            spinnerMaterie.setAdapter(adapter);
-                            spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    materiaSelezionata = items.get(position).getNome();
-                                    prezzoMateriaSelezionata = items.get(position).getPrezzo();
-                                    idMateriaSelezionata = items.get(position).getId();
-                                    Log.d(TAG,"Materia selezionata: " + materiaSelezionata);
-
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
+                            mat_tutor.setAdapter(adapter);
 
 
-                                }
-                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -289,6 +357,11 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             Log.i(TAG, "Name set: " + nome);
                             cognome = obj.getString("cognome");
                             Log.i(TAG, "Surname set: " + cognome);
+                            idfb = obj.getString("idfb");
+
+                            urlFoto = obj.getString("url");
+
+                            setPhoto();
 
                             tutorCognome.setText(cognome);
 
@@ -343,14 +416,36 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         });
     }
 
+    private void setPhoto(){
+
+        if(idfb.compareTo("")!=0){
+
+            Picasso.with(context.getApplicationContext()).load("https://graph.facebook.com/" +idfb + "/picture"
+            ).into(im);
+        }
+        else if(urlFoto.compareTo("")!=0){
+
+
+            Picasso.with(context.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlFoto
+            ).into(im);
+
+        }
+        else{
+            im.setImageResource(R.drawable.dummy_profpic);
+        }
+
+
+
+    }
+
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mGoogleApiClient.isConnected()) {
+/*        if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
             mGoogleApiClient.disconnect();
-        }
+        }*/
     }
 
 
@@ -446,6 +541,17 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                 .title("I am here!");
         map.addMarker(options);
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        MapFragment f=(MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        if(f!=null){
+
+            getFragmentManager().beginTransaction().remove(f).commit();
+        }
+
     }
 
     @Override
