@@ -531,6 +531,7 @@ public class MostraRichiestaFragment extends Fragment {
                     }
                 } finally {
                     output.close();
+
                     filep=addImageToGallery(storagePath.toString()+ "/imageRichiesta.jpg",activity);
                 }
             } catch (FileNotFoundException e) {
@@ -560,8 +561,13 @@ public class MostraRichiestaFragment extends Fragment {
 
                 NotificationManager nm=(NotificationManager)activity.getSystemService(Context.NOTIFICATION_SERVICE);
 
-                Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(filep.replace("%2","/")).build();
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                //Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(filep).build();
+
+
+
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
                 PendingIntent contentIntent= PendingIntent.getActivity(activity, 0, intent, 0);
                 mBuilder.setContentIntent(contentIntent);
                 nm.notify(0,mBuilder.build());
