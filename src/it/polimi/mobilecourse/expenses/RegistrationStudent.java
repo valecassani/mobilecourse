@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Matteo on 23/12/2014.
  */
-public class RegistrationStudent extends HelpActivity {
+public class RegistrationStudent extends HelpABActivity {
 
 
     private RegStudentFBFragment rsfbf;
@@ -27,6 +28,9 @@ public class RegistrationStudent extends HelpActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_student);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(25);
 
         rsfbf= new RegStudentFBFragment();
         rsf=new RegStudentFragment();
@@ -99,6 +103,22 @@ public class RegistrationStudent extends HelpActivity {
         if(op=="controlS"){
             RegStudentFragment reg=(RegStudentFragment) fragment;
             reg.duplicateMail(result);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
         }
 
     }

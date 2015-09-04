@@ -4,13 +4,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
 /**
  * Created by Matteo on 20/06/2015.
  */
-public class RegistrationTutor extends HelpActivity {
+public class RegistrationTutor extends HelpABActivity {
 
     private RegTutorFBFragment rtfbf;
     private RegTutorFragment rtf;
@@ -19,6 +20,10 @@ public class RegistrationTutor extends HelpActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_tutor);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(25);
 
         rtfbf= new RegTutorFBFragment();
         rtf=new RegTutorFragment();
@@ -68,6 +73,22 @@ public class RegistrationTutor extends HelpActivity {
         if(op=="controlT"){
             RegTutorFragment reg=(RegTutorFragment) fragment;
             reg.duplicateMail(result);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
         }
 
     }

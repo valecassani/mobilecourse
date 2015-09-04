@@ -8,6 +8,13 @@
     tools:context="it.polimi.mobilecourse.expenses.NuovaPrenotazioneActivity"
    >
 
+    <ProgressBar
+        android:id="@+id/progressBar_prenot_item"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
 
     <TextView
         android:id="@+id/tutor_selezionato"

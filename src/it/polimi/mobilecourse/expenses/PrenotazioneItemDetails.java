@@ -3,6 +3,7 @@ package it.polimi.mobilecourse.expenses;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -61,6 +63,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private TextView mTextViewMateria;
     private Button sceltaDataButton;
     private NumberPicker durataPicker;
+    private ProgressBar progressDialog;
 
 
     private String idStudente;
@@ -82,7 +85,9 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_prenotaz_item);
+
         context = getApplicationContext();
         queue = Volley.newRequestQueue(context);
 
@@ -90,9 +95,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         idPrenotazione = data.getString("id");
         Toast.makeText(getApplicationContext(), "Prenotazione id " + idPrenotazione, Toast.LENGTH_SHORT).show();
-        String displayIdPrenotazione = data.getString("id_prenotazione");
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -207,6 +211,8 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                                 sceltaDataButton.setVisibility(View.INVISIBLE);
                                 sceltaOraButton.setVisibility(View.INVISIBLE);
                             }
+
+                            progressDialog.setVisibility(View.INVISIBLE);
 
 
                         } catch (JSONException e) {
