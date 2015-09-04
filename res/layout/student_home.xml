@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/drawer_infos"
-            android:background="@drawable/tutor_sidebar"
+            android:background="@drawable/minitutored_bg"
             >
             <com.pkmmte.view.CircularImageView
                 android:layout_marginTop="70dp"
@@ -66,6 +66,13 @@
                 app:shadow="true" t="@color/material_blue_500"
                 android:src="@drawable/landing_image"
                 android:id="@+id/drawer_image"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/drawer_image"
+                android:layout_marginLeft="55dp"
+                android:src="@drawable/logo_white"/>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"

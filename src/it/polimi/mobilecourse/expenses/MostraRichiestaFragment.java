@@ -68,6 +68,8 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -521,6 +523,11 @@ public class MostraRichiestaFragment extends Fragment {
             try {
                 //The sdcard directory e.g. '/sdcard' can be used directly, or
                 //more safely abstracted with getExternalStorageDirectory()
+                String foldernew="Tutored";
+                File f=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),foldernew);
+                if(!f.exists()){
+                    f.mkdirs();
+                }
                 File storagePath = Environment.getExternalStorageDirectory();
                 OutputStream output = new FileOutputStream (storagePath + "/imageRichiesta.jpg");
                 try {
@@ -602,8 +609,11 @@ public class MostraRichiestaFragment extends Fragment {
 
 
 
+            Uri uri=Uri.parse(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
 
-        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            context.getContentResolver().insert(uri, values);
+
+
 
         return filePath;
     }

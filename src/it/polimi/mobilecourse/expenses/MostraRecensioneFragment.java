@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +48,18 @@ public class MostraRecensioneFragment extends Fragment {
     private String chiarezza;
     private String voto_finale;
     private String commento;
+
+    //campi
+
+    CircularImageView img;
+    RatingBar disp;
+    RatingBar chiar;
+    RatingBar punt;
+    RatingBar voto_final;
+    TextView title;
+    TextView comment;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,18 +132,17 @@ public class MostraRecensioneFragment extends Fragment {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             System.out.println(obj);
-                            /*nomeR=obj.getString("nome");
-                            cognomeR=obj.getString("cognome");
-                            testoR=obj.getString("testo");
-                            titoloR=obj.getString("titolo");
-                            id_studente=obj.getString("id_studente");
-                            regid=obj.getString("regid");
-                            uniR=obj.getString("uni");
-                            facR=obj.getString("facolta");
-                            urlR=obj.getString("foto");
-                            data_entroR=obj.getString("data_entro");
-                            setField();*/
+                            nome=obj.getString("nome");
+                            cognome=obj.getString("cognome");
+                            idfb=obj.getString("idfb");
+                            foto=obj.getString("foto");
+                            puntualita=obj.getString("puntualita");
+                            disponibilita=obj.getString("disponibilita");
+                            chiarezza=obj.getString("chiarezza");
+                            voto_finale=obj.getString("voto_finale");
+                            commento=obj.getString("commento");
 
+                            setField();
 
 
 
@@ -162,6 +177,53 @@ public class MostraRecensioneFragment extends Fragment {
     }
 
 
+    private void setField(){
+
+
+        title=(TextView)view.findViewById(R.id.title);
+        comment=(TextView)view.findViewById(R.id.commentMostra);
+        disp=(RatingBar)view.findViewById(R.id.dispMostra);
+        chiar=(RatingBar)view.findViewById(R.id.chiarMostra);
+        voto_final=(RatingBar)view.findViewById(R.id.finaleMostra);
+        punt=(RatingBar)view.findViewById(R.id.puntualMostra);
+
+        img=(CircularImageView)view.findViewById(R.id.studface);
+        title.setText(nome+" "+cognome.substring(0,1)+".");
+        comment.setText(commento);
+
+
+        if(idfb.compareTo("")!=0){
+
+            Picasso.with(activity.getApplicationContext()).load("https://graph.facebook.com/" + idfb + "/picture"
+            ).into(img);
+        }
+        else if(foto.compareTo("")!=0){
+
+
+            Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + foto
+            ).into(img);
+
+        }
+        else{
+
+            img.setImageResource(R.drawable.dummy_profpic);
+
+
+        }
+
+        disp.setRating(Float.parseFloat(disponibilita));
+        punt.setRating(Float.parseFloat(puntualita));
+        chiar.setRating(Float.parseFloat(chiarezza));
+        voto_final.setRating(Float.parseFloat(voto_finale));
+
+
+        progress(false);
+
+
+
+
+
+    }
 
 
 }

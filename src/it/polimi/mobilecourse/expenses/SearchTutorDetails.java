@@ -275,7 +275,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
                                             FragmentManager fragmentManager = getFragmentManager();
 
-                                            Fragment fragment = new MostraRichiestaFragment();
+                                            Fragment fragment = new MostraRecensioneFragment();
                                             Bundle bundle = new Bundle();
                                             bundle.putString("idrec", click.getIdrec());
                                             fragment.setArguments(bundle);
