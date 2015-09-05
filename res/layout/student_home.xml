@@ -110,8 +110,8 @@
         <ListView
             android:layout_below="@id/drawer_infos"
             android:id="@+id/student_drawer_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="#A7AEAE"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"

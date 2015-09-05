@@ -126,6 +126,7 @@ public class HomeTutorFragment extends Fragment {
 
                             adapter = new ListRichiesteAdapter(activity.getApplicationContext(), items);
                             richieste_list.setAdapter(adapter);
+                            Functions.setListViewHeightBasedOnChildren(richieste_list);
 
                             richieste_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override

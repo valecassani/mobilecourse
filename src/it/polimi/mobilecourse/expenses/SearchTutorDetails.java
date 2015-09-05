@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -138,7 +139,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Dati tutor");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profilo Tutor");
 
         idTutor = getArguments().getString("idt");
         /*mGoogleApiClient = new GoogleApiClient.Builder(activity)
@@ -264,6 +265,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
                             rec_tutor.setAdapter(adapterRec);
 
+                            Functions.setListViewHeightBasedOnChildren(rec_tutor);
+
                             rec_tutor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -362,6 +365,9 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
 
                             mat_tutor.setAdapter(adapter);
+
+                            Functions.setListViewHeightBasedOnChildren(mat_tutor);
+
 
 
                         } catch (JSONException e) {
@@ -632,5 +638,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
     }
+
+
 
 }

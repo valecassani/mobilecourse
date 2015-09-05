@@ -134,6 +134,8 @@ public class HomeStudentFragment extends Fragment {
 
                             list_tutor.setAdapter(adapter);
 
+                            Functions.setListViewHeightBasedOnChildren(list_tutor);
+
                             list_tutor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

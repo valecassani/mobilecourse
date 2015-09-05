@@ -24,6 +24,72 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/container3"
+
+
+                        android:layout_weight="0.20">
+
+
+
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fitsSystemWindows="true">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rec_tutor"
+                        android:choiceMode="singleChoice"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0dp"
+                        android:background="#cccc"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Nessuna recensione inserita"
+                        android:id="@+id/norec"
+                        android:visibility="invisible"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="137dp" />
+
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+ Nuova Recensione"
+                        android:id="@+id/buttonNewRec"
+
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@color/primaryColorDark"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/rec_tutor"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="205dp" />
+
+
+                    </RelativeLayout>
+                    </ScrollView>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/linearLayout"
 
                     android:layout_width="match_parent"
@@ -291,13 +357,13 @@
 
                     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="wrap_content"
-                        android:layout_height="805dp"
+                        android:layout_height="wrap_content"
                         android:fitsSystemWindows="true">
 
 
                     <ListView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/mat_tutor"
                         android:choiceMode="singleChoice"
                         android:divider="@android:color/transparent"
@@ -315,70 +381,6 @@
                         android:layout_below="@+id/mat_tutor"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="93dp" />
-
-                    </RelativeLayout>
-                    </ScrollView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/container3"
-
-
-                        >
-
-
-
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="wrap_content"
-                        android:layout_height="805dp"
-                        android:fitsSystemWindows="true">
-
-                    <ListView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rec_tutor"
-                        android:choiceMode="singleChoice"
-                        android:divider="@android:color/transparent"
-                        android:dividerHeight="0dp"
-                        android:background="#cccc"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Nessuna recensione inserita"
-                        android:id="@+id/norec"
-                        android:visibility="invisible"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="137dp" />
-
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="+ Nuova Recensione"
-                        android:id="@+id/buttonNewRec"
-
-                        style="?android:attr/borderlessButtonStyle"
-                        android:background="@color/primaryColorDark"
-                        android:layout_below="@+id/norec"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="295dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginRight="10dp" />
-
 
                     </RelativeLayout>
                     </ScrollView>

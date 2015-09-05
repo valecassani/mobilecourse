@@ -55,7 +55,7 @@ public class ListRecensioniAdapter extends BaseAdapter {
         TextView nome=(TextView)convertView.findViewById(R.id.rec_nome);
         RatingBar rb=(RatingBar)convertView.findViewById(R.id.rec_val);
 
-        nome.setText("Recensioni di "+items.get(position).getNome()+ " "+items.get(position).getCognome().substring(0,1)+".");
+        nome.setText("Recensione di "+items.get(position).getNome()+ " "+items.get(position).getCognome().substring(0,1)+".");
         rb.setRating(items.get(position).getVoto_finale());
 
          if (items.get(position).getIdfb().compareTo("") != 0) {
