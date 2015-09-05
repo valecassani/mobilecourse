@@ -1,19 +1,19 @@
 package it.polimi.mobilecourse.expenses;
 
-import android.app.AlertDialog;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
+import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -35,11 +35,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -47,7 +44,7 @@ import java.util.Map;
 /**
  * Created by Valerio on 13/08/2015.
  */
-public class PrenotazioneItemDetails extends AppCompatActivity {
+public class PrenotazioneItemDetails extends Fragment {
 
     private static final String TAG = "PrenotazioneItemDet";
     private SimpleDateFormat simpleDateFormat;
@@ -58,10 +55,11 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private Context context;
     private RequestQueue queue;
     private Button sceltaOraButton;
-    private EditText editTextCellulare;
+    private TextView editTextCellulare;
     private SessionManager sessionManager;
     private TextView mTextViewMateria;
     private Button sceltaDataButton;
+    private Button buttonAggiorna;
     private NumberPicker durataPicker;
     private ProgressBar progressDialog;
 
@@ -80,38 +78,66 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
     private TextView textDurata;
     private int prezzo;
     private String prezzoOrario;
+    private String cellulare;
+
+    private PrenotazioniDettagliActivity activity;
+
+
+    private View view;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_prenotaz_item);
+        view = inflater.inflate(R.layout.dettagli_prenot_frag, container, false);
+        activity = (PrenotazioniDettagliActivity)getActivity();
 
-        context = getApplicationContext();
+
+
+
+
+        context = getActivity().getApplicationContext();
         queue = Volley.newRequestQueue(context);
 
-        getSupportActionBar().setElevation(25);
-        Bundle data = getIntent().getExtras();
-        idPrenotazione = data.getString("id");
-        Toast.makeText(getApplicationContext(), "Prenotazione id " + idPrenotazione, Toast.LENGTH_SHORT).show();
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         simpleTimeFormat = new SimpleDateFormat("HH-mm-ss", Locale.US);
 
-        sceltaData = (TextView) findViewById(R.id.data_scelta);
-        sceltaDataButton = (Button) findViewById(R.id.button_data);
+        initializeButtons();
+
+        if (confermato.equals("1")) {
+            sendButton.setVisibility(View.INVISIBLE);
+            sceltaDataButton.setVisibility(View.INVISIBLE);
+            sceltaOraButton.setVisibility(View.INVISIBLE);
+            buttonAggiorna.setVisibility(View.INVISIBLE);
+
+
+        } else {
+            editTextCellulare.setVisibility(View.INVISIBLE);
+        }
+
+
+
+
+
+
+
+        return view;
+    }
+
+    public void initializeButtons() {
+        sceltaData = (TextView) view.findViewById(R.id.data_scelta);
+        sceltaData.setText(date);
+
+        sceltaDataButton = (Button) view.findViewById(R.id.button_data);
 
         sceltaDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar newCalendar = Calendar.getInstance();
-                DatePickerDialog datePickerDialog = new DatePickerDialog(PrenotazioneItemDetails.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -129,20 +155,23 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
             }
         });
 
-        sessionManager = new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(context);
         System.out.println(sessionManager.getUserDetails().get("id"));
 
 
-        mTextViewMateria = (TextView) findViewById(R.id.button_materia);
-        sceltaOra = (TextView) findViewById(R.id.ora_scelta);
-        sceltaOraButton = (Button) findViewById(R.id.ora_scelta_button);
+        mTextViewMateria = (TextView) view.findViewById(R.id.button_materia);
+        mTextViewMateria.setText(materia);
+        sceltaOra = (TextView) view.findViewById(R.id.ora_scelta);
+        sceltaOra.setText(time);
+
+        sceltaOraButton = (Button) view.findViewById(R.id.ora_scelta_button);
         sceltaOraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker = new TimePickerDialog(PrenotazioneItemDetails.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -159,7 +188,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         });
 
 
-        sendButton = (Button) findViewById(R.id.button_conferma_prenotazione);
+        sendButton = (Button) view.findViewById(R.id.button_conferma_prenotazione);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,15 +198,16 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
             }
         });
 
-        editTextCellulare = (EditText) findViewById(R.id.cellulare_nuova_prenotaz);
+        editTextCellulare = (TextView) view.findViewById(R.id.cellulare_prenotaz);
+        editTextCellulare.setText(cellulare);
 
+        buttonAggiorna = (Button) view.findViewById(R.id.button_aggiorna_prenotazione);
 
-
-        populateData();
 
 
     }
 
+    /*
     private void populateData() {
 
         String url = "http://www.unishare.it/tutored/prenotazione_by_id.php?id=" + idPrenotazione;
@@ -210,9 +240,10 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
                                 sendButton.setVisibility(View.INVISIBLE);
                                 sceltaDataButton.setVisibility(View.INVISIBLE);
                                 sceltaOraButton.setVisibility(View.INVISIBLE);
+
                             }
 
-                            progressDialog.setVisibility(View.INVISIBLE);
+
 
 
                         } catch (JSONException e) {
@@ -237,7 +268,7 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         queue.add(jsonObjReq);
 
 
-    }
+    } */
 
     private void confermaPrenotazione() {
         final String numeroCellulare = editTextCellulare.getText().toString();
@@ -293,35 +324,23 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
         };
         queue.add(jsObjRequest);
         Toast.makeText(context, "Prenotazione Confermata", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, HomeTutor.class);
+        Intent intent = new Intent(context, HomeTutor.class);
         Bundle bundle = new Bundle();
         bundle.putString("user_id", idTutor);
         intent.putExtras(bundle);
         startActivity(intent);
 
-        finish();
+        getActivity().finish();
 
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                finish();
 
-                return true;
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void showPicker()
     {
 
-        final Dialog d = new Dialog(PrenotazioneItemDetails.this);
+        final Dialog d = new Dialog(getActivity());
         d.setTitle("Durata Riptezione");
         d.setContentView(R.layout.dialog_number);
         Button b1 = (Button) d.findViewById(R.id.button1);
@@ -350,7 +369,37 @@ public class PrenotazioneItemDetails extends AppCompatActivity {
 
     }
 
+    private void progress(final boolean show){
+        final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
+        progressDialog.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressDialog.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressDialog.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+
+
+
+    }
+
+    public void populateData(JSONObject obj) throws JSONException {
+
+
+        date=obj.getString("data");
+        time=obj.getString("ora_inizio");
+        materia = obj.getString("nome_materia");
+        cellulare = obj.getString("cellulare");
+        idStudente = obj.getString("id_studente");
+        idTutor = obj.getString("id_tutor");
+        confermato = obj.getString("confermato");
+
+
+        note = obj.getString("note");
+
+    }
 }
 
 

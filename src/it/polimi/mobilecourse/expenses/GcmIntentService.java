@@ -68,15 +68,7 @@ public class GcmIntentService extends IntentService{
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
-                for (int i=0; i<5; i++) {
-                    Log.i(TAG, "Working... " + (i+1)
-                            + "/5 @ " + SystemClock.elapsedRealtime());
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                    }
-                }
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
+
                 // Post notification of received message.
                 //sendNotification("Received: " + extras.toString());
                 sendNotification(msg,tipo);
@@ -98,7 +90,7 @@ public class GcmIntentService extends IntentService{
 
          if(type.equals("prenotazione")) {
 
-            myintent = new Intent(this, PrenotazioneItemDetails.class);
+            myintent = new Intent(this, PrenotazioniDettagliActivity.class);
             myintent.putExtra("message", msg);
             myintent.putExtra("id",receivedIntent.getStringExtra("id_prenotazione"));
             contentIntent = PendingIntent.getActivity(this, 0,

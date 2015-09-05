@@ -8,12 +8,6 @@
     tools:context="it.polimi.mobilecourse.expenses.NuovaPrenotazioneActivity"
    >
 
-    <ProgressBar
-        android:id="@+id/progressBar_prenot_item"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 
 
     <TextView
@@ -28,7 +22,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
 
         android:layout_width="200dp"
-        android:text="Inserire una data"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="89dp"
         android:layout_below="@+id/prenot_tutor_name" />
@@ -39,7 +32,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
 
         android:id="@+id/ora_scelta"
-        android:text="Inserire orario"
         android:layout_alignBottom="@id/ora_scelta_button"
         android:layout_alignRight="@+id/imagePrenotTutor" />
 
@@ -47,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@id/ora_scelta_button"
-        android:text="Orario"
         android:layout_above="@+id/cellulare_nuova_prenotaz"
         android:layout_alignLeft="@+id/button_data" />
 
@@ -58,25 +49,21 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/button_materia"
-        android:text="materia"
         android:layout_alignTop="@+id/prenot_tutor_name"
         android:layout_centerHorizontal="true"
         android:textStyle="bold" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="phone"
         android:ems="10"
-        android:id="@+id/cellulare_nuova_prenotaz"
-        android:hint="Cellulare"
+        android:id="@+id/cellulare_prenotaz"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Conferma Prenotazione"
         android:id="@+id/button_conferma_prenotazione"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -114,11 +101,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Aggiorna Prenotazione"
         android:id="@+id/button_aggiorna_prenotazione"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
+        android:text="Aggiorna Prenotazione"
         style="?android:attr/borderlessButtonStyle"
         android:background="@color/primaryColorDark"
         android:layout_above="@id/button_conferma_prenotazione"/>

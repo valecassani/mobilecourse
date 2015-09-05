@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public class HomeTutorFragment extends Fragment {
 
     private HomeTutor activity;
-    private CardView cardView;
 
     private ArrayList<ListRichiesteItem> items = new ArrayList<>();
 

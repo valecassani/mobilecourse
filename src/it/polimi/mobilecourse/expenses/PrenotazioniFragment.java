@@ -165,9 +165,9 @@ public class PrenotazioniFragment extends Fragment {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d(TAG, response.toString());
                                 PrenotazioniItem item;
-                                if (obj.getString("confermato").equals(1)) {
+                                if (obj.getString("confermato").equals("1")) {
                                      item = new PrenotazioniItem(obj.getString("id"),obj.getString("materia"),obj.getString("data"),
-                                            obj.getString("cellulare"), obj.getString("durata"), true);
+                                            obj.getString("cellulare"), obj.getString("num_ore"), true);
                                 } else {
                                      item = new PrenotazioniItem(obj.getString("id"),obj.getString("materia"),obj.getString("data"),
                                             obj.getString("cellulare"),obj.getString("num_ore"), false);
@@ -209,7 +209,7 @@ public class PrenotazioniFragment extends Fragment {
 
 
     private void startItemDetails(int position) {
-        Intent intent = new Intent(context, PrenotazioneItemDetails.class);
+        Intent intent = new Intent(context, PrenotazioniDettagliActivity.class);
         Bundle bundle = new Bundle();
         PrenotazioniItem item =  adapter.getItem(position);
         bundle.putString("id", item.getId());

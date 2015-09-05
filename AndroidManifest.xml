@@ -58,11 +58,8 @@
         <activity
             android:name=".HomeTutor"
             android:theme="@style/AppTheme"
-            android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-        <activity android:name=".NuovaRecensione">
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
-        </activity>
         <activity
             android:name=".LandingActivity"
             android:theme="@style/Landing"
@@ -124,11 +121,7 @@
             android:name=".HelpABActivity"
             android:label="@string/title_activity_help_ab" >
         </activity>
-        <activity
-            android:name=".NuovaRichiestaFragment"
-            android:theme="@style/PageTheme"
-            android:parentActivityName=".HomeStudent" >
-        </activity>
+
         <activity
             android:name=".SearchResultActivity"
             android:theme="@style/PageTheme"
@@ -141,8 +134,7 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".SearchTutorDetails"
-            android:theme="@style/PageTheme"/>
+
         <activity android:name=".UploadToServer"
             >
         </activity>
@@ -155,7 +147,7 @@
         </activity>
 
         <activity
-            android:name=".PrenotazioneItemDetails"
+            android:name=".PrenotazioniDettagliActivity"
             android:theme="@style/PageTheme"
             android:label="Dettagli prenotazione"></activity>
         <activity

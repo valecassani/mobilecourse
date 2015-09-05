@@ -1,6 +1,7 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +68,10 @@ public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
 
         if (items.get(position).isConfermato()) {
             title.setTypeface(Typeface.DEFAULT_BOLD);
+            title.setTextColor(Color.GREEN);
+        } else {
+            title.setTypeface(Typeface.DEFAULT_BOLD);
+            title.setTextColor(Color.BLUE);
         }
 
 
