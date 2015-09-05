@@ -62,6 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/puntualMostra"
+                android:clickable="false"
+                android:isIndicator="true"
                 android:layout_below="@+id/textView21"
                 android:layout_alignLeft="@+id/textView21" />
 
@@ -79,6 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dispMostra"
+                android:clickable="false"
+                android:isIndicator="true"
                 android:layout_below="@+id/textView22"
                 android:layout_alignLeft="@+id/textView22" />
 
@@ -94,6 +98,8 @@
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:isIndicator="true"
                 android:id="@+id/chiarMostra"
                 android:layout_below="@+id/textView23"
                 android:layout_alignLeft="@+id/textView23" />
@@ -111,6 +117,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/finaleMostra"
+                android:clickable="false"
+                android:isIndicator="true"
                 android:layout_below="@+id/textView24"
                 android:layout_alignLeft="@+id/textView24" />
 
@@ -118,26 +126,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Vuoi aggiungere un commento?"
+                android:text="Commento"
                 android:id="@+id/textView25"
                 android:layout_below="@+id/finaleMostra"
                 android:layout_alignLeft="@+id/finaleMostra" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="(Opzionale)"
-                android:id="@+id/textView26"
-                android:layout_below="@+id/textView25"
-                android:layout_alignLeft="@+id/textView25" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/commentMostra"
-                android:layout_below="@+id/textView26"
-                android:layout_alignLeft="@+id/textView26"
+                android:layout_below="@+id/textView25"
+                android:layout_alignLeft="@id/textView25"
                 android:layout_alignRight="@+id/finaleMostra" />
 
 

@@ -58,6 +58,7 @@ public class MostraRecensioneFragment extends Fragment {
     RatingBar voto_final;
     TextView title;
     TextView comment;
+    TextView tvc;
 
 
 
@@ -182,6 +183,7 @@ public class MostraRecensioneFragment extends Fragment {
 
         title=(TextView)view.findViewById(R.id.title);
         comment=(TextView)view.findViewById(R.id.commentMostra);
+        tvc=(TextView)view.findViewById(R.id.textView25);
         disp=(RatingBar)view.findViewById(R.id.dispMostra);
         chiar=(RatingBar)view.findViewById(R.id.chiarMostra);
         voto_final=(RatingBar)view.findViewById(R.id.finaleMostra);
@@ -189,8 +191,14 @@ public class MostraRecensioneFragment extends Fragment {
 
         img=(CircularImageView)view.findViewById(R.id.studface);
         title.setText(nome+" "+cognome.substring(0,1)+".");
-        comment.setText(commento);
+        if(commento.compareTo("")!=0) {
+            comment.setText(commento);
+        }
+        else{
+            comment.setVisibility(View.GONE);
+            tvc.setVisibility(View.GONE);
 
+        }
 
         if(idfb.compareTo("")!=0){
 
@@ -204,7 +212,7 @@ public class MostraRecensioneFragment extends Fragment {
             ).into(img);
 
         }
-        else{
+        if(idfb.compareTo("")==0 && foto.compareTo("")==0){
 
             img.setImageResource(R.drawable.dummy_profpic);
 
