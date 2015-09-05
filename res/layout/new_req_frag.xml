@@ -62,25 +62,45 @@
         android:layout_below="@+id/dataEntro"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="22dp"></Button>
+
     <Button
         android:id="@+id/buttonPhoto"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Scatta Foto"
-        android:layout_above="@+id/anteprima_immagine"
+        android:layout_alignTop="@+id/buttonImage"
         android:layout_alignRight="@+id/buttonSendRich"></Button>
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/anteprima_immagine"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/check_immagine"
         android:maxWidth="200dp"
         android:maxHeight="300dp"
         android:scaleType="fitCenter"
+        android:src="@drawable/check_icon"
         android:adjustViewBounds="true"
+        android:visibility="gone"
         android:layout_below="@+id/buttonImage"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Immagine selezionata"
+        android:layout_below="@id/check_immagine"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:id="@+id/textView13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/check_immagine"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/url" />
 
 
 
@@ -99,24 +119,15 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/material_blue_500"
-        android:layout_below="@id/anteprima_immagine"
         android:text="Invia"
         android:textColor="#FFF"
-        android:layout_toRightOf="@+id/progressBarNewR"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/textView13"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
-    <ImageView
-        android:id="@+id/expanded_imageR"
-        android:layout_width="300dp"
-        android:layout_height="600dp"
-        android:visibility="invisible"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/titoloRichiesta"
-        android:layout_alignLeft="@+id/anteprima_immagine" />
+
 
     <ProgressBar
         android:layout_width="wrap_content"

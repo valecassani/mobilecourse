@@ -129,7 +129,6 @@ public class NuovaRichiestaFragment extends Fragment{
         mTesto = (EditText)view.findViewById(R.id.testoRichiesta);
         mDataEntro = (EditText)view.findViewById(R.id.dataEntro);
         progress=(ProgressBar)view.findViewById(R.id.progressBarNewR);
-        expanded=(ImageView)view.findViewById(R.id.expanded_imageR);
         sendButton = (Button)view.findViewById(R.id.buttonSendRich);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -551,8 +550,8 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
                 if (file.exists()) {
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 
-                    imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
-                    imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+                    //imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
+                    //imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
 
                     exist=true;
                 }
@@ -570,8 +569,8 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
                     System.out.println("File exists");
 
                     bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
-                    imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
+                    //imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
+                    //imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
 
                     exist=true;
                 }
@@ -580,17 +579,7 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
 
 
         }
-        if(exist==true) {
-            mShortAnimationDuration = getResources().getInteger(
-                    android.R.integer.config_shortAnimTime);
-            imgView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    zoomImageFromThumb(imgView, bitmap);
 
-                }
-            });
-        }
     }
 
 
