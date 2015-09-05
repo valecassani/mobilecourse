@@ -395,7 +395,14 @@ public class HomeTutor extends AppCompatActivity {
 
                 break;
             case 1:
-                //profilo
+                Bundle bundle = new Bundle();
+                bundle.putString("tipo","1");
+                bundle.putString("id",userId);
+                Intent intent = new Intent(this,UpdateInfo.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                fragment = null;
+                
                 /*fragment = new StudentDataFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("mail", username);
@@ -408,7 +415,7 @@ public class HomeTutor extends AppCompatActivity {
                 //materie
 
                 fragment = new MaterieTutorFragment();
-                Bundle bundle = new Bundle();
+                bundle = new Bundle();
                 bundle.putString("idt", userId);
 
                 fragment.setArguments(bundle);

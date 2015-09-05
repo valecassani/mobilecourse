@@ -394,11 +394,13 @@ public class HomeStudent extends AppCompatActivity {
 
                 break;
             case 2:
-                fragment[0] = new StudentDataFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("mail", username);
-                bundle.putString("id", userId);
-                fragment[0].setArguments(bundle);
+                bundle.putString("tipo","0");
+                bundle.putString("id",userId);
+                Intent intent = new Intent(this,UpdateInfo.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                fragment[0] = null;
                 break;
             case 3:
                 fragment[0] = new RichiesteFragment();

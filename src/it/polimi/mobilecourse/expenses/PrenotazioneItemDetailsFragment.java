@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * Created by Valerio on 13/08/2015.
  */
-public class PrenotazioneItemDetails extends Fragment {
+public class PrenotazioneItemDetailsFragment extends Fragment {
 
     private static final String TAG = "PrenotazioneItemDet";
     private SimpleDateFormat simpleDateFormat;
@@ -174,7 +174,6 @@ public class PrenotazioneItemDetails extends Fragment {
                 TimePickerDialog mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
                         time = selectedHour + ":" + selectedMinute;
                         sceltaOra.setText(selectedHour + ":" + selectedMinute);
 

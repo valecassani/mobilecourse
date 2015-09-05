@@ -2,18 +2,13 @@ package it.polimi.mobilecourse.expenses;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 
@@ -40,7 +35,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
     private TabHost th;
 
-    private PrenotazioneItemDetails pid = new PrenotazioneItemDetails();
+    private PrenotazioneItemDetailsFragment pid = new PrenotazioneItemDetailsFragment();
 
 
     private RequestQueue queue;

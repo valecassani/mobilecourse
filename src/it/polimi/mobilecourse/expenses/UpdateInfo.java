@@ -4,13 +4,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
 /**
  * Created by Matteo on 03/07/2015.
  */
-public class UpdateInfo extends HelpActivity {
+public class UpdateInfo extends HelpABActivity {
 
     private UpdateInfoStudentFragment uisf;
     private UpdateInfoTutorFragment uitf;
@@ -28,6 +29,8 @@ public class UpdateInfo extends HelpActivity {
         String tipo=bundle.getString("tipo");
         Bundle forFrag=new Bundle();
         forFrag.putString("id",id);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         if(tipo.compareTo("0")==0) {
@@ -111,6 +114,21 @@ public class UpdateInfo extends HelpActivity {
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+
+                return true;
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
 
