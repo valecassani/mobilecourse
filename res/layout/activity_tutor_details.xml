@@ -24,72 +24,6 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <ScrollView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/container3"
-
-
-                        android:layout_weight="0.20">
-
-
-
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fitsSystemWindows="true">
-
-                    <ListView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rec_tutor"
-                        android:choiceMode="singleChoice"
-                        android:divider="@android:color/transparent"
-                        android:dividerHeight="0dp"
-                        android:background="#cccc"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Nessuna recensione inserita"
-                        android:id="@+id/norec"
-                        android:visibility="invisible"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="137dp" />
-
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="+ Nuova Recensione"
-                        android:id="@+id/buttonNewRec"
-
-                        style="?android:attr/borderlessButtonStyle"
-                        android:background="@color/primaryColorDark"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@id/rec_tutor"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="205dp" />
-
-
-                    </RelativeLayout>
-                    </ScrollView>
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/linearLayout"
 
                     android:layout_width="match_parent"
@@ -120,8 +54,8 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/tutor_cognome"
                                 android:layout_marginTop="145dp"
-                                android:layout_alignRight="@+id/map"
-                                android:layout_marginRight="140dp" />
+                                android:layout_marginRight="140dp"
+                                android:layout_toRightOf="@+id/foto" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -179,7 +113,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:id="@+id/textView1"
+                                android:id="@+id/textViewespuni"
                                 android:text="Esperienze da tutor:"
                                 android:layout_below="@id/tutor_occupazione"
                                 android:layout_marginRight="28dp"
@@ -191,7 +125,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:id="@+id/tutor_esptutor"
-                                android:layout_below="@id/textView1"
+                                android:layout_below="@id/textViewespuni"
                                 android:layout_marginRight="28dp"
 
                                 android:layout_marginLeft="5dp" />
@@ -266,15 +200,7 @@
 
 
 
-                            <fragment
-                                android:id="@+id/map"
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:name="com.google.android.gms.maps.MapFragment"
-                                android:layout_marginTop="533dp"
-                                android:layout_alignRight="@+id/prenotaz_button"
-                                android:layout_marginRight="5dp"
-                                android:layout_marginLeft="10dp" />
+
 
 
 
@@ -313,8 +239,59 @@
                                 android:visibility="gone"
                                 style="?android:attr/progressBarStyleLarge"
                                 android:layout_alignBottom="@+id/foto"
-                                android:layout_toRightOf="@+id/textView1" />
+                                android:layout_toRightOf="@+id/textViewespuni" />
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="Caratteristiche lezioni:"
+                                android:id="@+id/textViewlez"
+                                android:layout_below="@+id/tutor_fac"
+                                android:layout_alignRight="@+id/tutor_eta" />
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lezioni di gruppo"
+                                android:id="@+id/checkBoxgroup"
+                                android:clickable="false"
+                                android:layout_below="@+id/textViewlez"
+                                android:layout_alignLeft="@+id/tutor_fac"
+                                android:checked="false" />
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Prima lezione gratis"
+                                android:id="@+id/checkBoxgratis"
+                                android:clickable="false"
+
+                                android:layout_below="@+id/checkBoxgroup"
+                                android:layout_alignLeft="@+id/checkBoxgroup"
+                                android:checked="false" />
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lezioni a domicilio"
+                                android:id="@+id/checkBoxdom"
+                                android:clickable="false"
+
+                                android:layout_below="@+id/checkBoxgratis"
+                                android:layout_alignLeft="@+id/checkBoxgratis"
+                                android:checked="false" />
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lezioni in sede propria"
+                                android:id="@+id/checkBoxsede"
+                                android:clickable="false"
+
+                                android:layout_below="@+id/checkBoxdom"
+                                android:layout_alignLeft="@+id/checkBoxdom"
+                                android:checked="false" />
 
 
                         </RelativeLayout>
@@ -336,6 +313,72 @@
 
 
 
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/container3"
+
+
+                        android:layout_weight="0.20">
+
+
+
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fitsSystemWindows="true">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rec_tutor"
+                        android:choiceMode="singleChoice"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0dp"
+                        android:background="#cccc"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Nessuna recensione inserita"
+                        android:id="@+id/norec"
+                        android:visibility="invisible"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="137dp" />
+
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+ Nuova Recensione"
+                        android:id="@+id/buttonNewRec"
+
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@color/primaryColorDark"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/rec_tutor"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="205dp" />
+
+
+                    </RelativeLayout>
+                    </ScrollView>
 
                 </LinearLayout>
 

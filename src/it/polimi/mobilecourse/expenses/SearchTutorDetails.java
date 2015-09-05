@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -76,6 +77,34 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private TextView tutorCognome;
     private TextView nomat;
     private TextView norec;
+    private TextView cittaT;
+    private TextView occT;
+    private TextView contentOccT;
+
+    private TextView espuniT;
+    private TextView contentEspUniT;
+
+
+    private TextView esptutT;
+    private TextView contentEspTut;
+
+    private TextView facT;
+    private TextView contentFacT;
+
+    private TextView uniT;
+    private TextView contentUniT;
+
+    private TextView lezT;
+
+    private CheckBox isgratis;
+    private CheckBox isdomicilio;
+    private CheckBox isgruppo;
+    private CheckBox issede;
+
+
+
+
+
 
     private Button newRec;
 
@@ -88,7 +117,17 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private String idTutor;
     private String nome;
     private String cognome;
+    private String uni;
+    private String fac;
     private String materiaSelezionata;
+    private String occupazione;
+    private String espuni;
+    private String esptutor;
+    private String citta;
+    private String gratis;
+    private String domicilio;
+    private String sede;
+    private String gruppo;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
     private ArrayList<ListRecensioneItem> itemsRec = new ArrayList<>();
 
@@ -133,10 +172,10 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         th.addTab(ts);
 
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                .getMap();
+        //map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+        //        .getMap();
 
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        //map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profilo Tutor");
@@ -207,16 +246,10 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                 fragmentTransaction.replace(R.id.student_fragment, nrf).addToBackStack(null).commit();
             }
         });
-        tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
-        im=(CircularImageView)view.findViewById(R.id.foto);
-
-        mat_tutor=(ListView)view.findViewById(R.id.mat_tutor);
-        rec_tutor=(ListView)view.findViewById(R.id.rec_tutor);
-
-        nomat=(TextView)view.findViewById(R.id.nomat);
-        norec=(TextView)view.findViewById(R.id.norec);
 
 
+
+        layout();
 
 
         progress(true);
@@ -226,6 +259,36 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
         return view;
+    }
+
+    private void layout(){
+
+        tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
+        im=(CircularImageView)view.findViewById(R.id.foto);
+
+        mat_tutor=(ListView)view.findViewById(R.id.mat_tutor);
+        rec_tutor=(ListView)view.findViewById(R.id.rec_tutor);
+
+        nomat=(TextView)view.findViewById(R.id.nomat);
+        norec=(TextView)view.findViewById(R.id.norec);
+
+        occT=(TextView)view.findViewById(R.id.tutor_textv);
+        contentOccT=(TextView)view.findViewById(R.id.tutor_occupazione);
+        espuniT=(TextView)view.findViewById(R.id.textViewespuni);
+        contentEspUniT=(TextView)view.findViewById(R.id.tutor_espuni);
+        esptutT=(TextView)view.findViewById(R.id.textv2);
+        contentEspTut=(TextView)view.findViewById(R.id.tutor_esptutor);
+        facT=(TextView)view.findViewById(R.id.textv4);
+        contentFacT=(TextView)view.findViewById(R.id.tutor_fac);
+
+        uniT=(TextView)view.findViewById(R.id.textv3);
+        contentUniT=(TextView)view.findViewById(R.id.tutor_uni);
+        lezT=(TextView)view.findViewById(R.id.textViewlez);
+        isgruppo=(CheckBox)view.findViewById(R.id.checkgruppo);
+        isdomicilio=(CheckBox)view.findViewById(R.id.checkBoxdom);
+        isgratis=(CheckBox)view.findViewById(R.id.checkBoxgratis);
+        issede=(CheckBox)view.findViewById(R.id.checkBoxsede);
+
     }
 
     private void getRecForTutor() {
@@ -412,17 +475,33 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             JSONObject obj = response.getJSONObject(0);
                             Log.d(TAG, response.toString());
                             nome = obj.getString("nome");
-                            tutorNome.setText(nome);
                             Log.i(TAG, "Name set: " + nome);
                             cognome = obj.getString("cognome");
                             Log.i(TAG, "Surname set: " + cognome);
                             idfb = obj.getString("idfb");
 
                             urlFoto = obj.getString("url");
+                            fac=obj.getString("facolta");
+                            uni=obj.getString("universita");
+
+
 
                             setPhoto();
 
-                            tutorCognome.setText(cognome);
+
+                            occupazione=obj.getString("occupazione");
+                            espuni=obj.getString("espuni");
+                            esptutor=obj.getString("esptutor");
+                            citta=obj.getString("citta");
+                            gratis=obj.getString("gratis");
+                            sede=obj.getString("sede_propria");
+                            domicilio=obj.getString("domicilio");
+                            gruppo=obj.getString("gruppo");
+
+
+
+                            setLayout();
+
 
                             manageButton();
 
@@ -445,6 +524,132 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         });
 
         queue.add(request);
+
+
+    }
+
+    private void setLayout()
+    {
+
+        tutorNome.setText(nome);
+        tutorCognome.setText(cognome);
+
+        if(citta.compareTo("")!=0){
+
+            cittaT.setText(citta);
+
+        }
+
+        if(occupazione.compareTo("")!=0){
+
+            contentOccT.setText(occupazione);
+
+        }
+        else{
+            occT.setVisibility(View.GONE);
+            contentOccT.setVisibility(View.GONE);
+
+
+        }
+
+        if(espuni.compareTo("")!=0){
+
+            contentEspUniT.setText(espuni);
+
+        }
+        else{
+            contentEspUniT.setVisibility(View.GONE);
+            espuniT.setVisibility(View.GONE);
+
+
+        }
+
+        if(esptutor.compareTo("")!=0){
+
+            contentEspTut.setText(esptutor);
+
+        }
+        else{
+            contentEspTut.setVisibility(View.GONE);
+            esptutT.setVisibility(View.GONE);
+
+
+        }
+
+        if(uni.compareTo("")!=0){
+
+            contentUniT.setText(uni);
+
+        }
+        else{
+            contentUniT.setVisibility(View.GONE);
+            uniT.setVisibility(View.GONE);
+
+
+        }
+        if(fac.compareTo("")!=0){
+
+            contentFacT.setText(fac);
+
+        }
+        else{
+            contentFacT.setVisibility(View.GONE);
+            facT.setVisibility(View.GONE);
+
+
+        }
+
+        if(gruppo.compareTo("0")==0 && domicilio.compareTo("0")==0 && gratis.compareTo("0")==0 && sede.compareTo("0")==0){
+
+            lezT.setVisibility(View.GONE);
+            isgruppo.setVisibility(View.GONE);
+            isdomicilio.setVisibility(View.GONE);
+
+            isgratis.setVisibility(View.GONE);
+            issede.setVisibility(View.GONE);
+
+
+
+        }
+        if(gruppo.compareTo("0")!=0){
+
+
+            isgruppo.setChecked(true);
+        }
+        else{
+            isgruppo.setVisibility(View.GONE);
+        }
+
+        if(domicilio.compareTo("0")!=0){
+
+
+            isdomicilio.setChecked(true);
+        }
+        else{
+            isdomicilio.setVisibility(View.GONE);
+        }
+
+        if(gratis.compareTo("0")!=0){
+
+
+            isgratis.setChecked(true);
+        }
+        else{
+            isgratis.setVisibility(View.GONE);
+        }
+
+        if(sede.compareTo("0")!=0){
+
+
+            issede.setChecked(true);
+        }
+        else{
+            issede.setVisibility(View.GONE);
+        }
+
+
+
+
 
 
     }
