@@ -311,6 +311,7 @@ public class UpdateImageFragment extends Fragment {
                     fileInputStream.close();
                     dos.flush();
                     dos.close();
+                    getActivity().finish();
 
                 } catch (MalformedURLException ex) {
 

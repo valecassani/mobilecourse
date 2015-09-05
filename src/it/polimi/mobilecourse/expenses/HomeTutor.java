@@ -591,4 +591,11 @@ public class HomeTutor extends AppCompatActivity {
 
     }
 
+    public void onResume() {
+        super.onResume();
+        loadUserInfos();
+
+
+    }
+
 }

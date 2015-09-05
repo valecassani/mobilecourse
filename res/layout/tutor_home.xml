@@ -57,8 +57,8 @@
             >
             <com.pkmmte.view.CircularImageView
                 android:layout_marginTop="70dp"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_margin="8dp"
                 app:border="false"
                 app:border_color="#000"
