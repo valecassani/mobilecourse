@@ -12,7 +12,7 @@
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:id="@+id/layout_search">
         <EditText
             android:layout_width="match_parent"
@@ -20,6 +20,13 @@
             android:hint="Inserisci cosa vuoi cercare"
             android:layout_margin="10dp"
             android:id="@+id/search_tutor"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkbox_citta"
+            android:layout_below="@id/search_tutor"
+            android:text="Stessa citta"
+            />
 
     </RelativeLayout>
 
@@ -30,8 +37,10 @@
         materialdesign:iconDrawable="@drawable/abc_ic_search_api_mtrl_alpha"
         materialdesign:animate="false"
         android:id="@+id/search_tutor_button"
-        android:layout_below="@+id/layout_search"
-        android:layout_alignRight="@+id/layout_search" />
+        android:layout_below="@id/layout_search"
+        android:layout_alignRight="@id/layout_search" />
+
+
 
 
     <TextView

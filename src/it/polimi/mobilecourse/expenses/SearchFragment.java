@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -55,6 +56,7 @@ public class SearchFragment extends Fragment {
     private EditText searchSubject;
     private ButtonFloat searchButton;
     private ProgressBar progress;
+    private CheckBox checkBox;
 
     private LocationManager locationManager;
     private String provider;
@@ -84,6 +86,9 @@ public class SearchFragment extends Fragment {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         mListView=(ListView)view.findViewById(R.id.result_tutor_search);
         progress=(ProgressBar)view.findViewById(R.id.progressBarRicercaTutor);
+
+        checkBox = (CheckBox) view.findViewById(R.id.checkbox_citta);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +137,17 @@ public class SearchFragment extends Fragment {
     private void showResults(final String searchTerm) {
 
         progress(true);
+        String url;
 
-        String url = "http://www.unishare.it/tutored/search_tutor.php?search=" + searchTerm ;
+        SessionManager sessionManager = new SessionManager(context);
+
+
+        if (checkBox.isChecked()) {
+            url = "http://www.unishare.it/tutored/search_tutor.php?search=" + searchTerm + "&id_user=" + sessionManager.getUserDetails().get("id");
+        } else {
+            url = "http://www.unishare.it/tutored/search_tutor.php?search=" + searchTerm ;
+        }
+        Log.d(TAG,url);
 
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,

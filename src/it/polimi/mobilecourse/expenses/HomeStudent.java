@@ -103,6 +103,8 @@ public class HomeStudent extends AppCompatActivity {
         mTitle = mDrawerTitle = getTitle();
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        circImgView = (CircularImageView) findViewById(R.id.drawer_image);
+
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
         sessionManager = new SessionManager(getApplicationContext());
@@ -187,7 +189,6 @@ public class HomeStudent extends AppCompatActivity {
     }
 
     private void loadUserInfos() {
-        circImgView = (CircularImageView) findViewById(R.id.drawer_image);
         if (Profile.getCurrentProfile() != null) {
             Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
 
@@ -510,7 +511,7 @@ public class HomeStudent extends AppCompatActivity {
 
                     LoginManager.getInstance().logOut();
                     sessionManager.logoutUser();
-                    HomeStudent.this.finish();
+                    finish();
 
 
                 }

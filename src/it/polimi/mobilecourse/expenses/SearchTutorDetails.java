@@ -817,16 +817,19 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
+   /*
     @Override
     public void onDestroyView(){
         super.onDestroyView();
-        MapFragment f=(MapFragment)getFragmentManager().findFragmentById(R.id.map);
+       MapFragment f=(MapFragment)getFragmentManager().findFragmentById(R.id.map);
         if(f!=null){
 
             getFragmentManager().beginTransaction().remove(f).commit();
         }
 
     }
+
+    */
 
     @Override
     public void onAttach(Activity activity) {
