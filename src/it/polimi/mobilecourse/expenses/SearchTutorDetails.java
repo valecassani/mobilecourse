@@ -74,7 +74,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private Location loc2;
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
-    private TextView tutorCognome;
     private TextView nomat;
     private TextView norec;
     private TextView cittaT;
@@ -95,6 +94,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private TextView contentUniT;
 
     private TextView lezT;
+    private TextView etaT;
 
     private CheckBox isgratis;
     private CheckBox isdomicilio;
@@ -119,6 +119,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private String cognome;
     private String uni;
     private String fac;
+    private String eta;
     private String materiaSelezionata;
     private String occupazione;
     private String espuni;
@@ -263,7 +264,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     private void layout(){
 
-        tutorCognome = (TextView) view.findViewById(R.id.tutor_cognome);
         im=(CircularImageView)view.findViewById(R.id.foto);
 
         mat_tutor=(ListView)view.findViewById(R.id.mat_tutor);
@@ -280,11 +280,13 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         contentEspTut=(TextView)view.findViewById(R.id.tutor_esptutor);
         facT=(TextView)view.findViewById(R.id.textv4);
         contentFacT=(TextView)view.findViewById(R.id.tutor_fac);
+        etaT=(TextView)view.findViewById(R.id.tutor_eta);
+        cittaT=(TextView)view.findViewById(R.id.tutor_citta);
 
         uniT=(TextView)view.findViewById(R.id.textv3);
         contentUniT=(TextView)view.findViewById(R.id.tutor_uni);
         lezT=(TextView)view.findViewById(R.id.textViewlez);
-        isgruppo=(CheckBox)view.findViewById(R.id.checkgruppo);
+        isgruppo=(CheckBox)view.findViewById(R.id.checkBoxgroup);
         isdomicilio=(CheckBox)view.findViewById(R.id.checkBoxdom);
         isgratis=(CheckBox)view.findViewById(R.id.checkBoxgratis);
         issede=(CheckBox)view.findViewById(R.id.checkBoxsede);
@@ -489,6 +491,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             setPhoto();
 
 
+                            eta=obj.getString("eta");
                             occupazione=obj.getString("occupazione");
                             espuni=obj.getString("espuni");
                             esptutor=obj.getString("esptutor");
@@ -531,9 +534,15 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private void setLayout()
     {
 
-        tutorNome.setText(nome);
-        tutorCognome.setText(cognome);
+        tutorNome.setText(nome+" " + cognome);
 
+        if(eta.compareTo("")!=0) {
+
+            etaT.setText(eta + " anni");
+        }
+        else{
+            etaT.setVisibility(View.GONE);
+        }
         if(citta.compareTo("")!=0){
 
             cittaT.setText(citta);

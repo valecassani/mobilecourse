@@ -598,7 +598,7 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
 
     }
 
-    private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
+    /*private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 
@@ -744,7 +744,7 @@ private class uploadFile extends AsyncTask<String,Void,Integer> {
 
             }
         });
-    }
+    }*/
 
     private void progress(final boolean show){
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);

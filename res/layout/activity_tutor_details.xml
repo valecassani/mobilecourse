@@ -48,22 +48,26 @@
                             android:fitsSystemWindows="true">
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:id="@+id/tutor_cognome"
-                                android:layout_marginTop="145dp"
-                                android:layout_marginRight="140dp"
-                                android:layout_toRightOf="@+id/foto" />
+                            <com.pkmmte.view.CircularImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:id="@+id/foto"
+                                android:layout_centerHorizontal="true" />
+
+
+
+                            />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/tutor_nome"
+                                android:layout_below="@id/foto"
                                 android:layout_alignRight="@+id/foto"
                                 android:layout_marginRight="28dp"
-                                android:layout_alignTop="@+id/tutor_cognome"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="140dp" />
 
                             <TextView
@@ -71,10 +75,10 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/tutor_citta"
-                                android:layout_alignRight="@+id/foto"
-                                android:layout_marginRight="28dp"
-                                android:layout_alignTop="@+id/tutor_nome"
-                                android:layout_marginLeft="140dp" />
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@id/tutor_nome"
+
+                                />
 
 
 
@@ -83,21 +87,22 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/tutor_eta"
-                                android:layout_below="@id/tutor_citta"
-                                android:layout_marginRight="28dp"
 
-                                android:layout_marginLeft="140dp" />
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@+id/tutor_nome"
+                                android:layout_alignLeft="@+id/tutor_nome"
+                                android:layout_marginTop="32dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/tutor_textv"
                                 android:text="Occupazione"
-                                android:layout_below="@id/tutor_eta"
-                                android:layout_marginRight="28dp"
 
-                                android:layout_marginLeft="5dp" />
+                                android:layout_below="@+id/tutor_eta"
+                                android:layout_alignLeft="@+id/tutor_occupazione"
+                                android:layout_marginTop="28dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -112,7 +117,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textViewespuni"
                                 android:text="Esperienze da tutor:"
                                 android:layout_below="@id/tutor_occupazione"
@@ -133,7 +138,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv2"
                                 android:text="Esperienze universitarie:"
                                 android:layout_below="@id/tutor_esptutor"
@@ -154,7 +159,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv3"
                                 android:text="Università:"
                                 android:layout_below="@id/tutor_espuni"
@@ -175,7 +180,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv4"
                                 android:text="Facoltà:"
                                 android:layout_below="@id/tutor_uni"
@@ -204,31 +209,9 @@
 
 
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/prenotaz_button"
-                                android:text="Vai a prenotazione"
-                                style="?android:attr/borderlessButtonStyle"
-                                android:background="@color/primaryColorDark"
-
-
-                                android:layout_alignParentBottom="true"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp" />
-
-                              <com.pkmmte.view.CircularImageView
-
-                            android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:id="@+id/foto"
-                                android:layout_above="@+id/tutor_nome"
-                                android:layout_centerHorizontal="true" />
 
 
 
-                            />
 
 
                             <ProgressBar
@@ -244,11 +227,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:text="Caratteristiche lezioni:"
                                 android:id="@+id/textViewlez"
                                 android:layout_below="@+id/tutor_fac"
-                                android:layout_alignRight="@+id/tutor_eta" />
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="28dp" />
 
                             <CheckBox
                                 android:layout_width="wrap_content"
@@ -292,6 +276,42 @@
                                 android:layout_below="@+id/checkBoxdom"
                                 android:layout_alignLeft="@+id/checkBoxdom"
                                 android:checked="false" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Distanza:"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+
+                                android:id="@+id/distText"
+                                android:layout_below="@id/checkBoxsede"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+
+                                android:id="@+id/distance"
+                                android:layout_below="@+id/distText"
+                                />
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/prenotaz_button"
+                                android:text="Vai a prenotazione"
+                                style="?android:attr/borderlessButtonStyle"
+                                android:background="@color/primaryColorDark"
+
+
+                                android:layout_below="@id/distance"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp" />
+
+
 
 
                         </RelativeLayout>
