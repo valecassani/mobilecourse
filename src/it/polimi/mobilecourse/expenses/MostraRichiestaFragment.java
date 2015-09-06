@@ -539,6 +539,8 @@ public class MostraRichiestaFragment extends Fragment {
                 } finally {
                     output.close();
 
+
+                    addFolderToGallery(storagePath.toString()+"/Tutored/",activity);
                     filep=addImageToGallery(storagePath.toString()+ "/imageRichiesta.jpg",activity);
                 }
             } catch (FileNotFoundException e) {
@@ -612,6 +614,28 @@ public class MostraRichiestaFragment extends Fragment {
             Uri uri=Uri.parse(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
 
             context.getContentResolver().insert(uri, values);
+
+
+
+        return filePath;
+    }
+    public static String addFolderToGallery(final String filePath, final Context context) {
+
+        ContentValues values = new ContentValues();
+
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "Tutored");
+
+
+
+        values.put(MediaStore.MediaColumns.DATA, filePath);
+        values.put(MediaStore.MediaColumns.TITLE, "Tutored");
+
+
+
+        Uri uri=Uri.parse(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+
+        context.getContentResolver().insert(uri, values);
 
 
 

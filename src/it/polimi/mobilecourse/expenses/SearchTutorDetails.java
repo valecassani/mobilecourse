@@ -358,8 +358,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         realdist=loc1.distanceTo(loc2);
 
-        NumberFormat nf=NumberFormat.getInstance();
-        nf.setMaximumFractionDigits(1);
+
         distance.setText(String.format("%.1f",realdist / 1000)+" Km");
 
 
