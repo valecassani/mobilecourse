@@ -221,8 +221,8 @@
 
                                 android:visibility="gone"
                                 style="?android:attr/progressBarStyleLarge"
-                                android:layout_alignBottom="@+id/foto"
-                                android:layout_toRightOf="@+id/textViewespuni" />
+                                android:layout_below="@+id/tutor_citta"
+                                android:layout_toRightOf="@+id/checkBoxgroup" />
 
                             <TextView
                                 android:layout_width="wrap_content"

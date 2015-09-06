@@ -57,6 +57,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private TextView lezT;
     private TextView etaT;
 
+    private TextView distText;
+    private TextView distance;
     private CheckBox isgratis;
     private CheckBox isdomicilio;
     private CheckBox isgruppo;
@@ -129,6 +132,9 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private String domicilio;
     private String sede;
     private String gruppo;
+    private String indirizzoTutor;
+    private String indirizzoStudente;
+    private String cittaStudente;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
     private ArrayList<ListRecensioneItem> itemsRec = new ArrayList<>();
 
@@ -137,6 +143,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private ListView rec_tutor;
 
     private String idMateriaSelezionata;
+    private Float realdist;
     private CircularImageView im;
     private String prezzoMateriaSelezionata;
     private View view;
@@ -235,12 +242,12 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             @Override
             public void onClick(View v) {
 
-                Bundle forFrag=new Bundle();
-                forFrag.putString("idstudente",activity.getUserId());
-                forFrag.putString("idtutor",idTutor);
+                Bundle forFrag = new Bundle();
+                forFrag.putString("idstudente", activity.getUserId());
+                forFrag.putString("idtutor", idTutor);
 
 
-                NuovaRecensioneFragment nrf=new NuovaRecensioneFragment() ;
+                NuovaRecensioneFragment nrf = new NuovaRecensioneFragment();
                 nrf.setArguments(forFrag);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -255,11 +262,109 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         progress(true);
         showTutorDetails();
+
         getMaterieForTutor();
         getRecForTutor();
 
 
+
+
         return view;
+    }
+
+    private void controlAddress(){
+
+
+        String ids=activity.getUserId();
+
+        String url = "http://www.unishare.it/tutored/student_data.php?id=" + ids;
+
+
+        Log.d(TAG, url);
+
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+
+
+                            JSONObject obj = response.getJSONObject(0);
+                            indirizzoStudente=obj.getString("indirizzo");
+                            cittaStudente=obj.getString("citta");
+
+                            if(indirizzoStudente.compareTo("")!=0 && indirizzoTutor.compareTo("")!=0){
+
+                                calcolaDistanza();
+
+                            }
+                            else{
+
+                                distText.setVisibility(View.GONE);
+                                distance.setVisibility(View.GONE);
+
+                            }
+                            progress(false);
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+
+
+            }
+        });
+
+        queue.add(request);
+
+
+    }
+
+    private void calcolaDistanza(){
+
+
+
+        Location loc1=new Location("A");
+        LatLng firstpoint=getLocationFromAddress(indirizzoStudente);
+        loc1.setLatitude(firstpoint.latitude);
+        loc1.setLongitude(firstpoint.longitude);
+        System.out.println(firstpoint.latitude);
+        System.out.println(firstpoint.longitude);
+
+        Location loc2=new Location("B");
+
+        LatLng secondpoint=getLocationFromAddress(indirizzoTutor);
+        loc2.setLatitude(secondpoint.latitude);
+        loc2.setLongitude(secondpoint.longitude);
+
+        System.out.println(secondpoint.latitude);
+        System.out.println(secondpoint.longitude);
+
+        realdist=loc1.distanceTo(loc2);
+
+        NumberFormat nf=NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(1);
+        distance.setText(String.format("%.1f",realdist / 1000)+" Km");
+
+
+
+
     }
 
     private void layout(){
@@ -271,6 +376,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         nomat=(TextView)view.findViewById(R.id.nomat);
         norec=(TextView)view.findViewById(R.id.norec);
+        distText=(TextView)view.findViewById(R.id.distText);
+        distance=(TextView)view.findViewById(R.id.distance);
 
         occT=(TextView)view.findViewById(R.id.tutor_textv);
         contentOccT=(TextView)view.findViewById(R.id.tutor_occupazione);
@@ -486,6 +593,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             fac=obj.getString("facolta");
                             uni=obj.getString("universita");
 
+                            indirizzoTutor=obj.getString("indirizzo");
+
 
 
                             setPhoto();
@@ -503,10 +612,17 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
 
+
+
                             setLayout();
 
 
                             manageButton();
+
+                            controlAddress();
+
+
+
 
 
                         } catch (JSONException e) {
@@ -708,7 +824,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         }
 
 
-        progress(false);
 
     }
 
