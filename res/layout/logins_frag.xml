@@ -13,6 +13,7 @@
         android:hint="Username"
         android:ems="10"
         android:id="@+id/userS"
+        android:theme="@style/customEditText"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/pasS"

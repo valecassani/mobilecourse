@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:id="@+id/containerR"
 
 
@@ -16,7 +16,7 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="675dp"
+    android:layout_height="641dp"
 
 
   >
@@ -28,7 +28,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="top"
         android:maxLength="35"
-        android:hint="Titolo della Richiesta"
+        android:hint="@string/titolorichiesta"
         android:textStyle="bold"/>
 
 
@@ -39,7 +39,7 @@
         android:layout_height="250dp"
         android:layout_gravity="center_horizontal"
         android:gravity="top"
-        android:hint="Testo della Richiesta"
+        android:hint="@string/testorichiesta"
         android:layout_below="@+id/titoloRichiesta"
         android:layout_alignRight="@+id/buttonPhoto" />
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
-        android:hint="Inserire una data"
+        android:hint="@string/insertdata"
         android:focusable="false"
         android:inputType="date"
         android:layout_below="@id/testoRichiesta"/>
@@ -58,7 +58,7 @@
         android:id="@+id/buttonImage"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Carica Immagine"
+        android:text="@string/uploadimmagine"
         android:layout_below="@+id/dataEntro"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="22dp"></Button>
@@ -67,7 +67,7 @@
         android:id="@+id/buttonPhoto"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Scatta Foto"
+        android:text="@string/takephoto"
         android:layout_alignTop="@+id/buttonImage"
         android:layout_alignRight="@+id/buttonSendRich"></Button>
 
@@ -88,7 +88,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Immagine selezionata"
+        android:text="@string/imageselected"
         android:layout_below="@id/check_immagine"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="oppure"
+        android:text="@string/or"
         android:id="@+id/textView27"
         android:layout_alignBaseline="@+id/buttonImage"
         android:layout_alignBottom="@+id/buttonImage"
@@ -119,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/material_blue_500"
-        android:text="Invia"
+        android:text="@string/submit"
         android:textColor="#FFF"
         android:layout_marginTop="52dp"
         android:layout_below="@+id/imgselected"

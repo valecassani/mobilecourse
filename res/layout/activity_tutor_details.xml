@@ -301,6 +301,9 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/prenotaz_button"
                                 android:text="Vai a prenotazione"
+                                android:drawableLeft="@drawable/handshake_icon"
+                                android:drawablePadding="-40sp"
+                                android:paddingLeft="40dp"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:background="@color/primaryColorDark"
 

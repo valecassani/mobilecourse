@@ -104,6 +104,10 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Scarica foto"
+
+        android:drawableLeft="@drawable/download_icon"
+        android:drawablePadding="-17sp"
+        android:paddingLeft="5dp"
         android:id="@+id/buttonDownload"
         style="?android:attr/borderlessButtonStyle"
         android:background="@color/com_facebook_button_send_background_color"
