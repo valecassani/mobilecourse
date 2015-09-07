@@ -115,6 +115,7 @@ public class MostraRichiestaFragment extends Fragment {
     String data_entroR;
     String regid;
 
+    String path;
 
     //Bitmap bitmap;
 
@@ -523,13 +524,10 @@ public class MostraRichiestaFragment extends Fragment {
             try {
                 //The sdcard directory e.g. '/sdcard' can be used directly, or
                 //more safely abstracted with getExternalStorageDirectory()
-                String foldernew="Tutored";
-                File f=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),foldernew);
-                if(!f.exists()){
-                    f.mkdirs();
-                }
+
                 File storagePath = Environment.getExternalStorageDirectory();
-                OutputStream output = new FileOutputStream (storagePath + "/imageRichiesta.jpg");
+                path=Environment.getExternalStorageDirectory().toString()+"/Tutored";
+                OutputStream output = new FileOutputStream (path + "/imageRichiesta.jpg");
                 try {
                     byte[] buffer = new byte[2048];
                     int bytesRead = 0;
@@ -540,8 +538,7 @@ public class MostraRichiestaFragment extends Fragment {
                     output.close();
 
 
-                    addFolderToGallery(storagePath.toString()+"/Tutored/",activity);
-                    filep=addImageToGallery(storagePath.toString()+ "/imageRichiesta.jpg",activity);
+                    filep=addImageToGallery(path+ "/imageRichiesta.jpg",activity);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -575,7 +572,9 @@ public class MostraRichiestaFragment extends Fragment {
 
 
 
+                //Uri uri=Uri.parse(MediaStore.Images.Media.EXTERNAL_CONTENT_URI + "/Tutored/imageRichiesta.jpg");
                 Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
 
                 PendingIntent contentIntent= PendingIntent.getActivity(activity, 0, intent, 0);
                 mBuilder.setContentIntent(contentIntent);
@@ -619,28 +618,7 @@ public class MostraRichiestaFragment extends Fragment {
 
         return filePath;
     }
-    public static String addFolderToGallery(final String filePath, final Context context) {
 
-        ContentValues values = new ContentValues();
-
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "Tutored");
-
-
-
-        values.put(MediaStore.MediaColumns.DATA, filePath);
-        values.put(MediaStore.MediaColumns.TITLE, "Tutored");
-
-
-
-        Uri uri=Uri.parse(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
-
-        context.getContentResolver().insert(uri, values);
-
-
-
-        return filePath;
-    }
 
 }
 

@@ -20,6 +20,11 @@
 
 
     </style>
+    <style name="customEditText">
+        <item name="colorControlActivated">#3f729b</item>
+
+
+    </style>
     <!-- ActionBar styles -->
 
 
