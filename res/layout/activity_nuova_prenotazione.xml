@@ -12,10 +12,9 @@
         android:id="@+id/tutor_selezionato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/materia_prenotazione"
-        android:layout_marginTop="41dp"
-        android:text="Tutor Selezionato" />
+        android:text="Tutor Selezionato"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/data_scelta"
@@ -29,10 +28,9 @@
         android:id="@+id/ora_scelta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/data_scelta"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="170dp"
-        android:text="Inserire orario" />
+        android:text="Inserire orario"
+        android:layout_alignBottom="@+id/ora_scelta_button"
+        android:layout_alignRight="@+id/durata_text" />
 
     <TextView
         android:id="@+id/durata_text"
@@ -60,15 +58,6 @@
         android:layout_above="@+id/ora_scelta_button"
         android:layout_alignRight="@+id/button_prenotazione" />
 
-
-    <TextView
-        android:id="@+id/materia_prenotazione"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="materia"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/button_prenotazione"
@@ -100,6 +89,15 @@
         android:layout_gravity="left|center_vertical"
         android:layout_marginTop="69dp"
        android:text="Durata" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_materie"
+        android:layout_above="@id/button_data"
+        android:layout_below="@id/tutor_selezionato"
+        android:layout_alignParentLeft="true"
+        android:spinnerMode="dialog" />
 
 
 </RelativeLayout>

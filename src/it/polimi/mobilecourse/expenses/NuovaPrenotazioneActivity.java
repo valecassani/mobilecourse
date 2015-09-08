@@ -16,10 +16,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,16 +32,21 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.identity.intents.AddressConstants;
 import com.quinny898.library.persistentsearch.SearchResult;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,9 +69,12 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private Button sceltaOraButton;
     private Button sceltaDataButton;
     private EditText editTextCellulare;
+    private Spinner spinnerMaterie;
     private SessionManager sessionManager;
+    private ArrayList<ListMaterieItem> items = new ArrayList<ListMaterieItem>();
     private String materia;
     private Button sceltaDurataButton;
+    private Adapter materieAdapter;
 
     private String durata;
     private String date;
@@ -81,17 +93,24 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         context = getApplicationContext();
         queue = Volley.newRequestQueue(context);
 
+
         getSupportActionBar().setElevation(25);
         Bundle data = getIntent().getExtras();
         idTutor = data.getString("id");
-        materia = data.getString("materia");
+        getMaterieForTutor();
+
         prezzoOrario = data.getString("prezzo");
-        materiaId = data.getString("materia_id");
         Log.d(TAG,"prezzo arrivato: " + prezzoOrario);
         Log.d(TAG, "Materia arrivata: " + materia);
         Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
         String nomeTutor = data.getString("nome");
         String cognomeTutor = data.getString("cognome");
+
+        spinnerMaterie = (Spinner) findViewById(R.id.spinner_materie);
+
+
+
+
 
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -100,8 +119,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         TextView mTutorSelezionato = (TextView) findViewById(R.id.tutor_selezionato);
         mTutorSelezionato.setText(nomeTutor + " " + cognomeTutor);
 
-        mMateriaText = (TextView) findViewById(R.id.materia_prenotazione);
-        mMateriaText.setText(materia);
+
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         anotherDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -181,6 +199,78 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
         editTextCellulare = (EditText) findViewById(R.id.cellulare_nuova_prenotaz);
 
+        spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ListMaterieItem item = items.get(position);
+                prezzoOrario = item.getPrezzo();
+                materiaId = item.getId();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+    }
+
+    private void getMaterieForTutor() {
+
+
+        String url = "http://www.unishare.it/tutored/getMaterie.php?idtutor=".concat(idTutor);
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            if (response.length() == 0) {
+
+
+                            }
+                            items.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                ListMaterieItem item = new ListMaterieItem(obj.getString("idm"), obj.getString("nome"), obj.getString("prezzo"));
+
+                                items.add(item);
+
+
+                            }
+
+
+                            materieAdapter = new ListMaterieAdapterNoDelete(getApplicationContext(), items);
+
+                            spinnerMaterie.setAdapter((SpinnerAdapter) materieAdapter);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+
+
+            }
+        });
+
+        queue.add(jsonObjReq);
 
     }
 
@@ -230,17 +320,14 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 params.put("id_studente", sessionManager.getUserDetails().get("id"));
                 Log.d(TAG, sessionManager.getUserDetails().get("id"));
                 params.put("data", date);
-                Log.d(TAG, date);
 
                 params.put("id_tutor", idTutor);
-                Log.d(TAG, idTutor);
 
                 params.put("ora", time);
                 Log.d(TAG, time);
 
                 params.put("durata", textDurata.getText().toString());
                 params.put("materia", materiaId);
-                Log.d(TAG, materia);
 
                 params.put("note", "");
                 Log.d(TAG, "");
@@ -314,6 +401,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 
 }

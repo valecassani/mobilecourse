@@ -105,10 +105,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private CheckBox issede;
 
 
-
-
-
-
     private Button newRec;
 
     private String idfb;
@@ -155,24 +151,24 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_tutor_details, container, false);
-        progressView=(ProgressBar)view.findViewById(R.id.progressBarTut);
+        progressView = (ProgressBar) view.findViewById(R.id.progressBarTut);
 
         context = view.getContext();
 
 
-        th=(TabHost)view.findViewById(R.id.tabHost);
+        th = (TabHost) view.findViewById(R.id.tabHost);
         th.setup();
-        TabHost.TabSpec ts=th.newTabSpec("Profilo");
+        TabHost.TabSpec ts = th.newTabSpec("Profilo");
         ts.setContent(R.id.linearLayout);
         ts.setIndicator("Profilo");
         th.addTab(ts);
 
-        ts=th.newTabSpec("Materie");
+        ts = th.newTabSpec("Materie");
         ts.setContent(R.id.linearLayout2);
         ts.setIndicator("Materie");
 
         th.addTab(ts);
-        ts=th.newTabSpec("Recensioni");
+        ts = th.newTabSpec("Recensioni");
 
         ts.setContent(R.id.linearLayout3);
         ts.setIndicator("Recensioni");
@@ -185,7 +181,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         //map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profilo Tutor");
 
         idTutor = getArguments().getString("idt");
@@ -237,7 +233,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         );*/
 
         tutorNome = (TextView) view.findViewById(R.id.tutor_nome);
-        newRec=(Button)view.findViewById(R.id.buttonNewRec);
+        newRec = (Button) view.findViewById(R.id.buttonNewRec);
         newRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,7 +252,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         });
 
 
-
         layout();
 
 
@@ -267,15 +262,13 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         getRecForTutor();
 
 
-
-
         return view;
     }
 
-    private void controlAddress(){
+    private void controlAddress() {
 
 
-        String ids=activity.getUserId();
+        String ids = activity.getUserId();
 
         String url = "http://www.unishare.it/tutored/student_data.php?id=" + ids;
 
@@ -294,24 +287,20 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
                             JSONObject obj = response.getJSONObject(0);
-                            indirizzoStudente=obj.getString("indirizzo");
-                            cittaStudente=obj.getString("citta");
+                            indirizzoStudente = obj.getString("indirizzo");
+                            cittaStudente = obj.getString("citta");
 
-                            if(indirizzoStudente.compareTo("")!=0 && indirizzoTutor.compareTo("")!=0){
+                            if (indirizzoStudente.compareTo("") != 0 && indirizzoTutor.compareTo("") != 0) {
 
                                 calcolaDistanza();
 
-                            }
-                            else{
+                            } else {
 
                                 distText.setVisibility(View.GONE);
                                 distance.setVisibility(View.GONE);
 
                             }
                             progress(false);
-
-
-
 
 
                         } catch (JSONException e) {
@@ -336,66 +325,63 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     }
 
-    private void calcolaDistanza(){
+    private void calcolaDistanza() {
 
 
-
-        Location loc1=new Location("A");
-        LatLng firstpoint=getLocationFromAddress(indirizzoStudente);
+        Location loc1 = new Location("A");
+        LatLng firstpoint = getLocationFromAddress(indirizzoStudente);
         loc1.setLatitude(firstpoint.latitude);
         loc1.setLongitude(firstpoint.longitude);
         System.out.println(firstpoint.latitude);
         System.out.println(firstpoint.longitude);
 
-        Location loc2=new Location("B");
+        Location loc2 = new Location("B");
 
-        LatLng secondpoint=getLocationFromAddress(indirizzoTutor);
+        LatLng secondpoint = getLocationFromAddress(indirizzoTutor);
         loc2.setLatitude(secondpoint.latitude);
         loc2.setLongitude(secondpoint.longitude);
 
         System.out.println(secondpoint.latitude);
         System.out.println(secondpoint.longitude);
 
-        realdist=loc1.distanceTo(loc2);
+        realdist = loc1.distanceTo(loc2);
 
 
-        distance.setText(String.format("%.1f",realdist / 1000)+" Km");
-
-
+        distance.setText(String.format("%.1f", realdist / 1000) + " Km");
 
 
     }
 
-    private void layout(){
+    private void layout() {
 
-        im=(CircularImageView)view.findViewById(R.id.foto);
+        im = (CircularImageView) view.findViewById(R.id.foto);
 
-        mat_tutor=(ListView)view.findViewById(R.id.mat_tutor);
-        rec_tutor=(ListView)view.findViewById(R.id.rec_tutor);
+        mat_tutor = (ListView) view.findViewById(R.id.mat_tutor);
+        rec_tutor = (ListView) view.findViewById(R.id.rec_tutor);
 
-        nomat=(TextView)view.findViewById(R.id.nomat);
-        norec=(TextView)view.findViewById(R.id.norec);
-        distText=(TextView)view.findViewById(R.id.distText);
-        distance=(TextView)view.findViewById(R.id.distance);
+        nomat = (TextView) view.findViewById(R.id.nomat);
+        norec = (TextView) view.findViewById(R.id.norec);
+        distText = (TextView) view.findViewById(R.id.distText);
+        distance = (TextView) view.findViewById(R.id.distance);
 
-        occT=(TextView)view.findViewById(R.id.tutor_textv);
-        contentOccT=(TextView)view.findViewById(R.id.tutor_occupazione);
-        espuniT=(TextView)view.findViewById(R.id.textViewespuni);
-        contentEspUniT=(TextView)view.findViewById(R.id.tutor_espuni);
-        esptutT=(TextView)view.findViewById(R.id.textv2);
-        contentEspTut=(TextView)view.findViewById(R.id.tutor_esptutor);
-        facT=(TextView)view.findViewById(R.id.textv4);
-        contentFacT=(TextView)view.findViewById(R.id.tutor_fac);
-        etaT=(TextView)view.findViewById(R.id.tutor_eta);
-        cittaT=(TextView)view.findViewById(R.id.tutor_citta);
+        occT = (TextView) view.findViewById(R.id.tutor_textv);
+        contentOccT = (TextView) view.findViewById(R.id.tutor_occupazione);
+        espuniT = (TextView) view.findViewById(R.id.textViewespuni);
+        contentEspUniT = (TextView) view.findViewById(R.id.tutor_espuni);
+        esptutT = (TextView) view.findViewById(R.id.textv2);
+        contentEspTut = (TextView) view.findViewById(R.id.tutor_esptutor);
+        facT = (TextView) view.findViewById(R.id.textv4);
+        contentFacT = (TextView) view.findViewById(R.id.tutor_fac);
+        etaT = (TextView) view.findViewById(R.id.tutor_eta);
+        cittaT = (TextView) view.findViewById(R.id.tutor_citta);
 
-        uniT=(TextView)view.findViewById(R.id.textv3);
-        contentUniT=(TextView)view.findViewById(R.id.tutor_uni);
-        lezT=(TextView)view.findViewById(R.id.textViewlez);
-        isgruppo=(CheckBox)view.findViewById(R.id.checkBoxgroup);
-        isdomicilio=(CheckBox)view.findViewById(R.id.checkBoxdom);
-        isgratis=(CheckBox)view.findViewById(R.id.checkBoxgratis);
-        issede=(CheckBox)view.findViewById(R.id.checkBoxsede);
+        uniT = (TextView) view.findViewById(R.id.textv3);
+        contentUniT = (TextView) view.findViewById(R.id.tutor_uni);
+        lezT = (TextView) view.findViewById(R.id.textViewlez);
+        isgruppo = (CheckBox) view.findViewById(R.id.checkBoxgroup);
+        isdomicilio = (CheckBox) view.findViewById(R.id.checkBoxdom);
+        isgratis = (CheckBox) view.findViewById(R.id.checkBoxgratis);
+        issede = (CheckBox) view.findViewById(R.id.checkBoxsede);
 
     }
 
@@ -422,14 +408,13 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             itemsRec.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                ListRecensioneItem item = new ListRecensioneItem(obj.getString("idrec"),obj.getString("idstudente"), obj.getString("nome"),obj.getString("cognome"), Float.parseFloat(obj.getString("puntualita")),
-                                        Float.parseFloat(obj.getString("disponibilita")),Float.parseFloat(obj.getString("chiarezza")),Float.parseFloat(obj.getString("voto_finale")),obj.getString("foto"),obj.getString("idfb"));
+                                ListRecensioneItem item = new ListRecensioneItem(obj.getString("idrec"), obj.getString("idstudente"), obj.getString("nome"), obj.getString("cognome"), Float.parseFloat(obj.getString("puntualita")),
+                                        Float.parseFloat(obj.getString("disponibilita")), Float.parseFloat(obj.getString("chiarezza")), Float.parseFloat(obj.getString("voto_finale")), obj.getString("foto"), obj.getString("idfb"));
 
                                 itemsRec.add(item);
 
 
                             }
-
 
 
                             adapterRec = new ListRecensioniAdapter(activity.getApplicationContext(), itemsRec);
@@ -443,23 +428,21 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                                            Object o = rec_tutor.getItemAtPosition(position);
-                                            System.out.println(o);
-                                            ListRecensioneItem click = ((ListRecensioneItem) o);
+                                    Object o = rec_tutor.getItemAtPosition(position);
+                                    System.out.println(o);
+                                    ListRecensioneItem click = ((ListRecensioneItem) o);
 
-                                            FragmentManager fragmentManager = getFragmentManager();
+                                    FragmentManager fragmentManager = getFragmentManager();
 
-                                            Fragment fragment = new MostraRecensioneFragment();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("idrec", click.getIdrec());
-                                            fragment.setArguments(bundle);
-                                            System.out.println("Bundle" + bundle);
-                                            fragmentManager.beginTransaction().replace(R.id.student_fragment,fragment).addToBackStack(null).commit();
+                                    Fragment fragment = new MostraRecensioneFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("idrec", click.getIdrec());
+                                    fragment.setArguments(bundle);
+                                    System.out.println("Bundle" + bundle);
+                                    fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
 
-                                        }
-                                    });
-
-
+                                }
+                            });
 
 
                             //spinnerMaterie.setAdapter(adapter);
@@ -532,13 +515,11 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             }
 
 
-
                             adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
 
                             mat_tutor.setAdapter(adapter);
 
                             Functions.setListViewHeightBasedOnChildren(mat_tutor);
-
 
 
                         } catch (JSONException e) {
@@ -589,28 +570,24 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             idfb = obj.getString("idfb");
 
                             urlFoto = obj.getString("url");
-                            fac=obj.getString("facolta");
-                            uni=obj.getString("universita");
+                            fac = obj.getString("facolta");
+                            uni = obj.getString("universita");
 
-                            indirizzoTutor=obj.getString("indirizzo");
-
+                            indirizzoTutor = obj.getString("indirizzo");
 
 
                             setPhoto();
 
 
-                            eta=obj.getString("eta");
-                            occupazione=obj.getString("occupazione");
-                            espuni=obj.getString("espuni");
-                            esptutor=obj.getString("esptutor");
-                            citta=obj.getString("citta");
-                            gratis=obj.getString("gratis");
-                            sede=obj.getString("sede_propria");
-                            domicilio=obj.getString("domicilio");
-                            gruppo=obj.getString("gruppo");
-
-
-
+                            eta = obj.getString("eta");
+                            occupazione = obj.getString("occupazione");
+                            espuni = obj.getString("espuni");
+                            esptutor = obj.getString("esptutor");
+                            citta = obj.getString("citta");
+                            gratis = obj.getString("gratis");
+                            sede = obj.getString("sede_propria");
+                            domicilio = obj.getString("domicilio");
+                            gruppo = obj.getString("gruppo");
 
 
                             setLayout();
@@ -619,9 +596,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             manageButton();
 
                             controlAddress();
-
-
-
 
 
                         } catch (JSONException e) {
@@ -646,84 +620,77 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     }
 
-    private void setLayout()
-    {
+    private void setLayout() {
 
-        tutorNome.setText(nome+" " + cognome);
+        tutorNome.setText(nome + " " + cognome);
 
-        if(eta.compareTo("")!=0) {
+        if (eta.compareTo("") != 0) {
 
             etaT.setText(eta + " anni");
-        }
-        else{
+        } else {
             etaT.setVisibility(View.GONE);
         }
-        if(citta.compareTo("")!=0){
+        if (citta.compareTo("") != 0) {
 
             cittaT.setText(citta);
 
         }
 
-        if(occupazione.compareTo("")!=0){
+        if (occupazione.compareTo("") != 0) {
 
             contentOccT.setText(occupazione);
 
-        }
-        else{
+        } else {
             occT.setVisibility(View.GONE);
             contentOccT.setVisibility(View.GONE);
 
 
         }
 
-        if(espuni.compareTo("")!=0){
+        if (espuni.compareTo("") != 0) {
 
             contentEspUniT.setText(espuni);
 
-        }
-        else{
+        } else {
             contentEspUniT.setVisibility(View.GONE);
             espuniT.setVisibility(View.GONE);
 
 
         }
 
-        if(esptutor.compareTo("")!=0){
+        if (esptutor.compareTo("") != 0) {
 
             contentEspTut.setText(esptutor);
 
-        }
-        else{
+        } else {
             contentEspTut.setVisibility(View.GONE);
             esptutT.setVisibility(View.GONE);
 
 
         }
 
-        if(uni.compareTo("")!=0){
+        if (uni.compareTo("") != 0) {
 
             contentUniT.setText(uni);
 
-        }
-        else{
+        } else {
             contentUniT.setVisibility(View.GONE);
             uniT.setVisibility(View.GONE);
 
 
         }
-        if(fac.compareTo("")!=0){
+        if (fac.compareTo("") != 0) {
 
             contentFacT.setText(fac);
 
-        }
-        else{
+        } else {
             contentFacT.setVisibility(View.GONE);
             facT.setVisibility(View.GONE);
 
 
         }
 
-        if(gruppo.compareTo("0")==0 && domicilio.compareTo("0")==0 && gratis.compareTo("0")==0 && sede.compareTo("0")==0){
+        if (gruppo.compareTo("0") == 0 && domicilio.compareTo("0") == 0 && gratis.compareTo("0") == 0 && sede.compareTo("0") == 0) {
 
             lezT.setVisibility(View.GONE);
             isgruppo.setVisibility(View.GONE);
@@ -733,47 +700,38 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             issede.setVisibility(View.GONE);
 
 
-
         }
-        if(gruppo.compareTo("0")!=0){
+        if (gruppo.compareTo("0") != 0) {
 
 
             isgruppo.setChecked(true);
-        }
-        else{
+        } else {
             isgruppo.setVisibility(View.GONE);
         }
 
-        if(domicilio.compareTo("0")!=0){
+        if (domicilio.compareTo("0") != 0) {
 
 
             isdomicilio.setChecked(true);
-        }
-        else{
+        } else {
             isdomicilio.setVisibility(View.GONE);
         }
 
-        if(gratis.compareTo("0")!=0){
+        if (gratis.compareTo("0") != 0) {
 
 
             isgratis.setChecked(true);
-        }
-        else{
+        } else {
             isgratis.setVisibility(View.GONE);
         }
 
-        if(sede.compareTo("0")!=0){
+        if (sede.compareTo("0") != 0) {
 
 
             issede.setChecked(true);
-        }
-        else{
+        } else {
             issede.setVisibility(View.GONE);
         }
-
-
-
-
 
 
     }
@@ -786,42 +744,38 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             public void onClick(View v) {
                 Intent intent = new Intent(activity, NuovaPrenotazioneActivity.class);
                 Bundle bundle = new Bundle();
-                if (materiaSelezionata == null) {
-                    Toast.makeText(activity.getApplicationContext(), "Seleziona una materia", Toast.LENGTH_SHORT).show();
-                } else {
-                    bundle.putString("id", idTutor);
-                    bundle.putString("nome", nome);
-                    bundle.putString("cognome", cognome);
-                    bundle.putString("materia", materiaSelezionata);
-                    bundle.putString("prezzo", prezzoMateriaSelezionata);
-                    bundle.putString("materia_id", idMateriaSelezionata);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
 
-                }
+                bundle.putString("id", idTutor);
+                bundle.putString("nome", nome);
+                bundle.putString("cognome", cognome);
+                bundle.putString("materia", materiaSelezionata);
+                bundle.putString("prezzo", prezzoMateriaSelezionata);
+                bundle.putString("materia_id", idMateriaSelezionata);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
+
+
         });
+
     }
 
-    private void setPhoto(){
+    private void setPhoto() {
 
-        if(idfb.compareTo("")!=0){
+        if (idfb.compareTo("") != 0) {
 
-            Picasso.with(context.getApplicationContext()).load("https://graph.facebook.com/" +idfb + "/picture"
+            Picasso.with(context.getApplicationContext()).load("https://graph.facebook.com/" + idfb + "/picture"
             ).into(im);
-        }
-        else if(urlFoto.compareTo("")!=0){
+        } else if (urlFoto.compareTo("") != 0) {
 
 
             Picasso.with(context.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlFoto
             ).into(im);
 
-        }
-        else{
+        } else {
             im.setImageResource(R.drawable.dummy_profpic);
         }
-
 
 
     }
@@ -954,7 +908,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     }
 
 
-    private void progress(final boolean show){
+    private void progress(final boolean show) {
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -967,9 +921,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         });
 
 
-
     }
-
 
 
 }

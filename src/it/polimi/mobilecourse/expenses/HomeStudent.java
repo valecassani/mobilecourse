@@ -191,7 +191,7 @@ public class HomeStudent extends AppCompatActivity {
     private void loadUserInfos() {
         if (Profile.getCurrentProfile() != null) {
             Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
-
+            circImgView = (CircularImageView) findViewById(R.id.drawer_image);
             Picasso.with(getApplicationContext()).load(pictureUri).into(circImgView);
         } else {
             checkImageOnDatabase();
@@ -537,7 +537,7 @@ public class HomeStudent extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
-        loadUserInfos();
+        //loadUserInfos();
     }
 
 
