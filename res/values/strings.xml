@@ -65,5 +65,10 @@
     <string name="imageselected">Immagine selezionata</string>
     <string name="or">oppure</string>
     <string name="submit">Invia</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="accedi">Accedi</string>
+    <string name="registrati">Registrati</string>
+    <string name="question_registered">Non sei registrato?</string>
 
 </resources>
