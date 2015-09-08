@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Username"
+        android:hint="@string/username"
         android:ems="10"
         android:id="@+id/userS"
         android:theme="@style/customEditText"
@@ -26,7 +26,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/pasS"
-        android:hint="Password"
+        android:hint="@string/password"
         android:layout_below="@+id/userS"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"/>
@@ -34,7 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accedi"
+        android:text="@string/accedi"
         android:id="@+id/butAccess"
         android:layout_below="@+id/pasS"
         android:layout_centerHorizontal="true"/>
@@ -42,7 +42,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrati"
+        android:text="@string/registrati"
         android:id="@+id/regS"
         android:layout_marginTop="49dp"
         android:layout_below="@+id/noreg"
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Non sei registrato?"
+        android:text="@string/question_registered"
         android:id="@+id/noreg"
         android:layout_below="@+id/butAccess"
         android:layout_centerHorizontal="true"
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="oppure"
+        android:text="@string/or"
         android:id="@+id/oppure"
         android:layout_below="@+id/regS"
         android:layout_above="@id/fb_login_button"
