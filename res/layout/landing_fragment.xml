@@ -9,7 +9,7 @@
     <Button
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:text="Studente"
+        android:text="@string/student"
         android:id="@+id/buttonStudente"
         android:layout_alignTop="@+id/buttonTutor"
         android:layout_toLeftOf="@id/textView2" />
@@ -17,7 +17,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Tutor"
+        android:text="@string/tutor"
         android:id="@+id/buttonTutor"
         android:layout_below="@id/textView2"
         android:layout_toRightOf="@id/textView2"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Accedi come:"
+        android:text="@string/howaccess"
         android:id="@id/textView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

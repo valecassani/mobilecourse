@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Opzioni aggiuntive per le lezioni"
+                android:text="@string/optaggiuntive"
                 android:id="@+id/textView20"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
@@ -30,7 +30,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Prima lezione gratis"
+                android:text="@string/firstgratis"
                 android:id="@+id/checkGratis"
                 android:layout_below="@+id/textView20"
                 android:layout_alignParentLeft="true"
@@ -40,7 +40,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lezioni a domicilio"
+                android:text="@string/lessondom"
                 android:id="@+id/checkdom"
                 android:layout_below="@+id/checkGratis"
                 android:layout_alignParentLeft="true"
@@ -50,7 +50,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lezioni in sede propria"
+                android:text="@string/lessonsede"
                 android:id="@+id/checksede"
                 android:layout_below="@+id/checkdom"
                 android:layout_alignParentLeft="true"
@@ -60,7 +60,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lezioni di gruppo"
+                android:text="@string/lessongroup"
                 android:id="@+id/checkgruppo"
                 android:checked="false"
                 android:layout_centerVertical="true"
@@ -69,7 +69,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Salva"
+                android:text="@string/save"
                 android:id="@+id/save"
                 android:layout_below="@+id/checkgruppo"
                 android:layout_centerHorizontal="true"
