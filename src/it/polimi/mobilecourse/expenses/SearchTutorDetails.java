@@ -67,7 +67,6 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     private Toolbar toolbar;
     private ProgressBar progressView;
-    private HomeStudent activity;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -239,7 +238,9 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             public void onClick(View v) {
 
                 Bundle forFrag = new Bundle();
-                forFrag.putString("idstudente", activity.getUserId());
+                SessionManager sessionManager = new SessionManager(getActivity().getApplicationContext());
+                String ids = sessionManager.getUserDetails().get("id");
+                forFrag.putString("idstudente", sessionManager.getUserDetails().get("id"));
                 forFrag.putString("idtutor", idTutor);
 
 
@@ -265,65 +266,65 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         return view;
     }
 
-    private void controlAddress() {
+            private void controlAddress() {
+
+                SessionManager sessionManager = new SessionManager(getActivity().getApplicationContext());
+                String ids = sessionManager.getUserDetails().get("id");
+
+                String url = "http://www.unishare.it/tutored/student_data.php?id=" + ids;
 
 
-        String ids = activity.getUserId();
+                Log.d(TAG, url);
 
-        String url = "http://www.unishare.it/tutored/student_data.php?id=" + ids;
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                        url, null,
+                        new Response.Listener<JSONArray>() {
+
+                            @Override
+                            public boolean onResponse(JSONArray response) {
+                                try {
 
 
-        Log.d(TAG, url);
+                                    JSONObject obj = response.getJSONObject(0);
+                                    indirizzoStudente = obj.getString("indirizzo");
+                                    cittaStudente = obj.getString("citta");
 
-        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+                                    if (indirizzoStudente.compareTo("") != 0 && indirizzoTutor.compareTo("") != 0) {
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
-                url, null,
-                new Response.Listener<JSONArray>() {
+                                        calcolaDistanza();
+
+                                    } else {
+
+                                        distText.setVisibility(View.GONE);
+                                        distance.setVisibility(View.GONE);
+
+                                    }
+                                    progress(false);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                return false;
+                            }
+                        }, new Response.ErrorListener() {
 
                     @Override
-                    public boolean onResponse(JSONArray response) {
-                        try {
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "Error: " + error.getMessage());
 
 
-                            JSONObject obj = response.getJSONObject(0);
-                            indirizzoStudente = obj.getString("indirizzo");
-                            cittaStudente = obj.getString("citta");
-
-                            if (indirizzoStudente.compareTo("") != 0 && indirizzoTutor.compareTo("") != 0) {
-
-                                calcolaDistanza();
-
-                            } else {
-
-                                distText.setVisibility(View.GONE);
-                                distance.setVisibility(View.GONE);
-
-                            }
-                            progress(false);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        return false;
                     }
-                }, new Response.ErrorListener() {
+                });
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error: " + error.getMessage());
+                queue.add(request);
 
 
             }
-        });
-
-        queue.add(request);
-
-
-    }
 
     private void calcolaDistanza() {
 
@@ -390,7 +391,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         String url = "http://www.unishare.it/tutored/getRecensioni.php?idutente=".concat(idTutor);
 
-        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -417,7 +418,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             }
 
 
-                            adapterRec = new ListRecensioniAdapter(activity.getApplicationContext(), itemsRec);
+                            adapterRec = new ListRecensioniAdapter(getActivity().getApplicationContext(), itemsRec);
 
                             rec_tutor.setAdapter(adapterRec);
 
@@ -489,7 +490,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         String url = "http://www.unishare.it/tutored/getMaterie.php?idtutor=".concat(idTutor);
 
-        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -515,7 +516,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             }
 
 
-                            adapter = new ListMaterieAdapterNoDelete(activity.getApplicationContext(), items);
+                            adapter = new ListMaterieAdapterNoDelete(getActivity().getApplicationContext(), items);
 
                             mat_tutor.setAdapter(adapter);
 
@@ -550,7 +551,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
         Log.d(TAG, url);
 
-        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
                 url, null,
@@ -742,7 +743,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, NuovaPrenotazioneActivity.class);
+                Intent intent = new Intent(getActivity(), NuovaPrenotazioneActivity.class);
                 Bundle bundle = new Bundle();
 
                 bundle.putString("id", idTutor);
@@ -793,7 +794,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     public LatLng getLocationFromAddress(String strAddress) {
 
-        Geocoder coder = new Geocoder(activity);
+        Geocoder coder = new Geocoder(getActivity());
         List<Address> address;
         LatLng p1 = null;
 
@@ -822,7 +823,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                activity.finish();
+                getActivity().finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -899,13 +900,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
     */
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
 
-
-        this.activity = (HomeStudent) activity;
-    }
 
 
     private void progress(final boolean show) {

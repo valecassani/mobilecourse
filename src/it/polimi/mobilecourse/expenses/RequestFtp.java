@@ -55,7 +55,7 @@ public class RequestFtp extends AsyncTask<Void, ArrayList<ObjDb>, ArrayList<ObjD
     protected void onPostExecute(ArrayList<ObjDb> result) {
         if (act != null) {
             if (result == null) {
-                Toast.makeText(act.getApplicationContext(), R.string.error_connection, Toast.LENGTH_SHORT).show();
+                Toast.makeText(act, R.string.error_connection, Toast.LENGTH_SHORT).show();
                 return;
             }
             act.handleResult(result, op, fragment);
@@ -63,7 +63,7 @@ public class RequestFtp extends AsyncTask<Void, ArrayList<ObjDb>, ArrayList<ObjD
 
         } else {
             if (result == null) {
-                Toast.makeText(act.getApplicationContext(), R.string.error_connection, Toast.LENGTH_SHORT).show();
+                Toast.makeText(act, R.string.error_connection, Toast.LENGTH_SHORT).show();
                 return;
             }
             act_ab.handleResult(result, op, fragment);

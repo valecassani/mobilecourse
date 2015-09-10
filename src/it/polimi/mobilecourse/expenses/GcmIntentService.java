@@ -98,6 +98,12 @@ public class GcmIntentService extends IntentService{
 
         } else {
             if (type.equals("richiesta")) {
+                Log.d(TAG,"Notification Richiesta ricevuta");
+                myintent = new Intent(this, RichiestaNotificaActivity.class);
+                myintent.putExtra("message", msg);
+                myintent.putExtra("tutor_id",receivedIntent.getStringExtra("tutor_id"));
+                contentIntent = PendingIntent.getActivity(this, 0,
+                        myintent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             }
         }

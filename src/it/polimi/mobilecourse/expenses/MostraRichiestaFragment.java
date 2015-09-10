@@ -47,6 +47,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -71,6 +72,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Matteo on 20/08/2015.
@@ -80,7 +83,6 @@ import java.net.URL;
 public class MostraRichiestaFragment extends Fragment {
 
     private RequestQueue queue;
-    private HomeTutor activity;
     private View view;
     String idr;
 
@@ -150,7 +152,7 @@ public class MostraRichiestaFragment extends Fragment {
 
     private void setGraphics(){
 
-        mBuilder=new NotificationCompat.Builder(activity).
+        mBuilder=new NotificationCompat.Builder(getActivity()).
                 setSmallIcon(R.drawable.gmc_img).setContentTitle("Tutored").setContentText("Immagine scaricata");
         mBuilder.setAutoCancel(true);
 
@@ -162,11 +164,53 @@ public class MostraRichiestaFragment extends Fragment {
         data=(TextView)view.findViewById(R.id.dataR);
 
         accetta=(Button)view.findViewById(R.id.buttonAccettaR);
+        accetta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inviaNotificaRichiesta();
+            }
+        });
         download=(Button)view.findViewById(R.id.buttonDownload);
 
         progress=(ProgressBar)view.findViewById(R.id.progressBarRichiesta);
 
 
+    }
+
+    private void inviaNotificaRichiesta() {
+
+        String url;
+        String idTutor = null;
+
+        SessionManager sessionManager = new SessionManager(getActivity().getApplicationContext());
+        if (sessionManager.getUserDetails().get("tipo").equals("1")) {
+            idTutor = sessionManager.getUserDetails().get("id");
+        }
+
+        url = "http://www.unishare.it/tutored/send_notification_richiesta.php?id_studente=" + id_studente + "&id_tutor=" + idTutor ;
+        Log.d("MostraRichiesta",url);
+        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public boolean onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        return false;
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        );
+
+        queue.add(jsObjRequest);
+
+
+        getFragmentManager().popBackStack();
     }
 
     private void showRequest() {
@@ -470,13 +514,7 @@ public class MostraRichiestaFragment extends Fragment {
 
 
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
 
-
-        this.activity = (HomeTutor) activity;
-    }
 
 
     @Override
@@ -538,7 +576,7 @@ public class MostraRichiestaFragment extends Fragment {
                     output.close();
 
 
-                    filep=addImageToGallery(path+ "/imageRichiesta.jpg",activity);
+                    filep=addImageToGallery(path+ "/imageRichiesta.jpg",getActivity());
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -565,7 +603,7 @@ public class MostraRichiestaFragment extends Fragment {
             if(success) {
 
 
-                NotificationManager nm=(NotificationManager)activity.getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationManager nm=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
                 //Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(filep).build();
 
@@ -576,13 +614,13 @@ public class MostraRichiestaFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
 
-                PendingIntent contentIntent= PendingIntent.getActivity(activity, 0, intent, 0);
+                PendingIntent contentIntent= PendingIntent.getActivity(getActivity(), 0, intent, 0);
                 mBuilder.setContentIntent(contentIntent);
                 nm.notify(0,mBuilder.build());
 
 
                 progress(false);
-               Toast.makeText(activity,"Immagine scaricata correttamente",Toast.LENGTH_LONG).show();
+               Toast.makeText(getActivity(),"Immagine scaricata correttamente",Toast.LENGTH_LONG).show();
 
 
 

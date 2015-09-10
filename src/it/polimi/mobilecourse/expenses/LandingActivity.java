@@ -244,7 +244,12 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
                     @Override
                     public boolean onResponse(JSONArray response) {
 
+
+
                         try {
+                            if (response.length() > 1) {
+                                JSONObject obj = response.getJSONObject(1);
+                            }
                             JSONObject obj = response.getJSONObject(0);
                             lf.control(obj);
                         } catch (JSONException e) {

@@ -343,47 +343,6 @@ public class HomeTutor extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerFragment);
-        menu.findItem(R.id.action_logout).setVisible(!drawerOpen);
-
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-
-    //metodo per far aprire e chiudere il drawer col bottone
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                selectItem(1);
-                return true;
-            case R.id.action_logout:
-                LoginManager.getInstance().logOut();
-                sessionManager.logoutUser();
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
 
     public void selectItem(int position) {

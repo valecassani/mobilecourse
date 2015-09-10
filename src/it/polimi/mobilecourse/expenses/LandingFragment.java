@@ -72,7 +72,6 @@ public class LandingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.landing_fragment, container, false);
         myCustomFont=Typeface.createFromAsset(activity.getAssets(), "font/Gotham-Book.ttf");
 
@@ -228,6 +227,8 @@ public class LandingFragment extends Fragment {
         String response = result.getString("Response");
         //System.out.println("Response "+response);
         if (response.compareTo("S") == 0) {
+
+
 
             str = "S";
             id_utente = result.getInt("id_utente");
