@@ -31,7 +31,7 @@
     <!-- Colori per Toolbar -->
 
     <style name="Widget.MyApp.ActionBar" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/primaryColor</item>
+        <item name="android:background">@color/primaryColor </item>
         <item name="theme">@style/ThemeOverlay.MyApp.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
