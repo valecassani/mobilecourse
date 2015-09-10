@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -275,7 +276,10 @@ public class LandingActivity extends HelpActivity implements LandingFragment.man
 
     private void setLanding() {
         setContentView(R.layout.landing_activity);
+        Typeface myCustomFont= Typeface.createFromAsset(getAssets(), "font/Gotham-Bold.ttf");
 
+        TextView slogan=(TextView)findViewById(R.id.slogan);
+        slogan.setTypeface(myCustomFont);
         progressView = (ProgressBar) findViewById(R.id.progressBarRS);
         lf = new LandingFragment();
         //hideButton();

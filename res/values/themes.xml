@@ -30,7 +30,7 @@
     </style>
 
      <style name="Landing" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
-     <item name="android:windowBackground">@color/sfondo</item>
+     <item name="android:windowBackground">@color/primaryColor</item>
 
      </style>
 

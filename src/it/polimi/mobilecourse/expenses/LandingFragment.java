@@ -2,8 +2,6 @@ package it.polimi.mobilecourse.expenses;
 
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -13,22 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.facebook.AccessTokenTracker;
-import com.facebook.LoggingBehavior;
-
 import com.facebook.login.LoginManager;
-import com.google.android.gms.fitness.result.SessionStopResult;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 
 public class LandingFragment extends Fragment {

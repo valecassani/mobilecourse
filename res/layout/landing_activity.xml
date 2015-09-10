@@ -31,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/logo_white"
                 android:id="@+id/imgLanding"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/welcomemessage"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="115dp" />
+                android:layout_marginTop="35dp" />
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -66,6 +66,17 @@
                 android:id="@+id/welcomemessage"
                 android:layout_toRightOf="@+id/progressBarRS"
                 android:layout_alignParentTop="true"></RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/slogan"
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                android:id="@+id/slogan"
+                android:layout_below="@+id/imgLanding"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 
