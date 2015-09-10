@@ -130,6 +130,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private String indirizzoTutor;
     private String indirizzoStudente;
     private String cittaStudente;
+    private String cellulare;
     private ArrayList<ListMaterieItem> items = new ArrayList<>();
     private ArrayList<ListRecensioneItem> itemsRec = new ArrayList<>();
 
@@ -589,6 +590,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             sede = obj.getString("sede_propria");
                             domicilio = obj.getString("domicilio");
                             gruppo = obj.getString("gruppo");
+                            cellulare = obj.getString("cellulare");
 
 
                             setLayout();
@@ -752,6 +754,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                 bundle.putString("materia", materiaSelezionata);
                 bundle.putString("prezzo", prezzoMateriaSelezionata);
                 bundle.putString("materia_id", idMateriaSelezionata);
+                bundle.putString("cellulare",cellulare);
                 intent.putExtras(bundle);
                 startActivity(intent);
 

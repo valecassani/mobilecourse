@@ -4,16 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.RemoteController;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -35,20 +30,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.identity.intents.AddressConstants;
-import com.quinny898.library.persistentsearch.SearchResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -68,7 +57,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Button sceltaOraButton;
     private Button sceltaDataButton;
-    private EditText editTextCellulare;
+    private TextView mCellulareText;
+    private String cellulare;
     private Spinner spinnerMaterie;
     private SessionManager sessionManager;
     private ArrayList<ListMaterieItem> items = new ArrayList<ListMaterieItem>();
@@ -150,6 +140,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         System.out.println(sessionManager.getUserDetails().get("id"));
 
         textDurata = (TextView)findViewById(R.id.durata_text);
+        cellulare = data.getString("cellulare");
 
         sceltaOra = (TextView) findViewById(R.id.ora_scelta);
         sceltaOraButton = (Button) findViewById(R.id.ora_scelta_button);
@@ -197,7 +188,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             }
         });
 
-        editTextCellulare = (EditText) findViewById(R.id.cellulare_nuova_prenotaz);
+        mCellulareText = (TextView) findViewById(R.id.cellulare_nuova_prenotaz);
+        mCellulareText.setText("Cellualare Tutor: " + cellulare );
 
         spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -275,10 +267,10 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     }
 
     private void inviaPrenotazione() {
-        final String numeroCellulare = editTextCellulare.getText().toString();
+        final String numeroCellulare = mCellulareText.getText().toString();
 
         try {
-            if (sceltaData != null && !editTextCellulare.getText().toString().equals("")) {
+            if (sceltaData != null && !mCellulareText.getText().toString().equals("")) {
 
 
             } else {
@@ -332,8 +324,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 params.put("note", "");
                 Log.d(TAG, "");
 
-                params.put("cellulare", numeroCellulare);
-                Log.d(TAG, numeroCellulare);
+
 
                 params.put("confermato", "0");
                 Log.d(TAG, "0");
