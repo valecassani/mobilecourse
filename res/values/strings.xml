@@ -101,6 +101,6 @@
     <string name="save">Salva</string>
     <string name="student">Studente</string>
     <string name="tutor">Tutor</string>
-    <string name="howaccess">Accedi come:</string>
+    <string name="howaccess">Accedi come: </string>
 
 </resources>
