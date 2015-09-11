@@ -109,5 +109,18 @@
     <string name="saveedit">Salva modifiche</string>
     <string name="caricaimmagine">Carica Immagine</string>
     <string name="scattaphoto">Scatta Foto</string>
+    <string name="puntualita">Puntualità</string>
+    <string name="disp">Disponibilità</string>
+    <string name="chiar">Chiarezza</string>
+    <string name="finalmark">Voto finale</string>
+    <string name="questionadd">Vuoi aggiungere un commento?</string>
+    <string name="optional">(Opzionale)</string>
+    <string name="addrec">Aggiungi recensione</string>
+    <string name="cell">Cellulare</string>
+    <string name="wherelive">Dove vivi?</string>
+    <string name="uni">Università</string>
+    <string name="fac">Facoltà</string>
+    <string name="accept_term">Accetto Termini e condizioni e informativa sulla privacy Tutored</string>
+    <string name="complete_profile">Completa il profilo</string>
 
 </resources>
