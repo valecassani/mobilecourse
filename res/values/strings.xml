@@ -122,5 +122,12 @@
     <string name="fac">Facoltà</string>
     <string name="accept_term">Accetto Termini e condizioni e informativa sulla privacy Tutored</string>
     <string name="complete_profile">Completa il profilo</string>
+    <string name="home">Nome</string>
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="mail">Mail</string>
+    <string name="citta">Città</string>
+    <string name="repeat_pass">Ripeti Password</string>
+    <string name="pass">Password</string>
 
 </resources>
