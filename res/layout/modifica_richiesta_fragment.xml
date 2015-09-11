@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Foto"
+                android:text="@string/photo"
                 android:id="@+id/fotoTestoMR"
                 android:layout_marginTop="38dp"
                 android:layout_below="@+id/buttonPhotoMR"
@@ -92,7 +92,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Salva modifiche"
+                android:text="@string/saveedit"
                 android:id="@+id/buttonSave"
                 style="?android:attr/borderlessButtonStyle"
                 android:background="@color/primaryColorDark"
@@ -109,7 +109,7 @@
                 android:id="@+id/buttonImageMR"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Carica Immagine"
+                android:text="@string/caricaimmagine"
                 android:layout_alignTop="@+id/buttonPhotoMR"
                 android:layout_alignRight="@+id/testoRichiestaMR"></Button>
 
@@ -118,7 +118,7 @@
                 android:id="@+id/buttonPhotoMR"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Scatta Foto"
+                android:text="@string/scattaphoto"
 
                 android:layout_below="@+id/textView27"
                 ></Button>
@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="oppure"
+                android:text="@string/or"
                 android:id="@+id/textView27"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />

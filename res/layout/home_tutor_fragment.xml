@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ecco le richieste degli studenti della tua stessa città:"
+        android:text="@string/elencoreq"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nessuna richiesta inserita"
+        android:text="@string/noreq"
         android:id="@+id/norequestT"
         android:visibility="invisible"
         android:layout_alignParentTop="true"

@@ -103,5 +103,11 @@
     <string name="tutor">Tutor</string>
     <string name="howaccess">Accedi come: </string>
     <string name="slogan">SUPERA CON SUCCESSO IL TUO PROSSIMO ESAME</string>
+    <string name="elencoreq">Ecco le richieste degli studenti della tua stessa città:</string>
+    <string name="noreq">Nessuna richiesta inserita</string>
+    <string name="photo">Foto</string>
+    <string name="saveedit">Salva modifiche</string>
+    <string name="caricaimmagine">Carica Immagine</string>
+    <string name="scattaphoto">Scatta Foto</string>
 
 </resources>
