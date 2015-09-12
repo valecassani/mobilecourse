@@ -263,11 +263,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
             }
         };
         queue.add(jsObjRequest);
-        Intent intent = new Intent(context, HomeTutor.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("user_id", idTutor);
-        intent.putExtras(bundle);
-        startActivity(intent);
+
 
         getActivity().finish();
 
@@ -392,11 +388,6 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
             }
         };
         queue.add(jsObjRequest);
-        Intent intent = new Intent(context, HomeTutor.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("user_id", idTutor);
-        intent.putExtras(bundle);
-        startActivity(intent);
 
         getActivity().finish();
 
