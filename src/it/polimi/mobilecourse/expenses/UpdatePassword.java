@@ -20,9 +20,12 @@ public class UpdatePassword extends HelpABActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_password);
 
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(25);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("UPDATE PASSWORD");
+
 
         upf= new UpdatePasswordFragment();
         //arriva un bundle dall'activity chiamante con un campo tipo (0/1 -> 0 studente 1 tutor)e un campo id
