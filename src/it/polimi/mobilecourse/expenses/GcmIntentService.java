@@ -87,42 +87,43 @@ public class GcmIntentService extends IntentService{
 
         Intent myintent = null;
         PendingIntent contentIntent = null;
+        if (type != null) {
 
-         if(type.equals("prenotazione")) {
 
-            myintent = new Intent(this, PrenotazioniDettagliActivity.class);
-            myintent.putExtra("message", msg);
-            myintent.putExtra("id",receivedIntent.getStringExtra("id_prenotazione"));
-            contentIntent = PendingIntent.getActivity(this, 0,
-                    myintent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (type.equals("prenotazione")) {
 
-        } else {
-            if (type.equals("richiesta")) {
-                Log.d(TAG,"Notification Richiesta ricevuta");
-                myintent = new Intent(this, RichiestaNotificaActivity.class);
+                myintent = new Intent(this, PrenotazioniDettagliActivity.class);
                 myintent.putExtra("message", msg);
-                myintent.putExtra("tutor_id",receivedIntent.getStringExtra("tutor_id"));
+                myintent.putExtra("id", receivedIntent.getStringExtra("id_prenotazione"));
                 contentIntent = PendingIntent.getActivity(this, 0,
                         myintent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            } else {
+                if (type.equals("richiesta")) {
+                    Log.d(TAG, "Notification Richiesta ricevuta");
+                    myintent = new Intent(this, RichiestaNotificaActivity.class);
+                    myintent.putExtra("message", msg);
+                    myintent.putExtra("tutor_id", receivedIntent.getStringExtra("tutor_id"));
+                    contentIntent = PendingIntent.getActivity(this, 0,
+                            myintent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                }
             }
+
+
+            //l'iconcina te l'ho messa nella cartella e va in drawable-hdpi
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.gmc_img)
+                            .setContentTitle("Tutored")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(msg))
+                            .setContentText(msg);
+
+            mBuilder.setAutoCancel(true);
+            mBuilder.setContentIntent(contentIntent);
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         }
-
-
-
-
-        //l'iconcina te l'ho messa nella cartella e va in drawable-hdpi
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.gmc_img)
-                        .setContentTitle("Tutored")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg);
-
-        mBuilder.setAutoCancel(true);
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     private void screenOn(){

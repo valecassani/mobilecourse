@@ -4,11 +4,16 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.RemoteController;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -30,16 +35,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.identity.intents.AddressConstants;
+import com.quinny898.library.persistentsearch.SearchResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import java.sql.Date;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -59,12 +68,10 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Button sceltaOraButton;
     private Button sceltaDataButton;
-    private TextView mCellulareText;
-    private String cellulare;
+
     private Spinner spinnerMaterie;
     private SessionManager sessionManager;
     private ArrayList<ListMaterieItem> items = new ArrayList<ListMaterieItem>();
-    private Date dataToSend;
     private String materia;
     private Button sceltaDurataButton;
     private Adapter materieAdapter;
@@ -128,7 +135,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
-                        date = simpleDateFormat.format(newDate.getTime());
+                        date = anotherDateFormat.format(newDate.getTime());
+                        sceltaData.setText(simpleDateFormat.format(newDate.getTime()));
 
                     }
 
@@ -156,7 +164,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         time = selectedHour + ":" + selectedMinute;
-                        sceltaOra.setText(time);
+                        sceltaOra.setText(selectedHour + ":" + selectedMinute);
                         //time.setTime(selectedHour);
                     }
                 }, hour, minute, true);
@@ -185,11 +193,10 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                // SearchResultActivity.activity.finish();
+
 
             }
         });
-
 
 
         spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -270,7 +277,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private void inviaPrenotazione() {
 
         try {
-            if (sceltaData != null ) {
+            if (sceltaData != null) {
 
 
             } else {
@@ -312,15 +319,13 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 params.put("id_studente", sessionManager.getUserDetails().get("id"));
                 Log.d(TAG, sessionManager.getUserDetails().get("id"));
                 params.put("data", date);
-                System.out.println(date);
 
                 params.put("id_tutor", idTutor);
 
                 params.put("ora", time);
-                System.out.println(time);
+                Log.d(TAG, time);
 
                 params.put("durata", durata);
-                System.out.println(durata);
                 params.put("materia", materiaId);
 
                 params.put("note", "");
@@ -362,8 +367,9 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                durata = Integer.toString(np.getValue());
+                System.out.println(durata);
                 prezzo = Integer.parseInt(prezzoOrario) * np.getValue();
-                durata = String.valueOf(np.getValue());
                 textDurata.setText("Prezzo totale: " + prezzo + " Euro");
                 calcolaPrezzo();
                 d.dismiss();
@@ -376,6 +382,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             }
         });
         d.show();
+
 
 
     }

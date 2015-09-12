@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/drawer_infos"
-            android:background="@drawable/minitutored_bg"
+            android:background="@drawable/minitutored_bg_sfocato"
             >
             <com.pkmmte.view.CircularImageView
                 android:layout_marginTop="70dp"
