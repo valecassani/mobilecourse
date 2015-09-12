@@ -129,5 +129,13 @@
     <string name="citta">Città</string>
     <string name="repeat_pass">Ripeti Password</string>
     <string name="pass">Password</string>
+    <string name="choosefile">Clicca sul tasto qui sotto per scegliere il file</string>
+    <string name="choose_gallery">Scegli file da galleria</string>
+    <string name="and_upload">e poi clicca upload</string>
+    <string name="upload">Upload</string>
+    <string name="address">Indirizzo</string>
+    <string name="eta">Età</string>
+    <string name="add_req">+ Nuova richiesta</string>
+    <string name="no_req">Nessuna richiesta inserita</string>
 
 </resources>
