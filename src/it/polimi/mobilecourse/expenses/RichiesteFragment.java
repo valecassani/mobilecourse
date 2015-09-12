@@ -111,9 +111,18 @@ public class RichiesteFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.showContextMenu();
+                startItemDetails(position);
+            }
+        });
 
 
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                return false;
             }
         });
 
@@ -206,6 +215,8 @@ public class RichiesteFragment extends Fragment {
             menu.add(0, v.getId(), 0, "Elimina richiesta");
 
     }
+
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {

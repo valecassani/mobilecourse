@@ -59,7 +59,7 @@
         android:layout_height="500dp"
         android:id="@+id/result_tutor_search"
         android:layout_below="@id/search_tutor_button"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="80dp">
     </ListView>
 
     <ProgressBar
@@ -77,10 +77,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/testa"
         android:textColor="#000000"
-        android:layout_below="@id/search_tutor_button"
         android:layout_above="@id/result_tutor_search"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="70dp" />
 
 
 </RelativeLayout>

@@ -51,7 +51,7 @@ public class ListMaterieAdapterNoDelete extends BaseAdapter {
         TextView prezzo=(TextView)convertView.findViewById(R.id.materia_prezzo);
 
         nome.setText(items.get(position).getNome());
-        prezzo.setText(items.get(position).getPrezzo()+ "   Euro /ora");
+        prezzo.setText(items.get(position).getPrezzo()+ " Euro /ora");
 
 
 

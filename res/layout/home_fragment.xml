@@ -14,16 +14,25 @@
         android:layout_marginTop="34dp"
         android:id="@+id/phr"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tutor_list"
+        android:layout_below="@id/phr"
+        android:id="@+id/tutor_list"/>
+<!--
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:layout_below="@id/phr"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="#cccc"
-         />
+
+        -->
+
+
+
 
     <ProgressBar
         android:layout_width="wrap_content"

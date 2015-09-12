@@ -186,8 +186,10 @@ public class SearchFragment extends Fragment {
                             SearchTutorAdapter adapter = new SearchTutorAdapter(activity.getApplicationContext(), items);
                             mListView.setAdapter(adapter);
 
+                            if (!searchTerm.equals("")) {
+                                testa.setText("Risultati della ricerca per '" + searchTerm + "'");
+                            }
 
-                            testa.setText("Risultati della ricerca per '" + searchTerm + "'");
 
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override

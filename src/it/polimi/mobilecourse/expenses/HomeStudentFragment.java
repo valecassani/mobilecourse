@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +42,13 @@ import java.util.Comparator;
 public class HomeStudentFragment extends Fragment {
 
     private HomeStudent activity;
-    private CardView cardView;
 
     private ArrayList<ListTutorItem> items = new ArrayList<>();
     ListTutorAdapter adapter ;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
 
     private ListView list_tutor;
     private String userId;
@@ -62,7 +67,11 @@ public class HomeStudentFragment extends Fragment {
         queue= Volley.newRequestQueue(view.getContext());
 
         userId=activity.getUserId();
-        list_tutor=(ListView)view.findViewById(R.id.tutor_list);
+        //list_tutor=(ListView)view.findViewById(R.id.tutor_list);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.tutor_list);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+
 
         progress(true);
         getList();
@@ -130,12 +139,13 @@ public class HomeStudentFragment extends Fragment {
                                 }
                             });
 
-                            adapter = new ListTutorAdapter(activity.getApplicationContext(), items);
+                            //adapter = new ListTutorAdapter(activity.getApplicationContext(), items);
 
-                            list_tutor.setAdapter(adapter);
+                            //list_tutor.setAdapter(adapter);
 
-                            Functions.setListViewHeightBasedOnChildren(list_tutor);
+                            //Functions.setListViewHeightBasedOnChildren(list_tutor);
 
+                            /*
                             list_tutor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -152,8 +162,21 @@ public class HomeStudentFragment extends Fragment {
                                     System.out.println("Bundle" + bundle);
                                     fragmentManager.beginTransaction().replace(R.id.student_fragment, fragment).addToBackStack(null).commit();
 
+
                                 }
                             });
+
+                            */
+                            mAdapter = new ListTutorRecAdapter(items);
+                            mRecyclerView.setAdapter(mAdapter);
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            mRecyclerView.setHasFixedSize(true);
+
+
+
+
+
+
 
                             progress(false);
 

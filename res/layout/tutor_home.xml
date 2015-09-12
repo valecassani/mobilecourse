@@ -47,6 +47,8 @@
         android:id="@+id/left_drawer_tutor"
         android:layout_width="300dp"
         android:layout_height="match_parent"
+        android:background="#A7AEAE"
+
         android:layout_gravity="start"
         android:orientation="vertical">
 
