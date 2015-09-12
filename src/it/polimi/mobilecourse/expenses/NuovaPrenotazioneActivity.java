@@ -35,6 +35,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,6 +64,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private Spinner spinnerMaterie;
     private SessionManager sessionManager;
     private ArrayList<ListMaterieItem> items = new ArrayList<ListMaterieItem>();
+    private Date dataToSend;
     private String materia;
     private Button sceltaDurataButton;
     private Adapter materieAdapter;
@@ -124,8 +127,8 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
-                        date = anotherDateFormat.format(newDate.getTime());
-                        sceltaData.setText(simpleDateFormat.format(newDate.getTime()));
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        date = simpleDateFormat.format(newDate.getTime());
 
                     }
 
@@ -140,7 +143,6 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         System.out.println(sessionManager.getUserDetails().get("id"));
 
         textDurata = (TextView)findViewById(R.id.durata_text);
-        cellulare = data.getString("cellulare");
 
         sceltaOra = (TextView) findViewById(R.id.ora_scelta);
         sceltaOraButton = (Button) findViewById(R.id.ora_scelta_button);
@@ -154,7 +156,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         time = selectedHour + ":" + selectedMinute;
-                        sceltaOra.setText(selectedHour + ":" + selectedMinute);
+                        sceltaOra.setText(time);
                         //time.setTime(selectedHour);
                     }
                 }, hour, minute, true);
@@ -188,8 +190,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             }
         });
 
-        mCellulareText = (TextView) findViewById(R.id.cellulare_nuova_prenotaz);
-        mCellulareText.setText("Cellualare Tutor: " + cellulare );
+
 
         spinnerMaterie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -267,10 +268,9 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     }
 
     private void inviaPrenotazione() {
-        final String numeroCellulare = mCellulareText.getText().toString();
 
         try {
-            if (sceltaData != null && !mCellulareText.getText().toString().equals("")) {
+            if (sceltaData != null ) {
 
 
             } else {
@@ -312,13 +312,15 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 params.put("id_studente", sessionManager.getUserDetails().get("id"));
                 Log.d(TAG, sessionManager.getUserDetails().get("id"));
                 params.put("data", date);
+                System.out.println(date);
 
                 params.put("id_tutor", idTutor);
 
                 params.put("ora", time);
-                Log.d(TAG, time);
+                System.out.println(time);
 
-                params.put("durata", textDurata.getText().toString());
+                params.put("durata", durata);
+                System.out.println(durata);
                 params.put("materia", materiaId);
 
                 params.put("note", "");
@@ -348,7 +350,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     {
 
         final Dialog d = new Dialog(NuovaPrenotazioneActivity.this);
-        d.setTitle("Durata Riptezione");
+        d.setTitle("Durata Ripetizione");
         d.setContentView(R.layout.dialog_number);
         Button b1 = (Button) d.findViewById(R.id.button1);
         Button b2 = (Button) d.findViewById(R.id.button2);
@@ -361,6 +363,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 prezzo = Integer.parseInt(prezzoOrario) * np.getValue();
+                durata = String.valueOf(np.getValue());
                 textDurata.setText("Prezzo totale: " + prezzo + " Euro");
                 calcolaPrezzo();
                 d.dismiss();
