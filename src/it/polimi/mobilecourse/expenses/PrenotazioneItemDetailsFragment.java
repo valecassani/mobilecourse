@@ -107,6 +107,8 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
         initializeButtons();
 
+
+
         if (confermato.equals("1")) {
             sendButton.setVisibility(View.INVISIBLE);
             sceltaDataButton.setVisibility(View.INVISIBLE);
@@ -201,10 +203,80 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         editTextCellulare.setText(cellulare);
 
         buttonAggiorna = (Button) view.findViewById(R.id.button_aggiorna_prenotazione);
+        buttonAggiorna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aggiornaPrenotazione();
+            }
+        });
 
 
 
     }
+
+    private void aggiornaPrenotazione() {
+
+        String url = "http://www.unishare.it/tutored/update_prenotazione.php";
+
+        System.out.println(url);
+
+
+        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public boolean onResponse(String response) {
+                        // response
+                        Log.d("Response Upd Prenot", response);
+                        return false;
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+
+                Map<String, String> params = new HashMap<String, String>();
+
+
+                params.put("id_studente", idStudente);
+
+                params.put("data", date);
+                params.put("id_tutor", idTutor);
+                params.put("ora", time);
+                params.put("durata", "");
+                params.put("materia", materia);
+                params.put("note", note);
+                params.put("id_prenotazione", idPrenotazione);
+
+
+
+                params.put("confermato", "0");
+
+
+                return params;
+            }
+        };
+        queue.add(jsObjRequest);
+        Intent intent = new Intent(context, HomeTutor.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("user_id", idTutor);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        getActivity().finish();
+
+
+
+
+    }
+
+
 
     /*
     private void populateData() {
@@ -270,17 +342,12 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
     } */
 
     private void confermaPrenotazione() {
-        final String numeroCellulare = editTextCellulare.getText().toString();
-
-        try {
 
 
-
-        } catch (NullPointerException e) {
-            Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT);
-        }
 
         String url = "http://www.unishare.it/tutored/update_prenotazione.php";
+
+        System.out.println(url);
 
 
         StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
@@ -305,15 +372,18 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
+
                 params.put("id_studente", idStudente);
+
                 params.put("data", date);
                 params.put("id_tutor", idTutor);
                 params.put("ora", time);
                 params.put("durata", "");
                 params.put("materia", materia);
                 params.put("note", note);
-                params.put("cellulare", numeroCellulare);
                 params.put("id_prenotazione", idPrenotazione);
+
+
 
                 params.put("confermato", "1");
 
@@ -322,7 +392,6 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
             }
         };
         queue.add(jsObjRequest);
-        Toast.makeText(context, "Prenotazione Confermata", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, HomeTutor.class);
         Bundle bundle = new Bundle();
         bundle.putString("user_id", idTutor);
@@ -394,6 +463,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         idStudente = obj.getString("id_studente");
         idTutor = obj.getString("id_tutor");
         confermato = obj.getString("confermato");
+        idPrenotazione = obj.getString("id");
 
 
         note = obj.getString("note");
