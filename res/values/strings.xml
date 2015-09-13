@@ -142,5 +142,11 @@
     <string name="no_mat">Nessuna materia inserita</string>
     <string name="comment">Commento</string>
     <string name="string_send_prenotazione">Invia prenotazione</string>
+    <string name="tutor_home">Ecco i tutor della tua stessa città:</string>
+    <string name="no_tutor">Nessun tutor trovato</string>
+    <string name="oldpsw">Vecchia password</string>
+    <string name="newpsw">Nuova password</string>
+    <string name="newpsw2">Ripeti Password</string>
+    <string name="conferma">Conferma</string>
 
 </resources>

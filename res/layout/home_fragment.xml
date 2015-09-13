@@ -5,14 +5,15 @@
 
 
     <!-- A CardView that contains a TextView -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ecco i tutor della tua stessa città:"
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:text="@string/tutor_home"
+        android:background="#585858"
+        android:textColor="@color/white"
+        android:id="@+id/phr"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:id="@+id/phr"/>
+        android:layout_centerHorizontal="true" />
 
     <android.support.v7.widget.RecyclerView
 
@@ -38,8 +39,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBarHomeS"
-        android:visibility="gone"
         style="?android:attr/progressBarStyleLarge"
+        android:visibility="gone"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -47,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nessun tutor trovato"
+        android:text="@string/no_tutor"
         android:id="@+id/noTutor"
         android:visibility="invisible"
         android:layout_alignParentTop="true"
