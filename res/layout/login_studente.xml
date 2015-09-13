@@ -35,8 +35,9 @@
                 android:id="@+id/fb_login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/fragLS"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/fragLS" />
+                android:layout_marginBottom="50dp" />
 
 
 

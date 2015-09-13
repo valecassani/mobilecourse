@@ -1,56 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="@string/username"
-        android:ems="10"
-        android:id="@+id/userS"
-        android:theme="@style/customEditText"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/pasS"
-        android:layout_marginTop="90dp"
-        android:layout_alignRight="@+id/pasS"/>
+        android:layout_height="600dp"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="1">
 
-    <EditText
-        android:layout_width="304dp"
+
+
+
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="295dp"
+            android:layout_height="wrap_content"
+            float:fletPaddingLeft="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:layout_width="276dp"
+                android:layout_height="wrap_content"
+
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/mail_32"
+                android:inputType="textEmailAddress"
+                android:hint="Mail"
+                android:id="@+id/userS"
+                />
+
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="295dp"
+            android:layout_height="wrap_content"
+            float:fletPaddingLeft="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:layout_width="276dp"
+                android:layout_height="wrap_content"
+
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/lock_32"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:id="@+id/pasS"
+                />
+
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/accedi"
+            android:textStyle="bold"
+
+            android:id="@+id/butAccess"
+            android:textColor="@color/white"
+            android:background="@drawable/smooth_button_app"
+            android:layout_below="@+id/pasS"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp" />
+
+
+        <ProgressBar
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/pasS"
-        android:hint="@string/password"
-        android:layout_below="@+id/userS"
+        android:id="@+id/progressBarLS"
+        android:layout_below="@id/butAccess"
+            android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"/>
+        android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/accedi"
-        android:id="@+id/butAccess"
-        android:layout_below="@+id/pasS"
-        android:layout_centerHorizontal="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registrati"
-        android:id="@+id/regS"
-        android:layout_marginTop="49dp"
-        android:layout_below="@+id/noreg"
-        android:layout_centerHorizontal="true"/>
-
-
-
-    <TextView
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -58,27 +101,35 @@
         android:id="@+id/noreg"
         android:layout_below="@+id/butAccess"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
+        <Button
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/or"
-        android:id="@+id/oppure"
-        android:layout_below="@+id/regS"
-        android:layout_above="@id/fb_login_button"
-        android:layout_centerHorizontal="true"/>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBarLS"
-        android:visibility="gone"
-        android:layout_below="@id/butAccess"
-        style="?android:attr/progressBarStyleLarge"
+        android:text="@string/registrati"
+        android:textStyle="bold"
+        android:id="@+id/regS"
+        android:textColor="@color/white"
+        android:background="@drawable/smooth_button_app"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/noreg"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-         />
+            android:layout_gravity="center_horizontal" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/or"
+            android:id="@+id/oppure"
+            android:layout_below="@+id/regS"
+
+            android:layout_above="@id/fb_login_button"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp" />
+
+    </LinearLayout>
 </RelativeLayout>
+</ScrollView>
