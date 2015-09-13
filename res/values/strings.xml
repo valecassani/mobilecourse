@@ -137,5 +137,9 @@
     <string name="eta">Età</string>
     <string name="add_req">+ Nuova richiesta</string>
     <string name="no_req">Nessuna richiesta inserita</string>
+    <string name="mat_tutor">Ecco le materie che hai inserito:</string>
+    <string name="add_materia">+ Aggiungi materia</string>
+    <string name="no_mat">Nessuna materia inserita</string>
+    <string name="comment">Commento</string>
 
 </resources>

@@ -16,15 +16,20 @@
     <style  name="PageTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
-        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:actionBarStyle">@style/PageTheme.ActionBar</item>
     </style>
 
-    <style name="ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+    <style name="PageTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/PageTheme.ActionBar.TitleTextStyle</item>
     </style>
 
-    <style name="ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="PageTheme.ActionBar.TitleTextStyle" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+
+        <item name="android:textStyle">bold</item>
+
+
     </style>
 
 
@@ -53,7 +58,7 @@
 
 
     <color name="primaryColor">#3f729b</color>
-    <color name="primaryColorDark">#3f729b</color>
+    <color name="primaryColorDark">#003153</color>
 
 
 

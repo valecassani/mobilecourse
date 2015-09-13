@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:text="@string/student"
         android:id="@+id/buttonStudente"
+        android:textColor="@color/white"
+        android:background="@drawable/smooth_button"
         android:layout_alignTop="@+id/buttonTutor"
         android:layout_toLeftOf="@id/textView2" />
 
@@ -18,7 +20,9 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/tutor"
+        android:textColor="@color/white"
         android:id="@+id/buttonTutor"
+        android:background="@drawable/smooth_button"
         android:layout_below="@id/textView2"
         android:layout_toRightOf="@id/textView2"
         android:layout_marginTop="58dp" />
