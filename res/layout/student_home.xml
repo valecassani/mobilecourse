@@ -22,6 +22,15 @@
             style="@style/Widget.MyApp.ActionBar"
              >
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+
+                 />
+
         </android.support.v7.widget.Toolbar>
 
 
@@ -46,7 +55,8 @@
 
     <RelativeLayout
         android:id="@+id/left_drawer_student"
-        android:background="#A7AEAE"
+        android:background="@color/primaryColor"
+
 
         android:layout_width="300dp"
         android:layout_height="match_parent"
@@ -116,10 +126,12 @@
             android:id="@+id/student_drawer_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#A7AEAE"
+            android:background="@color/primaryColor"
             android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"/>
+
+            android:dividerHeight="1px"
+            android:divider="@drawable/divider"
+            />
 
 
     </RelativeLayout>

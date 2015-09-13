@@ -47,7 +47,7 @@
         android:id="@+id/left_drawer_tutor"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:background="#A7AEAE"
+        android:background="@color/primaryColor"
 
         android:layout_gravity="start"
         android:orientation="vertical">
@@ -109,10 +109,11 @@
             android:id="@+id/tutor_drawer_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#A7AEAE"
+            android:background="@color/primaryColor"
             android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"/>
+
+            android:dividerHeight="1px"
+            android:divider="@drawable/divider"/>
 
 
     </RelativeLayout>
