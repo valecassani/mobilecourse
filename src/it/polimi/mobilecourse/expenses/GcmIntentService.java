@@ -134,7 +134,7 @@ public class GcmIntentService extends IntentService{
 
         boolean isScreenOn = pm.isScreenOn();
 
-        Log.e("screen on", ""+isScreenOn);
+        Log.i("screen on", ""+isScreenOn);
 
         if(isScreenOn==false)
         {

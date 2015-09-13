@@ -141,5 +141,6 @@
     <string name="add_materia">+ Aggiungi materia</string>
     <string name="no_mat">Nessuna materia inserita</string>
     <string name="comment">Commento</string>
+    <string name="string_send_prenotazione">Invia prenotazione</string>
 
 </resources>

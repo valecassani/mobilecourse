@@ -1,20 +1,20 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-   >
+    android:paddingTop="@dimen/activity_vertical_margin">
+
     <TextView
         android:id="@+id/tutor_selezionato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tutor Selezionato"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:text="Tutor Selezionato" />
 
     <TextView
         android:id="@+id/data_scelta"
@@ -28,9 +28,9 @@
         android:id="@+id/ora_scelta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inserire orario"
         android:layout_alignBottom="@+id/ora_scelta_button"
-        android:layout_alignRight="@+id/durata_text" />
+        android:layout_alignRight="@+id/durata_text"
+        android:text="Inserire orario" />
 
     <TextView
         android:id="@+id/durata_text"
@@ -44,16 +44,14 @@
         android:id="@+id/ora_scelta_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ora"
+        android:layout_alignLeft="@+id/button_data"
         android:layout_below="@+id/data_scelta"
-        android:layout_alignLeft="@+id/button_data" />
+        android:text="Ora" />
 
     <Button
         android:id="@+id/button_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="254dp"
-        android:layout_y="214dp"
         android:text="Data"
         android:layout_above="@+id/ora_scelta_button"
         android:layout_alignRight="@+id/button_prenotazione" />
@@ -66,7 +64,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center_horizontal|bottom"
-        android:text="Invia prenotazione" />
+        android:text="@string/string_send_prenotazione" />
 
     <TextView
         android:id="@+id/cellulare_nuova_prenotaz"
@@ -76,8 +74,7 @@
         android:layout_alignParentLeft="true"
         android:layout_gravity="left|center_vertical"
         android:layout_marginBottom="63dp"
-        android:ems="10"
-         />
+        android:ems="10" />
 
     <Button
         android:id="@+id/button_durata"
@@ -87,16 +84,19 @@
         android:layout_below="@+id/data_scelta"
         android:layout_gravity="left|center_vertical"
         android:layout_marginTop="69dp"
-       android:text="Durata" />
+        android:text="Durata" />
 
     <Spinner
+        android:id="@+id/spinner_materie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_materie"
         android:layout_above="@id/button_data"
-        android:layout_below="@id/tutor_selezionato"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/tutor_selezionato"
         android:spinnerMode="dialog" />
 
 
 </RelativeLayout>
+
+
+
