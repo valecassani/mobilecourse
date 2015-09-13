@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ecco le materie che hai inserito:"
+        android:text="@string/mat_tutor"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
@@ -30,7 +30,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="+ Aggiungi materia"
+        android:text="@string/add_materia"
         android:id="@+id/buttonAddMateria"
         style="?android:attr/borderlessButtonStyle"
         android:background="@color/primaryColorDark"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nessuna materia inserita"
+        android:text="@string/no_mat"
         android:id="@+id/nomaterieT"
         android:visibility="invisible"
         android:layout_alignParentTop="true"
