@@ -311,6 +311,8 @@ public class UpdateImageFragment extends Fragment {
                     fileInputStream.close();
                     dos.flush();
                     dos.close();
+                    Toast.makeText(getActivity().getApplicationContext(), "Immagine caricata correttamente.", Toast.LENGTH_LONG).show();
+
                     getActivity().finish();
 
                 } catch (MalformedURLException ex) {
