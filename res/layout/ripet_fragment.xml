@@ -17,7 +17,7 @@
 
 
 
-        <ListView
+        <!--ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/list_ripetizioni"
@@ -26,7 +26,14 @@
 
 
 
-        </ListView>
+        </ListView-->
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/recyclerview_prenotazioni">
+
+        </android.support.v7.widget.RecyclerView>
 
 
 

@@ -6,11 +6,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInstaller;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -47,7 +50,10 @@ public class PrenotazioniFragment extends Fragment {
     private RequestQueue queue;
     private ArrayList<PrenotazioniItem> items;
     private Context context;
-    private ListView mListView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    //private ListView mListView;
     private String studentId;
     private String tutorId;
     private SwipeRefreshLayout mSwipeRefresh;
@@ -87,8 +93,10 @@ public class PrenotazioniFragment extends Fragment {
         });
         context = view.getContext();
         queue = Volley.newRequestQueue(context);
-        mListView = (ListView) view.findViewById(R.id.list_ripetizioni);
-        fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
+        //mListView = (ListView) view.findViewById(R.id.list_ripetizioni);
+
+
+        /*fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
         fab.attachToListView(mListView);
         if (tutorId != null)
             fab.setVisibility(View.INVISIBLE);
@@ -124,12 +132,20 @@ public class PrenotazioniFragment extends Fragment {
             }
         });
 
+        */
+
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_prenotazioni);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+
+
+
+
         progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Attendere...");
         progressDialog.setCancelable(false);
 
 
-        registerForContextMenu(mListView);
+        //registerForContextMenu(mListView);
         showElements();
 
         return view;
@@ -173,7 +189,13 @@ public class PrenotazioniFragment extends Fragment {
                                             obj.getString("cellulare"),obj.getString("num_ore"), false);
 
                                 }
-
+                                item.setStudentNome(obj.getString("student_nome"));
+                                item.setStudentCognome(obj.getString("student_cognome"));
+                                item.setTutorCognome(obj.getString("tutor_cognome"));
+                                item.setTutorNome(obj.getString("tutor_nome"));
+                                item.setTutorUrl(obj.getString("tutor_url"));
+                                item.setTutorIdfb(obj.getString("tutor_idfb"));
+                                item.setOraInizio(obj.getString("orainizio"));
                                 items.add(item);
 
 
@@ -181,8 +203,15 @@ public class PrenotazioniFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            adapter = new PrenotazioniAdapter(context,R.id.list_ripetizioni,items);
-                            mListView.setAdapter(adapter);
+
+                            SessionManager sm = new SessionManager(context);
+
+                            mAdapter = new PrenotazioniCardAdapter(items,sm.getUserDetails().get("tipo"));
+                            mRecyclerView.setAdapter(mAdapter);
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            mRecyclerView.setHasFixedSize(true);
+                            //adapter = new PrenotazioniAdapter(context,R.id.list_ripetizioni,items);
+                            //mListView.setAdapter(adapter);
                             mSwipeRefresh.setRefreshing(false);
 
                         }
