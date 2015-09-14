@@ -65,14 +65,14 @@
 
 
         <Button
-            android:layout_width="150dp"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:text="@string/accedi"
             android:textStyle="bold"
 
             android:id="@+id/butAccess"
             android:textColor="@color/white"
-            android:background="@drawable/smooth_button_app"
+            android:background="@drawable/smooth_button"
             android:layout_below="@+id/pasS"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
@@ -108,13 +108,13 @@
         android:textStyle="bold"
         android:id="@+id/regS"
         android:textColor="@color/white"
-        android:background="@drawable/smooth_button_app"
+        android:background="@drawable/smooth_button"
         android:layout_marginTop="49dp"
         android:layout_below="@+id/noreg"
         android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal" />
 
-        <!--TextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -125,7 +125,7 @@
             android:layout_above="@id/fb_login_button"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp" /-->
+            android:layout_marginTop="30dp" />
 
     </LinearLayout>
 </RelativeLayout>
