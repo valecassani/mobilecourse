@@ -69,6 +69,7 @@ public class HomeStudent extends AppCompatActivity {
     private String userId;
     private boolean doubleBackToExitPressedOnce;
     private int itemSelected;
+    TextView title;
     public static Activity activity;
 
 
@@ -114,7 +115,7 @@ public class HomeStudent extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        TextView title= (TextView)findViewById(R.id.title);
+        title= (TextView)findViewById(R.id.title);
         if (toolbar != null) {
             //SpannableString st=new SpannableString("Home");
             //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -406,7 +407,9 @@ public class HomeStudent extends AppCompatActivity {
             case 3:
                 fragment[0] = new RichiesteFragment();
                 bundle = new Bundle();
-                titleBar.setText("Richieste");
+                //titleBar.setText("LE TUE RICHIESTE");
+                title.setTextSize(18);
+                title.setText("LE TUE RICHIESTE");
                 bundle.putString("student_id", userId);
                 fragment[0].setArguments(bundle);
                 break;

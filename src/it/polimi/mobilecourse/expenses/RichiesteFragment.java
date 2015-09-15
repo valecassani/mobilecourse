@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class RichiesteFragment extends Fragment {
     private RichiesteAdapter adapter;
     private ProgressDialog progressDialog;
     private HomeStudent activity;
+    private ImageView sfondo;
 
     TextView nor;
     ProgressBar progress;
@@ -65,6 +67,7 @@ public class RichiesteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.richieste_fragment, container, false);
+        sfondo=(ImageView)view.findViewById(R.id.sfondoReq);
         items = new ArrayList<RichiestaItem>();
         queue = Volley.newRequestQueue(view.getContext());
         idStudente = getActivity().getIntent().getExtras().getString("user_id");
@@ -82,7 +85,6 @@ public class RichiesteFragment extends Fragment {
                 showResults();
             }
         });
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Le tue richieste");
 
 
         context = container.getContext();
