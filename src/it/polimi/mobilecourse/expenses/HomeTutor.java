@@ -231,6 +231,7 @@ public class HomeTutor extends AppCompatActivity {
                     bundle.putString("id", userId);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 }
 
 
