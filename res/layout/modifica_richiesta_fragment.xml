@@ -3,6 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
 
 
@@ -14,111 +15,100 @@
         android:weightSum="1">
 
         <RelativeLayout  android:layout_width="match_parent"
-            android:layout_height="643dp"
+            android:layout_height="722dp"
             >
 
-
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/titleRichiestaMR"
-                android:maxLength="35"
-                android:layout_below="@+id/progressBarMR"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="20dp" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/testoRichiestaMR"
-                android:layout_below="@+id/titleRichiestaMR"
-                android:layout_marginTop="48dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-
-
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/photo"
-                android:id="@+id/fotoTestoMR"
-                android:layout_marginTop="38dp"
-                android:layout_below="@+id/buttonPhotoMR"
-                android:layout_alignParentLeft="true" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/dataMR"
-                android:layout_below="@+id/progressBarMR"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="212dp" />
-
-            <ImageButton
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:id="@+id/fotoRichiestaMR"
-                android:adjustViewBounds="true"
-                android:visibility="invisible"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/buttonImageMR"
-                android:layout_marginTop="40dp" />
-
-
-
-
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBarMR"
-                android:visibility="gone"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonImageMR" />
-
-
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/saveedit"
-                android:id="@+id/buttonSave"
-                style="?android:attr/borderlessButtonStyle"
-                android:background="@drawable/smooth_button"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_height="600dp"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:weightSum="1"
+                android:id="@+id/linearLayout4"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="-30dp" />
+                android:layout_alignParentTop="true">
 
-
-
-            <Button
-                android:id="@+id/buttonImageMR"
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="295dp"
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
-                android:background="@drawable/smooth_button"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="@string/caricaimmagine"
-                android:layout_alignTop="@+id/buttonPhotoMR"
-                android:layout_alignRight="@+id/testoRichiestaMR"></Button>
+                float:fletPaddingLeft="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+
+                <EditText
+                    android:layout_width="276dp"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/title_32"
+                    android:inputType="text"
+                    android:hint="Titolo della richiesta"
+                    android:id="@+id/titleRichiestaMR"
+                    />
 
 
-            <Button
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                float:fletPaddingLeft="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+
+                <EditText
+                    android:layout_width="276dp"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/text_32"
+                    android:inputType="textMultiLine"
+                    android:hint="Testo della richiesta"
+                    android:id="@+id/testoRichiestaMR"
+                    />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                float:fletPaddingLeft="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+
+                <EditText
+                    android:layout_width="276dp"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="5dp"
+                    android:hint="Data"
+                    android:drawableLeft="@drawable/calendar_32"
+                    android:inputType="text"
+                    android:id="@+id/dataMR"
+                    />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+                <Button
+                    android:id="@+id/buttonImageMR"
+                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:background="@drawable/smooth_button"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:text="@string/caricaimmagine"
+                   android:layout_gravity="left"
+                    android:layout_marginBottom="-50dp"
+                    android:layout_marginTop="30dp"></Button>
+
+                <Button
                 android:id="@+id/buttonPhotoMR"
                 android:layout_height="wrap_content"
                 android:layout_width="130dp"
@@ -127,17 +117,67 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:layout_below="@+id/textView27"
-                ></Button>
+                    android:layout_gravity="right"></Button>
 
-
-            <TextView
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/or"
                 android:id="@+id/textView27"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginRight="-10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/photo"
+                    android:id="@+id/fotoTestoMR"
+                    android:layout_marginTop="38dp"
+                    android:layout_below="@+id/buttonPhotoMR"
+                    android:layout_alignParentLeft="true" />
+
+                <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/fotoRichiestaMR"
+                android:adjustViewBounds="true"
+                android:visibility="invisible"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/buttonImageMR"
+                android:layout_marginTop="40dp"
+                    android:layout_gravity="center_horizontal" />
+
+
+                <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBarMR"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonImageMR" />
+
+                <Button
+                    android:layout_width="338dp"
+                    android:layout_height="50dp"
+                    android:text="@string/saveedit"
+                    android:id="@+id/buttonSave"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/smooth_button"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_below="@+id/linearLayout4"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="27dp" />
+
+
+            </LinearLayout>
 
         </RelativeLayout>
 
