@@ -4,7 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -14,6 +18,8 @@ import java.util.ArrayList;
 public class UpdateImage extends HelpABActivity {
 
     private UpdateImageFragment uif;
+
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,9 +33,14 @@ public class UpdateImage extends HelpABActivity {
         String id=bundle.getString("id"); //id dell'utente
         String tipo=bundle.getString("tipo");
 
-        getSupportActionBar().setElevation(25);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(25);
+        getSupportActionBar().setTitle("CAMBIA IMMAGINE");
+
+
+
 
         Bundle forFrag=new Bundle();
         forFrag.putString("id",id);

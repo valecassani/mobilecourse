@@ -580,7 +580,7 @@ public class UpdateImageFragment extends Fragment {
             {
                 Uri selectedImageUri = data.getData();
                 selectedPath = getRealPathFromURI(selectedImageUri);
-                url.setText(selectedPath);
+                url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
 
 
                 System.out.println("selectedPath1 : " + selectedPath);
@@ -591,7 +591,7 @@ public class UpdateImageFragment extends Fragment {
             if(requestCode==2) {
                 System.out.println("Selected path from photo: " + path);
                 File imgFile = new  File(selectedPath);
-                url.setText(selectedPath);
+                url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
 
 
                 if(imgFile.exists()) {

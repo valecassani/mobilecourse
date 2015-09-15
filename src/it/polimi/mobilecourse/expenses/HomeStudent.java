@@ -114,11 +114,14 @@ public class HomeStudent extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        TextView title= (TextView)findViewById(R.id.title);
         if (toolbar != null) {
             //SpannableString st=new SpannableString("Home");
             //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            toolbar.setTitle("Home");
+            title.setText("HOME");
+            title.setTextSize(18);
+
             setSupportActionBar(toolbar);
         }
 
@@ -382,7 +385,7 @@ public class HomeStudent extends AppCompatActivity {
         switch (position) {
             case 0:
                 fragment[0] = new HomeStudentFragment();
-                titleBar.setText("Home Studente");
+                //titleBar.setText("Home Studente");
                 break;
             case 1:
 

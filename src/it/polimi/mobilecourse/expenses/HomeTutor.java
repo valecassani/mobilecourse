@@ -131,8 +131,10 @@ public class HomeTutor extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        TextView title= (TextView)findViewById(R.id.title);
+
         if (toolbar != null) {
-            toolbar.setTitle(R.string.app_name);
+            title.setText("HOME");
             setSupportActionBar(toolbar);
 
         }
