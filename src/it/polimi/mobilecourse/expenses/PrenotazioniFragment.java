@@ -96,8 +96,10 @@ public class PrenotazioniFragment extends Fragment {
         //mListView = (ListView) view.findViewById(R.id.list_ripetizioni);
 
 
-        /*fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
-        fab.attachToListView(mListView);
+        fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_prenotazioni);
+
+        fab.attachToRecyclerView(mRecyclerView);
         if (tutorId != null)
             fab.setVisibility(View.INVISIBLE);
         Log.i(TAG, "Button Created");
@@ -116,25 +118,8 @@ public class PrenotazioniFragment extends Fragment {
             }
         });
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startItemDetails(position);
-            }
-        });
-
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                return false;
-            }
-        });
-
-        */
-
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_prenotazioni);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
 
@@ -146,6 +131,7 @@ public class PrenotazioniFragment extends Fragment {
 
 
         //registerForContextMenu(mListView);
+        registerForContextMenu(mRecyclerView);
         showElements();
 
         return view;
@@ -340,6 +326,7 @@ public class PrenotazioniFragment extends Fragment {
 
 
     }
+
 
 
 }

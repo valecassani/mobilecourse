@@ -62,6 +62,7 @@ public class HomeStudent extends AppCompatActivity {
     private int positionRequired;
     private CircularImageView circImgView;
     private SessionManager sessionManager;
+    private TextView titleBar;
 
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
@@ -100,6 +101,7 @@ public class HomeStudent extends AppCompatActivity {
         mDrawerOptions = getResources().getStringArray(R.array.student_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         circImgView = (CircularImageView) findViewById(R.id.drawer_image);
+        titleBar = (TextView) findViewById(R.id.title);
 
         mDrawerList = (ListView) findViewById(R.id.student_drawer_list);
         mDrawerFragment = (RelativeLayout) findViewById(R.id.left_drawer_student);
@@ -380,17 +382,13 @@ public class HomeStudent extends AppCompatActivity {
         switch (position) {
             case 0:
                 fragment[0] = new HomeStudentFragment();
+                titleBar.setText("Home Studente");
                 break;
             case 1:
 
                 fragment[0] = new SearchFragment();
                 getSupportActionBar().setTitle("Ricerca per materie");
-
-
-
-
-
-
+                titleBar.setText("Cerca");
 
                 break;
             case 2:
@@ -405,19 +403,19 @@ public class HomeStudent extends AppCompatActivity {
             case 3:
                 fragment[0] = new RichiesteFragment();
                 bundle = new Bundle();
+                titleBar.setText("Richieste");
                 bundle.putString("student_id", userId);
                 fragment[0].setArguments(bundle);
                 break;
             case 4:
                 bundle = new Bundle();
                 bundle.putString("student_id", userId);
-
+                titleBar.setText("Prenotazione");
                 fragment[0] = new PrenotazioniFragment();
                 fragment[0].setArguments(bundle);
                 break;
             case 5:
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
                 builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
 
                 builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {

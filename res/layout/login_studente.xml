@@ -7,9 +7,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
 
-    android:background="@color/white"
+
     android:weightSum="1">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+
+        android:layout_height="56dp"
+        android:layout_width="match_parent"
+
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        style="@style/Widget.MyApp.ActionBar"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+
+            />
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

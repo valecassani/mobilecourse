@@ -65,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_conferma_prenotazione"
-        android:text="Conferma Prenotazione"
+        android:text="@string/prenotazione_conferma"
+        android:textColor="#FFFFFF"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         style="?android:attr/borderlessButtonStyle"
@@ -95,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_data"
-        android:text="Data"
+        android:text="@string/string_data"
         android:layout_alignTop="@+id/data_scelta"
         android:layout_alignLeft="@+id/prenot_tutor_name" />
 
@@ -106,7 +107,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
-        android:text="Aggiorna Prenotazione"
+        android:text="@string/aggiorna_prenotazione"
+        android:textColor="#FFFFFF"
         style="?android:attr/borderlessButtonStyle"
         android:background="@color/primaryColorDark"
         android:layout_above="@id/button_conferma_prenotazione"/>

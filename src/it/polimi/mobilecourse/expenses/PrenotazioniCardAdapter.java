@@ -34,7 +34,7 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
     private String tipoUtente;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+            implements View.OnClickListener, View.OnLongClickListener{
 
         TextView nome;
         TextView materia;
@@ -71,6 +71,12 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
             context.startActivity(intent);
 
 
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+
+            return false;
         }
     }
 
@@ -140,6 +146,8 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
         } else {
             holder.materia.setTextColor(Color.BLUE);
         }
+
+
 
 
 

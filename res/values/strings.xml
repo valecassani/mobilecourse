@@ -148,5 +148,9 @@
     <string name="newpsw">Nuova password</string>
     <string name="newpsw2">Ripeti Password</string>
     <string name="conferma">Conferma</string>
+    <string name="old_password">Vecchia Password</string>
+    <string name="string_data">Data</string>
+    <string name="aggiorna_prenotazione">Aggiorna Prenotazione</string>
+    <string name="prenotazione_conferma">Conferma Prenotazione</string>
 
 </resources>

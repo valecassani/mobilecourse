@@ -14,72 +14,72 @@
 
         android:weightSum="1">
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <android.support.v4.widget.SwipeRefreshLayout
-
-        android:id="@+id/swipe_richieste"
-        android:layout_width="match_parent"
-        android:layout_height="512dp"
-        android:orientation="vertical">
-
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="605dp"
-        >
-
-        <ListView
-            android:id="@+id/richieste_list"
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="489dp"
-            android:layout_gravity="center_horizontal|top"></ListView>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_req"
-            android:id="@+id/buttonAddRequest"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/primaryColorDark"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_below="@+id/richieste_list"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="49dp" />
+            <android.support.v4.widget.SwipeRefreshLayout
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/no_req"
-            android:id="@+id/norequest"
-            android:visibility="invisible"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="137dp" />
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressRichieste"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_alignTop="@+id/norequest"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
+                android:id="@+id/swipe_richieste"
+                android:layout_width="match_parent"
+                android:layout_height="512dp"
+                android:orientation="vertical">
 
 
-</FrameLayout>
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="605dp"
+                >
+
+                <ListView
+                    android:id="@+id/richieste_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="489dp"
+                    android:layout_gravity="center_horizontal|top"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_req"
+                    android:id="@+id/buttonAddRequest"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textColor="#FFFFFF"
+                    android:background="@color/primaryColorDark"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_below="@+id/richieste_list"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="49dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/no_req"
+                    android:id="@+id/norequest"
+                    android:visibility="invisible"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="137dp" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressRichieste"
+                    android:visibility="gone"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_alignTop="@+id/norequest"
+                    android:layout_centerHorizontal="true" />
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
     </LinearLayout>
 
 
