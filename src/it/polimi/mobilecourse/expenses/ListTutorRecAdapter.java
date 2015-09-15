@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -95,6 +97,8 @@ public class ListTutorRecAdapter extends RecyclerView.Adapter<ListTutorRecAdapte
         holder.uni.setText(items.get(position).getUni());
         if (items.get(position).getMedia() != 0) {
             holder.media.setRating(items.get(position).getMedia());
+            LayerDrawable stars = (LayerDrawable)holder.media.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_ATOP);
         } else {
             holder.media.setVisibility(View.GONE);
         }

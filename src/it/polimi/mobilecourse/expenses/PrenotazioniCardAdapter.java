@@ -141,10 +141,10 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
         holder.data.setText(Functions.convertiData(items.get(position).getData()));
         holder.ora.setText(items.get(position).getOraInizio());
         if (items.get(position).isConfermato()) {
-            holder.materia.setTextColor(context.getResources().getColor(R.color.green_prenotazione));
+            holder.materia.setTextColor(context.getResources().getColor(R.color.primaryColor));
 
         } else {
-            holder.materia.setTextColor(Color.BLUE);
+            holder.materia.setTextColor(Color.RED);
         }
 
 

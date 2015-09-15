@@ -38,7 +38,7 @@
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
-    <com.melnykov.fab.FloatingActionButton
+    <!--com.melnykov.fab.FloatingActionButton
         android:id="@+id/buttonFloat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:layout_marginRight="24dp"
         android:background="#1E88E5"
         materialdesign:animate="true"
-        materialdesign:iconDrawable="@drawable/ic_plus" />
+        materialdesign:iconDrawable="@drawable/ic_plus" /-->
 
 
 </FrameLayout>

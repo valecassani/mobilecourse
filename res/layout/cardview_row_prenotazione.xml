@@ -1,8 +1,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/tools"
-    card_view:cardCornerRadius="2dp"
-    card_view:contentPadding="10dp"
+    card_view:cardCornerRadius="10dp"
     android:id="@+id/card_view"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -12,7 +11,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#d8d8d8">
 
         <com.pkmmte.view.CircularImageView
             android:id="@+id/prenot_tutor_image"

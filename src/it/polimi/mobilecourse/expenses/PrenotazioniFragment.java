@@ -96,9 +96,9 @@ public class PrenotazioniFragment extends Fragment {
         //mListView = (ListView) view.findViewById(R.id.list_ripetizioni);
 
 
-        fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
+        //fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_prenotazioni);
-
+        /*
         fab.attachToRecyclerView(mRecyclerView);
         if (tutorId != null)
             fab.setVisibility(View.INVISIBLE);
@@ -117,6 +117,8 @@ public class PrenotazioniFragment extends Fragment {
 
             }
         });
+
+        */
 
 
 

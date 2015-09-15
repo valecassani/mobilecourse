@@ -70,8 +70,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-    private Location loc1;
-    private Location loc2;
+
     private LocationRequest mLocationRequest;
     private TextView tutorNome;
     private TextView nomat;

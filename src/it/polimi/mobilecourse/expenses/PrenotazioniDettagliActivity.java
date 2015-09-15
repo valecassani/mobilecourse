@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,10 +22,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by Matteo on 04/09/2015.
@@ -32,9 +46,11 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
     private Context context;
     private ProgressBar progress;
-
+    private String indirizzo;
     private TabHost th;
-
+    private float realdist;
+    private TextView distance;
+    private MapFragment mapFragment;
     private PrenotazioneItemDetailsFragment pid = new PrenotazioneItemDetailsFragment();
 
 
@@ -97,6 +113,10 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
         populateData();
 
+        mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+
+
 
 
 
@@ -121,7 +141,46 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
                             pid.populateData(obj);
                             FragmentManager fragmentManager = getFragmentManager();
                             fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.fragreplace, pid).commit();
+                            indirizzo = obj.getString("indirizzo");
+                            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                                                        @Override
+                                                        public void onMapReady(GoogleMap map) {
 
+                                                            //i due numeri sono lat e long ricavabili dal metodo getLocationFromAddress che trovi sotto
+
+
+                                                            //calcolo distanza in km. puoi servirmi per la ricerca
+
+
+
+
+                                                            LatLng ltlg = getLocationFromAddress(indirizzo);
+                                                            System.out.println("Latitudine:" + ltlg.latitude);
+                                                            System.out.println("Longitudine:" + ltlg.longitude);
+
+                                                            Marker casaTutor = map.addMarker(new MarkerOptions().position(ltlg)
+                                                                    .title("Nome Tutor"));
+
+
+
+                                                            TextView distanza = (TextView)findViewById(R.id.distanza_text);
+
+                                                            distanza.setText("Distanza");
+
+
+
+
+
+                                                            // Move the camera instantly to hamburg with a zoom of 15.
+                                                            map.moveCamera(CameraUpdateFactory.newLatLng(ltlg));
+
+
+                                                            // Zoom in, animating the camera.
+                                                            map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+                                                        }
+                                                    }
+
+                            );
 
 
 
@@ -184,6 +243,58 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public LatLng getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
+    }
+
+
+    private void calcolaDistanza() {
+
+
+        Location loc1 = new Location("A");
+        LatLng firstpoint = getLocationFromAddress(null);
+        loc1.setLatitude(firstpoint.latitude);
+        loc1.setLongitude(firstpoint.longitude);
+        System.out.println(firstpoint.latitude);
+        System.out.println(firstpoint.longitude);
+
+        Location loc2 = new Location("B");
+
+        LatLng secondpoint = getLocationFromAddress(null);
+        loc2.setLatitude(secondpoint.latitude);
+        loc2.setLongitude(secondpoint.longitude);
+
+        System.out.println(secondpoint.latitude);
+        System.out.println(secondpoint.longitude);
+
+        realdist = loc1.distanceTo(loc2);
+
+
+        distance.setText(String.format("%.1f", realdist / 1000) + " Km");
+
+
+    }
 
 
 
