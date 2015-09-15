@@ -39,26 +39,27 @@
                 <ListView
                     android:id="@+id/richieste_list"
                     android:layout_width="match_parent"
-                    android:layout_height="489dp"
+                    android:layout_height="485dp"
                     android:layout_gravity="center_horizontal|top"
-                    android:layout_alignBottom="@+id/sfondoReq" />
+                    android:layout_above="@+id/buttonAddRequest" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_req"
                     android:id="@+id/buttonAddRequest"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:textColor="@color/white"
                     android:background="@drawable/smooth_button"
                     android:textStyle="bold"
                     style="?android:attr/borderlessButtonStyle"
 
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_below="@+id/richieste_list"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="139dp" />
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,7 +80,8 @@
 
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:id="@+id/sfondoReq" />
+                    android:id="@+id/sfondoReq"
+                    android:layout_marginBottom="30dp" />
 
                 <ProgressBar
                     android:layout_width="wrap_content"

@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -137,8 +139,13 @@ public class ModificaRichiestaFragment extends Fragment {
 
         queue= Volley.newRequestQueue(view.getContext());
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("La tua richiesta");
+
+        TextView title=activity.getTitleToolbar();
+        title.setTextSize(18);
+        title.setText("MODIFICA RICHIESTA");
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("La tua richiesta");
 
 
         Bundle bundle=this.getArguments();

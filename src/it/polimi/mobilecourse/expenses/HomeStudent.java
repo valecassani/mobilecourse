@@ -69,7 +69,7 @@ public class HomeStudent extends AppCompatActivity {
     private String userId;
     private boolean doubleBackToExitPressedOnce;
     private int itemSelected;
-    TextView title;
+    private TextView title;
     public static Activity activity;
 
 
@@ -545,6 +545,10 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
+
+    public TextView getTitleToolbar(){
+        return title;
+    }
 
 
 
