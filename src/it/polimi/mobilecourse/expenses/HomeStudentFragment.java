@@ -172,6 +172,10 @@ public class HomeStudentFragment extends Fragment {
                             mRecyclerView.setLayoutManager(mLayoutManager);
                             mRecyclerView.setHasFixedSize(true);
 
+                            if(0==0) {
+
+                            }
+
 
 
 

@@ -68,7 +68,7 @@ public class PrenotazioniAdapter extends ArrayAdapter<PrenotazioniItem>{
 
         if (items.get(position).isConfermato()) {
             title.setTypeface(Typeface.DEFAULT_BOLD);
-            title.setTextColor(Color.GREEN);
+            title.setTextColor(context.getResources().getColor(R.color.green_prenotazione));
         } else {
             title.setTypeface(Typeface.DEFAULT_BOLD);
             title.setTextColor(Color.BLUE);

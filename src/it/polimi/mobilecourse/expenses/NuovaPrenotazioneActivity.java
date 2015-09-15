@@ -107,8 +107,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
         getMaterieForTutor();
 
         prezzoOrario = data.getString("prezzo");
-        Log.d(TAG,"prezzo arrivato: " + prezzoOrario);
-        Log.d(TAG, "Materia arrivata: " + materia);
+
         Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
         String nomeTutor = data.getString("nome");
         String cognomeTutor = data.getString("cognome");

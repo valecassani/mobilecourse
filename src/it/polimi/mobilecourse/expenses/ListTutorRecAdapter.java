@@ -54,9 +54,6 @@ public class ListTutorRecAdapter extends RecyclerView.Adapter<ListTutorRecAdapte
 
         @Override
         public void onClick(View v) {
-
-            Toast.makeText(context,"Item clicked",Toast.LENGTH_SHORT).show();
-
             FragmentManager fragmentManager = ((Activity)context).getFragmentManager();
             int itemPosition = getAdapterPosition();
 
