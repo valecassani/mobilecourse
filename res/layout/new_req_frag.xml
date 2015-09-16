@@ -17,7 +17,7 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="601dp"
+    android:layout_height="621dp"
 
 
   >
@@ -122,7 +122,8 @@
             android:layout_alignBottom="@+id/buttonImage"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-30dp" />
+            android:layout_marginTop="-30dp"
+            android:layout_marginRight="5dp" />
 
         <Button
         android:id="@+id/buttonPhoto"
@@ -172,6 +173,22 @@
         android:id="@+id/url" />
 
 
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/error_64"
+            android:id="@+id/noimgimg"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nessuna immagine selezionata"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/noimg"/>
+
         <Button
         android:id="@+id/buttonSendRich"
         android:layout_width="match_parent"
@@ -180,21 +197,20 @@
         android:background="@drawable/smooth_button"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:layout_marginTop="142dp"
+        android:layout_marginTop="62dp"
         android:layout_below="@+id/imgselected"
             android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
 
-
-    <ProgressBar
+        <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBarNewR"
-        android:visibility="gone"
+            android:visibility="gone"
         style="?android:attr/progressBarStyleLarge"
         android:layout_gravity="center_horizontal"
-        />
+            android:layout_marginTop="-300dp" />
 
     </LinearLayout>
 

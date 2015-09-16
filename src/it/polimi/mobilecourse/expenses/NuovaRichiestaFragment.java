@@ -44,6 +44,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 
+import org.w3c.dom.Text;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -95,6 +97,8 @@ public class NuovaRichiestaFragment extends Fragment{
     private ImageView checkimg;
     private TextView imgsel;
     private TextView url;
+    private TextView noimg;
+    private ImageView noimgimg;
     private Animator mCurrentAnimator;
     private EditText textTitolo;
 
@@ -124,6 +128,8 @@ public class NuovaRichiestaFragment extends Fragment{
 
         textTitolo = (EditText)view.findViewById(R.id.titoloRichiesta);
 
+        noimg=(TextView)view.findViewById(R.id.noimg);
+        noimgimg=(ImageView)view.findViewById(R.id.noimgimg);
         mTesto = (EditText)view.findViewById(R.id.testoRichiesta);
         mDataEntro = (EditText)view.findViewById(R.id.dataEntro);
         progress=(ProgressBar)view.findViewById(R.id.progressBarNewR);
@@ -552,11 +558,13 @@ private class UploadFile extends AsyncTask<String,Void,Integer> {
 
                     //imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     //imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
-                    checkimg.setVisibility(View.VISIBLE);
-                    imgsel.setVisibility(View.VISIBLE);
+                    //checkimg.setVisibility(View.VISIBLE);
+                    //imgsel.setVisibility(View.VISIBLE);
+                    noimgimg.setImageResource(R.drawable.ok_64);
+                    noimg.setText(selectedPath.substring(selectedPath.lastIndexOf("/") + 1, selectedPath.length()));
 
-                    url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
-                    url.setVisibility(View.VISIBLE);
+                    //url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
+                    //url.setVisibility(View.VISIBLE);
 
                     exist=true;
                 }
@@ -576,10 +584,12 @@ private class UploadFile extends AsyncTask<String,Void,Integer> {
                     bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     //imgView = (ImageView) view.findViewById(R.id.anteprima_immagine);
                     //imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
-                    checkimg.setVisibility(View.VISIBLE);
-                    imgsel.setVisibility(View.VISIBLE);
-                    url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
-                    url.setVisibility(View.VISIBLE);
+                    //checkimg.setVisibility(View.VISIBLE);
+                    //imgsel.setVisibility(View.VISIBLE);
+                    noimgimg.setImageResource(R.drawable.ok_64);
+                    noimg.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
+                    //url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
+                    //url.setVisibility(View.VISIBLE);
 
                     exist=true;
                 }
