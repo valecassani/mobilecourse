@@ -417,6 +417,8 @@ public class ModificaRichiestaFragment extends Fragment {
         String new_Date= c.get(Calendar.DAY_OF_MONTH)+"-"+((c.get(Calendar.MONTH))+1)   +"-"+c.get(Calendar.YEAR) +" " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE)+ "-"+ c.get(Calendar.SECOND);
         selectedPath=String.format(Environment.getExternalStorageDirectory() +"/%s.jpg","Tutored" +new_Date);
         File photo = new File(selectedPath);
+        nameFile=photo.getName();
+
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
         startActivityForResult(intent, 2);
 
