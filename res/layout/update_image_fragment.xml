@@ -85,11 +85,13 @@
                 android:layout_alignRight="@+id/uplB" />
 
             <Button
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="@string/takephoto"
                 android:background="@drawable/smooth_button"
                 android:textColor="@color/white"
+                android:drawableLeft="@drawable/camera_24"
+                android:paddingLeft="5dp"
                 android:textStyle="bold"
                 android:id="@+id/photoButton"
                 android:layout_below="@+id/textView16"

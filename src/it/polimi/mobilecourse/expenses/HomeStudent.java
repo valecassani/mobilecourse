@@ -115,13 +115,12 @@ public class HomeStudent extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        title= (TextView)findViewById(R.id.title);
         if (toolbar != null) {
             //SpannableString st=new SpannableString("Home");
             //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            title.setText("HOME");
-            title.setTextSize(18);
+            titleBar.setTextSize(18);
+            titleBar.setText("HOME");
 
             setSupportActionBar(toolbar);
         }
@@ -174,7 +173,8 @@ public class HomeStudent extends AppCompatActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setTitle("HOME");
+
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -386,7 +386,8 @@ public class HomeStudent extends AppCompatActivity {
         switch (position) {
             case 0:
                 fragment[0] = new HomeStudentFragment();
-                //titleBar.setText("Home Studente");
+                titleBar.setText("HOME");
+                titleBar.setTextSize(18);
                 break;
             case 1:
 
@@ -401,8 +402,8 @@ public class HomeStudent extends AppCompatActivity {
                 bundle.putString("id",userId);
 
                 Intent intent = new Intent(this,UpdateInfo.class);
-                title.setTextSize(18);
-                title.setText("PROFILO");
+                titleBar.setTextSize(18);
+                titleBar.setText("PROFILO");
                 intent.putExtras(bundle);
                 startActivity(intent);
                 fragment[0] = null;
@@ -411,8 +412,8 @@ public class HomeStudent extends AppCompatActivity {
                 fragment[0] = new RichiesteFragment();
                 bundle = new Bundle();
                 //titleBar.setText("LE TUE RICHIESTE");
-                title.setTextSize(18);
-                title.setText("LE TUE RICHIESTE");
+                titleBar.setTextSize(18);
+                titleBar.setText("LE TUE RICHIESTE");
                 bundle.putString("student_id", userId);
                 fragment[0].setArguments(bundle);
                 break;
@@ -546,7 +547,7 @@ public class HomeStudent extends AppCompatActivity {
 
 
     public TextView getTitleToolbar(){
-        return title;
+        return titleBar;
     }
 
 

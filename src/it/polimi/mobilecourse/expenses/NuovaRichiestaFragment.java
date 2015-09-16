@@ -111,6 +111,10 @@ public class NuovaRichiestaFragment extends Fragment{
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nuova richiesta");
 
+        TextView title=activity.getTitleToolbar();
+
+        title.setText("NUOVA RICHIESTA");
+        title.setTextSize(18);
 
         context=activity.getApplicationContext();
         queue= Volley.newRequestQueue(view.getContext());
@@ -551,7 +555,7 @@ private class UploadFile extends AsyncTask<String,Void,Integer> {
                     checkimg.setVisibility(View.VISIBLE);
                     imgsel.setVisibility(View.VISIBLE);
 
-                    url.setText(selectedPath);
+                    url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
                     url.setVisibility(View.VISIBLE);
 
                     exist=true;
@@ -574,7 +578,7 @@ private class UploadFile extends AsyncTask<String,Void,Integer> {
                     //imgView.setImageBitmap(Bitmap.createBitmap(bitmap));
                     checkimg.setVisibility(View.VISIBLE);
                     imgsel.setVisibility(View.VISIBLE);
-                    url.setText(selectedPath);
+                    url.setText(selectedPath.substring(selectedPath.lastIndexOf("/")+1,selectedPath.length()));
                     url.setVisibility(View.VISIBLE);
 
                     exist=true;
