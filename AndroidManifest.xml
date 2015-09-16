@@ -168,7 +168,8 @@
             android:theme="@style/PageTheme">
         </activity>
         <activity android:name=".UpdateInfo"
-            android:theme="@style/PageTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ImpostazLezioniTutor"
             android:theme="@style/PageTheme"></activity>

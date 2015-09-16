@@ -399,7 +399,10 @@ public class HomeStudent extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("tipo","0");
                 bundle.putString("id",userId);
+
                 Intent intent = new Intent(this,UpdateInfo.class);
+                title.setTextSize(18);
+                title.setText("PROFILO");
                 intent.putExtras(bundle);
                 startActivity(intent);
                 fragment[0] = null;
