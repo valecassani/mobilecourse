@@ -33,11 +33,31 @@ public class UpdateImage extends HelpABActivity {
         String id=bundle.getString("id"); //id dell'utente
         String tipo=bundle.getString("tipo");
 
+        //toolbar da aggiungere
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        if (toolbar != null) {
+            //SpannableString st=new SpannableString("Home");
+            //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            TextView title = (TextView)findViewById(R.id.title);
+            title.setText("CAMBIA IMMAGINE");
+            title.setTextSize(18);
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(25);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primaryColorDark));
+
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setElevation(25);
-        getSupportActionBar().setTitle("CAMBIA IMMAGINE");
 
 
 

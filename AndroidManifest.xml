@@ -162,7 +162,7 @@
             android:theme="@style/PageTheme" >
         </activity>
         <activity android:name=".UpdateImage"
-            android:theme="@style/PageTheme">
+            android:theme="@style/AppTheme">
         </activity>
         <activity android:name=".UpdatePassword"
             android:theme="@style/PageTheme">
