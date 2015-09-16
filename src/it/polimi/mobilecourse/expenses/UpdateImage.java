@@ -24,7 +24,7 @@ public class UpdateImage extends HelpABActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_info);
+        setContentView(R.layout.update_image);
 
         uif= new UpdateImageFragment();
         //arriva un bundle dall'activity chiamante con un campo tipo (0/1 -> 0 studente 1 tutor)e un campo id
