@@ -76,7 +76,7 @@ public class HomeTutor extends AppCompatActivity {
     private int positionRequired;
     private SessionManager sessionManager;
     private CircularImageView circImgView;
-
+    TextView title;
     private ArrayList<NavDrawerItem> mDrawerItems;
     private NavDrawerListAdapter mNavDrawerAdapter;
     private String userId;
@@ -131,7 +131,7 @@ public class HomeTutor extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        TextView title= (TextView)findViewById(R.id.title);
+         title= (TextView)findViewById(R.id.title);
 
         if (toolbar != null) {
             title.setText("HOME");
@@ -361,6 +361,8 @@ public class HomeTutor extends AppCompatActivity {
                 bundle.putString("tipo","1");
                 bundle.putString("id",userId);
                 Intent intent = new Intent(this,UpdateInfo.class);
+                title.setTextSize(18);
+                title.setText("PROFILO");
                 intent.putExtras(bundle);
                 startActivity(intent);
                 fragment = null;
