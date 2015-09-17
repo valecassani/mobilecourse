@@ -551,6 +551,11 @@ public class HomeStudent extends AppCompatActivity {
         return titleBar;
     }
 
+    public void onResume() {
+        super.onResume();
+        loadUserInfos();
 
+
+    }
 
 }
