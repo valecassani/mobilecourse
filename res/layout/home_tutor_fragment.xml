@@ -5,14 +5,15 @@
 
 
     <!-- A CardView that contains a TextView -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/elencoreq"
+    <Button
+        android:layout_width="310dp"
+        android:layout_height="30dp"
+        android:text="@string/tutor_home_string"
+        android:background="#585858"
+        android:textColor="@color/white"
+        android:id="@+id/phr"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:id="@+id/phr"/>
+        android:layout_centerHorizontal="true" />
 
 
 

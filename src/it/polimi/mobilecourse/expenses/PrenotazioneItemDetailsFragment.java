@@ -34,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -68,6 +69,8 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
     private String idTutor;
     private String note;
     private String confermato;
+    private String tutor;
+    private String studente;
 
     private String date;
     private String time;
@@ -116,9 +119,19 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
             buttonAggiorna.setVisibility(View.INVISIBLE);
 
 
+
         } else {
             editTextCellulare.setVisibility(View.INVISIBLE);
         }
+
+        TextView mTutorText = (TextView) view.findViewById(R.id.tutor_selezionato);
+        mTutorText.setText("Tutor: " + tutor);
+
+        TextView mStudentText = (TextView) view.findViewById(R.id.studente_selezionato);
+        mStudentText.setText("Studente: " + studente);
+
+        TextView materiaText = (TextView) view.findViewById(R.id.materia_prenotazione);
+        materiaText.setText(materia);
 
 
 
@@ -454,6 +467,8 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         idTutor = obj.getString("id_tutor");
         confermato = obj.getString("confermato");
         idPrenotazione = obj.getString("id");
+        tutor = obj.getString("nome_tutor") + " " + obj.getString("cognome_tutor");
+        studente = obj.getString("nome_studente") + " " + obj.getString("cognome_studente");
 
 
         note = obj.getString("note");

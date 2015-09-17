@@ -89,8 +89,7 @@
                         android:layout_alignTop="@+id/norequest"
                         android:layout_centerHorizontal="true" />
 
-                    android:src="@drawable/advertising_32"
-                    android:alpha="0.3"
+
                 </RelativeLayout>
 
 
