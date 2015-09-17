@@ -4,47 +4,48 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
 
 
     android:weightSum="1">
 
-<android.support.v7.widget.Toolbar
-    android:id="@+id/my_awesome_toolbar"
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_height="56dp"
-    android:layout_width="match_parent"
+        android:id="@+id/my_awesome_toolbar"
+        style="@style/Widget.MyApp.ActionBar"
 
-    android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    style="@style/Widget.MyApp.ActionBar"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView
-        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="@color/white"
+        android:layout_height="56dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
 
-        />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
 
-</android.support.v7.widget.Toolbar>
+            />
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    </android.support.v7.widget.Toolbar>
 
-    >
-
-    <LinearLayout android:layout_width="match_parent"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/fragreplace"
-       />
+        android:orientation="vertical"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/fragreplace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

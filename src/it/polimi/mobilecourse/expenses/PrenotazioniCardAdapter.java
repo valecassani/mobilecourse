@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,16 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -34,7 +43,7 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
     private String tipoUtente;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener{
+            implements View.OnClickListener{
 
         TextView nome;
         TextView materia;
@@ -51,7 +60,6 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
             data = (TextView) itemView.findViewById(R.id.prenot_data);
             ora = (TextView) itemView.findViewById(R.id.prenot_ora);
             imageTutor = (CircularImageView) itemView.findViewById(R.id.prenot_tutor_image);
-
 
             itemView.setOnClickListener(this);
             Log.i(TAG, "Image view set");
@@ -73,11 +81,9 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
 
         }
 
-        @Override
-        public boolean onLongClick(View v) {
 
-            return false;
-        }
+
+
     }
 
     public PrenotazioniCardAdapter(ArrayList<PrenotazioniItem> myDataset,String tipoUtente) {
@@ -150,6 +156,62 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
 
 
 
+
+
+    }
+
+    public void startItemDetails(int position) {
+        Intent intent = new Intent(context, PrenotazioniDettagliActivity.class);
+        Bundle bundle = new Bundle();
+        PrenotazioniItem item =  items.get(position);
+        bundle.putString("id", item.getId());
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+
+    }
+
+    public void removeItem(final int position) {
+
+        PrenotazioniItem item = items.get(position);
+        Log.d(TAG,"ID to be deleted " + item.getId());
+        String delete_url = "http://www.unishare.it/tutored/delete_prenotazione.php?id="
+                + item.getId();
+        RequestQueue queue1 = Volley.newRequestQueue(context);
+        JsonObjectRequest delete_request = new JsonObjectRequest(delete_url,
+                null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public boolean onResponse(JSONObject response) {
+
+                try {
+                    int success = response.getInt("success");
+
+                    if (success == 1) {
+                        Toast.makeText(context,
+                                "Deleted Successfully",
+                                Toast.LENGTH_SHORT).show();
+                        notifyItemRemoved(position);
+
+                    } else {
+                        Toast.makeText(context,
+                                "failed to delete", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                return false;
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Errore di connessione",Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue1.add(delete_request);
 
 
     }

@@ -5,6 +5,7 @@ package it.polimi.mobilecourse.expenses;
  */
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -97,6 +98,8 @@ public class GcmIntentService extends IntentService{
                 myintent.putExtra("id", receivedIntent.getStringExtra("id_prenotazione"));
                 contentIntent = PendingIntent.getActivity(this, 0,
                         myintent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
 
             } else {
                 if (type.equals("richiesta")) {

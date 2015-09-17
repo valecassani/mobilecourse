@@ -43,6 +43,9 @@ public class PrenotazioniItem {
     private String studentNome;
     private String studentCognome;
 
+    private String studentUrl;
+    private String studentIdfb;
+
     public String getStudentUrl() {
         return studentUrl;
     }
@@ -59,8 +62,7 @@ public class PrenotazioniItem {
         this.studentIdfb = studentIdfb;
     }
 
-    private String studentUrl;
-    private String studentIdfb;
+
 
     public String getOraInizio() {
         return oraInizio;

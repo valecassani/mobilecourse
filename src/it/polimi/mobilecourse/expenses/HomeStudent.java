@@ -393,7 +393,7 @@ public class HomeStudent extends AppCompatActivity {
 
                 fragment[0] = new SearchFragment();
                 getSupportActionBar().setTitle("Ricerca per materie");
-                titleBar.setText("Cerca");
+                titleBar.setText("CERCA");
 
                 break;
             case 2:
@@ -418,9 +418,10 @@ public class HomeStudent extends AppCompatActivity {
                 fragment[0].setArguments(bundle);
                 break;
             case 4:
+
+                titleBar.setText("LE TUE PRENOTAZIONI");
                 bundle = new Bundle();
                 bundle.putString("student_id", userId);
-                titleBar.setText("Prenotazione");
                 fragment[0] = new PrenotazioniFragment();
                 fragment[0].setArguments(bundle);
                 break;

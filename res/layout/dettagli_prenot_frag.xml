@@ -14,52 +14,72 @@
         android:id="@+id/tutor_selezionato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:id="@+id/data_scelta"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-
-        android:layout_width="200dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="89dp"
-        android:layout_below="@+id/prenot_tutor_name" />
-
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-
-        android:id="@+id/ora_scelta"
-        android:layout_alignBottom="@id/ora_scelta_button"
-        android:layout_alignRight="@+id/imagePrenotTutor" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@id/ora_scelta_button"
-        android:layout_above="@+id/cellulare_nuova_prenotaz"
-        android:layout_alignLeft="@+id/button_data" />
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/button_materia"
-        android:layout_alignTop="@+id/prenot_tutor_name"
+        android:layout_margin="5dp"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
-    <TextView
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/cellulare_prenotaz"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:numColumns="2"
+
+        android:layout_alignParentTop="true"
+        android:layout_below="@id/tutor_selezionato">
+        <TextView
+            android:id="@+id/data_scelta"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_below="@+id/prenot_tutor_name" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_data"
+            android:text="@string/string_data"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:layout_alignTop="@+id/data_scelta"
+            android:layout_alignLeft="@+id/prenot_tutor_name" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_column="0"
+            android:layout_row="1"
+
+            android:id="@+id/ora_scelta"
+            android:layout_alignBottom="@id/ora_scelta_button"
+            android:layout_alignRight="@+id/imagePrenotTutor" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/ora_scelta_button"
+            android:layout_alignLeft="@+id/button_data"
+            android:layout_column="1"
+            android:layout_row="1"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/cellulare_prenotaz"
+            android:layout_column="0"
+            android:layout_row="3"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+
+    </GridLayout>
+
 
     <Button
         android:layout_width="match_parent"
@@ -77,33 +97,24 @@
 
 
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/imagePrenotTutor"
-        android:layout_above="@+id/data_scelta"
-        android:layout_alignLeft="@+id/tutor_selezionato" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/prenot_tutor_name"
-        android:layout_alignTop="@+id/tutor_selezionato"
-        android:layout_alignParentRight="true" />
 
-    <Button
-        android:layout_width="wrap_content"
+
+
+    <TextView android:id="@+id/stato_prenotazione"
         android:layout_height="wrap_content"
-        android:id="@+id/button_data"
-        android:text="@string/string_data"
-        android:layout_alignTop="@+id/data_scelta"
-        android:layout_alignLeft="@+id/prenot_tutor_name" />
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/button_aggiorna_prenotazione"
+        />
+
+
+
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_aggiorna_prenotazione"
+        android:id="@id/button_aggiorna_prenotazione"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"

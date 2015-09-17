@@ -1,245 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:float="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
-    <LinearLayout android:orientation="vertical"
-        android:layout_height="999dp"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        android:weightSum="1">
-
-
-
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="999dp"
-            >
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:weightSum="1">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="999dp"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:weightSum="1"
-                android:id="@+id/linearLayout4"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true">
-
-                <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                    android:layout_width="165dp"
-                    android:layout_height="wrap_content"
-                    float:fletPaddingLeft="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp">
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                float:fletPaddingLeft="10dp">
 
 
-                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-                <EditText
-                    android:layout_width="165dp"
-                    android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/nameS"
+                android:layout_width="165dp"
 
-                    android:drawablePadding="5dp"
-                    android:inputType="text"
-                    android:hint="Nome"
-                    android:id="@+id/nameS"
-                    />
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:hint="Nome"
+                android:inputType="text" />
 
-                <EditText
-                    android:layout_width="165dp"
-                    android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/surnameS"
+                android:layout_width="165dp"
 
-                    android:drawablePadding="5dp"
-                    android:inputType="text"
-                    android:hint="Cognome"
-                    android:id="@+id/surnameS"
-                    android:layout_marginLeft="190dp"
-                    android:layout_marginTop="-43dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="-43dp"
+                android:drawablePadding="5dp"
+                android:hint="Cognome"
+                android:inputType="text" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/user_48"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp">
-
-
-                </ImageView>
-
-                <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    float:fletPaddingLeft="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp">
-
-                    <EditText
-                        android:layout_width="276dp"
-                        android:layout_height="wrap_content"
-
-                        android:drawablePadding="5dp"
-                        android:inputType="number"
-                        android:hint="Età"
-                        android:id="@+id/etaS"
-                        />
-
-
-                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-
-                <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                    android:layout_width="295dp"
-                    android:layout_height="wrap_content"
-                    float:fletPaddingLeft="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp">
-
-                    <EditText
-                        android:layout_width="276dp"
-                        android:layout_height="wrap_content"
-
-                        android:drawablePadding="5dp"
-                        android:drawableLeft="@drawable/map_marker_32"
-                        android:inputType="text"
-                        android:hint="Indirizzo"
-                        android:id="@+id/addressS"
-                        />
-
-
-                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-
-
-                <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                    android:layout_width="295dp"
-                    android:layout_height="wrap_content"
-                    float:fletPaddingLeft="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp">
-
-                    <EditText
-                        android:layout_width="276dp"
-                        android:layout_height="wrap_content"
-
-                        android:drawablePadding="5dp"
-                        android:drawableLeft="@drawable/mobile_32"
-                        android:inputType="phone"
-                        android:hint="Cellulare"
-                        android:id="@+id/cellS"
-                        />
-
-
-                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/school_48"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp">
-
-
-                </ImageView>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/citta"
-                    android:id="@+id/textView5"
-
-                    android:layout_marginTop="10dp" />
-
-                <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/uni"
-                android:id="@+id/textView6"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/user_48">
 
-                    android:layout_marginTop="80dp" />
 
-                <Spinner
+            </ImageView>
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                float:fletPaddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/etaS"
+                    android:layout_width="276dp"
+
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:hint="Età"
+                    android:inputType="number" />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                float:fletPaddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/addressS"
+                    android:layout_width="276dp"
+
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/map_marker_32"
+                    android:drawablePadding="5dp"
+                    android:hint="Indirizzo"
+                    android:inputType="text" />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                float:fletPaddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/cellS"
+                    android:layout_width="276dp"
+
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/mobile_32"
+                    android:drawablePadding="5dp"
+                    android:hint="Cellulare"
+                    android:inputType="phone" />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/school_48">
+
+
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/citta"
+
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+            <Spinner
                 android:id="@+id/spinnerCitta"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
-                android:spinnerMode="dialog"
-
-                    android:layout_marginTop="-100dp" />
-
-                <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-100dp"
+                android:drawSelectorOnTop="true"
+                android:saveEnabled="true"
+
+                android:spinnerMode="dialog" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:text="@string/uni"
+
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Spinner
                 android:id="@+id/spinnerUni"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
-
-
-                android:spinnerMode="dialog"
-                android:clickable="true"
-                    android:layout_marginTop="50dp" />
-
-                <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinnerFac"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
-
-
-                android:spinnerMode="dialog"
+                android:layout_marginTop="50dp"
                 android:clickable="true"
+
+
+                android:drawSelectorOnTop="true"
+                android:saveEnabled="true"
+                android:spinnerMode="dialog" />
+
+
+
+            <TextView
+                android:id="@+id/editTextFac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="-170dp"
+                android:text="@string/fac"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Spinner
+                android:id="@+id/spinnerFac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/updateS"
                 android:layout_alignParentLeft="true"
+
+
                 android:layout_marginBottom="87dp"
-                    android:layout_marginTop="40dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-
-                    android:id="@+id/editTextFac"
-                    android:text="@string/fac"
-                    android:layout_marginTop="-170dp" />
-
-                <Button
+                android:layout_marginTop="40dp"
+                android:clickable="true"
+                android:drawSelectorOnTop="true"
+                android:saveEnabled="true"
+                android:spinnerMode="dialog" />
+            <Button
+                android:id="@+id/updateS"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="@string/save"
-                android:id="@+id/updateS"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/smooth_button"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="84dp"
-                    android:layout_marginTop="100dp"
-                    android:layout_gravity="center_horizontal" />
-
+                android:layout_marginTop="100dp"
+                android:background="@drawable/smooth_button"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
 
             <ProgressBar
+                android:id="@+id/progressBarS"
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBarS"
-                android:visibility="gone"
-                style="?android:attr/progressBarStyleLarge"
                 android:layout_alignBottom="@+id/updateS"
                 android:layout_alignLeft="@+id/updateS"
                 android:layout_gravity="center"
-                android:layout_marginTop="-550dp" />
+                android:layout_marginTop="-550dp"
+                android:visibility="gone" />
 
 
-            </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>

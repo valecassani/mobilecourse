@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +45,15 @@ public class HomeTutorFragment extends Fragment {
 
     ListRichiesteAdapter adapter ;
 
-    private ListView richieste_list;
+   // private ListView richieste_list;
+    private RecyclerView mRichiesteRecView;
     private String userId;
     private RequestQueue queue;
     private TextView nor;
 
     final String TAG="Home Tutor";
+    private RichiesteHomeTutorCardAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     int no;
     ProgressBar progress;
 
@@ -61,7 +66,11 @@ public class HomeTutorFragment extends Fragment {
 
 
         userId=activity.getUserId();
-        richieste_list=(ListView)view.findViewById(R.id.richieste_list);
+        mRichiesteRecView = (RecyclerView)view.findViewById(R.id.richieste_list);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+
+
+        //richieste_list=(ListView)view.findViewById(R.id.richieste_list);
 
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
@@ -126,11 +135,16 @@ public class HomeTutorFragment extends Fragment {
 
                             }
 
-
+                            SessionManager sm = new SessionManager(getActivity().getApplicationContext());
                             adapter = new ListRichiesteAdapter(activity.getApplicationContext(), items);
-                            richieste_list.setAdapter(adapter);
-                            Functions.setListViewHeightBasedOnChildren(richieste_list);
 
+                            mAdapter = new RichiesteHomeTutorCardAdapter(items,sm.getUserDetails().get("tipo"));
+                            mRichiesteRecView.setAdapter(mAdapter);
+                            mRichiesteRecView.setLayoutManager(mLayoutManager);
+                            mRichiesteRecView.setHasFixedSize(true);
+                            //richieste_list.setAdapter(adapter);
+                            //Functions.setListViewHeightBasedOnChildren(richieste_list);
+                            /*
                             richieste_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -149,6 +163,8 @@ public class HomeTutorFragment extends Fragment {
 
                                 }
                             });
+
+                            */
 
 
                             progress(false);

@@ -367,11 +367,7 @@ public class HomeTutor extends AppCompatActivity {
                 startActivity(intent);
                 fragment = null;
                 
-                /*fragment = new StudentDataFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("mail", username);
-                bundle.putString("id", userId);
-                fragment.setArguments(bundle);*/
+
                 break;
 
             case 2:

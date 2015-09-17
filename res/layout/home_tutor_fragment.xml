@@ -16,15 +16,12 @@
 
 
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/richieste_list"
         android:choiceMode="singleChoice"
         android:layout_below="@id/phr"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#cccc"
         />
 
 

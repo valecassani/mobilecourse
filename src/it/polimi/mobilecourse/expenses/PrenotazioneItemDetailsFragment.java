@@ -131,7 +131,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
     public void initializeButtons() {
         sceltaData = (TextView) view.findViewById(R.id.data_scelta);
-        sceltaData.setText(date);
+        sceltaData.setText(Functions.convertiData(date));
 
         sceltaDataButton = (Button) view.findViewById(R.id.button_data);
 
@@ -144,7 +144,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
-                        sceltaData.setText(simpleDateFormat.format(newDate.getTime()));
+                        sceltaData.setText(Functions.convertiData(simpleDateFormat.format(newDate.getTime())));
                         date = simpleDateFormat.format(newDate.getTime());
 
 
@@ -161,8 +161,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         System.out.println(sessionManager.getUserDetails().get("id"));
 
 
-        mTextViewMateria = (TextView) view.findViewById(R.id.button_materia);
-        mTextViewMateria.setText(materia);
+
         sceltaOra = (TextView) view.findViewById(R.id.ora_scelta);
         sceltaOra.setText(time);
 

@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -51,8 +52,8 @@ public class PrenotazioniFragment extends Fragment {
     private ArrayList<PrenotazioniItem> items;
     private Context context;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private PrenotazioniCardAdapter mAdapter;
+    private final LinearLayoutManager mLayoutManager;
     //private ListView mListView;
     private String studentId;
     private String tutorId;
@@ -63,6 +64,9 @@ public class PrenotazioniFragment extends Fragment {
 
     public PrenotazioniFragment() {
         items = new ArrayList<PrenotazioniItem>();
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
     }
 
 
@@ -93,6 +97,7 @@ public class PrenotazioniFragment extends Fragment {
         });
         context = view.getContext();
         queue = Volley.newRequestQueue(context);
+
         //mListView = (ListView) view.findViewById(R.id.list_ripetizioni);
 
 
@@ -122,7 +127,8 @@ public class PrenotazioniFragment extends Fragment {
 
 
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+
+
 
 
 
@@ -183,6 +189,8 @@ public class PrenotazioniFragment extends Fragment {
                                 item.setTutorNome(obj.getString("tutor_nome"));
                                 item.setTutorUrl(obj.getString("tutor_url"));
                                 item.setTutorIdfb(obj.getString("tutor_idfb"));
+                                item.setStudentIdfb(obj.getString("student_idfb"));
+                                item.setStudentUrl(obj.getString("student_url"));
                                 item.setOraInizio(obj.getString("orainizio"));
                                 items.add(item);
 
@@ -234,20 +242,14 @@ public class PrenotazioniFragment extends Fragment {
         startActivity(intent);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Context Menu");
-        menu.add(0, v.getId(), 0, "Modifica");
-        menu.add(0, v.getId(), 0, "Elimina");
-    }
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         AlertDialog dialog;
         if (item.getTitle() == "Modifica") {
-            startItemDetails(info.position);
+            mAdapter.startItemDetails(info.position);
         } else {
             if (item.getTitle() == "Elimina") {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -255,7 +257,7 @@ public class PrenotazioniFragment extends Fragment {
                         .setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 progressDialog.show();
-                                removeItem(info.position);
+                                mAdapter.removeItem(info.position);
                                 Toast.makeText(context, "Elemento eliminato", Toast.LENGTH_SHORT).show();
 
 
