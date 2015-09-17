@@ -40,6 +40,8 @@
         <item>Home</item>
         <item>Profilo</item>
         <item>Materie</item>
+        <item>Impostazioni Lezioni</item>
+
         <item>Prenotazioni</item>
         <item>Logout</item>
     </string-array>
@@ -115,7 +117,7 @@
     <string name="finalmark">Voto finale</string>
     <string name="questionadd">Vuoi aggiungere un commento?</string>
     <string name="optional">(Opzionale)</string>
-    <string name="addrec">Aggiungi recensione</string>
+    <string name="addrec">+ Aggiungi recensione</string>
     <string name="cell">Cellulare</string>
     <string name="wherelive">Dove vivi?</string>
     <string name="uni">Università</string>

@@ -157,10 +157,12 @@ public class HomeTutor extends AppCompatActivity {
 
         mDrawerItems.add(new NavDrawerItem(mDrawerOptions[2], R.drawable.icon_materie));
 
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.gear_16));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[3], R.drawable.prenot_icon));
 
-        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.icon_logout));
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[4], R.drawable.prenot_icon));
+
+        mDrawerItems.add(new NavDrawerItem(mDrawerOptions[5], R.drawable.icon_logout));
 
 
         // setting the nav drawer list adapter
@@ -382,6 +384,10 @@ public class HomeTutor extends AppCompatActivity {
                 break;
 
             case 3:
+            //impostaz lez
+            break;
+
+            case 4:
                 //prenotazioni
                 bundle = new Bundle();
                 bundle.putString("tutor_id",userId);
@@ -390,7 +396,7 @@ public class HomeTutor extends AppCompatActivity {
                 fragment.setArguments(bundle);
                 break;
 
-            case 4:
+            case 5:
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
                 builder.setMessage("Vuoi effetturare il logout?").setTitle("Attenzione");
