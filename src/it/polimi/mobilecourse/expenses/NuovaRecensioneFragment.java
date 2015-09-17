@@ -7,8 +7,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +50,7 @@ public class NuovaRecensioneFragment extends Fragment {
     String idstudente;
     String idtutor;
     TextView name;
+
     RatingBar disp;
     RatingBar puntual;
     RatingBar finale;
@@ -64,6 +70,9 @@ public class NuovaRecensioneFragment extends Fragment {
 
         queue= Volley.newRequestQueue(view.getContext());
 
+        TextView title=activity.getTitleToolbar();
+        title.setText("NUOVA RECENSIONE");
+        title.setTextSize(18);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nuova Recensione");
@@ -228,7 +237,12 @@ public class NuovaRecensioneFragment extends Fragment {
         float ratingstep=0.5f;
 
         name=(TextView)view.findViewById(R.id.textNome);
-        name.setText("Qui puoi valutare " + nome);
+
+        /*Spannable WordtoSpan = new SpannableString(nome);
+        WordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, nome.length(),
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE);*/
+
+        name.setText("Qui puoi valutare "+nome);
 
         progress(false);
 
