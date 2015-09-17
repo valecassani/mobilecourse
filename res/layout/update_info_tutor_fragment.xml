@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <LinearLayout android:orientation="vertical"
@@ -13,91 +13,232 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="840dp"
+            android:layout_height="1160dp"
             >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="939dp"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:weightSum="1"
+                android:id="@+id/linearLayout4"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true">
 
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:hint="Nome"
-                android:id="@+id/nameT"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="45dp"
-                android:layout_marginLeft="20dp"
-                />
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="90dp">
 
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Cognome"
-                android:ems="10"
-                android:id="@+id/surnameT"
-                android:layout_alignTop="@+id/nameT"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="0dp"
-                android:layout_gravity="right"
-                android:layout_weight="0.04"/>
+                    <EditText
+                        android:layout_width="165dp"
+                        android:layout_height="wrap_content"
 
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Indirizzo"
-                android:id="@+id/addressT"
+                        android:inputType="text"
+                        android:hint="Nome"
+                        android:id="@+id/nameT"
+                        />
 
 
-                android:layout_below="@+id/etaT"
-                android:layout_alignLeft="@+id/etaT"
-                android:layout_alignRight="@+id/etaT" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-59dp"
+                    android:layout_marginRight="-100dp">
+
+                    <EditText
+                        android:layout_width="165dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:inputType="text"
+                        android:hint="Cognome"
+                        android:id="@+id/surnameT"
+                        android:layout_marginLeft="190dp"
+                        android:layout_marginTop="-43dp" />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_48"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp">
+
+
+                </ImageView>
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:inputType="number"
+                        android:hint="Età"
+                        android:id="@+id/etaT"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
 
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/cellT"
-                android:hint="Cellulare"
-                android:layout_below="@+id/nameT"
-                android:layout_toRightOf="@+id/textView6" />
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp">
 
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerCitta"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
-                android:spinnerMode="dialog"
-                android:layout_above="@+id/textView6"
-                android:layout_alignRight="@+id/surnameT" />
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
 
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerUni"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/map_marker_32"
+                        android:inputType="text"
+                        android:hint="Indirizzo"
+                        android:id="@+id/addressT"
+                        />
 
 
-                android:spinnerMode="dialog"
-                android:clickable="true"
-                android:layout_above="@+id/editTextFac"
-                android:layout_alignRight="@+id/surnameT" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Dove vivi?"
-                android:id="@+id/textView5"
-                android:layout_alignTop="@+id/spinnerCitta"
-                android:layout_alignLeft="@+id/nameT"
-                android:layout_marginTop="-40dp" />
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/mobile_32"
+                        android:inputType="phone"
+                        android:hint="Cellulare"
+                        android:id="@+id/cellT"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/baggage_32"
+                        android:inputType="textMultiLine"
+                        android:hint="Occupazione"
+                        android:id="@+id/occT"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:inputType="textMultiLine"
+                        android:hint="Esperienze universitarie"
+                        android:id="@+id/espUniT"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:inputType="textMultiLine"
+                        android:hint="Esperienze da tutor"
+                        android:id="@+id/espT"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/school_48"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp">
+
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/citta"
+                    android:id="@+id/textView5"
+
+                    android:layout_marginTop="10dp" />
+
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerCitta"
+                    android:saveEnabled="true"
+                    android:drawSelectorOnTop="true"
+                    android:spinnerMode="dialog"
+                    android:layout_marginTop="10dp"
+
+                    />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,92 +246,84 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Università"
                 android:id="@+id/textView6"
+                android:layout_marginTop="20dp"
+
                 android:layout_above="@+id/spinnerUni"
                 android:layout_alignRight="@+id/textView5" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerUni"
+                    android:saveEnabled="true"
+                    android:drawSelectorOnTop="true"
+
+                    android:layout_marginTop="10dp"
+
+                    android:spinnerMode="dialog"
+                    android:clickable="true"
+                    android:layout_above="@+id/editTextFac"
+                    android:layout_alignRight="@+id/surnameT" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+
+                    android:id="@+id/editTextFac"
+                    android:text="Facoltà"
+                    android:layout_marginTop="20dp"
+
+                    android:layout_above="@+id/spinnerFac"
+                    android:layout_alignLeft="@+id/textView5" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerFac"
+                    android:saveEnabled="true"
+                    android:drawSelectorOnTop="true"
+
+
+                    android:spinnerMode="dialog"
+                    android:clickable="true"
+                    android:layout_above="@+id/updateT"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"/>
 
 
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:text="Salva"
                 android:id="@+id/updateT"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:background="@drawable/smooth_button"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginBottom="84dp"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal" />
 
 
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBarT"
-                android:visibility="gone"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-
-                android:id="@+id/editTextFac"
-                android:text="Facoltà"
-                android:layout_above="@+id/spinnerFac"
-                android:layout_alignLeft="@+id/textView5" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerFac"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBarT"
+                    android:visibility="gone"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_alignBottom="@+id/updateS"
+                    android:layout_alignLeft="@+id/updateS"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-400dp" />
 
 
-                android:spinnerMode="dialog"
-                android:clickable="true"
-                android:layout_above="@+id/updateT"
-                android:layout_alignParentLeft="true" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="Età"
-                android:ems="10"
-                android:id="@+id/etaT"
-                android:layout_below="@+id/cellT"
-                android:layout_alignLeft="@+id/cellT" />
 
-            <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:hint="Esperienze universitarie"
-            android:ems="10"
-            android:id="@+id/espUniT"
-            android:layout_below="@+id/occT"
-            android:layout_alignLeft="@+id/occT" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="90dp"
-                android:hint="Esperienze da tutor"
-                android:ems="10"
-                android:id="@+id/espT"
-                android:layout_below="@+id/espUniT"
-                android:layout_alignLeft="@+id/occT" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="90dp"
-                android:hint="Occupazione"
-                android:id="@+id/occT"
-                android:layout_below="@+id/addressT"
-                android:layout_toRightOf="@+id/textView5"
-                android:layout_alignRight="@+id/addressT">
-
-            </EditText>
-
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
