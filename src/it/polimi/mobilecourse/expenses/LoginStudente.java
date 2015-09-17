@@ -101,7 +101,11 @@ public class LoginStudente extends ActionBarActivity {
 
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_login_button);
+
+
+
         loginButton.setReadPermissions(Arrays.asList("public_profile, email"));
+
         FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

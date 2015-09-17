@@ -73,8 +73,7 @@
             android:id="@+id/butAccess"
             android:textColor="@color/white"
             android:background="@drawable/smooth_button"
-            android:layout_below="@+id/pasS"
-            android:layout_centerHorizontal="true"
+
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp" />
 
@@ -84,11 +83,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBarLS"
         android:layout_below="@id/butAccess"
-            android:visibility="gone"
         style="?android:attr/progressBarStyleLarge"
+            android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-60dp" />
 
         <!--TextView
         android:layout_width="wrap_content"

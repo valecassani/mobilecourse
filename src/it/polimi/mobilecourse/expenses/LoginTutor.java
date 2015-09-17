@@ -6,8 +6,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 
 import com.android.volley.Request;
@@ -46,6 +50,7 @@ public class LoginTutor extends ActionBarActivity {
     private String nome;
     private String cognome;
     private GoogleCloudMessaging gcm;
+    private Toolbar toolbar;
 
 
 
@@ -73,8 +78,25 @@ public class LoginTutor extends ActionBarActivity {
         }
 
         setContentView(R.layout.login_tutor);
+        //toolbar da aggiungere
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        if (toolbar != null) {
+            //SpannableString st=new SpannableString("Home");
+            //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            TextView title = (TextView)findViewById(R.id.title);
+            title.setText("LOGIN TUTOR");
+            title.setTextSize(18);
+            setSupportActionBar(toolbar);
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(25);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primaryColorDark));
         gcm = GoogleCloudMessaging.getInstance(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton)findViewById(R.id.fb_login_button);
