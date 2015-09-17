@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -51,7 +53,10 @@ public class RichiesteFragment extends Fragment {
     private final String TAG = "Richieste";
     private RequestQueue queue;
     private ArrayList<RichiestaItem> items;
-    private ListView mListView;
+    //private ListView mListView;
+    private RichiesteCardAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerView;
     private Context context;
     private Button newRichiestaButton;
     private String idStudente;
@@ -72,9 +77,11 @@ public class RichiesteFragment extends Fragment {
         items = new ArrayList<RichiestaItem>();
         queue = Volley.newRequestQueue(view.getContext());
         idStudente = getActivity().getIntent().getExtras().getString("user_id");
-        Log.i(TAG, "user id " + idStudente);
 
-        mListView = (ListView) view.findViewById(R.id.richieste_list);
+        //mListView = (ListView) view.findViewById(R.id.richieste_list);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.richieste_list);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_richieste);
         nor=(TextView)view.findViewById(R.id.norequest);
@@ -107,10 +114,10 @@ public class RichiesteFragment extends Fragment {
 
             }
         });
-        registerForContextMenu(mListView);
 
 
         //azione su selezione normale
+        /*
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -128,6 +135,8 @@ public class RichiesteFragment extends Fragment {
                 return false;
             }
         });
+
+        */
 
         progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Attendere...");
@@ -182,7 +191,11 @@ public class RichiesteFragment extends Fragment {
 
                         }
                         adapter = new RichiesteAdapter(context, items);
-                        mListView.setAdapter(adapter);
+                        mAdapter = new RichiesteCardAdapter(items,"0");
+                        mRecyclerView.setAdapter(mAdapter);
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+
+                        //mListView.setAdapter(adapter);
                         progress(false);
                         swipeRefreshLayout.setRefreshing(false);
 
@@ -207,17 +220,6 @@ public class RichiesteFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-
-
-            super.onCreateContextMenu(menu, v, menuInfo);
-            menu.setHeaderTitle("Cosa vuoi fare?");
-            menu.add(0, v.getId(), 0, "Modifica richiesta");
-            menu.add(0, v.getId(), 0, "Elimina richiesta");
-
-    }
 
 
 

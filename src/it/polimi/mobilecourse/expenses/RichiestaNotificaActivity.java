@@ -24,7 +24,6 @@ public class RichiestaNotificaActivity extends AppCompatActivity {
         Bundle receivedBundle = getIntent().getExtras();
         idTutor = receivedBundle.getString("tutor_id");
 
-        Log.d("RichiestaNotActivity", idTutor);
 
         Bundle bundle = new Bundle();
         bundle.putString("idt",idTutor);

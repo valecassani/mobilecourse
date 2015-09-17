@@ -30,7 +30,6 @@ import java.util.List;
 public class ListRichiesteAdapter extends BaseAdapter {
     private Context context;
     private List<ListRichiesteItem> items;
-    Bitmap bitmap;
 
 
     public ListRichiesteAdapter(Context context, List<ListRichiesteItem> objects) {

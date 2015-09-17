@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    card_view:cardCornerRadius="10dp"
+    android:id="@+id/card_view"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground">
+
+
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:textStyle="bold"
+            android:id="@+id/testoRichiesta"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/testoRichiesta"
+
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Entro il:"
+            android:id="@+id/data_entro_title"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/data_entro_title"
+            android:layout_below="@id/testoRichiesta"
+
+            android:textStyle="italic"
+            android:layout_margin="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/data_entro_value"
+            android:layout_row="1"
+            android:layout_column="2" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
