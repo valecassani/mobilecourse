@@ -103,6 +103,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/or"
             android:id="@+id/oppure"
+            android:textColor="@color/primaryColor"
             android:layout_below="@+id/regS"
 
             android:layout_above="@id/fb_login_button"
