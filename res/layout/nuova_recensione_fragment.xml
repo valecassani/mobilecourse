@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="627dp"
+            android:layout_height="wrap_content"
             >
 
 
@@ -130,17 +130,21 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="5dp" />
 
+
+
             <EditText
                 android:layout_width="276dp"
                 android:layout_height="wrap_content"
+                android:minHeight="120dp"
+                android:isScrollContainer="true"
 
                 android:drawablePadding="5dp"
                 android:hint="Commento"
-                android:drawableLeft="@drawable/comments_32"
                 android:inputType="textMultiLine"
                 android:id="@+id/comment"
-                android:layout_below="@+id/finale"
-                android:layout_alignLeft="@+id/textView24" />
+                />
+
+
 
         </RelativeLayout>
     </LinearLayout>

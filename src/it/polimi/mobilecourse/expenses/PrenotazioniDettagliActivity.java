@@ -26,7 +26,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,6 +56,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
     private RequestQueue queue;
 
     private String idPrenotazione;
+    private String distanza;
 
 
     /*
@@ -88,7 +88,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.prenotazione_dettagli_fragment);
+        setContentView(R.layout.prenotazione_dettagli_activity);
 
         context = getApplicationContext();
 
@@ -142,6 +142,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
                             FragmentManager fragmentManager = getFragmentManager();
                             fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.fragreplace, pid).commit();
                             indirizzo = obj.getString("indirizzo");
+                            distanza = obj.getString("distanza");
                             mapFragment.getMapAsync(new OnMapReadyCallback() {
                                                         @Override
                                                         public void onMapReady(GoogleMap map) {
@@ -165,7 +166,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
                                                             TextView distanza = (TextView)findViewById(R.id.distanza_text);
 
-                                                            distanza.setText("Distanza");
+                                                            distanza.setText("Distanza: " + distanza);
 
 
 
