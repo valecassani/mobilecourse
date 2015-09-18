@@ -136,12 +136,14 @@
                 android:layout_width="276dp"
                 android:layout_height="wrap_content"
                 android:minHeight="120dp"
+                android:maxHeight="120dp"
                 android:isScrollContainer="true"
-
+                android:overScrollMode="ifContentScrolls"
+                android:layout_below="@id/finale"
                 android:drawablePadding="5dp"
-                android:hint="Commento"
+                android:hint="@string/commento_recensione"
                 android:inputType="textMultiLine"
-                android:id="@+id/comment"
+                android:id="@id/comment"
                 />
 
 
