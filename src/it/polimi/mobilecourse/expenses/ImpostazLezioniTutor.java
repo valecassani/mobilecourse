@@ -4,13 +4,17 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
  * Created by Matteo on 03/08/2015.
  */
-public class ImpostazLezioniTutor extends HelpActivity {
+public class ImpostazLezioniTutor extends HelpABActivity {
 
     private ImpostazLezioniTutorFragment iltf;
 
@@ -18,6 +22,27 @@ public class ImpostazLezioniTutor extends HelpActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.impostaz_lezioni);
+
+        //toolbar da aggiungere
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        if (toolbar != null) {
+            //SpannableString st=new SpannableString("Home");
+            //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            TextView title = (TextView)findViewById(R.id.title);
+            title.setText("IMPOSTAZIONI LEZIONI");
+            title.setTextSize(18);
+            setSupportActionBar(toolbar);
+        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(25);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primaryColorDark));
 
         iltf= new ImpostazLezioniTutorFragment();
         //arriva un bundle dall'activity chiamante con  id tutor

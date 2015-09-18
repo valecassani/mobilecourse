@@ -172,7 +172,7 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ImpostazLezioniTutor"
-            android:theme="@style/PageTheme"></activity>
+            android:theme="@style/AppTheme"></activity>
 
         <receiver
             android:name=".GcmBroadcastReceiver"

@@ -387,6 +387,13 @@ public class HomeTutor extends AppCompatActivity {
 
             case 3:
             //impostaz lez
+                Bundle bundleImp = new Bundle();
+                bundleImp.putString("id",userId);
+                Intent intentImp = new Intent(this,ImpostazLezioniTutor.class);
+
+                intentImp.putExtras(bundleImp);
+                startActivity(intentImp);
+                fragment = null;
             break;
 
             case 4:

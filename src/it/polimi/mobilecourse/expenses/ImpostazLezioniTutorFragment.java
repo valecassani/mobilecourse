@@ -43,7 +43,7 @@ public class ImpostazLezioniTutorFragment extends Fragment {
     CheckBox domicilioC;
     Button save;
 
-    HelpActivity activity;
+    ImpostazLezioniTutor activity;
     String id;
 
     String sede_propria;
@@ -91,6 +91,7 @@ public class ImpostazLezioniTutorFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        this.activity = (ImpostazLezioniTutor) activity;
 
 
     }
@@ -289,6 +290,8 @@ public class ImpostazLezioniTutorFragment extends Fragment {
                             Log.d(TAG, response.toString());
                             progress(false);
 
+                            Toast.makeText(activity.getApplicationContext(),"Impostazioni salvate correttamente",Toast.LENGTH_LONG).show();
+                            getActivity().finish();
 
 
                         } catch (JSONException e) {

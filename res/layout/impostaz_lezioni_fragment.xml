@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="644dp"
+            android:layout_height="534dp"
             >
 
 
@@ -23,6 +23,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/optaggiuntive"
                 android:id="@+id/textView20"
+                android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="39dp" />
@@ -32,30 +33,36 @@
                 android:layout_height="wrap_content"
                 android:text="@string/firstgratis"
                 android:id="@+id/checkGratis"
+                android:textColor="@color/primaryColor"
                 android:layout_below="@+id/textView20"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="39dp"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_marginLeft="10dp" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lessondom"
                 android:id="@+id/checkdom"
+                android:textColor="@color/primaryColor"
                 android:layout_below="@+id/checkGratis"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="37dp"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_marginLeft="10dp" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lessonsede"
                 android:id="@+id/checksede"
+                android:textColor="@color/primaryColor"
                 android:layout_below="@+id/checkdom"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="44dp"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_marginLeft="10dp" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -63,17 +70,34 @@
                 android:text="@string/lessongroup"
                 android:id="@+id/checkgruppo"
                 android:checked="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true" />
+                android:textColor="@color/primaryColor"
+                android:layout_below="@+id/checksede"
+                android:layout_alignLeft="@+id/checksede"
+                android:layout_marginTop="43dp" />
 
-            <Button
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
+                android:src="@drawable/gear_128"
+                android:alpha="0.3"
+                android:layout_gravity="center_horizontal"
+                android:layout_above="@+id/checkgruppo"
+                android:layout_alignRight="@+id/save">
+
+
+            </ImageView>
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Salva modifiche"
+                android:background="@drawable/smooth_button"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:id="@+id/save"
-                android:layout_below="@+id/checkgruppo"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="55dp" />
+                android:layout_marginBottom="67dp" />
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -81,8 +105,8 @@
                 android:id="@+id/progressBar"
                 android:visibility="gone"
                 style="?android:attr/progressBarStyleLarge"
-                android:layout_alignTop="@+id/save"
-                android:layout_toRightOf="@+id/checkGratis" />
+                android:layout_alignBottom="@+id/save"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
