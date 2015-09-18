@@ -194,6 +194,10 @@ public class HomeStudent extends AppCompatActivity {
     }
 
     private void loadUserInfos() {
+
+        titleBar.setTextSize(18);
+        titleBar.setText("HOME");
+
         if (Profile.getCurrentProfile() != null) {
             Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
             circImgView = (CircularImageView) findViewById(R.id.drawer_image);
@@ -539,6 +543,8 @@ public class HomeStudent extends AppCompatActivity {
             //super.onBackPressed();
         } else {
             getFragmentManager().popBackStack();
+            titleBar.setTextSize(18);
+            titleBar.setText("HOME");
         }
 
     }

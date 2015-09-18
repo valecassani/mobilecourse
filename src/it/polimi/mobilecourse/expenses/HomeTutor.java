@@ -560,6 +560,8 @@ public class HomeTutor extends AppCompatActivity {
             //super.onBackPressed();
         } else {
             getFragmentManager().popBackStack();
+            title.setText("HOME");
+            title.setTextSize(18);
         }
 
     }
@@ -567,8 +569,15 @@ public class HomeTutor extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         loadUserInfos();
-
+        title.setText("HOME");
+        title.setTextSize(18);
 
     }
+
+
+    public TextView getTitleToolbar(){
+        return title;
+    }
+
 
 }

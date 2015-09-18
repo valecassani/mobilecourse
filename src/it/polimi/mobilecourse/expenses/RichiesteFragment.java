@@ -328,6 +328,8 @@ public class RichiesteFragment extends Fragment {
     public void onResume() {
         super.onResume();
         showResults();
+        activity.getTitleToolbar().setText("LE TUE RICHIESTE");
+        activity.getTitleToolbar().setTextSize(18);
     }
 
     @Override

@@ -59,6 +59,7 @@ public class NuovaRecensioneFragment extends Fragment {
     Button addRec;
     String nome;
     RequestQueue queue;
+    TextView title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class NuovaRecensioneFragment extends Fragment {
 
         queue= Volley.newRequestQueue(view.getContext());
 
-        TextView title=activity.getTitleToolbar();
+        title=activity.getTitleToolbar();
         title.setText("NUOVA RECENSIONE");
         title.setTextSize(18);
 

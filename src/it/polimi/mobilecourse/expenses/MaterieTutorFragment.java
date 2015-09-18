@@ -80,6 +80,10 @@ public class MaterieTutorFragment extends Fragment {
         queueEl= Volley.newRequestQueue(view.getContext());
 
 
+        activity.getTitleToolbar().setText("LE TUE MATERIE");
+        activity.getTitleToolbar().setTextSize(18);
+
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Materie");
 
@@ -313,6 +317,14 @@ public class MaterieTutorFragment extends Fragment {
 
 
 
+
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        activity.getTitleToolbar().setText("LE TUE MATERIE");
+        activity.getTitleToolbar().setTextSize(18);
 
     }
 
