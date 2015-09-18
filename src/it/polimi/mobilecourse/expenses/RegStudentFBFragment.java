@@ -303,7 +303,15 @@ public class RegStudentFBFragment extends Fragment {
                         try {
                             JSONObject obj = response.getJSONObject(0);
                             Log.d("RegFBStudent", "Registrazione avvenuta con successo");
+                            Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
 
+                            Intent myintent = new Intent(getActivity(),HomeStudent.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("user_id", obj.getString("newid"));
+
+                            myintent.putExtras(bundle);
+
+                            startActivity(myintent);
 
 
                         } catch (JSONException e) {
@@ -323,10 +331,10 @@ public class RegStudentFBFragment extends Fragment {
             }
         });
         queue.add(jsonObjReq);
-        Activity activity = new GCMMainActivity();
-        Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(),LandingActivity.class);
-        startActivity(myintent);
+       // Activity activity = new GCMMainActivity();
+       // Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
+       // Intent myintent = new Intent(view.getContext(),LandingActivity.class);
+       // startActivity(myintent);
 
 
 

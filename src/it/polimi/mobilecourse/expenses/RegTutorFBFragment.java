@@ -69,7 +69,8 @@ public class RegTutorFBFragment extends Fragment {
 
         view = inflater.inflate(R.layout.regfbtutor_fragment, container, false);
 
-
+        activity.getTitleToolbar().setText("REGISTRAZIONE TUTOR");
+        activity.getTitleToolbar().setTextSize(18);
         getFacebookId();
 
 

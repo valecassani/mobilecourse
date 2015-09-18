@@ -275,20 +275,22 @@ public class HomeTutor extends AppCompatActivity {
                             content.setSpan(new UnderlineSpan(), 0, obj.get("username").toString().length(), 0);
                             mail.setText(content);
                             mail.setTextColor(Color.WHITE);
-                            mail.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);//rimettere updateImage
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("tipo", "1");
-                                    bundle.putString("id", userId);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
+                            if (Profile.getCurrentProfile() == null) {
 
-                                }
-                            });
+                                mail.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);//rimettere updateImage
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("tipo", "1");
+                                        bundle.putString("id", userId);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
 
+                                    }
+                                });
 
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

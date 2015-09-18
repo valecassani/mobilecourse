@@ -99,7 +99,7 @@
 
         </activity>
         <activity android:name=".RegistrationTutor"
-            android:theme="@style/PageTheme">
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".RegistrationStudent"

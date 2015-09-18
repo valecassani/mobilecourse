@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:float="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout android:orientation="vertical"
@@ -13,23 +13,38 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="840dp"
+            android:layout_height="600dp"
             >
 
 
 
 
 
-            <EditText
-                android:layout_width="wrap_content"
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/cellT"
-                android:hint="@string/cell"
-                android:layout_marginTop="68dp"
+                float:fletPaddingLeft="10dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/view"
                 android:layout_below="@+id/complete"
-                android:layout_toRightOf="@+id/textView5" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="52dp">
+
+                <EditText
+                    android:layout_width="205dp"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="5dp"
+                    android:inputType="number"
+                    android:hint="Cellulare"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/mobile_32"
+                    android:id="@+id/cellT"
+                    android:layout_marginLeft="190dp"
+                    android:layout_marginTop="-43dp" />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -39,8 +54,8 @@
                 android:drawSelectorOnTop="true"
                 android:spinnerMode="dialog"
                 android:layout_below="@+id/textView5"
-                android:layout_alignRight="@+id/cellS"
-                android:layout_toRightOf="@+id/textView5" />
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="20dp" />
 
 
 
@@ -49,20 +64,25 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/citta"
+                android:textColor="@color/primaryColor"
                 android:id="@+id/textView5"
-                android:layout_marginTop="56dp"
-                android:layout_below="@+id/cellT"
-                android:layout_alignParentLeft="true" />
+                android:layout_marginTop="147dp"
+                android:layout_below="@+id/complete"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp" />
 
 
 
 
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:text="@string/registrati"
+                android:text="Completa registrazione"
                 android:id="@+id/regT"
+                android:background="@drawable/smooth_button"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_marginTop="100dp"
                 android:layout_below="@+id/checkBox"
                 android:layout_centerHorizontal="true" />
@@ -79,25 +99,37 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="-15dp" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_128"
+                android:alpha="0.3"
+                android:id="@+id/imageView"
+                android:layout_below="@+id/textView5"
+                android:layout_centerHorizontal="true" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/complete"
-                android:editable="true"
 
+                android:text="Completa il profilo"
+                android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="70dp" />
+                android:layout_marginTop="30dp" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/accept_term"
                 android:id="@+id/checkBox"
+                android:textColor="@color/primaryColor"
                 android:layout_below="@id/spinnerCitta"
                 android:checked="false"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="40dp" />
 
 
 
