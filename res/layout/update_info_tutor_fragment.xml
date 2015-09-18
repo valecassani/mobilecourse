@@ -224,6 +224,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/citta"
+                    android:textColor="@color/primaryColor"
                     android:id="@+id/textView5"
 
                     android:layout_marginTop="10dp" />
@@ -245,6 +246,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Università"
+                android:textColor="@color/primaryColor"
                 android:id="@+id/textView6"
                 android:layout_marginTop="20dp"
 
@@ -270,6 +272,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
 
+                    android:textColor="@color/primaryColor"
                     android:id="@+id/editTextFac"
                     android:text="Facoltà"
                     android:layout_marginTop="20dp"
