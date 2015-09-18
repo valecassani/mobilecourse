@@ -104,7 +104,7 @@
         <activity
             android:name=".RegistrationStudent"
             android:label="Nuovo studente"
-            android:theme="@style/PageTheme"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".HomeStudent"

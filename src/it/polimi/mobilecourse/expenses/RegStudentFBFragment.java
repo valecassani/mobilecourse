@@ -72,6 +72,9 @@ public class RegStudentFBFragment extends Fragment {
         view = inflater.inflate(R.layout.regfbstudent_fragment, container, false);
 
 
+        activity.getTitleToolbar().setText("REGISTRAZIONE STUDENTE");
+        activity.getTitleToolbar().setTextSize(18);
+
         getFacebookId();
 
         settingsReg();
@@ -322,7 +325,7 @@ public class RegStudentFBFragment extends Fragment {
         queue.add(jsonObjReq);
         Activity activity = new GCMMainActivity();
         Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(),HomeStudent.class);
+        Intent myintent = new Intent(view.getContext(),LandingActivity.class);
         startActivity(myintent);
 
 
