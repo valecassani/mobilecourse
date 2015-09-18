@@ -63,6 +63,9 @@ public class AggiungiMateriaFragment extends Fragment{
 
         Bundle bundle=this.getArguments();
         idt=bundle.getString("idt");
+        activity.getTitleToolbar().setText("AGGIUNGI MATERIA");
+        activity.getTitleToolbar().setTextSize(18);
+
 
 
         field();

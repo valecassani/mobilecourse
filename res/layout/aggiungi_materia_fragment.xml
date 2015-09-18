@@ -3,65 +3,113 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
 
 
     >
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
 
+    <LinearLayout android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:weightSum="1">
 
 
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            float:fletPaddingLeft="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="-100dp"
+            android:layout_marginLeft="-100dp">
+
+            <EditText
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+
+                android:drawablePadding="5dp"
+                android:inputType="number"
+                android:hint="Prezzo/ora"
+                android:drawableLeft="@drawable/banknotes_32"
+                android:id="@+id/prezzoM"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="-43dp" />
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Nome materia"
-        android:ems="10"
-        android:id="@+id/nameM"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp" />
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/prezzoM"
-        android:layout_below="@+id/nameM"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
-        android:hint="Prezzo/ora" />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="295dp"
+            android:layout_height="wrap_content"
+            float:fletPaddingLeft="10dp"
+            android:layout_marginTop="-150dp"
+            android:layout_marginRight="-100dp"
+            android:layout_marginLeft="-100dp"
+            android:layout_gravity="center_horizontal">
 
-    <Button
+            <EditText
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+
+                android:drawablePadding="5dp"
+                android:inputType="textLongMessage"
+                android:hint="Nome materia"
+                android:drawableLeft="@drawable/book_32"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/nameM"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="-43dp" />
+
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/book_128"
+            android:layout_gravity="center_horizontal"
+            android:alpha="0.3"/>
+
+        <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Conferma"
+        android:text="+ Aggiungi"
         android:id="@+id/confermaAdd"
         style="?android:attr/borderlessButtonStyle"
-        android:background="@color/primaryColorDark"
-        android:layout_centerVertical="true"
-        android:layout_below="@id/prezzoM"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="40dp"
-        android:layout_alignParentLeft="true" />
+        android:background="@drawable/smooth_button"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="50dp" />
 
-    <ProgressBar
+        <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBarAgg"
+            android:visibility="gone"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_below="@id/prezzoM"
-android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-60dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
-
+</LinearLayout>
     </ScrollView>
