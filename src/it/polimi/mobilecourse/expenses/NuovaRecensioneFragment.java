@@ -11,8 +11,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -237,13 +239,20 @@ public class NuovaRecensioneFragment extends Fragment {
 
         float ratingstep=0.5f;
 
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+
         name=(TextView)view.findViewById(R.id.textNome);
+        builder.append("Qui puoi valutare ");
 
-        /*Spannable WordtoSpan = new SpannableString(nome);
-        WordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, nome.length(),
-                Spannable.SPAN_INCLUSIVE_INCLUSIVE);*/
+        SpannableString wordtoSpan = new SpannableString(nome);
 
-        name.setText("Qui puoi valutare "+nome);
+        wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, nome.length(),
+                0);
+        builder.append(wordtoSpan);
+
+
+        name.setText(builder, TextView.BufferType.SPANNABLE);
 
         progress(false);
 

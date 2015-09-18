@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    xmlns:float="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout android:orientation="vertical"
@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="650dp"
             >
 
 
@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/puntualita"
+                android:textColor="@color/primaryColor"
                 android:id="@+id/textView21"
                 android:layout_marginTop="28dp"
                 android:layout_below="@+id/textNome"
@@ -61,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/disp"
+                android:textColor="@color/primaryColor"
                 android:id="@+id/textView22"
                 android:layout_below="@+id/puntual"
                 android:layout_alignParentLeft="true"
@@ -79,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/chiar"
+                android:textColor="@color/primaryColor"
                 android:id="@+id/textView23"
                 android:layout_below="@+id/disp"
                 android:layout_alignRight="@+id/textView21" />
@@ -95,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/finalmark"
+                android:textColor="@color/primaryColor"
                 android:id="@+id/textView24"
                 android:layout_below="@+id/chiar"
                 android:layout_alignLeft="@+id/textView23" />
@@ -115,9 +119,9 @@
                 android:background="@drawable/smooth_button"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:layout_marginTop="50dp"
-                android:layout_below="@+id/comment"
-                android:layout_centerHorizontal="true" />
+                android:layout_below="@+id/view2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="54dp" />
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -132,19 +136,29 @@
 
 
 
-            <EditText
-                android:layout_width="276dp"
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:minHeight="120dp"
-                android:maxHeight="120dp"
-                android:isScrollContainer="true"
-                android:overScrollMode="ifContentScrolls"
-                android:layout_below="@id/finale"
-                android:drawablePadding="5dp"
-                android:hint="@string/commento_recensione"
-                android:inputType="textMultiLine"
-                android:id="@id/comment"
-                />
+                float:fletPaddingLeft="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/finale"
+                android:layout_alignLeft="@+id/textView24"
+                android:id="@+id/view2">
+
+                <EditText
+                    android:layout_width="205dp"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="5dp"
+                    android:inputType="textMultiLine"
+                    android:hint="Commento"
+                    android:drawableLeft="@drawable/comments_32"
+                    android:id="@+id/comment"
+                    android:layout_marginLeft="190dp"
+                    android:layout_marginTop="-43dp" />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
 
 
