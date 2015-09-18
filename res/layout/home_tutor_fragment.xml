@@ -6,7 +6,7 @@
 
     <!-- A CardView that contains a TextView -->
     <Button
-        android:layout_width="310dp"
+        android:layout_width="31  0dp"
         android:layout_height="30dp"
         android:text="@string/tutor_home_string"
         android:background="#585858"
