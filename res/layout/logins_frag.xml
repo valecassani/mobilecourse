@@ -46,8 +46,10 @@
             android:layout_width="295dp"
             android:layout_height="wrap_content"
             float:fletPaddingLeft="10dp"
+
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            >
 
             <EditText
                 android:layout_width="276dp"
@@ -56,12 +58,15 @@
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/lock_32"
                 android:inputType="textPassword"
+
                 android:hint="Password"
                 android:id="@+id/pasS"
                 />
 
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
 
 
         <Button
@@ -84,11 +89,11 @@
         android:id="@+id/progressBarLS"
         android:layout_below="@id/butAccess"
         style="?android:attr/progressBarStyleLarge"
-            android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-60dp" />
+            android:layout_marginTop="-80dp" />
 
         <!--TextView
         android:layout_width="wrap_content"
