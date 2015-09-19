@@ -99,7 +99,8 @@
 
         </activity>
         <activity android:name=".RegistrationTutor"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".RegistrationStudent"
