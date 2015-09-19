@@ -5,13 +5,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -84,6 +88,7 @@ public class HomeTutor extends AppCompatActivity {
     private int itemSelected;
     public static Activity activity;
     private Service instanceIdService;
+    private int NOTIFICATION_ID = 1;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -205,6 +210,78 @@ public class HomeTutor extends AppCompatActivity {
 
     }
 
+    private void checkIfUpcomingPrenotation() {
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        String url = "http://www.unishare.it/tutored/lesson_today.php?id=" + userId;
+
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+
+                            PendingIntent contentIntent = null;
+                            NotificationManager mNotificationManager = (NotificationManager)
+                                    getSystemService(Context.NOTIFICATION_SERVICE);
+                            JSONObject obj = response.getJSONObject(0);
+                            if (obj.getString("Risposta").equals("SI")) {
+
+
+                                Intent intent = new Intent(activity, PrenotazioniDettagliActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("id", obj.getString("id_prenotaz"));
+                                intent.putExtras(bundle);
+                                contentIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+                                        intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                NotificationCompat.Builder mBuilder =
+                                        new NotificationCompat.Builder(getApplicationContext())
+                                                .setSmallIcon(R.drawable.gmc_img)
+                                                .setContentTitle("Tutored")
+                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                        .bigText("Hai una prenotazione oggi!"))
+                                                .setContentText("Hai una prenotazione oggi!");
+
+                                mBuilder.setAutoCancel(true);
+                                mBuilder.setContentIntent(contentIntent);
+                                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+
+
+                            } else {
+                                Log.d(TAG,"Nessuna notifica per oggi");
+                            }
+
+                            return false;
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
+
+
+    }
+
     private void registerGCM() {
 
         Intent intent = new Intent(getApplicationContext(), MyInstanceIDListenerService.class);
@@ -291,6 +368,8 @@ public class HomeTutor extends AppCompatActivity {
                                 });
 
                             }
+
+                            checkIfUpcomingPrenotation();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
