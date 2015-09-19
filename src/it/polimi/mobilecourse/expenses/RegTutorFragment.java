@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -56,6 +68,8 @@ public class RegTutorFragment extends Fragment {
         view = inflater.inflate(R.layout.regt_frag, container, false);
         progressView = (ProgressBar)view.findViewById(R.id.progressBarRT);
 
+        activity.getTitleToolbar().setText("REGISTRAZIONE TUTOR");
+        activity.getTitleToolbar().setTextSize(18);
 
         settingsReg();
         setSpinner();
@@ -197,10 +211,45 @@ public class RegTutorFragment extends Fragment {
         String url="registration_tutor.php?username=".concat(mailT).concat("&").concat("password=").concat(passT).concat("&").concat("nome=")
                 .concat(nameT).concat("&").concat("cognome=").concat(surnameT).concat("&").concat("cellulare=").concat(cellT)
                 .concat("&").concat("id_citta=").concat(idCity);
-        new RequestFtp().setParameters(activity, url, "regTutor", RegTutorFragment.this).execute();
-        Toast.makeText(getActivity().getApplicationContext(), "Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(), LandingActivity.class);
-        startActivity(myintent);
+        //new RequestFtp().setParameters(activity, url, "regTutor", RegTutorFragment.this).execute();
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                "http://www.unishare.it/tutored/"+url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d("RegFBStudent", "Registrazione avvenuta con successo");
+                            Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
+
+                            Intent myintent = new Intent(getActivity(),HomeTutor.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("user_id", obj.getString("newid"));
+
+                            myintent.putExtras(bundle);
+
+                            startActivity(myintent);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("RegFBStudent", "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+        queue.add(jsonObjReq);
 
 
 
@@ -229,6 +278,7 @@ public class RegTutorFragment extends Fragment {
 
             Toast.makeText(getActivity().getApplicationContext(),"Utente gia registrato", Toast.LENGTH_LONG).show();
             progress(false);
+            submit.setVisibility(View.VISIBLE);
         }
 
     }

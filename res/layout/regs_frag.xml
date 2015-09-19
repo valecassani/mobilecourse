@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:float="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout android:orientation="vertical"
@@ -13,193 +13,283 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="840dp"
+            android:layout_height="999dp"
             >
 
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:hint="@string/nome"
-                android:id="@+id/nameS"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="45dp"
-                android:layout_marginLeft="20dp"
-                />
-
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="@string/cognome"
-                android:ems="10"
-                android:id="@+id/surnameS"
-                android:layout_alignTop="@+id/nameS"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="0dp"
-                android:layout_gravity="right"
-                android:layout_weight="0.04"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:id="@+id/mailS"
-                android:hint="@string/mail"
-                android:layout_below="@+id/cellS"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="38dp"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/cellS"
-                android:hint="@string/cell"
-                android:layout_marginTop="41dp"
-                android:layout_below="@+id/nameS"
-                android:layout_alignLeft="@+id/mailS"/>
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerCitta"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
-                android:layout_marginTop="76dp"
-                android:spinnerMode="dialog"
-                android:layout_below="@+id/mailS"
-                android:layout_alignLeft="@+id/mailS"
-                android:layout_alignRight="@+id/surnameS" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerUni"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
-
-
-                android:spinnerMode="dialog"
-                android:layout_below="@+id/textView6"
-                android:layout_alignLeft="@+id/spinnerCitta"
-                android:clickable="true"
-                android:layout_alignRight="@+id/spinnerCitta" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/citta"
-                android:id="@+id/textView5"
-                android:layout_alignTop="@+id/spinnerCitta"
-                android:layout_alignLeft="@+id/nameS"
-                android:layout_marginTop="-40dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/uni"
-                android:id="@+id/textView6"
-                android:layout_below="@+id/spinnerCitta"
-                android:layout_alignLeft="@+id/textView5"
-                android:layout_marginTop="20dp"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/passS"
-                android:layout_above="@+id/textView7"
-                android:layout_alignLeft="@+id/spinnerUni" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/pass2S"
-                android:layout_above="@+id/regS"
-                android:layout_alignLeft="@+id/passS"
-                android:layout_marginBottom="30dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/registrati"
-                android:id="@+id/regS"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="959dp"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:weightSum="1"
+                android:id="@+id/linearLayout4"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentTop="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/repeat_pass"
-                android:id="@+id/textView7"
-                android:layout_above="@+id/pass2S"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="35dp" />
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="90dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/password"
-                android:id="@+id/textView8"
-                android:layout_above="@+id/passS"
-                android:layout_alignParentLeft="true" />
+                    <EditText
+                        android:layout_width="165dp"
+                        android:layout_height="wrap_content"
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBarRS"
-                android:visibility="gone"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_alignTop="@+id/checkBox"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-
-                android:id="@+id/editTextFac"
-                android:text="@string/fac"
-                android:layout_below="@+id/spinnerUni"
-                android:layout_alignParentLeft="true"
-                android:layout_alignRight="@+id/textView8" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerFac"
-                android:saveEnabled="true"
-                android:drawSelectorOnTop="true"
+                        android:inputType="text"
+                        android:hint="Nome"
+                        android:id="@+id/nameS"
+                        />
 
 
-                android:spinnerMode="dialog"
-                android:layout_below="@+id/editTextFac"
-                android:layout_alignLeft="@+id/spinnerCitta"
-                android:clickable="true"
-                android:layout_alignRight="@+id/spinnerCitta" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/accept_term"
-                android:id="@+id/checkBox"
-                android:checked="false"
-                android:layout_above="@+id/regS"
-                android:layout_alignParentLeft="true" />
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-56dp"
+                    android:layout_marginRight="-100dp"
+                    android:layout_marginLeft="-10dp">
+
+                    <EditText
+                        android:layout_width="165dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:inputType="text"
+                        android:hint="Cognome"
+                        android:id="@+id/surnameS"
+                        android:layout_marginLeft="190dp"
+                        android:layout_marginTop="-43dp" />
 
 
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/mail_32"
+                        android:inputType="textEmailAddress"
+                        android:hint="Mail"
+                        android:id="@+id/mailS"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+
+
+
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/mobile_32"
+                        android:inputType="phone"
+                        android:hint="Cellulare"
+                        android:id="@+id/cellS"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/citta"
+                    android:textColor="@color/primaryColor"
+                    android:id="@+id/textView5"
+
+                    android:layout_marginTop="40dp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerCitta"
+                    android:saveEnabled="true"
+                    android:drawSelectorOnTop="true"
+                    android:spinnerMode="dialog"
+                    android:layout_marginTop="10dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/uni"
+                    android:textColor="@color/primaryColor"
+                    android:id="@+id/textView6"
+                    android:layout_marginTop="20dp"
+
+                    />
+
+
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerUni"
+                    android:saveEnabled="true"
+                    android:drawSelectorOnTop="true"
+
+
+                    android:spinnerMode="dialog"
+                    android:clickable="true"
+                    android:layout_marginTop="10dp"
+                    />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/primaryColor"
+                    android:id="@+id/editTextFac"
+                    android:text="@string/fac"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerFac"
+                    android:saveEnabled="true"
+                    android:drawSelectorOnTop="true"
+
+
+                    android:spinnerMode="dialog"
+                    android:clickable="true"
+                    android:layout_above="@+id/updateS"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+
+                    />
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/lock_32"
+                        android:inputType="textPassword"
+                        android:hint="Password"
+                        android:id="@+id/passS"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    float:fletPaddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:layout_width="276dp"
+                        android:layout_height="wrap_content"
+
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/lock_32"
+                        android:inputType="textPassword"
+                        android:hint="Ripeti Password"
+                        android:id="@+id/pass2S"
+                        />
+
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_128"
+                    android:alpha="0.3"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-500dp" />
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Registrati"
+                    android:id="@+id/regS"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/smooth_button"
+                    android:layout_marginBottom="84dp"
+                    android:layout_marginTop="499dp"
+                    android:layout_gravity="center_horizontal" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:text="@string/accept_term"
+                    android:id="@+id/checkBox"
+                    android:textColor="@color/primaryColor"
+                    android:checked="false"
+
+                    android:layout_marginTop="-210dp" />
+
+
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:id="@+id/progressBarRS"
+                    style="?android:attr/progressBarStyleLarge"
+
+                    android:layout_gravity="center_horizontal"
+
+                    android:visibility="gone"
+                    android:layout_marginTop="-40dp"
+                    />
+
+
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 

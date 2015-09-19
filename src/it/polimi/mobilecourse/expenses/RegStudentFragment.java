@@ -10,11 +10,23 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import javax.xml.datatype.Duration;
@@ -72,6 +84,8 @@ public class RegStudentFragment extends Fragment {
          view = inflater.inflate(R.layout.regs_frag, container, false);
 
 
+        activity.getTitleToolbar().setText("REGISTRAZIONE STUDENTE");
+        activity.getTitleToolbar().setTextSize(18);
 
          settingsReg();
          setSpinner();
@@ -291,10 +305,45 @@ public class RegStudentFragment extends Fragment {
         String url="registration_student.php?username=".concat(mailS).concat("&").concat("password=").concat(passS).concat("&").concat("nome=")
                 .concat(nameS).concat("&").concat("cognome=").concat(surnameS).concat("&").concat("cellulare=").concat(cellS)
                 .concat("&").concat("id_uni=").concat(idUni).concat("&").concat("id_citta=").concat(idCity).concat("&").concat("id_facolta=").concat(idFac);
-        new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFragment.this).execute();
-        Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
-        Intent myintent = new Intent(view.getContext(), LandingActivity.class);
-        startActivity(myintent);
+        //new RequestFtp().setParameters(activity, url, "regStudente", RegStudentFragment.this).execute();
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                "http://www.unishare.it/tutored/"+url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d("RegFBStudent", "Registrazione avvenuta con successo");
+                            Toast.makeText(getActivity().getApplicationContext(),"Registrazione completata", Toast.LENGTH_LONG).show();
+
+                            Intent myintent = new Intent(getActivity(),HomeStudent.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("user_id", obj.getString("newid"));
+
+                            myintent.putExtras(bundle);
+
+                            startActivity(myintent);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return false;
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("RegFBStudent", "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+        queue.add(jsonObjReq);
 
 
 
@@ -323,6 +372,7 @@ public class RegStudentFragment extends Fragment {
 
             Toast.makeText(getActivity().getApplicationContext(),"Utente già registrato", Toast.LENGTH_LONG).show();
             progress(false);
+            submit.setVisibility(View.VISIBLE);
 
             }
 
