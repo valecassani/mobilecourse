@@ -7,6 +7,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -128,8 +131,21 @@ public class RegStudentFBFragment extends Fragment {
 
         Bundle bundle = activity.getIntent().getExtras();
         String nome = bundle.getString("Nome");
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        SpannableString wordtoSpan = new SpannableString(nome);
+
+        wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, nome.length(),
+                0);
+        builder.append(wordtoSpan);
+        builder.append(",completa il profilo ");
+
+
         TextView complete=(TextView) view.findViewById(R.id.complete);
-        complete.setText(nome + ",completa il profilo.");
+
+
+        complete.setText(builder, TextView.BufferType.SPANNABLE);
 
         progressView=(ProgressBar)view.findViewById(R.id.progressBarRS);
         accept=(CheckBox)view.findViewById(R.id.checkBox);
