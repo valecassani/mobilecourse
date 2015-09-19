@@ -229,4 +229,12 @@ public class Functions {
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
+
+    public static String addZeroesToNum(int value) {
+        if (value < 10 ) {
+            return "0"+value;
+        }
+        return Integer.toString(value);
+
+    }
 }

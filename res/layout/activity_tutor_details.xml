@@ -305,7 +305,8 @@
                                 android:drawablePadding="-40sp"
                                 android:paddingLeft="40dp"
                                 style="?android:attr/borderlessButtonStyle"
-                                android:background="@color/primaryColorDark"
+                                android:background="@drawable/smooth_button"
+                                android:textColor="#FFF"
 
 
                                 android:layout_below="@id/distance"
@@ -388,9 +389,9 @@
                         android:layout_height="wrap_content"
                         android:text="+ Nuova Recensione"
                         android:id="@+id/buttonNewRec"
-
                         style="?android:attr/borderlessButtonStyle"
-                        android:background="@color/primaryColorDark"
+                        android:background="@drawable/smooth_button"
+                        android:textColor="#FFF"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/rec_tutor"

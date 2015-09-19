@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -63,7 +64,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
     private Button buttonAggiorna;
     private NumberPicker durataPicker;
     private ProgressBar progressDialog;
-
+    private Button sceltaDurataButton;
 
     private String idStudente;
     private String idTutor;
@@ -93,6 +94,8 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.dettagli_prenot_frag, container, false);
+
+
         activity = (PrenotazioniDettagliActivity)getActivity();
 
 
@@ -117,6 +120,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
             sceltaDataButton.setVisibility(View.INVISIBLE);
             sceltaOraButton.setVisibility(View.INVISIBLE);
             buttonAggiorna.setVisibility(View.INVISIBLE);
+            sceltaDurataButton.setVisibility(View.INVISIBLE);
 
 
 
@@ -133,7 +137,13 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         TextView materiaText = (TextView) view.findViewById(R.id.materia_prenotazione);
         materiaText.setText(materia);
 
-
+        textDurata = (TextView) view.findViewById(R.id.durata_text);
+        if (!durata.equals("")) {
+            prezzo = Integer.parseInt(prezzoOrario) * Integer.parseInt(durata);
+            textDurata.setText("Prezzo totale: " + prezzo + " Euro");
+        } else {
+            textDurata.setText(" ");
+        }
 
 
 
@@ -188,8 +198,12 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
                 TimePickerDialog mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time = selectedHour + ":" + selectedMinute;
-                        sceltaOra.setText(selectedHour + ":" + selectedMinute);
+                        String h;
+                        String m;
+                        h = Functions.addZeroesToNum(selectedHour);
+                        m = Functions.addZeroesToNum(selectedMinute);
+                        time = h + ":" + m;
+                        sceltaOra.setText(h + ":" + m);
 
 
                     }
@@ -211,6 +225,15 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
             }
         });
 
+        sceltaDurataButton = (Button) view.findViewById(R.id.button_durata);
+        sceltaDurataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPicker();
+            }
+        });
+
+
         editTextCellulare = (TextView) view.findViewById(R.id.cellulare_prenotaz);
         editTextCellulare.setText(cellulare);
 
@@ -221,6 +244,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
                 aggiornaPrenotazione();
             }
         });
+
 
 
 
@@ -261,7 +285,6 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
                 params.put("data", date);
                 params.put("id_tutor", idTutor);
                 params.put("ora", time);
-                params.put("durata", "");
                 params.put("materia", materia);
                 params.put("note", note);
                 params.put("id_prenotazione", idPrenotazione);
@@ -464,16 +487,22 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         materia = obj.getString("nome_materia");
         cellulare = obj.getString("cellulare");
         idStudente = obj.getString("id_studente");
+        durata = obj.getString("durata");
         idTutor = obj.getString("id_tutor");
         confermato = obj.getString("confermato");
         idPrenotazione = obj.getString("id");
         tutor = obj.getString("nome_tutor") + " " + obj.getString("cognome_tutor");
         studente = obj.getString("nome_studente") + " " + obj.getString("cognome_studente");
+        prezzoOrario = obj.getString("prezzo_orario");
+
+
 
 
         note = obj.getString("note");
 
     }
+
+
 }
 
 

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -95,6 +96,9 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
 
                 showResults(searchSubject.getText().toString());
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchSubject.getWindowToken(),
+                        InputMethodManager.RESULT_UNCHANGED_SHOWN);
                 /*Criteria criteria = new Criteria();
                 provider = locationManager.getBestProvider(criteria, false);
                 Location location = getLocation();

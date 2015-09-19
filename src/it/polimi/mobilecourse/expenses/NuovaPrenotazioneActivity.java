@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -169,9 +170,12 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                 TimePickerDialog mTimePicker = new TimePickerDialog(NuovaPrenotazioneActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time = selectedHour + ":" + selectedMinute;
-                        sceltaOra.setText(selectedHour + ":" + selectedMinute);
-                        //time.setTime(selectedHour);
+                        String h;
+                        String m;
+                        h = Functions.addZeroesToNum(selectedHour);
+                        m = Functions.addZeroesToNum(selectedMinute);
+                        time = h + ":" + m;
+                        sceltaOra.setText(h + ":" + m);
                     }
                 }, hour, minute, true);
 
@@ -283,7 +287,60 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
     private void inviaPrenotazione() {
 
         try {
-            if (sceltaData != null) {
+            if (date != null && time != null && durata != null) {
+                String url = "http://www.unishare.it/tutored/add_prenotazione.php";
+
+
+                StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public boolean onResponse(String response) {
+                                // response
+                                Log.d("Response", response);
+                                return false;
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.getMessage());
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("id_studente", sessionManager.getUserDetails().get("id"));
+                        Log.d(TAG, sessionManager.getUserDetails().get("id"));
+                        params.put("data", date);
+
+                        params.put("id_tutor", idTutor);
+
+                        params.put("ora", time);
+                        Log.d(TAG, time);
+
+                        params.put("durata", durata);
+                        params.put("materia", materiaId);
+
+                        params.put("note", "");
+                        Log.d(TAG, "");
+
+
+
+                        params.put("confermato", "0");
+                        Log.d(TAG, "0");
+
+
+
+                        return params;
+                    }
+                };
+                queue.add(jsObjRequest);
+                Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT).show();
+                finish();
+
 
 
             } else {
@@ -298,58 +355,6 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
             Toast.makeText(context, "Mancano dei dati", Toast.LENGTH_SHORT).show();
         }
 
-        String url = "http://www.unishare.it/tutored/add_prenotazione.php";
-
-
-        StringRequest jsObjRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public boolean onResponse(String response) {
-                        // response
-                        Log.d("Response", response);
-                        return false;
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.getMessage());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id_studente", sessionManager.getUserDetails().get("id"));
-                Log.d(TAG, sessionManager.getUserDetails().get("id"));
-                params.put("data", date);
-
-                params.put("id_tutor", idTutor);
-
-                params.put("ora", time);
-                Log.d(TAG, time);
-
-                params.put("durata", durata);
-                params.put("materia", materiaId);
-
-                params.put("note", "");
-                Log.d(TAG, "");
-
-
-
-                params.put("confermato", "0");
-                Log.d(TAG, "0");
-
-
-
-                return params;
-            }
-        };
-        queue.add(jsObjRequest);
-        Toast.makeText(context, "Prenotazione Aggiunta", Toast.LENGTH_SHORT).show();
-        finish();
 
     }
 
