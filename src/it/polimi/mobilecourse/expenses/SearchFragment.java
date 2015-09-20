@@ -91,6 +91,7 @@ public class SearchFragment extends Fragment {
         testa=(TextView)view.findViewById(R.id.testa);
 
         searchButton = (ButtonFloat)view.findViewById(R.id.search_tutor_button);
+        searchButton.setBackgroundColor(getResources().getColor(R.color.primaryColor));
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         mListView=(ListView)view.findViewById(R.id.result_tutor_search);
         progress=(ProgressBar)view.findViewById(R.id.progressBarRicercaTutor);

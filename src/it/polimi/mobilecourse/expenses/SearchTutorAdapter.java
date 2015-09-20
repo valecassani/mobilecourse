@@ -1,6 +1,8 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,8 @@ public class SearchTutorAdapter extends BaseAdapter {
         TextView nome = (TextView) convertView.findViewById(R.id.ricerca_tutor_nome);
         TextView uni= (TextView) convertView.findViewById(R.id.ricerca_tutor_uni);
         RatingBar media = (RatingBar) convertView.findViewById(R.id.ricerca_tutor_media);
+        LayerDrawable stars=(LayerDrawable)media.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_ATOP);
         CircularImageView img = (CircularImageView) convertView.findViewById(R.id.search_tutor_image);
 
 

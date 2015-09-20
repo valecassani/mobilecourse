@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d8d8d8">
+        >
         <com.pkmmte.view.CircularImageView
             android:layout_centerVertical="true"
             android:layout_width="56dp"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_margin="5dp"
             android:layout_height="match_parent"
-            android:textColor="#000"
+            android:textColor="@color/primaryColor"
             android:textStyle="bold"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:id="@+id/richiesta_nome"/>

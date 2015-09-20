@@ -10,7 +10,7 @@
         android:layout_height="56dp"
         android:layout_margin="8dp"
         app:border="true"
-        app:border_color="#000"
+        app:border_color="@color/primaryColor"
         app:border_width="4dp"
         app:shadow="true"
         app:backgroundTint="@color/material_blue_500"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_margin="5dp"
         android:layout_height="match_parent"
-        android:textColor="#000"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         android:textSize="14sp"
         android:id="@+id/ricerca_tutor_nome"/>
@@ -37,7 +37,7 @@
         android:layout_margin="5dp"
         android:layout_height="match_parent"
         android:textColor="#000"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textSize="14sp"
         android:id="@+id/ricerca_tutor_uni"/>
 
