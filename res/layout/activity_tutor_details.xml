@@ -99,6 +99,7 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/tutor_textv"
                                 android:text="Occupazione"
+                                android:textColor="@color/primaryColor"
 
                                 android:layout_below="@+id/tutor_eta"
                                 android:layout_alignLeft="@+id/tutor_occupazione"
@@ -120,6 +121,7 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textViewespuni"
                                 android:text="Esperienze da tutor:"
+                                android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_occupazione"
                                 android:layout_marginRight="28dp"
 
@@ -141,6 +143,7 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv2"
                                 android:text="Esperienze universitarie:"
+                                android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_esptutor"
                                 android:layout_marginRight="28dp"
 
@@ -162,6 +165,7 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv3"
                                 android:text="Università:"
+                                android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_espuni"
                                 android:layout_marginRight="28dp"
 
@@ -183,6 +187,7 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv4"
                                 android:text="Facoltà:"
+                                android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_uni"
                                 android:layout_marginRight="28dp"
 
@@ -229,6 +234,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:text="Caratteristiche lezioni:"
+                                android:textColor="@color/primaryColor"
                                 android:id="@+id/textViewlez"
                                 android:layout_below="@+id/tutor_fac"
                                 android:layout_marginLeft="5dp"
@@ -281,6 +287,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Distanza:"
+                                android:textColor="@color/primaryColor"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
 
                                 android:id="@+id/distText"
