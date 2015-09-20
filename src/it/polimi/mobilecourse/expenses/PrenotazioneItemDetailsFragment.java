@@ -435,9 +435,10 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
     {
 
         final Dialog d = new Dialog(getActivity());
-        d.setTitle("Durata Riptezione");
+        d.setTitle("N° ore della ripetizione");
         d.setContentView(R.layout.dialog_number);
         Button b1 = (Button) d.findViewById(R.id.button1);
+
         Button b2 = (Button) d.findViewById(R.id.button2);
         final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
         np.setMaxValue(24);

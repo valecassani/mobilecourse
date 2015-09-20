@@ -11,22 +11,30 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp" />
 
+
+
+    <Button
+        android:src="@drawable/ic_success"
+        android:id="@+id/button1"
+        android:background="@drawable/smooth_button"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Conferma"
+        android:layout_below="@+id/numberPicker1"
+        android:layout_toRightOf="@+id/numberPicker1"
+        android:layout_marginTop="128dp" />
+
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Annulla"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@id/button1" />
-
-    <Button
-        android:src="@drawable/ic_success"
-        android:id="@id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Conferma"/>
+        android:background="@drawable/smooth_button"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/button1"
+        android:layout_toLeftOf="@+id/numberPicker1" />
 
 </RelativeLayout>

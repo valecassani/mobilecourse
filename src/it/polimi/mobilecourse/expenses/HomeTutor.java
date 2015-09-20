@@ -445,7 +445,6 @@ public class HomeTutor extends AppCompatActivity {
                 bundle.putString("id",userId);
                 Intent intent = new Intent(this,UpdateInfo.class);
                 title.setTextSize(18);
-                title.setText("PROFILO");
                 intent.putExtras(bundle);
                 startActivity(intent);
                 fragment = null;

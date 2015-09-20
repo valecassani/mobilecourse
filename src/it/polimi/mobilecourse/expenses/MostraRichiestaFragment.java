@@ -87,6 +87,7 @@ public class MostraRichiestaFragment extends Fragment {
 
     private RequestQueue queue;
     private View view;
+    private HomeTutor activity;
     String idr;
 
     NotificationCompat.Builder mBuilder;
@@ -135,6 +136,10 @@ public class MostraRichiestaFragment extends Fragment {
         view = inflater.inflate(R.layout.mostra_richiesta_fragment, container, false);
         sc=(ScrollView)view.findViewById(R.id.container);
         queue= Volley.newRequestQueue(view.getContext());
+
+        activity.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+        activity.getTitleToolbar().setTextSize(18);
+
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Dati richiesta");
@@ -709,6 +714,15 @@ public class MostraRichiestaFragment extends Fragment {
 
         return filePath;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+
+        this.activity = (HomeTutor) activity;
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package it.polimi.mobilecourse.expenses;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -49,6 +50,7 @@ public class PrenotazioniFragment extends Fragment {
 
     private final String TAG = "Prenotazioni";
     private RequestQueue queue;
+    private HomeTutor activity;
     private ArrayList<PrenotazioniItem> items;
     private Context context;
     private RecyclerView mRecyclerView;
@@ -86,6 +88,10 @@ public class PrenotazioniFragment extends Fragment {
                 tutorId=getArguments().getString("tutor_id");
             }
         }
+
+
+        activity.getTitleToolbar().setText("PRENOTAZIONI");
+        activity.getTitleToolbar().setTextSize(18);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_prenotazioni);
         mSwipeRefresh.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
@@ -329,6 +335,14 @@ public class PrenotazioniFragment extends Fragment {
 
 
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+
+        this.activity = (HomeTutor) activity;
     }
 
 

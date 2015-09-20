@@ -45,6 +45,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
     private Context context;
     private ProgressBar progress;
+    private AppCompatActivity activity;
     private String indirizzo;
     private TabHost th;
     private float realdist;
@@ -90,6 +91,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
         setContentView(R.layout.prenotazione_dettagli_activity);
 
+
         context = getApplicationContext();
 
         th = (TabHost) findViewById(R.id.tabHostP);
@@ -104,6 +106,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         ts.setIndicator("Mappa");
 
         th.addTab(ts);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         queue = Volley.newRequestQueue(context);
