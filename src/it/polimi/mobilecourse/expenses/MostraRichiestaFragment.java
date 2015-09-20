@@ -563,6 +563,12 @@ public class MostraRichiestaFragment extends Fragment {
                 //The sdcard directory e.g. '/sdcard' can be used directly, or
                 //more safely abstracted with getExternalStorageDirectory()
 
+                String folder="Tutored";
+                File f=new File(Environment.getExternalStorageDirectory(),folder);
+                if(!f.exists()){
+                    f.mkdirs();
+                }
+
                 File storagePath = Environment.getExternalStorageDirectory();
                 path=Environment.getExternalStorageDirectory().toString()+"/Tutored";
                 OutputStream output = new FileOutputStream (path + "/imageRichiesta.jpg");
