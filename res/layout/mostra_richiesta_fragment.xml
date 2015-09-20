@@ -87,30 +87,34 @@
 
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Invia notifica"
         android:id="@+id/buttonAccettaR"
+
         style="?android:attr/borderlessButtonStyle"
-        android:background="@color/primaryColorDark"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:background="@drawable/smooth_button"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
 
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="Scarica foto"
 
-        android:drawableLeft="@drawable/download_icon"
+        android:drawableLeft="@drawable/download_24"
         android:drawablePadding="-17sp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="9dp"
         android:id="@+id/buttonDownload"
         style="?android:attr/borderlessButtonStyle"
-        android:background="@color/com_facebook_button_send_background_color"
+        android:background="@drawable/smooth_button"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:layout_marginBottom="85dp"
         android:layout_above="@+id/buttonAccettaR"
         android:layout_centerHorizontal="true" />
