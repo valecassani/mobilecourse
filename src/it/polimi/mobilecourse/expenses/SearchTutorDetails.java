@@ -66,6 +66,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Toolbar toolbar;
+    private HomeStudent activity;
     private ProgressBar progressView;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
@@ -151,6 +152,10 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_tutor_details, container, false);
         progressView = (ProgressBar) view.findViewById(R.id.progressBarTut);
+
+        activity.getTitleToolbar().setText("PROFILO TUTOR");
+        activity.getTitleToolbar().setTextSize(18);
+
 
         context = view.getContext();
 
@@ -918,6 +923,14 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         });
 
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+
+        this.activity =  (HomeStudent)activity;
     }
 
 

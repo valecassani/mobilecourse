@@ -14,6 +14,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -191,7 +194,17 @@ public class SearchFragment extends Fragment {
                             mListView.setAdapter(adapter);
 
                             if (!searchTerm.equals("")) {
-                                testa.setText("Risultati della ricerca per '" + searchTerm + "'");
+
+                                SpannableStringBuilder builder = new SpannableStringBuilder();
+                                builder.append("Risultati della ricerca per '");
+                                SpannableString wordtoSpan = new SpannableString(searchTerm);
+
+                                wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, searchTerm.length(),
+                                        0);
+                                builder.append(wordtoSpan);
+                                builder.append("'");
+
+                                testa.setText(builder, TextView.BufferType.SPANNABLE);
                             }
 
 
