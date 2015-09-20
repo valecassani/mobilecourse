@@ -26,6 +26,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -270,15 +273,59 @@ public class MostraRichiestaFragment extends Fragment {
 
     private void setField(){
 
-       nome.setText("Richiesta di " + nomeR + " " + cognomeR.substring(0, 1) + ".");
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        SpannableString wordtoSpan = new SpannableString("Richiesta di ");
+
+        wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, "Richiesta di ".length(),
+                0);
+        builder.append(wordtoSpan);
+        builder.append(nomeR);
+        builder.append(" ");
+        builder.append(cognomeR.substring(0,1));
+        builder.append(".");
+
+
+       nome.setText(builder, TextView.BufferType.SPANNABLE);
+
+
         titolo.setText(titoloR);
         testo.setText(testoR);
-        data.setText("Entro il " + Functions.convertiData(data_entroR.substring(0, 10)));
+
+        SpannableStringBuilder builderData = new SpannableStringBuilder();
+
+        String entro="Entro il ";
+        SpannableString wordtoSpandue = new SpannableString(entro);
+
+        wordtoSpandue.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, entro.length(),
+                0);
+        builderData.append(wordtoSpandue);
+        builderData.append(Functions.convertiData(data_entroR.substring(0,10)));
+
+        data.setText(builderData, TextView.BufferType.SPANNABLE);
+
+
         if(uniR.compareTo("0")!=0){
-            uni.setText("Università:"+uniR);
+            SpannableStringBuilder builderUni = new SpannableStringBuilder();
+            SpannableString wordtospantre = new SpannableString("Università:");
+
+            wordtospantre.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, "Università:".length(),
+                    0);
+            builderUni.append(wordtospantre);
+            builderUni.append(uniR);
+
+            uni.setText(builderUni,TextView.BufferType.SPANNABLE);
         }
         if(facR.compareTo("0")!=0){
-            facolta.setText("Facoltà:" + facR);
+            SpannableStringBuilder builderFac = new SpannableStringBuilder();
+
+            SpannableString wordtosp = new SpannableString("Facoltà:");
+
+            wordtosp.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, "Facoltà:".length(),
+                    0);
+            builderFac.append(wordtosp);
+            builderFac.append(facR);
+
+            facolta.setText(builderFac,TextView.BufferType.SPANNABLE);
         }
         if(urlR.compareTo("0")!=0){
              downloadImage();

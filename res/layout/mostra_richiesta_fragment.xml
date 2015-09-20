@@ -103,13 +103,14 @@
 
 
     <Button
-        android:layout_width="170dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Scarica foto"
 
         android:drawableLeft="@drawable/download_24"
         android:drawablePadding="-17sp"
-        android:paddingLeft="9dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="-10dp"
         android:id="@+id/buttonDownload"
         style="?android:attr/borderlessButtonStyle"
         android:background="@drawable/smooth_button"
