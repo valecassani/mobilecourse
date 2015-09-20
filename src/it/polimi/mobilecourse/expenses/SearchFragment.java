@@ -77,6 +77,10 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.search_fragment, container, false);
 
+
+        activity.getTitleToolbar().setText("CERCA UN TUTOR");
+        activity.getTitleToolbar().setTextSize(18);
+
         queue= Volley.newRequestQueue(view.getContext());
         context = view.getContext();
 
