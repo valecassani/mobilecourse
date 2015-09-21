@@ -1,133 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
 
 
     >
-    <LinearLayout android:orientation="vertical"
-        android:layout_height="match_parent"
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
 
         android:weightSum="1">
 
-<RelativeLayout  android:layout_width="match_parent"
-    android:layout_height="643dp"
->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="643dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/nameRichiesta"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp" />
+            <TextView
+                android:id="@+id/nameRichiesta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/titleRichiesta"
+                android:layout_marginTop="42dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/titleRichiesta"
-        android:layout_below="@+id/dataR"
-        android:layout_alignLeft="@+id/nameRichiesta" />
+            <TextView
+                android:id="@+id/titleRichiesta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/nameRichiesta"
+                android:textColor="@color/primaryColorDark"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/testoRichiesta"
-        android:layout_below="@+id/titleRichiesta"
-        android:layout_marginTop="48dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+            <TextView
+                android:id="@+id/testoRichiesta"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/dataR"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="48dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/uniRichiesta"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/testoRichiesta" />
+            <TextView
+                android:id="@+id/uniRichiesta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/testoRichiesta"
+                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/facRichiesta"
-        android:layout_below="@+id/uniRichiesta"
-        android:layout_alignLeft="@+id/uniRichiesta" />
-
-
-
+            <TextView
+                android:id="@+id/facRichiesta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/uniRichiesta"
+                android:layout_below="@+id/uniRichiesta"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
+            <TextView
+                android:id="@+id/dataR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/nameRichiesta"
+                android:layout_below="@+id/nameRichiesta"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ProgressBar
+                android:id="@+id/progressBarRichiesta"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/uniRichiesta"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/dataR"
-        android:layout_below="@+id/nameRichiesta"
-        android:layout_alignRight="@+id/titleRichiesta" />
+            <Button
+                android:id="@+id/buttonAccettaR"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBarRichiesta"
-        style="?android:attr/progressBarStyleLarge"
-        android:visibility="gone"
-        android:layout_above="@+id/uniRichiesta"
-        android:layout_centerHorizontal="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/smooth_button"
+
+                android:text="Invia notifica"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Invia notifica"
-        android:id="@+id/buttonAccettaR"
+            <Button
+                android:id="@+id/buttonDownload"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="150dp"
 
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@drawable/smooth_button"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
-
-
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Scarica foto"
-
-        android:drawableLeft="@drawable/download_24"
-        android:drawablePadding="-17sp"
-        android:paddingLeft="5dp"
-        android:paddingRight="-10dp"
-        android:id="@+id/buttonDownload"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@drawable/smooth_button"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_marginBottom="85dp"
-        android:layout_above="@+id/buttonAccettaR"
-        android:layout_centerHorizontal="true" />
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/buttonAccettaR"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="85dp"
+                android:background="@drawable/smooth_button"
+                android:drawableLeft="@drawable/download_24"
+                android:drawablePadding="-17sp"
+                android:paddingLeft="5dp"
+                android:paddingRight="-10dp"
+                android:text="Scarica foto"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
 
+        </RelativeLayout>
 
 
-</RelativeLayout>
-
-
-
-</LinearLayout>
+    </LinearLayout>
 
 </ScrollView>
 

@@ -7,10 +7,13 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -115,6 +118,8 @@ public class GcmIntentService extends IntentService{
 
 
             //l'iconcina te l'ho messa nella cartella e va in drawable-hdpi
+            Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.gmc_img)
@@ -123,9 +128,18 @@ public class GcmIntentService extends IntentService{
                                     .bigText(msg))
                             .setContentText(msg);
 
+            Notification note = mBuilder.build();
+
+            note.defaults |= Notification.DEFAULT_VIBRATE;
+            note.defaults |= Notification.DEFAULT_SOUND;
+
+
+
+
+
             mBuilder.setAutoCancel(true);
             mBuilder.setContentIntent(contentIntent);
-            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+            mNotificationManager.notify(NOTIFICATION_ID, note);
         }
     }
 

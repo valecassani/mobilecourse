@@ -81,7 +81,11 @@ public class PrenotazioniFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
+
         View view = inflater.inflate(R.layout.ripet_fragment, container, false);
+
+        setRetainInstance(true);
+
         if (getArguments().getString("student_id")!= null) {
             studentId=getArguments().getString("student_id");
             tipo = "0";
@@ -350,15 +354,20 @@ public class PrenotazioniFragment extends Fragment {
         super.onAttach(activity);
         try {
             this.activityT = (HomeTutor) activity;
+
+
+            activityT.getTitleToolbar().setText("PRENOTAZIONI");
+            activityT.getTitleToolbar().setTextSize(18);
+
             return;
 
-        } catch (ClassCastException e){
-            Log.d(TAG,"utente non è tutor");
+        } catch (ClassCastException e) {
 
         }
         this.activityS = (HomeStudent) activity;
+        activityS.getTitleToolbar().setText("PRENOTAZIONI");
+        activityS.getTitleToolbar().setTextSize(18);
     }
-
 
 
 }

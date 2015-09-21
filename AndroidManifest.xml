@@ -153,7 +153,7 @@
         <activity
             android:name=".PrenotazioniDettagliActivity"
             android:theme="@style/PageTheme"
-            android:label="Dettagli prenotazione"></activity>
+           />
         <activity
             android:name=".GCMMainActivity"
             android:theme="@style/Base.Theme.AppCompat.Light" >

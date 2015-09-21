@@ -39,13 +39,15 @@
                         android:layout_centerHorizontal="true" />
 
 
-                    <fragment
+
+
+                    <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/fragreplace"
                         android:name="it.polimi.mobilecourse.expenses.FragReplace"
-                        />
+                        android:orientation="horizontal" />
 
 
 

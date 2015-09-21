@@ -138,8 +138,14 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
 
 
             } else {
-                Picasso.with(context.getApplicationContext()).load("http://www.unishare.it/tutored/" + items.get(position).getStudentUrl()
-                ).into(holder.imageTutor);
+                try {
+                    Picasso.with(context.getApplicationContext()).load("http://www.unishare.it/tutored/" + items.get(position).getStudentUrl()
+                    ).into(holder.imageTutor);
+
+                } catch (NullPointerException e) {
+
+                }
+
 
             }
         }

@@ -94,6 +94,7 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.dettagli_prenot_frag, container, false);
+        setRetainInstance(true);
 
 
         activity = (PrenotazioniDettagliActivity)getActivity();
@@ -116,16 +117,81 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
 
         if (confermato.equals("1")) {
-            sendButton.setVisibility(View.INVISIBLE);
-            sceltaDataButton.setVisibility(View.INVISIBLE);
-            sceltaOraButton.setVisibility(View.INVISIBLE);
+            sendButton.setText("Prenotazione Confermata");
+
             buttonAggiorna.setVisibility(View.INVISIBLE);
-            sceltaDurataButton.setVisibility(View.INVISIBLE);
 
 
 
         } else {
             editTextCellulare.setVisibility(View.INVISIBLE);
+            sceltaDataButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar newCalendar = Calendar.getInstance();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            Calendar newDate = Calendar.getInstance();
+                            newDate.set(year, monthOfYear, dayOfMonth);
+                            sceltaData.setText(Functions.convertiData(simpleDateFormat.format(newDate.getTime())));
+                            date = simpleDateFormat.format(newDate.getTime());
+
+
+                        }
+
+                    }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+                    datePickerDialog.show();
+
+                }
+            });
+            sceltaOraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    TimePickerDialog mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            String h;
+                            String m;
+                            h = Functions.addZeroesToNum(selectedHour);
+                            m = Functions.addZeroesToNum(selectedMinute);
+                            time = h + ":" + m;
+                            sceltaOra.setText(h + ":" + m);
+
+
+                        }
+                    }, hour, minute, true);
+
+                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
+                }
+            });
+            sendButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    confermaPrenotazione();
+
+
+                }
+            });
+            buttonAggiorna.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    aggiornaPrenotazione();
+                }
+            });
+            sceltaDurataButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPicker();
+                }
+            });
+
+
         }
 
         TextView mTutorText = (TextView) view.findViewById(R.id.tutor_selezionato);
@@ -158,27 +224,9 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
         sceltaDataButton = (Button) view.findViewById(R.id.button_data);
 
-        sceltaDataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar newCalendar = Calendar.getInstance();
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        sceltaData.setText(Functions.convertiData(simpleDateFormat.format(newDate.getTime())));
-                        date = simpleDateFormat.format(newDate.getTime());
 
 
-                    }
 
-                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-                datePickerDialog.show();
-
-            }
-        });
 
         sessionManager = new SessionManager(context);
         System.out.println(sessionManager.getUserDetails().get("id"));
@@ -189,61 +237,19 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
         sceltaOra.setText(time);
 
         sceltaOraButton = (Button) view.findViewById(R.id.ora_scelta_button);
-        sceltaOraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        String h;
-                        String m;
-                        h = Functions.addZeroesToNum(selectedHour);
-                        m = Functions.addZeroesToNum(selectedMinute);
-                        time = h + ":" + m;
-                        sceltaOra.setText(h + ":" + m);
 
-
-                    }
-                }, hour, minute, true);
-
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
-        });
 
 
         sendButton = (Button) view.findViewById(R.id.button_conferma_prenotazione);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confermaPrenotazione();
 
-
-            }
-        });
 
         sceltaDurataButton = (Button) view.findViewById(R.id.button_durata);
-        sceltaDurataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPicker();
-            }
-        });
 
 
         editTextCellulare = (TextView) view.findViewById(R.id.cellulare_prenotaz);
-        editTextCellulare.setText(cellulare);
+        editTextCellulare.setText("Cellulare Tutor: " + cellulare);
 
         buttonAggiorna = (Button) view.findViewById(R.id.button_aggiorna_prenotazione);
-        buttonAggiorna.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                aggiornaPrenotazione();
-            }
-        });
 
 
 

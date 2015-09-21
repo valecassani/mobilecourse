@@ -64,7 +64,7 @@ public class RichiesteCardAdapter extends RecyclerView.Adapter<RichiesteCardAdap
 
             FragmentManager fragmentManager = ((Activity)context).getFragmentManager();
 
-            Fragment fragment = new MostraRichiestaFragment();
+            Fragment fragment = new ModificaRichiestaFragment();
             Bundle bundle = new Bundle();
             bundle.putString("idr", items.get(getAdapterPosition()).getId());
             fragment.setArguments(bundle);

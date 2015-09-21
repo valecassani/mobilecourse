@@ -122,6 +122,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("NUOVA PRENOTAZIONE");
 
         TextView mTutorSelezionato = (TextView) findViewById(R.id.tutor_selezionato);
         mTutorSelezionato.setText(nomeTutor + " " + cognomeTutor);

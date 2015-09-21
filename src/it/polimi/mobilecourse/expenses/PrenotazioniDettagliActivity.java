@@ -108,6 +108,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         th.addTab(ts);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("DETTAGLI PRENOTAZIONE");
 
         queue = Volley.newRequestQueue(context);
 
@@ -300,7 +301,17 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateData();
 
+    }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        populateData();
+    }
 
 }

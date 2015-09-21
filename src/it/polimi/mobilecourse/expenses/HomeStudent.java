@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -140,7 +142,7 @@ public class HomeStudent extends AppCompatActivity {
 
 
 
-        // set a custom shadow that overlays the main content when the drawer opens
+        // set a custom shadow that overlays the main content when the drawer
 
         mDrawerItems = new ArrayList<NavDrawerItem>();
 
@@ -190,6 +192,12 @@ public class HomeStudent extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -237,9 +245,13 @@ public class HomeStudent extends AppCompatActivity {
                                                         .bigText("Hai una prenotazione oggi!"))
                                                 .setContentText("Hai una prenotazione oggi!");
 
+                                Notification note = mBuilder.build();
+                                note.defaults |= Notification.DEFAULT_VIBRATE;
+                                note.defaults |= Notification.DEFAULT_SOUND;
+
                                 mBuilder.setAutoCancel(true);
                                 mBuilder.setContentIntent(contentIntent);
-                                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+                                mNotificationManager.notify(NOTIFICATION_ID, note);
 
 
                             } else {
@@ -276,8 +288,7 @@ public class HomeStudent extends AppCompatActivity {
 
     private void loadUserInfos() {
 
-        titleBar.setTextSize(18);
-        titleBar.setText("HOME");
+
 
         if (Profile.getCurrentProfile() != null) {
             Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);

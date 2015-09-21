@@ -2,24 +2,15 @@ package it.polimi.mobilecourse.expenses;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,16 +21,11 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -52,13 +38,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,14 +49,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Matteo on 20/08/2015.
@@ -87,7 +61,7 @@ public class MostraRichiestaFragment extends Fragment {
 
     private RequestQueue queue;
     private View view;
-    private HomeTutor activity;
+    private HomeTutor activityT;
     String idr;
 
     NotificationCompat.Builder mBuilder;
@@ -128,6 +102,7 @@ public class MostraRichiestaFragment extends Fragment {
     private Animator mCurrentAnimator;
 
     private int mShortAnimationDuration;
+    private HomeStudent activityS;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -136,13 +111,18 @@ public class MostraRichiestaFragment extends Fragment {
         view = inflater.inflate(R.layout.mostra_richiesta_fragment, container, false);
         sc=(ScrollView)view.findViewById(R.id.container);
         queue= Volley.newRequestQueue(view.getContext());
+        if (activityT!=null){
 
-        activity.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
-        activity.getTitleToolbar().setTextSize(18);
+            activityT.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+            activityT.getTitleToolbar().setTextSize(18);
+        } else {
+            activityS.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+            activityS.getTitleToolbar().setTextSize(18);
+
+        }
 
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Dati richiesta");
+
 
 
         Bundle bundle=this.getArguments();
@@ -362,7 +342,7 @@ public class MostraRichiestaFragment extends Fragment {
             }
         });
 
-        /*Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
+        /*Picasso.with(activityT.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
         ).into(fotor);
 
         fotor.setVisibility(View.VISIBLE);
@@ -393,7 +373,7 @@ public class MostraRichiestaFragment extends Fragment {
 
 
         };
-        Picasso.with(activity.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
+        Picasso.with(activityT.getApplicationContext()).load("http://www.unishare.it/tutored/" + urlR
             ).into(t);
 
 
@@ -643,7 +623,7 @@ public class MostraRichiestaFragment extends Fragment {
             } finally {
                 try {
                     input.close();
-                } catch (IOException e) {
+                } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
             }
@@ -674,7 +654,10 @@ public class MostraRichiestaFragment extends Fragment {
 
                 PendingIntent contentIntent= PendingIntent.getActivity(getActivity(), 0, intent, 0);
                 mBuilder.setContentIntent(contentIntent);
-                nm.notify(0,mBuilder.build());
+                Notification note = mBuilder.build();
+                note.defaults |= Notification.DEFAULT_VIBRATE;
+                note.defaults |= Notification.DEFAULT_SOUND;
+                nm.notify(0,note);
 
 
                 progress(false);
@@ -719,8 +702,17 @@ public class MostraRichiestaFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        try {
+            this.activityT = (HomeTutor) activity;
+            return;
 
-        this.activity = (HomeTutor) activity;
+        } catch (ClassCastException c) {
+
+        }
+
+        this.activityS = (HomeStudent)activity;
+
+
     }
 
 

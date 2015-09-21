@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -30,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -197,7 +199,13 @@ public class HomeTutor extends AppCompatActivity {
 
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();// creates call to onPrepareOptionsMenu()
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -244,10 +252,13 @@ public class HomeTutor extends AppCompatActivity {
                                                 .setStyle(new NotificationCompat.BigTextStyle()
                                                         .bigText("Hai una prenotazione oggi!"))
                                                 .setContentText("Hai una prenotazione oggi!");
+                                Notification note = mBuilder.build();
+                                note.defaults |= Notification.DEFAULT_VIBRATE;
+                                note.defaults |= Notification.DEFAULT_SOUND;
 
                                 mBuilder.setAutoCancel(true);
                                 mBuilder.setContentIntent(contentIntent);
-                                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+                                mNotificationManager.notify(NOTIFICATION_ID, note);
 
 
                             } else {
