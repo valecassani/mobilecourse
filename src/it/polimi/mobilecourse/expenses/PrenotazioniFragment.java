@@ -210,6 +210,8 @@ public class PrenotazioniFragment extends Fragment {
                                 item.setStudentIdfb(obj.getString("student_idfb"));
                                 item.setStudentUrl(obj.getString("student_url"));
                                 item.setOraInizio(obj.getString("orainizio"));
+                                item.setIdTutor(obj.getString("id_tutor"));
+                                item.setIdStudente(obj.getString("id_studente"));
                                 items.add(item);
 
 
@@ -367,6 +369,27 @@ public class PrenotazioniFragment extends Fragment {
         this.activityS = (HomeStudent) activity;
         activityS.getTitleToolbar().setText("PRENOTAZIONI");
         activityS.getTitleToolbar().setTextSize(18);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+
+
+
+            activityT.getTitleToolbar().setText("PRENOTAZIONI");
+            activityT.getTitleToolbar().setTextSize(18);
+
+            return;
+
+        } catch (NullPointerException e) {
+
+        }
+
+        activityS.getTitleToolbar().setText("PRENOTAZIONI");
+        activityS.getTitleToolbar().setTextSize(18);
+
     }
 
 

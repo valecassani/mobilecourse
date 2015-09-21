@@ -259,11 +259,56 @@ public class HomeTutor extends AppCompatActivity {
                                 mBuilder.setAutoCancel(true);
                                 mBuilder.setContentIntent(contentIntent);
                                 mNotificationManager.notify(NOTIFICATION_ID, note);
+                                setPrenotAlreadyNotified(obj.getString("id_prenotaz"));
 
 
                             } else {
                                 Log.d(TAG,"Nessuna notifica per oggi");
                             }
+
+                            return false;
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
+
+
+    }
+
+    private void setPrenotAlreadyNotified(String idPrenotazione) {
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        String url = "http://www.unishare.it/tutored/update_pren_for_notif.php?id=" + idPrenotazione;
+
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG,response.toString());
 
                             return false;
 

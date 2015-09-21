@@ -34,6 +34,8 @@ public class PrenotazioniItem {
     private String id;
     private boolean confermato;
     private String durata;
+    private String idTutor;
+    private String idStudente;
 
     private String tutorIdfb;
     private String tutorUrl;
@@ -156,5 +158,21 @@ public class PrenotazioniItem {
     public boolean isConfermato() {return confermato;}
 
     public String getDurata() { return durata;
+    }
+
+    public String getIdTutor() {
+        return idTutor;
+    }
+
+    public void setIdTutor(String idTutor) {
+        this.idTutor = idTutor;
+    }
+
+    public String getIdStudente() {
+        return idStudente;
+    }
+
+    public void setIdStudente(String idStudente) {
+        this.idStudente = idStudente;
     }
 }

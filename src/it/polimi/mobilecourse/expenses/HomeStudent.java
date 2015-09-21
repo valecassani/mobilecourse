@@ -245,6 +245,8 @@ public class HomeStudent extends AppCompatActivity {
                                                         .bigText("Hai una prenotazione oggi!"))
                                                 .setContentText("Hai una prenotazione oggi!");
 
+                                setPrenotAlreadyNotified(obj.getString("id_prenotaz"));
+
                                 Notification note = mBuilder.build();
                                 note.defaults |= Notification.DEFAULT_VIBRATE;
                                 note.defaults |= Notification.DEFAULT_SOUND;
@@ -285,6 +287,51 @@ public class HomeStudent extends AppCompatActivity {
 
 
     }
+
+    private void setPrenotAlreadyNotified(String idPrenotazione) {
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        String url = "http://www.unishare.it/tutored/update_pren_for_notif.php?id=" + idPrenotazione;
+
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public boolean onResponse(JSONArray response) {
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            Log.d(TAG,response.toString());
+
+                            return false;
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error: " + error.getMessage());
+                // hide the progress dialog
+
+            }
+        });
+
+        queue.add(jsonObjReq);
+
+
+
+
+    }
+
 
     private void loadUserInfos() {
 
@@ -638,8 +685,6 @@ public class HomeStudent extends AppCompatActivity {
             //super.onBackPressed();
         } else {
             getFragmentManager().popBackStack();
-            titleBar.setTextSize(18);
-            titleBar.setText("HOME");
         }
 
     }
