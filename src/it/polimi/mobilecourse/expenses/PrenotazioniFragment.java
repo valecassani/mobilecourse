@@ -50,7 +50,8 @@ public class PrenotazioniFragment extends Fragment {
 
     private final String TAG = "Prenotazioni";
     private RequestQueue queue;
-    private HomeTutor activity;
+    private HomeTutor activityT;
+    private HomeStudent activityS;
     private ArrayList<PrenotazioniItem> items;
     private Context context;
     private RecyclerView mRecyclerView;
@@ -63,6 +64,7 @@ public class PrenotazioniFragment extends Fragment {
     private FloatingActionButton fab;
     private PrenotazioniAdapter adapter;
     private ProgressDialog progressDialog;
+    private String tipo;
 
     public PrenotazioniFragment() {
         items = new ArrayList<PrenotazioniItem>();
@@ -82,16 +84,22 @@ public class PrenotazioniFragment extends Fragment {
         View view = inflater.inflate(R.layout.ripet_fragment, container, false);
         if (getArguments().getString("student_id")!= null) {
             studentId=getArguments().getString("student_id");
+            tipo = "0";
+            activityS.getTitleToolbar().setText("PRENOTAZIONI");
+            activityS.getTitleToolbar().setTextSize(18);
+
+
 
         } else {
             if (getArguments().getString("tutor_id")!=null) {
                 tutorId=getArguments().getString("tutor_id");
+                activityT.getTitleToolbar().setText("PRENOTAZIONI");
+                activityT.getTitleToolbar().setTextSize(18);
             }
         }
 
 
-        activity.getTitleToolbar().setText("PRENOTAZIONI");
-        activity.getTitleToolbar().setTextSize(18);
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_prenotazioni);
         mSwipeRefresh.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
@@ -340,9 +348,15 @@ public class PrenotazioniFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        try {
+            this.activityT = (HomeTutor) activity;
+            return;
 
+        } catch (ClassCastException e){
+            Log.d(TAG,"utente non è tutor");
 
-        this.activity = (HomeTutor) activity;
+        }
+        this.activityS = (HomeStudent) activity;
     }
 
 
