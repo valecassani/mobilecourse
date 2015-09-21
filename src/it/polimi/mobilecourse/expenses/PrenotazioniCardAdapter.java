@@ -61,6 +61,22 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
             ora = (TextView) itemView.findViewById(R.id.prenot_ora);
             imageTutor = (CircularImageView) itemView.findViewById(R.id.prenot_tutor_image);
 
+            imageTutor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = ((Activity)context).getFragmentManager();
+
+                    Fragment fragment = new MostraRichiestaFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("idr", items.get(getAdapterPosition()).getId());
+                    fragment.setArguments(bundle);
+                    System.out.println("Bundle" + bundle);
+                    fragmentManager.beginTransaction().replace(R.id.tutor_fragment,fragment).addToBackStack(null).commit();
+
+
+                }
+            });
+
             itemView.setOnClickListener(this);
             Log.i(TAG, "Image view set");
 

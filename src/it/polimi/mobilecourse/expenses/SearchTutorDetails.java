@@ -335,6 +335,9 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
 
         Location loc1 = new Location("A");
+        if (indirizzoStudente.equals("")) {
+            return;
+        }
         LatLng firstpoint = getLocationFromAddress(indirizzoStudente);
         loc1.setLatitude(firstpoint.latitude);
         loc1.setLongitude(firstpoint.longitude);
@@ -342,8 +345,11 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         System.out.println(firstpoint.longitude);
 
         Location loc2 = new Location("B");
-
+        if (indirizzoTutor.equals("")) {
+            return;
+        }
         LatLng secondpoint = getLocationFromAddress(indirizzoTutor);
+
         loc2.setLatitude(secondpoint.latitude);
         loc2.setLongitude(secondpoint.longitude);
 

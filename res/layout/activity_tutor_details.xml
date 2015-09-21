@@ -103,7 +103,8 @@
 
                                 android:layout_below="@+id/tutor_eta"
                                 android:layout_alignLeft="@+id/tutor_occupazione"
-                                android:layout_marginTop="28dp" />
+                                android:layout_marginTop="28dp"
+                                android:textStyle="bold"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -124,6 +125,7 @@
                                 android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_occupazione"
                                 android:layout_marginRight="28dp"
+                                android:textStyle="bold"
 
                                 android:layout_marginLeft="5dp" />
 
@@ -146,6 +148,7 @@
                                 android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_esptutor"
                                 android:layout_marginRight="28dp"
+                                android:textStyle="bold"
 
                                 android:layout_marginLeft="5dp" />
 
@@ -168,6 +171,7 @@
                                 android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_espuni"
                                 android:layout_marginRight="28dp"
+                                android:textStyle="bold"
 
                                 android:layout_marginLeft="5dp" />
 
@@ -190,6 +194,7 @@
                                 android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_uni"
                                 android:layout_marginRight="28dp"
+                                android:textStyle="bold"
 
                                 android:layout_marginLeft="5dp" />
 
@@ -238,7 +243,8 @@
                                 android:id="@+id/textViewlez"
                                 android:layout_below="@+id/tutor_fac"
                                 android:layout_marginLeft="5dp"
-                                android:layout_marginRight="28dp" />
+                                android:layout_marginRight="28dp"
+                                android:textStyle="bold"/>
 
                             <CheckBox
                                 android:layout_width="wrap_content"

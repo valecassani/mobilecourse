@@ -46,7 +46,6 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
     private Context context;
     private ProgressBar progress;
     private AppCompatActivity activity;
-    private String indirizzo;
     private TabHost th;
     private float realdist;
     private TextView distance;
@@ -58,6 +57,9 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
     private String idPrenotazione;
     private String distanza;
+    private LatLng locTutor;
+    private String indirizzoT;
+    private String indirizzoS;
 
 
     /*
@@ -120,6 +122,8 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
 
+        distance = (TextView)findViewById(R.id.distanza_text);
+
 
 
 
@@ -145,54 +149,56 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
                             pid.populateData(obj);
                             FragmentManager fragmentManager = getFragmentManager();
                             fragmentManager.beginTransaction().addToBackStack("back").replace(R.id.fragreplace, pid).commit();
-                            indirizzo = obj.getString("indirizzo");
-                            distanza = obj.getString("distanza");
-                            mapFragment.getMapAsync(new OnMapReadyCallback() {
-                                                        @Override
-                                                        public void onMapReady(GoogleMap map) {
-
-                                                            //i due numeri sono lat e long ricavabili dal metodo getLocationFromAddress che trovi sotto
+                            indirizzoT = obj.getString("indirizzo");
+                            indirizzoS = obj.getString("indirizzo_studente");
+                            if (!(indirizzoT.equals("") && indirizzoS.equals(""))) {
 
 
-                                                            //calcolo distanza in km. puoi servirmi per la ricerca
+                                mapFragment.getMapAsync(new OnMapReadyCallback() {
+                                                            @Override
+                                                            public void onMapReady(GoogleMap map) {
+
+                                                                //i due numeri sono lat e long ricavabili dal metodo getLocationFromAddress che trovi sotto
 
 
+                                                                //calcolo distanza in km. puoi servirmi per la ricerca
 
 
-                                                            LatLng ltlg = getLocationFromAddress(indirizzo);
-                                                            System.out.println("Latitudine:" + ltlg.latitude);
-                                                            System.out.println("Longitudine:" + ltlg.longitude);
-
-                                                            Marker casaTutor = map.addMarker(new MarkerOptions().position(ltlg)
-                                                                    .title("Nome Tutor"));
+                                                                locTutor = getLocationFromAddress(indirizzoT);
+                                                                calcolaDistanza(indirizzoT, indirizzoS);
 
 
-
-                                                            TextView distanza = (TextView)findViewById(R.id.distanza_text);
-
-                                                            distanza.setText("Distanza: " + distanza);
+                                                                Marker casaTutor = map.addMarker(new MarkerOptions().position(locTutor)
+                                                                        .title("Nome Tutor"));
 
 
 
 
 
-                                                            // Move the camera instantly to hamburg with a zoom of 15.
-                                                            map.moveCamera(CameraUpdateFactory.newLatLng(ltlg));
 
 
-                                                            // Zoom in, animating the camera.
-                                                            map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+                                                                // Move the camera instantly to hamburg with a zoom of 15.
+                                                                map.moveCamera(CameraUpdateFactory.newLatLng(locTutor));
+
+
+                                                                // Zoom in, animating the camera.
+                                                                map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+                                                            }
                                                         }
-                                                    }
 
-                            );
+                                );
+                            } else {
+                                mapFragment.getView().setVisibility(View.INVISIBLE);
 
+                               distance.setText("Nessuna posizione per studente e tutor");
 
+                            }
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
 
 
                         return false;
@@ -274,11 +280,11 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
     }
 
 
-    private void calcolaDistanza() {
+    private void calcolaDistanza(String addrTutor, String addrStudent) {
 
 
         Location loc1 = new Location("A");
-        LatLng firstpoint = getLocationFromAddress(null);
+        LatLng firstpoint = getLocationFromAddress(addrTutor);
         loc1.setLatitude(firstpoint.latitude);
         loc1.setLongitude(firstpoint.longitude);
         System.out.println(firstpoint.latitude);
@@ -286,7 +292,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
         Location loc2 = new Location("B");
 
-        LatLng secondpoint = getLocationFromAddress(null);
+        LatLng secondpoint = getLocationFromAddress(addrStudent);
         loc2.setLatitude(secondpoint.latitude);
         loc2.setLongitude(secondpoint.longitude);
 
@@ -296,7 +302,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         realdist = loc1.distanceTo(loc2);
 
 
-        distance.setText(String.format("%.1f", realdist / 1000) + " Km");
+        distance.setText("Distanza: " + String.format("%.1f", realdist / 1000) + " Km");
 
 
     }
