@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+
+        style="@style/Widget.MyApp.ActionBar"
+        android:layout_width="match_parent"
+
+        android:layout_height="56dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/pad_20dp"
+            android:textStyle="bold"
+
+            />
+
+    </android.support.v7.widget.Toolbar>
 
     <TabHost
+        android:id="@+id/tabHostP"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tabHostP">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,7 +39,7 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -29,31 +52,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ProgressBar
+                        android:id="@+id/progressBarPrenot"
+                        style="?android:attr/progressBarStyleLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/progressBarPrenot"
-                        android:visibility="gone"
-                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true" />
-
+                        android:visibility="gone" />
 
 
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                        <LinearLayout
 
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/fragreplace"
-                            android:name="it.polimi.mobilecourse.expenses.FragReplace"
-                            />
+                            android:layout_height="match_parent">
 
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:alpha="0.2"
+                                android:src="@drawable/handshake_128" />
+
+
+                            <LinearLayout
+
+                                android:id="@+id/fragreplace"
+                                android:name="it.polimi.mobilecourse.expenses.FragReplace"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
 
                     </ScrollView>
-
 
 
                 </LinearLayout>
@@ -66,22 +101,36 @@
 
                     <fragment
                         android:id="@+id/map"
+                        class="com.google.android.gms.maps.MapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        class="com.google.android.gms.maps.MapFragment" />
-
-                    <TextView
+                        android:layout_height="200dp" />
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center_horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primaryColor"
+                            android:text="@string/distanza"
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        android:id="@+id/distanza_text"/>
+                        <TextView
+                            android:id="@+id/distanza_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+                    </LinearLayout>
+
 
 
 
                 </LinearLayout>
-
 
 
             </FrameLayout>

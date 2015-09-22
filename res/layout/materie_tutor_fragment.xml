@@ -30,9 +30,7 @@
         android:id="@+id/materie_list"
         android:choiceMode="singleChoice"
         android:layout_below="@id/phr"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#cccc"
+        android:dividerHeight="1dp"
         android:layout_marginBottom="80dp" />
 
     <Button

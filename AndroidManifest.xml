@@ -141,7 +141,7 @@
 
         <activity
             android:name=".PrenotazioniDettagliActivity"
-            android:theme="@style/PageTheme"
+            android:theme="@style/AppTheme"
            />
         <activity
             android:name=".GCMMainActivity"

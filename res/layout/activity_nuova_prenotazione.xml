@@ -6,27 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_awesome_toolbar"
-
-        style="@style/Widget.MyApp.ActionBar"
-        android:layout_width="match_parent"
-
-        android:layout_height="56dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/pad_20dp"
-            android:textStyle="bold"
-
-            />
-
-    </android.support.v7.widget.Toolbar>
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +20,7 @@
 
 
         <TextView
-            android:id="@+id/tutor_selezionato"
+            android:id="@+id/utente_selezionato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -58,7 +37,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primaryColor"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="Seleziona una materia"
             android:textAppearance="?android:textAppearanceMedium" />
 

@@ -7,35 +7,27 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -194,11 +186,18 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
         }
 
-        TextView mTutorText = (TextView) view.findViewById(R.id.tutor_selezionato);
-        mTutorText.setText("Tutor: " + tutor);
+        SessionManager sessionManager = new SessionManager(context);
+        if (sessionManager.getUserDetails().get("tipo").equals("0")) {
+            TextView mUserText = (TextView) view.findViewById(R.id.utente_selezionato);
+            mUserText.setText(" " + tutor);
+        } else {
+            TextView mUserText = (TextView) view.findViewById(R.id.utente_selezionato);
+            mUserText.setText(" " + studente);
 
-        TextView mStudentText = (TextView) view.findViewById(R.id.studente_selezionato);
-        mStudentText.setText("Studente: " + studente);
+        }
+
+
+
 
         TextView materiaText = (TextView) view.findViewById(R.id.materia_prenotazione);
         materiaText.setText(materia);
@@ -315,68 +314,6 @@ public class PrenotazioneItemDetailsFragment extends Fragment {
 
 
 
-    /*
-    private void populateData() {
-
-        String url = "http://www.unishare.it/tutored/prenotazione_by_id.php?id=" + idPrenotazione;
-
-        final JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                url, null,
-                new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public boolean onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-
-                        try {
-
-                            JSONObject obj = (JSONObject) response.get(0);
-                            sceltaData.setText(obj.getString("data"));
-                            date=obj.getString("data");
-                            sceltaOra.setText(obj.getString("ora_inizio"));
-                            time=obj.getString("ora_inizio");
-                            mTextViewMateria.setText(obj.getString("nome_materia"));
-                            materia = obj.getString("materia");
-                            editTextCellulare.setText(obj.getString("cellulare"));
-                            idStudente = obj.getString("id_studente");
-                            idTutor = obj.getString("id_tutor");
-                            confermato = obj.getString("confermato");
-
-
-                            note = obj.getString("note");
-                            if (confermato.equals("1")) {
-                                sendButton.setVisibility(View.INVISIBLE);
-                                sceltaDataButton.setVisibility(View.INVISIBLE);
-                                sceltaOraButton.setVisibility(View.INVISIBLE);
-
-                            }
-
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        return false;
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error: " + error.getMessage());
-                // hide the progress dialog
-
-            }
-
-
-        });
-
-        queue.add(jsonObjReq);
-
-
-    } */
 
     private void confermaPrenotazione() {
 

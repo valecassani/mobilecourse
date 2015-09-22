@@ -952,5 +952,12 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         this.activity =  (HomeStudent)activity;
     }
 
+    public void onResume() {
+        super.onResume();
+        activity.getTitleToolbar().setText("PROFILO TUTOR");
+        activity.getTitleToolbar().setTextSize(18);
+
+    }
+
 
 }

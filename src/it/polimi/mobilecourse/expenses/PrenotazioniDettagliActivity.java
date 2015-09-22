@@ -9,9 +9,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -50,6 +53,8 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
     private float realdist;
     private TextView distance;
     private MapFragment mapFragment;
+    private TextView titleBar;
+    private Toolbar toolbar;
     private PrenotazioneItemDetailsFragment pid = new PrenotazioneItemDetailsFragment();
 
 
@@ -85,8 +90,27 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
         th.addTab(ts);
 
+        titleBar = (TextView)findViewById(R.id.title);
+
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        if (toolbar != null) {
+            //SpannableString st=new SpannableString("Home");
+            //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            titleBar.setTextSize(18);
+            titleBar.setText("DETTAGLI PRENOTAZIONE");
+
+            setSupportActionBar(toolbar);
+        }
+
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("DETTAGLI PRENOTAZIONE");
+        getSupportActionBar().setElevation(25);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primaryColorDark));
 
         queue = Volley.newRequestQueue(context);
 
@@ -217,17 +241,19 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                finish();
+    public boolean onOptionsItemSelected(MenuItem item){
 
+        switch(item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
 
 
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
     public LatLng getLocationFromAddress(String strAddress) {
@@ -278,7 +304,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         realdist = loc1.distanceTo(loc2);
 
 
-        distance.setText("Distanza: " + String.format("%.1f", realdist / 1000) + " Km");
+        distance.setText(" " + String.format("%.1f", realdist / 1000) + " Km");
 
 
     }
@@ -295,5 +321,8 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
         super.onRestart();
         populateData();
     }
+
+
+
 
 }
