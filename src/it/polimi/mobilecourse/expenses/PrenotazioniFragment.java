@@ -124,6 +124,8 @@ public class PrenotazioniFragment extends Fragment {
 
         //fab = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_prenotazioni);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         /*
         fab.attachToRecyclerView(mRecyclerView);
         if (tutorId != null)
@@ -231,8 +233,8 @@ public class PrenotazioniFragment extends Fragment {
 
                             mAdapter = new PrenotazioniCardAdapter(items,sm.getUserDetails().get("tipo"));
                             mRecyclerView.setAdapter(mAdapter);
-                            mRecyclerView.setLayoutManager(mLayoutManager);
                             mRecyclerView.setHasFixedSize(true);
+
                             //adapter = new PrenotazioniAdapter(context,R.id.list_ripetizioni,items);
                             //mListView.setAdapter(adapter);
                             mSwipeRefresh.setRefreshing(false);

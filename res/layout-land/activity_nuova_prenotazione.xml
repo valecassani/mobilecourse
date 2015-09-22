@@ -54,7 +54,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Tutor Selezionato"
                 android:textColor="@color/primaryColor"
-                android:textSize="18sp"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold" />
 
             <TextView

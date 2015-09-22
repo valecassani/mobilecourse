@@ -62,31 +62,7 @@ public class PrenotazioniDettagliActivity extends AppCompatActivity {
     private String indirizzoS;
 
 
-    /*
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.prenotazione_dettagli_fragment, container, false);
 
-        context = view.getContext();
-
-
-        th = (TabHost) view.findViewById(R.id.tabHostP);
-        th.setup();
-        TabHost.TabSpec ts = th.newTabSpec("Dettagli");
-        ts.setContent(R.id.ll);
-        ts.setIndicator("Dettagli");
-        th.addTab(ts);
-
-        ts = th.newTabSpec("Mappa");
-        ts.setContent(R.id.ll2);
-        ts.setIndicator("Mappa");
-
-        th.addTab(ts);
-
-
-        return view;
-    }
-
-    */
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

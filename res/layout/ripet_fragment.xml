@@ -15,7 +15,7 @@
         android:id="@+id/noprenotazoni"
         android:visibility="invisible"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="137dp" />
 
     <ImageView

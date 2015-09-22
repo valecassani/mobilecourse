@@ -50,7 +50,7 @@ public class ListMaterieProfiloTutorAdapter extends BaseAdapter {
         TextView prezzo = (TextView) convertView.findViewById(R.id.materia_prezzo);
 
         nome.setText(items.get(position).getNome());
-        prezzo.setText(items.get(position).getPrezzo() + " &#8364;/ora");
+        prezzo.setText(items.get(position).getPrezzo() + " €/ora");
 
 
         return convertView;

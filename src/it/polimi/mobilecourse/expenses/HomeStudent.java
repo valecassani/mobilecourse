@@ -701,6 +701,9 @@ public class HomeStudent extends AppCompatActivity {
         super.onResume();
         loadUserInfos();
 
+        titleBar.setText("HOME");
+        titleBar.setTextSize(18);
+
 
     }
 
