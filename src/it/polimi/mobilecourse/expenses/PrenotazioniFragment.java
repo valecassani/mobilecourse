@@ -65,6 +65,7 @@ public class PrenotazioniFragment extends Fragment {
     private PrenotazioniAdapter adapter;
     private ProgressDialog progressDialog;
     private String tipo;
+    private TextView noPrenotazioni;
 
     public PrenotazioniFragment() {
         items = new ArrayList<PrenotazioniItem>();
@@ -101,6 +102,8 @@ public class PrenotazioniFragment extends Fragment {
                 activityT.getTitleToolbar().setTextSize(18);
             }
         }
+
+        noPrenotazioni = (TextView)view.findViewById(R.id.noprenotazoni);
 
 
 
@@ -188,6 +191,10 @@ public class PrenotazioniFragment extends Fragment {
                     @Override
                     public boolean onResponse(JSONArray response) {
                         items.clear();
+                        if (response.length() == 0) {
+                            noPrenotazioni.setVisibility(View.VISIBLE);
+                            return false;
+                        }
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject obj = response.getJSONObject(i);

@@ -339,10 +339,16 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             return;
         }
         LatLng firstpoint = getLocationFromAddress(indirizzoStudente);
-        loc1.setLatitude(firstpoint.latitude);
-        loc1.setLongitude(firstpoint.longitude);
-        System.out.println(firstpoint.latitude);
-        System.out.println(firstpoint.longitude);
+        try {
+            loc1.setLatitude(firstpoint.latitude);
+            loc1.setLongitude(firstpoint.longitude);
+            System.out.println(firstpoint.latitude);
+            System.out.println(firstpoint.longitude);
+
+        } catch (NullPointerException e) {
+
+        }
+
 
         Location loc2 = new Location("B");
         if (indirizzoTutor.equals("")) {
@@ -350,16 +356,23 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
         }
         LatLng secondpoint = getLocationFromAddress(indirizzoTutor);
 
-        loc2.setLatitude(secondpoint.latitude);
-        loc2.setLongitude(secondpoint.longitude);
 
-        System.out.println(secondpoint.latitude);
-        System.out.println(secondpoint.longitude);
+        try {
+            loc2.setLatitude(secondpoint.latitude);
+            loc2.setLongitude(secondpoint.longitude);
 
-        realdist = loc1.distanceTo(loc2);
+            System.out.println(secondpoint.latitude);
+            System.out.println(secondpoint.longitude);
+
+            realdist = loc1.distanceTo(loc2);
 
 
-        distance.setText(String.format("%.1f", realdist / 1000) + " Km");
+            distance.setText(String.format("%.1f", realdist / 1000) + " Km");
+
+        } catch (NullPointerException e) {
+
+        }
+
 
 
     }
