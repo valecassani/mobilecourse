@@ -107,26 +107,6 @@ public class SearchFragment extends Fragment {
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchSubject.getWindowToken(),
                         InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                /*Criteria criteria = new Criteria();
-                provider = locationManager.getBestProvider(criteria, false);
-                Location location = getLocation();
-                String url;
-                if (location != null) {
-                    Log.d(TAG,"Location is not null");
-                    Log.d(TAG,"Latitude : " + location.getLatitude() + "; Longitude : " + location.getLongitude());
-                    url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchSubject.getText().toString()+ "&lat="
-                            + location.getLatitude() + "&long=" + location.getLongitude() ;
-
-                } else {
-                    url = "http://www.unishare.it/tutored/search_by_subject.php?subject=" + searchSubject.getText().toString();
-                    Log.d(TAG, "Location is null");
-                }
-
-                Intent intent = new Intent(context,SearchResultActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("query", url);
-                intent.putExtras(bundle);
-                startActivity(intent);*/
 
             }
         });
@@ -276,88 +256,7 @@ public class SearchFragment extends Fragment {
         //locationManager.removeUpdates(this);
     }
 
-   /* @Override
-    public void onLocationChanged(Location location) {
-        lat =  location.getLatitude();
-        lng = location.getLongitude();
-        Log.d(TAG, "Latitude " + lat + ", Longitude " + lng);
-    }*/
 
-   /* @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(getActivity(), "Enabled new provider " + provider,Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    public Location getLocation() {
-        Location location = null;
-
-        //TODO aggiungere se esiste indirizzo da database e ottenere coordinate
-        try {
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-            // getting GPS status
-            isGPSEnabled = locationManager
-                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            // getting network status
-            isNetworkEnabled = locationManager
-                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (!isGPSEnabled && !isNetworkEnabled) {
-                // no network provider is enabled
-            } else {
-                this.canGetLocation = true;
-                if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            1,
-                            1, this);
-                    Log.d("Network", "Network Enabled");
-                    if (locationManager != null) {
-                        location = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-
-                        }
-                    }
-                }
-                // if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled) {
-                    if (location == null) {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                1,
-                                1, this);
-                        Log.d("GPS", "GPS Enabled");
-                        if (locationManager != null) {
-                            location = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-
-                            }
-                        }
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return location;
-    }*/
 
     private void progress(final boolean show){
         final int shortAnimTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
