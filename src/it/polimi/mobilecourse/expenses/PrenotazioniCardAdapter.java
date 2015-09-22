@@ -41,6 +41,7 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
 
     private static ArrayList<PrenotazioniItem> items = new ArrayList<PrenotazioniItem>();
     private String tipoUtente;
+    private static SessionManager sessionManager;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener{
@@ -67,18 +68,35 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
             materia.setOnClickListener(this);
             data.setOnClickListener(this);
             ora.setOnClickListener(this);
+            sessionManager = new SessionManager(context);
+
 
             imageTutor.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fragmentManager = ((Activity)context).getFragmentManager();
+                    if (sessionManager.getUserDetails().get("tipo").equals("1")) {
+                        Intent intent = new Intent(context, PrenotazioniDettagliActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", items.get(getAdapterPosition()).getId());
+                        intent.putExtras(bundle);
 
-                    Fragment fragment = new SearchTutorDetails();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("idt", items.get(getAdapterPosition()).getIdTutor());
-                    fragment.setArguments(bundle);
-                    System.out.println("Bundle" + bundle);
-                    fragmentManager.beginTransaction().replace(R.id.prenotaz_fragment,fragment).addToBackStack(null).commit();
+                        context.startActivity(intent);
+
+
+                    } else {
+
+                        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+
+                        Fragment fragment = new SearchTutorDetails();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("idt", items.get(getAdapterPosition()).getIdTutor());
+                        fragment.setArguments(bundle);
+                        System.out.println("Bundle" + bundle);
+                        fragmentManager.beginTransaction().replace(R.id.prenotaz_fragment, fragment).addToBackStack(null).commit();
+
+
+                    }
 
                 }
             });
@@ -121,6 +139,7 @@ public class PrenotazioniCardAdapter extends RecyclerView.Adapter<PrenotazioniCa
 
         this.items = myDataset;
         this.tipoUtente = tipoUtente;
+
     }
 
 

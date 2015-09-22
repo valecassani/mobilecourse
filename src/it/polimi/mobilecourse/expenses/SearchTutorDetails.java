@@ -109,7 +109,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
     private String idfb;
     private String urlFoto;
     private ListView mListMaterie;
-    private ListMaterieAdapterNoDelete adapter;
+    private ListMaterieProfiloTutorAdapter adapter;
     private ListRecensioniAdapter adapterRec;
 
     private String idTutor;
@@ -540,7 +540,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
                             }
 
 
-                            adapter = new ListMaterieAdapterNoDelete(getActivity().getApplicationContext(), items);
+                            adapter = new ListMaterieProfiloTutorAdapter(getActivity().getApplicationContext(), items);
 
                             mat_tutor.setAdapter(adapter);
 
