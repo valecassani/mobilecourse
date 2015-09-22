@@ -209,6 +209,14 @@ public class HomeTutorFragment extends Fragment {
 
     }
 
+    public void onResume() {
+        super.onResume();
+        activity.getTitleToolbar().setText("HOME");
+        activity.getTitleToolbar().setTextSize(18);
+
+    }
+
+
 
 
 
