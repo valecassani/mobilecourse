@@ -54,7 +54,7 @@
             android:layout_marginTop="10dp"
 
 
-
+            android:text="Inserire Data"
             android:layout_width="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_column="0"
@@ -85,6 +85,7 @@
             android:layout_column="0"
             android:layout_row="1"
             android:layout_marginTop="10dp"
+            android:text="Inserire data"
 
 
 
@@ -112,6 +113,7 @@
             android:id="@+id/durata_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_alignBottom="@+id/button_durata"
             android:layout_alignParentLeft="true"
             android:text="Inserire Durata"

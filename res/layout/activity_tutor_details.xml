@@ -17,7 +17,7 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></TabWidget>
+                android:layout_height="wrap_content"/>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -35,8 +35,10 @@
 
                     <ScrollView
                         android:layout_width="match_parent"
+
                         android:layout_height="match_parent"
                         android:id="@+id/container"
+                        android:fillViewport="true"
 
 
                         >
@@ -45,8 +47,10 @@
 
                         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
-                            android:layout_height="805dp"
-                            android:fitsSystemWindows="true">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fitsSystemWindows="true"
+                            android:fillViewport="true">
 
 
                             <com.pkmmte.view.CircularImageView
@@ -56,9 +60,6 @@
                                 android:id="@+id/foto"
                                 android:layout_centerHorizontal="true" />
 
-
-
-                            />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -127,6 +128,8 @@
                                 android:layout_below="@id/tutor_occupazione"
                                 android:layout_marginRight="28dp"
                                 android:textStyle="bold"
+                                android:layout_marginTop="5dp"
+
 
                                 android:layout_marginLeft="5dp" />
 
@@ -149,6 +152,8 @@
                                 android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_esptutor"
                                 android:layout_marginRight="28dp"
+                                android:layout_marginTop="5dp"
+
                                 android:textStyle="bold"
 
                                 android:layout_marginLeft="5dp" />
@@ -160,6 +165,7 @@
                                 android:id="@+id/tutor_espuni"
                                 android:layout_below="@id/textv2"
                                 android:layout_marginRight="28dp"
+
 
                                 android:layout_marginLeft="5dp" />
 
@@ -173,6 +179,8 @@
                                 android:layout_below="@id/tutor_espuni"
                                 android:layout_marginRight="28dp"
                                 android:textStyle="bold"
+                                android:layout_marginTop="5dp"
+
 
                                 android:layout_marginLeft="5dp" />
 
@@ -181,6 +189,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:id="@+id/tutor_uni"
+
                                 android:layout_below="@id/textv3"
                                 android:layout_marginRight="28dp"
 
@@ -192,6 +201,8 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/textv4"
                                 android:text="Facoltà:"
+                                android:layout_marginTop="5dp"
+
                                 android:textColor="@color/primaryColor"
                                 android:layout_below="@id/tutor_uni"
                                 android:layout_marginRight="28dp"
@@ -209,22 +220,6 @@
 
                                 android:layout_marginLeft="5dp" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <ProgressBar
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -241,6 +236,8 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:text="Caratteristiche lezioni:"
                                 android:textColor="@color/primaryColor"
+                                android:layout_marginTop="5dp"
+
                                 android:id="@+id/textViewlez"
                                 android:layout_below="@+id/tutor_fac"
                                 android:layout_marginLeft="5dp"
@@ -296,15 +293,19 @@
                                 android:text="Distanza:"
                                 android:textColor="@color/primaryColor"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:id="@+id/distText"
                                 android:layout_below="@id/checkBoxsede"
+                                android:textStyle="bold"
                                 />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_marginLeft="5dp"
+
 
                                 android:id="@+id/distance"
                                 android:layout_below="@+id/distText"
@@ -325,12 +326,11 @@
                                 style="?android:attr/borderlessButtonStyle"
                                 android:background="@drawable/smooth_button"
                                 android:textColor="#FFF"
-
-
+                                android:layout_marginTop="30dp"
+                                android:layout_alignParentEnd="true"
                                 android:layout_below="@id/distance"
-                                android:layout_alignParentBottom="true"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginBottom="10dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginEnd="10dp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp" />
 
@@ -415,6 +415,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/rec_tutor"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="205dp" />
@@ -428,6 +429,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
+
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 

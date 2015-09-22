@@ -392,5 +392,27 @@ public class PrenotazioniFragment extends Fragment {
 
     }
 
+    public void onStart() {
+        super.onStart();
+        try {
+
+
+
+            activityT.getTitleToolbar().setText("PRENOTAZIONI");
+            activityT.getTitleToolbar().setTextSize(18);
+
+            return;
+
+        } catch (NullPointerException e) {
+
+        }
+
+        activityS.getTitleToolbar().setText("PRENOTAZIONI");
+        activityS.getTitleToolbar().setTextSize(18);
+
+    }
+
+
+
 
 }

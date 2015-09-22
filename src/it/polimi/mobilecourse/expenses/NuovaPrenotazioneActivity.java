@@ -144,7 +144,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         date = anotherDateFormat.format(newDate.getTime());
-                        sceltaData.setText(simpleDateFormat.format(newDate.getTime()));
+                        sceltaData.setText(Functions.convertiData(simpleDateFormat.format(newDate.getTime())));
 
                     }
 
