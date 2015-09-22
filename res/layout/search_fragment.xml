@@ -1,96 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
 
 
     >
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_search">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Inserisci cosa vuoi cercare"
-            android:layout_margin="10dp"
-            android:id="@+id/search_tutor"/>
-        <CheckBox
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/search_tutor"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:hint="Inserisci cosa vuoi cercare" />
+
+            <CheckBox
+                android:id="@+id/checkbox_citta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/search_tutor"
+                android:text="Stessa citta"
+                android:textColor="@color/primaryColor" />
+
+        </RelativeLayout>
+
+
+        <com.gc.materialdesign.views.ButtonFloat
+            android:id="@+id/search_tutor_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignRight="@id/layout_search"
+            android:layout_below="@id/layout_search"
+            materialdesign:animate="false"
+            materialdesign:iconDrawable="@drawable/abc_ic_search_api_mtrl_alpha" />
+
+
+        <TextView
+            android:id="@+id/noresultR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkbox_citta"
-            android:layout_below="@id/search_tutor"
-            android:textColor="@color/primaryColor"
-            android:text="Stessa citta"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Nessun risultato trovato"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="invisible" />
+
+
+        <ListView
+            android:id="@+id/result_tutor_search"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_below="@+id/testa"
+            android:layout_marginTop="40dp"
+            android:dividerHeight="1px"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.3"
+            android:src="@drawable/search_128" />
+
+        <ProgressBar
+            android:id="@+id/progressBarRicercaTutor"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/result_tutor_search"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@id/testa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_search"
+            android:layout_marginTop="70dp"
+
+            android:layout_centerHorizontal="true"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
     </RelativeLayout>
 
-
-    <com.gc.materialdesign.views.ButtonFloat
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        materialdesign:iconDrawable="@drawable/abc_ic_search_api_mtrl_alpha"
-        materialdesign:animate="false"
-        android:id="@+id/search_tutor_button"
-        android:layout_below="@id/layout_search"
-        android:layout_alignRight="@id/layout_search" />
-
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nessun risultato trovato"
-        android:id="@+id/noresultR"
-        android:visibility="invisible"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="500dp"
-        android:id="@+id/result_tutor_search"
-        android:layout_below="@id/search_tutor_button"
-        android:layout_marginTop="80dp">
-    </ListView>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/search_128"
-        android:alpha="0.3"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBarRicercaTutor"
-        style="?android:attr/progressBarStyleLarge"
-        android:visibility="gone"
-        android:layout_alignTop="@+id/result_tutor_search"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/testa"
-
-        android:layout_above="@id/result_tutor_search"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp" />
-
-
-</RelativeLayout>
-
-    </ScrollView>
+</ScrollView>

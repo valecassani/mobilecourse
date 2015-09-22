@@ -13,10 +13,10 @@
         android:layout_height="56dp"
         android:layout_margin="8dp"
         app:border="true"
-        app:border_color="#000"
+        app:border_color="@color/primaryColor"
         app:border_width="4dp"
         app:shadow="true"
-        app:backgroundTint="@color/material_blue_500"
+        app:backgroundTint="@color/primaryColor"
         android:src="@drawable/landing_image"
         android:id="@+id/stud_image"/>
 

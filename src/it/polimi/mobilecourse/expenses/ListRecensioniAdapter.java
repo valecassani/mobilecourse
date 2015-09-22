@@ -1,6 +1,8 @@
 package it.polimi.mobilecourse.expenses;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,8 @@ public class ListRecensioniAdapter extends BaseAdapter {
         CircularImageView si=(CircularImageView)convertView.findViewById(R.id.stud_image);
         TextView nome=(TextView)convertView.findViewById(R.id.rec_nome);
         RatingBar rb=(RatingBar)convertView.findViewById(R.id.rec_val);
+        LayerDrawable stars=(LayerDrawable)rb.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_ATOP);
 
         nome.setText("Recensione di "+items.get(position).getNome()+ " "+items.get(position).getCognome().substring(0,1)+".");
         rb.setRating(items.get(position).getVoto_finale());
