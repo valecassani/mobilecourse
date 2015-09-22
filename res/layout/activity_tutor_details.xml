@@ -51,6 +51,14 @@
                             android:fillViewport="true"
                             android:fitsSystemWindows="true">
 
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/user_128"
+                                android:alpha="0.3"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true"/>
+
 
                             <com.pkmmte.view.CircularImageView
 
@@ -368,7 +376,6 @@
                                 android:id="@+id/rec_tutor"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="#cccc"
                                 android:choiceMode="singleChoice"
                                 android:divider="@android:color/transparent"
                                 android:dividerHeight="0dp" />
@@ -424,17 +431,26 @@
                         >
 
 
+
                         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fitsSystemWindows="true">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/book_128"
+                                android:alpha="0.3"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true"/>
+
+
 
 
                             <ListView
                                 android:id="@+id/mat_tutor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="#cccc"
                                 android:choiceMode="singleChoice"
                                 android:divider="@android:color/transparent"
                                 android:dividerHeight="0dp" />

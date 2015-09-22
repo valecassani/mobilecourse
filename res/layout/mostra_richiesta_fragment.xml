@@ -19,6 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="643dp">
 
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:src="@drawable/bullhorn_icon"
+                android:alpha="0.3"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
             <TextView
                 android:id="@+id/nameRichiesta"
                 android:layout_width="wrap_content"
@@ -34,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/nameRichiesta"
-                android:textColor="@color/primaryColorDark"
+                android:textColor="@color/primaryColor"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
