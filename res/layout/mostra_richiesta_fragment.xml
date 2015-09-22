@@ -17,13 +17,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="643dp">
+            android:minHeight="643dp"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:src="@drawable/bullhorn_icon"
-                android:alpha="0.3"
+                android:alpha="0.2"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"/>
 
@@ -31,17 +32,18 @@
                 android:id="@+id/nameRichiesta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/titleRichiesta"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="40dp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/titleRichiesta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/nameRichiesta"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
                 android:textColor="@color/primaryColor"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -58,20 +60,46 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
+                android:id="@+id/universita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:text="@string/universita"
+                android:layout_below="@id/testoRichiesta"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
                 android:id="@+id/uniRichiesta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/testoRichiesta"
+                android:layout_below="@id/universita"
                 android:layout_centerVertical="true"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_margin="5dp"
+                />
+            <TextView
+                android:id="@+id/facolta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/uniRichiesta"
+                android:textColor="@color/primaryColor"
+                android:text="@string/facolta"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_margin="5dp"
+                />
 
             <TextView
                 android:id="@+id/facRichiesta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/uniRichiesta"
-                android:layout_below="@+id/uniRichiesta"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:layout_below="@id/facolta"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_margin="5dp"
+                />
 
 
             <TextView
@@ -79,8 +107,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/nameRichiesta"
+                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/nameRichiesta"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
             <ProgressBar
                 android:id="@+id/progressBarRichiesta"
@@ -100,6 +130,7 @@
 
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/smooth_button"
 
@@ -115,8 +146,10 @@
 
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/buttonAccettaR"
+                android:layout_below="@id/facRichiesta"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="85dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/smooth_button"
                 android:drawableLeft="@drawable/download_24"
                 android:drawablePadding="-17sp"

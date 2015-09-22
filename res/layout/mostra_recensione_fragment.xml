@@ -13,8 +13,17 @@
         android:weightSum="1">
 
         <RelativeLayout  android:layout_width="match_parent"
+            android:minHeight="450dp"
             android:layout_height="wrap_content"
             >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star_128"
+                android:alpha="0.3"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
 
 
             <com.pkmmte.view.CircularImageView
@@ -22,21 +31,23 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/studface"
-                android:layout_alignTop="@+id/textNome"
+                android:layout_marginTop="10dp"
+
+                android:layout_below="@+id/progressBarRecensione"
                 android:layout_centerHorizontal="true" />
 
 
 
-            />
-
-
-            <TextView
+           <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
+               android:layout_centerHorizontal="true"
+               android:textStyle="bold"
                 android:layout_below="@+id/studface"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
+                android:layout_marginTop="10dp"
+               android:textAppearance="?android:textAppearanceMedium"
+               />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,6 +55,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/puntualita"
                 android:id="@+id/textView21"
+                android:textColor="@color/primaryColor"
                 android:layout_marginTop="42dp"
                 android:layout_below="@+id/title"
                 android:layout_alignLeft="@+id/textView22" />
@@ -72,6 +84,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/disp"
+                android:textColor="@color/primaryColor"
+
                 android:id="@+id/textView22"
                 android:layout_below="@+id/puntualMostra"
                 android:layout_alignParentLeft="true"
@@ -91,6 +105,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/chiar"
+                android:textColor="@color/primaryColor"
+
                 android:id="@+id/textView23"
                 android:layout_below="@+id/dispMostra"
                 android:layout_alignLeft="@+id/dispMostra" />
@@ -109,6 +125,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/finalmark"
+                android:textColor="@color/primaryColor"
+
                 android:id="@+id/textView24"
                 android:layout_below="@+id/chiarMostra"
                 android:layout_alignLeft="@+id/chiarMostra" />
@@ -127,6 +145,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/comment"
+                android:textColor="@color/primaryColor"
+
                 android:id="@+id/textView25"
                 android:layout_below="@+id/finaleMostra"
                 android:layout_alignLeft="@+id/finaleMostra" />
@@ -135,11 +155,13 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/commentMostra"
                 android:layout_below="@+id/textView25"
                 android:layout_alignLeft="@id/textView25"
-                android:layout_alignRight="@+id/finaleMostra" />
+                android:layout_alignRight="@+id/finaleMostra"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:layout_marginBottom="40dp"/>
 
 
     <ProgressBar

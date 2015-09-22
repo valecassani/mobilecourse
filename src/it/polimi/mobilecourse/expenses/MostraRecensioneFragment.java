@@ -69,9 +69,10 @@ public class MostraRecensioneFragment extends Fragment {
         view = inflater.inflate(R.layout.mostra_recensione_fragment, container, false);
         progress=(ProgressBar)view.findViewById(R.id.progressBarRecensione);
         queue= Volley.newRequestQueue(view.getContext());
+        activity.getTitleToolbar().setTextSize(18);
+        activity.getTitleToolbar().setText("RECENSIONE");
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recensione");
+
 
 
         Bundle bundle=this.getArguments();
@@ -232,6 +233,8 @@ public class MostraRecensioneFragment extends Fragment {
 
 
     }
+
+
 
 
 }

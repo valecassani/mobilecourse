@@ -126,18 +126,7 @@
             android:label="@string/title_activity_help_ab" >
         </activity>
 
-        <activity
-            android:name=".SearchResultActivity"
-            android:theme="@style/PageTheme"
-            android:label="@string/title_activity_search_results" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
 
         <activity android:name=".UploadToServer"
             >
@@ -146,8 +135,8 @@
             android:theme="@style/PageTheme"/>
         <activity
             android:name=".NuovaPrenotazioneActivity"
-            android:theme="@style/PageTheme"
-            android:label="@string/title_activity_nuova_prenotazione" >
+            android:theme="@style/AppTheme"
+          >
         </activity>
 
         <activity
@@ -173,7 +162,7 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ImpostazLezioniTutor"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
 
         <receiver
             android:name=".GcmBroadcastReceiver"

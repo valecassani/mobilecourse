@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_margin="5dp"
         android:layout_height="match_parent"
-        android:textColor="#000"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         android:textSize="@dimen/abc_text_size_medium_material"
         android:id="@+id/materia_nome"/>

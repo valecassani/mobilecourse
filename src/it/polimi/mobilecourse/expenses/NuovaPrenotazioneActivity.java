@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -96,6 +98,26 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_nuova_prenotazione);
 
+        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        if (toolbar != null) {
+            //SpannableString st=new SpannableString("Home");
+            //st.setSpan(new TypefaceSpan(this, "Gotham-Light.ttf"),0,st.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            TextView title = (TextView)findViewById(R.id.title);
+            title.setText("NUOVA PRENOTAZIONE");
+            title.setTextSize(18);
+            setSupportActionBar(toolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(25);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primaryColorDark));
+
+
 
 
         context = getApplicationContext();
@@ -109,7 +131,6 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
 
         prezzoOrario = data.getString("prezzo");
 
-        Toast.makeText(getApplicationContext(), "Tutor id " + idTutor, Toast.LENGTH_SHORT).show();
         String nomeTutor = data.getString("nome");
         String cognomeTutor = data.getString("cognome");
 
@@ -144,7 +165,7 @@ public class NuovaPrenotazioneActivity extends AppCompatActivity {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         date = anotherDateFormat.format(newDate.getTime());
-                        sceltaData.setText(Functions.convertiData(simpleDateFormat.format(newDate.getTime())));
+                        sceltaData.setText(Functions.convertiDataDialog(simpleDateFormat.format(newDate.getTime())));
 
                     }
 

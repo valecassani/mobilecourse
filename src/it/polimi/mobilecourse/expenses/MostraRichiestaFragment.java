@@ -290,27 +290,14 @@ public class MostraRichiestaFragment extends Fragment {
 
 
         if(uniR.compareTo("0")!=0){
-            SpannableStringBuilder builderUni = new SpannableStringBuilder();
-            SpannableString wordtospantre = new SpannableString("Università:");
 
-            wordtospantre.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, "Università:".length(),
-                    0);
-            builderUni.append(wordtospantre);
-            builderUni.append(uniR);
 
-            uni.setText(builderUni,TextView.BufferType.SPANNABLE);
+            uni.setText(uniR);
         }
         if(facR.compareTo("0")!=0){
-            SpannableStringBuilder builderFac = new SpannableStringBuilder();
 
-            SpannableString wordtosp = new SpannableString("Facoltà:");
 
-            wordtosp.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primaryColor)), 0, "Facoltà:".length(),
-                    0);
-            builderFac.append(wordtosp);
-            builderFac.append(facR);
-
-            facolta.setText(builderFac,TextView.BufferType.SPANNABLE);
+            facolta.setText(facR);
         }
         if(urlR.compareTo("0")!=0){
              downloadImage();
@@ -509,6 +496,35 @@ public class MostraRichiestaFragment extends Fragment {
         }
 
         this.activityS = (HomeStudent)activity;
+
+
+    }
+
+    public void onResume() {
+        super.onResume();
+        if (activityT!=null){
+
+            activityT.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+            activityT.getTitleToolbar().setTextSize(18);
+        } else {
+            activityS.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+            activityS.getTitleToolbar().setTextSize(18);
+
+        }
+    }
+
+    public void onStart() {
+        super.onStart();
+
+        if (activityT!=null){
+
+            activityT.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+            activityT.getTitleToolbar().setTextSize(18);
+        } else {
+            activityS.getTitleToolbar().setText("DETTAGLI DELLA RICHIESTA");
+            activityS.getTitleToolbar().setTextSize(18);
+
+        }
 
 
     }
