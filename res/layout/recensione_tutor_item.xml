@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFF">
+
+
     <com.pkmmte.view.CircularImageView
         android:layout_centerVertical="true"
         android:layout_width="56dp"
@@ -23,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_margin="5dp"
         android:layout_height="match_parent"
-        android:textColor="#000"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         android:textSize="14sp"
         android:id="@+id/rec_nome"/>

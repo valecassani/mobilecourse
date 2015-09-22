@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#FFF"
     android:layout_height="match_parent">
 
 
@@ -18,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_margin="5dp"
         android:layout_height="match_parent"
-        android:textColor="#000"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         android:textSize="@dimen/abc_text_size_medium_material"
         android:layout_toRightOf="@id/materia_icon"
@@ -33,14 +34,14 @@
         android:layout_margin="5dp"
         android:layout_height="match_parent"
         android:textColor="#000"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textSize="@dimen/abc_text_size_medium_material"
         android:id="@+id/materia_prezzo"/>
 
 
     <ImageView
 
-        android:src="@drawable/delete_icon"
+        android:src="@drawable/delete_icon_2"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginTop="10dp"
