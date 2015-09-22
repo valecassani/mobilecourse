@@ -654,12 +654,14 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
 
             etaT.setText(eta + " anni");
         } else {
-            etaT.setVisibility(View.GONE);
+            etaT.setText("Nessuna età definita");
         }
         if (citta.compareTo("") != 0) {
 
             cittaT.setText(citta);
 
+        } else {
+            cittaT.setText("Nessuna città definita");
         }
 
         if (occupazione.compareTo("") != 0) {
@@ -667,8 +669,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             contentOccT.setText(occupazione);
 
         } else {
-            occT.setVisibility(View.GONE);
-            contentOccT.setVisibility(View.GONE);
+            contentOccT.setText("Nessuna occupazione definita");
 
 
         }
@@ -678,8 +679,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             contentEspUniT.setText(espuni);
 
         } else {
-            contentEspUniT.setVisibility(View.GONE);
-            espuniT.setVisibility(View.GONE);
+
+            contentEspUniT.setText("Nessuna esperienza universitaria definita");
 
 
         }
@@ -689,8 +690,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             contentEspTut.setText(esptutor);
 
         } else {
-            contentEspTut.setVisibility(View.GONE);
-            esptutT.setVisibility(View.GONE);
+            contentEspTut.setText("Nessuna esperienza da tutor definita");
 
 
         }
@@ -700,8 +700,7 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             contentUniT.setText(uni);
 
         } else {
-            contentUniT.setVisibility(View.GONE);
-            uniT.setVisibility(View.GONE);
+            contentUniT.setText("Nessuna università definita");
 
 
         }
@@ -710,8 +709,8 @@ public class SearchTutorDetails extends Fragment implements GoogleApiClient.Conn
             contentFacT.setText(fac);
 
         } else {
-            contentFacT.setVisibility(View.GONE);
-            facT.setVisibility(View.GONE);
+            contentFacT.setText("Nessuna facoltà definita");
+
 
 
         }
